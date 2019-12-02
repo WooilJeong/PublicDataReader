@@ -1,2 +1,3 @@
-from PublicDataPortal.AptTransaction import AptTransactionReader
+from PublicDataReader.PublicDataPortal.AptTransaction import AptTransactionReader
 
+AptTransactionReader = AptTransactionReader
