@@ -16,7 +16,7 @@ class AptTransactionReader:
         국토교통부 실거래가 정보 오픈API는 법정동코드 10자리 중 앞 5자리인 구를 나타내는 지역코드를 사용합니다.
         API에 사용할 구 별 코드를 조회하는 메소드이며, 문자열 지역 명을 입력받고, 조회 결과를 Pandas DataFrame형식으로 출력합니다.
         '''
-        code = pd.read_csv("법정동코드 전체자료.txt", encoding='cp949', sep='\t')
+        code = pd.read_csv("PublicDataPortal/법정동코드 전체자료.txt", encoding='cp949', sep='\t')
         code = code.loc[code['폐지여부']=='존재']
         code['법정구코드'] = list(map(lambda a: str(a)[:5], list(code['법정동코드'])))
         result = code[code['법정동명'].str.contains(name)][['법정동명','법정구코드']]
