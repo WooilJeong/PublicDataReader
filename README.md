@@ -33,6 +33,7 @@ df_sum_agg = Apt.Agg(df_sum)
 ```
 
 ## Requirements
+python >= 3.7.4
 
 ## Contact
 email : wooil@kakao.com
