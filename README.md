@@ -2,14 +2,26 @@
 Open Source Public Data Reader
 
 ## Overview
+Current Version : 0.0.4
 
 ## Installation
 
-```bash
+```
 pip install PublicDataReader
 ```
 
-
 ## Usage
+- Korea Apartment Transaction Data
+https://www.data.go.kr/dataset/3050988/openapi.do
+
+```python
+import PublicDataReader as pdr
+
+serviceKey = "<<YOUR API SERVICE KEY>>"
+Apt = pdr.AptTransaction(serviceKey)
+
+Apt.CodeFinder("백현동")            # 지역코드 : 41135
+Apt.DataReader("41135", "201911") # 지역코드(LAWD_CD), 계약월(DEAL_YMD)
+```
 
 ## Requirements
