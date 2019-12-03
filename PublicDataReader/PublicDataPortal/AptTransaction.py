@@ -78,3 +78,17 @@ class AptTransactionReader:
         df.index = range(len(df))
 
         return df
+
+        def Agg(self, df):
+            
+            df_dong = df.groupby('법정동').agg(
+                {'거래금액':['median', 'mean', 'min', 'max', 'std','count']}).reset_index()
+
+            df_dong.columns=['법정동', '중앙값', '평균값', '최솟값', '최댓값', '표준편차', '거래량']
+
+            # 소수점 이하 첫 째 자리에서 반올림하여 정수형으로 변환 - 평균, 표준편차
+            df_dong['평균값'] = np.round(df_dong['평균값'], 0).astype(int)
+            df_dong['표준편차'] = np.round(df_dong['표준편차'], 0).astype(int)
+            df_dong.index = range(len(df_dong))
+
+            return df_dong
