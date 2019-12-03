@@ -2,17 +2,15 @@
 Open Source Public Data Reader
 
 ## Overview
-Current Version : 0.0.5
+Current Version : 0.0.1
 
 ## Installation
-
-```
+```bash
 pip install PublicDataReader
 ```
 
 ## Usage
 ### 국토교통부 실거래가 정보 - 아파트매매 실거래자료
-https://www.data.go.kr/dataset/3050988/openapi.do
 
 ```python
 import PublicDataReader as pdr
