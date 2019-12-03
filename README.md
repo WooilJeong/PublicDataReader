@@ -23,5 +23,5 @@ Apt = pdr.AptTransaction(serviceKey)
 Apt.CodeFinder("백현동")            # 지역코드 : 41135
 Apt.DataReader("41135", "201911") # 지역코드(LAWD_CD), 계약월(DEAL_YMD)
 ```
-
+ 
 ## Requirements
