@@ -1,4 +1,6 @@
 import pandas as pd
+import numpy as np
+import datetime
 import requests
 from bs4 import BeautifulSoup
 
@@ -79,16 +81,46 @@ class AptTransactionReader:
 
         return df
 
-        def Agg(self, df):
+    def DataCollector(self, LAWD_CD, start_date, end_date):
+        '''
+        특정 기간 동안의 데이터 수집 메소드
+        '''
+
+        end_date = datetime.datetime.strptime(end_date, "%Y-%m")
+        end_date = end_date + datetime.timedelta(days=31)
+        end_date = datetime.datetime.strftime(end_date, "%Y-%m")
+
+        ts = pd.date_range(start=start_date, end=end_date, freq='m')
+        date_list = list(ts.strftime('%Y%m'))
+        
+        df = pd.DataFrame()
+        df_sum = pd.DataFrame()
+        for m in date_list:
             
-            df_dong = df.groupby('법정동').agg(
-                {'거래금액':['median', 'mean', 'min', 'max', 'std','count']}).reset_index()
+            print('>>> LAWD_CD :', LAWD_CD, 'DEAL_YMD :', m)
+            
+            DEAL_YMD = m
+            
+            df = self.DataReader(LAWD_CD, DEAL_YMD)
+            df_sum = pd.concat([df_sum, df])
+            
+        df_sum.index = range(len(df_sum))
 
-            df_dong.columns=['법정동', '중앙값', '평균값', '최솟값', '최댓값', '표준편차', '거래량']
+        return df_sum
 
-            # 소수점 이하 첫 째 자리에서 반올림하여 정수형으로 변환 - 평균, 표준편차
-            df_dong['평균값'] = np.round(df_dong['평균값'], 0).astype(int)
-            df_dong['표준편차'] = np.round(df_dong['표준편차'], 0).astype(int)
-            df_dong.index = range(len(df_dong))
+    def Agg(self, df):
+        '''
+        동 별 집계 메소드
+        '''
 
-            return df_dong
+        df_dong = df.groupby('법정동').agg(
+            {'거래금액':['median', 'mean', 'min', 'max', 'std','count']}).reset_index()
+
+        df_dong.columns=['법정동', '중앙값', '평균값', '최솟값', '최댓값', '표준편차', '거래량']
+
+        # 소수점 이하 첫 째 자리에서 반올림하여 정수형으로 변환 - 평균, 표준편차
+        df_dong['평균값'] = np.round(df_dong['평균값'], 0).astype(int)
+        df_dong['표준편차'] = np.round(df_dong['표준편차'], 0).astype(int)
+        df_dong.index = range(len(df_dong))
+
+        return df_dong
