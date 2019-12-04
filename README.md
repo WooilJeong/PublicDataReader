@@ -16,7 +16,7 @@ pip install PublicDataReader
 import PublicDataReader as pdr
 
 serviceKey = "<<YOUR API SERVICE KEY>>"
-Apt = pdr.AptTransaction(serviceKey)
+Apt = pdr.AptTransactionReader(serviceKey)
 
 # 특정 월 데이터 조회
 df_code = Apt.CodeFinder("백현동")                           # 지역코드 : 41135
