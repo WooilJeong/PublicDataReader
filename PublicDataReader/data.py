@@ -1,3 +1,5 @@
 from PublicDataReader.PublicDataPortal.AptTransaction import AptTransactionReader
+from PublicDataReader.PublicDataPortal.AptTransactionDetail import AptDetailReader
 
 AptTransactionReader = AptTransactionReader
+AptDetailReader = AptDetailReader
