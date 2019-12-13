@@ -4,7 +4,7 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
-class Station:
+class AirStation:
     '''
     측정소정보 조회 서비스 클래스
     '''
