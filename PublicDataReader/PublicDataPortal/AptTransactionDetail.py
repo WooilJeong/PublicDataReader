@@ -42,7 +42,6 @@ class AptDetailReader:
         url_2="&DEAL_YMD=" + DEAL_YMD
         url_3="&serviceKey=" + self.serviceKey
         url = url_1+url_2+url_3
-        print(url)
 
         # Get raw data
         result = requests.get(url, verify=False)
