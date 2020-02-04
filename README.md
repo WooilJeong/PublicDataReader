@@ -4,6 +4,13 @@ Open Source Public Data Reader
 ## Overview
 Current Version : 0.0.9
 
+**History**  
+
+- v0.0.9 (2020-02-04)  
+AptDetailReader 메서드 수정 - numOfRows
+인증키 에러 문구 추가 - OpenAPI 인증키가 잘못 초기화 된 경우 경고 문구 출력
+
+
 ## Installation
 ```bash
 pip install PublicDataReader
