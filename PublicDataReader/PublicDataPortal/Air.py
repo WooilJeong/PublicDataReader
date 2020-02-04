@@ -26,35 +26,41 @@ class AirStation:
         url_3=url_2+"&ver="+ver
         url=url_3+"&ServiceKey="+self.serviceKey
                 
-        # Get raw data
-        result = requests.get(url, verify=False)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
 
-        # Parsing
-        xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
 
-        # Filtering
-        te = xmlsoup.findAll("item")
+            # Filtering
+            te = xmlsoup.findAll("item")
 
-        # Creating Pandas Data Frame
-        df = pd.DataFrame()    
-        variables = ['stationName', 'addr', 'tm']
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['stationName', 'addr', 'tm']
 
-        for t in te: 
-            for variable in variables:       
-                try :
-                    globals()[variable] = t.find(variable).text
-                except :
-                    globals()[variable] = np.nan
-            data = pd.DataFrame(
-                                [[stationName, addr, tm]], 
-                                columns = variables
-                                )
-            df = pd.concat([df, data])
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[stationName, addr, tm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
 
-        # Arange Columns
-        df.index = range(len(df))
+            # Arange Columns
+            df.index = range(len(df))
 
-        return df
+            return df
+        
+        except:
+            error_msg = "serviceKey Error"
+            print(error_msg)
+            pass        
     
     def GetList(self, addr, stationName, pageNo, numOfRows):
         '''

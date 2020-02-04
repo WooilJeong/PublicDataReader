@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="PublicDataReader",
-    version="0.0.8",
+    version="0.0.9",
     license='MIT',
     author="Wooil Jeong",
     author_email="wooil@kakao.com",

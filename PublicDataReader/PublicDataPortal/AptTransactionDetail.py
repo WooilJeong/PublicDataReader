@@ -41,56 +41,63 @@ class AptDetailReader:
         url_1="http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?LAWD_CD="+LAWD_CD
         url_2="&DEAL_YMD=" + DEAL_YMD
         url_3="&serviceKey=" + self.serviceKey
-        url = url_1+url_2+url_3
+        url_4="&numOfRows=99999"
+        url = url_1+url_2+url_3+url_4
 
-        # Get raw data
-        result = requests.get(url, verify=False)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
 
-        # Parsing
-        xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
 
-        # Filtering
-        te = xmlsoup.findAll("item")
+            # Filtering
+            te = xmlsoup.findAll("item")
 
-        # Creating Pandas Data Frame
-        df = pd.DataFrame()    
-        variables = ['거래금액','건축년도','년','도로명','도로명건물본번호코드',
-                     '도로명건물부번호코드','도로명시군구코드','도로명일련번호코드',
-                     '도로명지상지하코드','도로명코드','법정동','법정동본번코드',
-                     '법정동부번코드','법정동시군구코드','법정동읍면동코드',
-                     '법정동지번코드','아파트','월','일','전용면적','지번',
-                     '지역코드','층']
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['거래금액','건축년도','년','도로명','도로명건물본번호코드',
+                        '도로명건물부번호코드','도로명시군구코드','도로명일련번호코드',
+                        '도로명지상지하코드','도로명코드','법정동','법정동본번코드',
+                        '법정동부번코드','법정동시군구코드','법정동읍면동코드',
+                        '법정동지번코드','아파트','월','일','전용면적','지번',
+                        '지역코드','층']
 
-        for t in te: 
-            for variable in variables:       
-                try :
-                    globals()[variable] = t.find(variable).text
-                except :
-                    globals()[variable] = np.nan
-            data = pd.DataFrame(
-                                [[거래금액,건축년도,년,도로명,도로명건물본번호코드,도로명건물부번호코드,도로명시군구코드,도로명일련번호코드,
-                                 도로명지상지하코드,도로명코드,법정동,법정동본번코드,법정동부번코드,법정동시군구코드,법정동읍면동코드,
-                                 법정동지번코드,아파트,월,일,전용면적,지번,지역코드,층]], 
-                                columns = variables
-                                )
-            df = pd.concat([df, data])
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[거래금액,건축년도,년,도로명,도로명건물본번호코드,도로명건물부번호코드,도로명시군구코드,도로명일련번호코드,
+                                    도로명지상지하코드,도로명코드,법정동,법정동본번코드,법정동부번코드,법정동시군구코드,법정동읍면동코드,
+                                    법정동지번코드,아파트,월,일,전용면적,지번,지역코드,층]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
 
-        # Feature Engineering
-        df['거래일'] = df['년'] + '-' + df['월'] + '-' + df['일']
-        df['거래일'] = pd.to_datetime(df['거래일'])
-        df['거래금액'] = pd.to_numeric(df['거래금액'].str.replace(',',''))
+            # Feature Engineering
+            df['거래일'] = df['년'] + '-' + df['월'] + '-' + df['일']
+            df['거래일'] = pd.to_datetime(df['거래일'])
+            df['거래금액'] = pd.to_numeric(df['거래금액'].str.replace(',',''))
 
-        # Arange Columns
-        df = df[['지역코드','법정동','거래일','아파트','지번','전용면적','층','건축년도','거래금액',
-                 '법정동본번코드','법정동부번코드','법정동시군구코드','법정동읍면동코드','법정동지번코드',
-                 '도로명','도로명건물본번호코드','도로명건물부번호코드','도로명시군구코드','도로명일련번호코드','도로명지상지하코드','도로명코드',
-               ]]
+            # Arange Columns
+            df = df[['지역코드','법정동','거래일','아파트','지번','전용면적','층','건축년도','거래금액',
+                    '법정동본번코드','법정동부번코드','법정동시군구코드','법정동읍면동코드','법정동지번코드',
+                    '도로명','도로명건물본번호코드','도로명건물부번호코드','도로명시군구코드','도로명일련번호코드','도로명지상지하코드','도로명코드',
+                ]]
+            
+            df = df.sort_values(['법정동','거래일'])
+            df['법정동'] = df['법정동'].str.strip()
+            df.index = range(len(df))
+
+            return df
         
-        df = df.sort_values(['법정동','거래일'])
-        df['법정동'] = df['법정동'].str.strip()
-        df.index = range(len(df))
-
-        return df
+        except:
+            error_msg = "serviceKey Error"
+            print(error_msg)
+            pass
 
     def DataCollector(self, LAWD_CD, start_date, end_date):
         '''
