@@ -2,7 +2,7 @@
 Open Source Public Data Reader
 
 ## Overview
-Current Version : 0.0.8
+Current Version : 0.0.9
 
 ## Installation
 ```bash
