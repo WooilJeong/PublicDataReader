@@ -3,7 +3,9 @@
 ![PNG](./img_logo.png)
 
 
-![](https://img.shields.io/badge/PublicDataReader-0.1.0-blue.svg) Open Source Project PublicDataReader
+![](https://img.shields.io/badge/PublicDataReader-0.1.0-blue.svg) ![](https://img.shields.io/badge/Python-3.7.4-yellow.svg)
+
+## Open Source Project
 
 - **기획/개발/관리: 정우일(Wooil Jeong)**
 - **e-mail: wooil@kakao.com**
