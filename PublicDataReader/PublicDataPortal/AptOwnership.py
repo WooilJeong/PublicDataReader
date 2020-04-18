@@ -1,17 +1,45 @@
+'''
+@ Author : Wooil Jeong
+@ E-mail : wooil@kakao.com
+@ Github : https://github.com/WooilJeong/PublicDataReader
+@ Blog : https://wooiljeong.github.io
+'''
+
+
 import pandas as pd
 import numpy as np
 import datetime
 import requests
 from bs4 import BeautifulSoup
 
-class AptTransactionReader:
-    
+class AptOwnershipReader:
+
     def __init__(self, serviceKey):
         '''
         공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
         '''
         # Open API 서비스 키 초기화
         self.serviceKey = serviceKey
+
+        # ServiceKey 유효성 검사
+        api_url = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSilvTrade?serviceKey=" + self.serviceKey
+
+        # Get raw data
+        result = requests.get(api_url, verify=False)
+
+        # Parsing
+        xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+
+        # Filtering
+        te = xmlsoup.findAll("header")
+
+        if te[0].find('resultCode').text == "00":
+            print(">>> 서비스가 정상 작동합니다.")
+
+        else:
+            print(">>> 서비스키 미등록 오류입니다.")
+
+
 
         # 지역 코드 초기화
         # 법정동 코드 출처 : https://code.go.kr
@@ -20,7 +48,7 @@ class AptTransactionReader:
         code = code.loc[code['폐지여부']=='존재']
         code['법정구코드'] = list(map(lambda a: str(a)[:5], list(code['법정동코드'])))
         self.code = code
-    
+
     def CodeFinder(self, name):
         '''
         국토교통부 실거래가 정보 오픈API는 법정동코드 10자리 중 앞 5자리인 구를 나타내는 지역코드를 사용합니다.
@@ -29,20 +57,20 @@ class AptTransactionReader:
 
         result = self.code[self.code['법정동명'].str.contains(name)][['법정동명','법정구코드']]
         result.index = range(len(result))
-        
+
         return result
 
     def DataReader(self, LAWD_CD, DEAL_YMD):
         '''
-        지역코드와 계약월을 입력받고, 아파트 실거래 정보를 Pandas DataFrame 형식으로 출력합니다.
+        지역코드와 계약월을 입력받고, 아파트 분양권 정보를 Pandas DataFrame 형식으로 출력합니다.
         '''
 
         # URL
-        url_1="http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?LAWD_CD="+LAWD_CD
+        url_1="http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSilvTrade?LAWD_CD="+LAWD_CD
         url_2="&DEAL_YMD=" + DEAL_YMD
         url_3="&serviceKey=" + self.serviceKey
         url = url_1+url_2+url_3
-
+        
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -54,17 +82,17 @@ class AptTransactionReader:
             te = xmlsoup.findAll("item")
 
             # Creating Pandas Data Frame
-            df = pd.DataFrame()    
-            variables = ['법정동','지역코드','아파트','지번','년','월','일','건축년도','전용면적','층','거래금액']
+            df = pd.DataFrame()
+            variables = ['법정동','지역코드','시군구','단지','지번','구분','년','월','일','전용면적','층','거래금액']
 
-            for t in te: 
-                for variable in variables:       
+            for t in te:
+                for variable in variables:
                     try :
                         globals()[variable] = t.find(variable).text
                     except :
                         globals()[variable] = np.nan
                 data = pd.DataFrame(
-                                    [[법정동,지역코드,아파트,지번,년,월,일,건축년도,전용면적,층,거래금액]], 
+                                    [[법정동,지역코드,시군구,단지,지번,구분,년,월,일,전용면적,층,거래금액]],
                                     columns = variables
                                     )
                 df = pd.concat([df, data])
@@ -75,17 +103,34 @@ class AptTransactionReader:
             df['거래금액'] = pd.to_numeric(df['거래금액'].str.replace(',',''))
 
             # Arange Columns
-            df = df[['지역코드','법정동','거래일','아파트','지번','전용면적','층','건축년도','거래금액']]
+            df = df[['지역코드','법정동','거래일','시군구','단지','지번','구분','전용면적','층','거래금액']]
             df = df.sort_values(['법정동','거래일'])
             df['법정동'] = df['법정동'].str.strip()
             df.index = range(len(df))
 
             return df
-        
+
         except:
-            error_msg = "serviceKey Error"
-            print(error_msg)
+
+            # Get raw data
+            result = requests.get(url, verify=False)
+
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+
+            # Filtering
+            te = xmlsoup.findAll("header")
+
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+
             pass
+
 
     def DataCollector(self, LAWD_CD, start_date, end_date):
         '''
@@ -98,25 +143,25 @@ class AptTransactionReader:
 
         ts = pd.date_range(start=start_date, end=end_date, freq='m')
         date_list = list(ts.strftime('%Y%m'))
-        
+
         df = pd.DataFrame()
         df_sum = pd.DataFrame()
         for m in date_list:
-            
+
             print('>>> LAWD_CD :', LAWD_CD, 'DEAL_YMD :', m)
-            
+
             DEAL_YMD = m
-            
+
             df = self.DataReader(LAWD_CD, DEAL_YMD)
             df_sum = pd.concat([df_sum, df])
-            
+
         df_sum.index = range(len(df_sum))
 
         return df_sum
 
     def Agg(self, df):
         '''
-        동 별 집계 메소드
+        동 별 거래금액 집계 메소드
         '''
 
         df_dong = df.groupby('법정동').agg(

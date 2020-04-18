@@ -1,45 +1,65 @@
 # PublicDataReader
-Open Source Public Data Reader
 
-## Overview
-Current Version : 0.0.9
+Open Source Public Data Reader  
 
-**History**  
+- 기획/개발/관리: 정우일(Wooil Jeong)
+- e-mail: wooil@kakao.com
 
-```
-- v0.0.9 (2020-02-04)
-AptDetailReader 메서드 수정 - numOfRows
-인증키 에러 문구 추가 - OpenAPI 인증키가 잘못 초기화 된 경우 경고 문구 출력
-```
+## 소개
 
-## Installation
+- Current Version : 0.1.0
+
+PublicDataReader는 [공공데이터포털](https://data.go.kr)에서 제공하는 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 데이터 수집 라이브러리입니다. 2020년 04월 현재 [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do) 조회 서비스 중 '아파트매매 실거래자료', '아파트매매 실거래 상세 자료', '아파트 전월세 자료' 그리고 '아파트 분양권판매 신고 자료' 조회 서비스에 대한 인터페이스를 제공하고 있습니다. 추후 수요가 높은 Open API 서비스에 대한 인터페이스도 지속적으로 업데이트할 예정입니다.
+
+
+## 설치 방법
 ```bash
 pip install PublicDataReader
 ```
 
-## Usage
-### 국토교통부 실거래가 정보 - 아파트매매 실거래자료
+## 사용 방법
+### (예시) 국토교통부 실거래가 정보 조회 서비스
 
 ```python
+# 라이브러리 임포트
 import PublicDataReader as pdr
 
+# 공공 데이터 포털 Open API 서비스 인증키
 serviceKey = "<<YOUR API SERVICE KEY>>"
-Apt = pdr.AptTransactionReader(serviceKey)
+
+# 아파트매매 실거래자료 조회 인스턴스 생성
+AptTrade = pdr.AptTradeReader(serviceKey)
+# 아파트매매 실거래 상세 자료 조회 인스턴스 생성
+AptTradeDetail = pdr.AptTradeDetailReader(serviceKey)
+# 아파트 전월세 자료 조회 인스턴스 생성
+AptRent = pdr.AptRentReader(serviceKey)
+# 아파트 분양권전매 신고 자료 조회 인스턴스 생성
+AptOwnership = pdr.AptOwnershipReader(serviceKey)
+
 
 # 특정 월 데이터 조회
 df_code = Apt.CodeFinder("백현동")                           # 지역코드 : 41135
-df = Apt.DataReader("41135", "201911")                     # 지역코드(LAWD_CD), 계약월(DEAL_YMD)
 
-# 특정 기간 데이터 조회
-df_sum = Apt.DataCollector("41135", "2019-01", "2019-11")  # 지역코드, 시작 월, 종료 월
+# 데이터 프레임 만들기
+# Function("지역코드 5자리", "계약월(YYYYMM)")
+# 2020년 04월 백현동에 해당하는 자료를 Pandas DataFrame 으로 생성
+df_AptTrade = AptTrade.DataReader("41135", "20204")             # 아파트매매 실거래자료 조회
+df_AptTradeDetail = AptTradeDetail.DataReader("41135", "20204") # 아파트매매 실거래 상세 자료 조회
+df_AptRent = AptRent.DataReader("41135", "20204")               # 아파트 전월세 자료 조회
+df_AptOwnership = AptOwnership.DataReader("41135", "20204")     # 아파트 분양권전매 신고 자료 조회
+
+
+# 기간 설정하여 데이터 프레임 만들기
+# Function("지역코드 5자리", "시작 년월(YYYY-MM)", "종료 년월(YYYY-MM)")
+df_AptTradeSum = AptTrade.DataCollector("41135", "2020-01", "2020-04")
+df_AptTradeDetailSum = AptTradeDetail.DataCollector("41135", "2020-01", "2020-04")
+df_AptRentSum = AptRent.DataCollector("41135", "2020-01", "2020-04")
+df_AptOwnershipSum = AptOwnership.DataCollector("41135", "2020-01", "2020-04")
 
 # 동 별 데이터 집계 (중앙값, 평균값, 최솟값, 최댓값, 표준편차, 거래량)
-df_agg = Apt.Agg(df)
-df_sum_agg = Apt.Agg(df_sum)
+df_agg = Apt.Agg(df_AptTrade)
+df_sum_agg = Apt.Agg(df_AptTradeSum)
 ```
 
 ## Requirements
 python >= 3.7.4
-
-## Contact
-email : wooil@kakao.com

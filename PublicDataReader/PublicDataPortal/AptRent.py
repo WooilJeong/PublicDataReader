@@ -1,17 +1,45 @@
+'''
+@ Author : Wooil Jeong
+@ E-mail : wooil@kakao.com
+@ Github : https://github.com/WooilJeong/PublicDataReader
+@ Blog : https://wooiljeong.github.io
+'''
+
+
 import pandas as pd
 import numpy as np
 import datetime
 import requests
 from bs4 import BeautifulSoup
 
-class AptDetailReader:
-    
+class AptRentReader:
+
     def __init__(self, serviceKey):
         '''
         공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
         '''
         # Open API 서비스 키 초기화
         self.serviceKey = serviceKey
+        
+        # ServiceKey 유효성 검사
+        api_url = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?serviceKey=" + self.serviceKey
+        
+        # Get raw data
+        result = requests.get(api_url, verify=False)
+
+        # Parsing
+        xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+
+        # Filtering
+        te = xmlsoup.findAll("header")
+            
+        if te[0].find('resultCode').text == "00":
+            print(">>> 서비스가 정상 작동합니다.")
+        
+        else:
+            print(">>> 서비스키 미등록 오류입니다.")
+            
+        
 
         # 지역 코드 초기화
         # 법정동 코드 출처 : https://code.go.kr
@@ -20,7 +48,7 @@ class AptDetailReader:
         code = code.loc[code['폐지여부']=='존재']
         code['법정구코드'] = list(map(lambda a: str(a)[:5], list(code['법정동코드'])))
         self.code = code
-    
+
     def CodeFinder(self, name):
         '''
         국토교통부 실거래가 정보 오픈API는 법정동코드 10자리 중 앞 5자리인 구를 나타내는 지역코드를 사용합니다.
@@ -29,20 +57,20 @@ class AptDetailReader:
 
         result = self.code[self.code['법정동명'].str.contains(name)][['법정동명','법정구코드']]
         result.index = range(len(result))
-        
+
         return result
 
     def DataReader(self, LAWD_CD, DEAL_YMD):
         '''
-        지역코드와 계약월을 입력받고, 아파트 실거래 정보를 Pandas DataFrame 형식으로 출력합니다.
+        지역코드와 계약월을 입력받고, 아파트 전월세 정보를 Pandas DataFrame 형식으로 출력합니다.
         '''
 
         # URL
-        url_1="http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?LAWD_CD="+LAWD_CD
+        url_1="http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?LAWD_CD="+LAWD_CD
         url_2="&DEAL_YMD=" + DEAL_YMD
         url_3="&serviceKey=" + self.serviceKey
-        url_4="&numOfRows=99999"
-        url = url_1+url_2+url_3+url_4
+        url = url_1+url_2+url_3
+                
 
         try:
             # Get raw data
@@ -56,13 +84,7 @@ class AptDetailReader:
 
             # Creating Pandas Data Frame
             df = pd.DataFrame()    
-            variables = ['거래금액','건축년도','년','도로명','도로명건물본번호코드',
-                        '도로명건물부번호코드','도로명시군구코드','도로명일련번호코드',
-                        '도로명지상지하코드','도로명코드','법정동','법정동본번코드',
-                        '법정동부번코드','법정동시군구코드','법정동읍면동코드',
-                        '법정동지번코드','아파트','월','일','전용면적','지번',
-                        '지역코드','층']
-
+            variables = ['법정동','지역코드','아파트','지번','년','월','일','건축년도','전용면적','층','보증금액','월세금액']
             for t in te: 
                 for variable in variables:       
                     try :
@@ -70,9 +92,7 @@ class AptDetailReader:
                     except :
                         globals()[variable] = np.nan
                 data = pd.DataFrame(
-                                    [[거래금액,건축년도,년,도로명,도로명건물본번호코드,도로명건물부번호코드,도로명시군구코드,도로명일련번호코드,
-                                    도로명지상지하코드,도로명코드,법정동,법정동본번코드,법정동부번코드,법정동시군구코드,법정동읍면동코드,
-                                    법정동지번코드,아파트,월,일,전용면적,지번,지역코드,층]], 
+                                    [[법정동,지역코드,아파트,지번,년,월,일,건축년도,전용면적,층,보증금액,월세금액]], 
                                     columns = variables
                                     )
                 df = pd.concat([df, data])
@@ -80,24 +100,38 @@ class AptDetailReader:
             # Feature Engineering
             df['거래일'] = df['년'] + '-' + df['월'] + '-' + df['일']
             df['거래일'] = pd.to_datetime(df['거래일'])
-            df['거래금액'] = pd.to_numeric(df['거래금액'].str.replace(',',''))
+            df['보증금액'] = pd.to_numeric(df['보증금액'].str.replace(',',''))
+            df['월세금액'] = pd.to_numeric(df['월세금액'].str.replace(',',''))
 
             # Arange Columns
-            df = df[['지역코드','법정동','거래일','아파트','지번','전용면적','층','건축년도','거래금액',
-                    '법정동본번코드','법정동부번코드','법정동시군구코드','법정동읍면동코드','법정동지번코드',
-                    '도로명','도로명건물본번호코드','도로명건물부번호코드','도로명시군구코드','도로명일련번호코드','도로명지상지하코드','도로명코드',
-                ]]
-            
+            df = df[['지역코드','법정동','거래일','아파트','지번','전용면적','층','건축년도','보증금액','월세금액']]
             df = df.sort_values(['법정동','거래일'])
             df['법정동'] = df['법정동'].str.strip()
             df.index = range(len(df))
 
             return df
-        
+
         except:
-            error_msg = "serviceKey Error"
-            print(error_msg)
+
+            # Get raw data
+            result = requests.get(url, verify=False)
+
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+
+            # Filtering
+            te = xmlsoup.findAll("header")
+            
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+                
             pass
+        
 
     def DataCollector(self, LAWD_CD, start_date, end_date):
         '''
@@ -110,29 +144,29 @@ class AptDetailReader:
 
         ts = pd.date_range(start=start_date, end=end_date, freq='m')
         date_list = list(ts.strftime('%Y%m'))
-        
+
         df = pd.DataFrame()
         df_sum = pd.DataFrame()
         for m in date_list:
-            
+
             print('>>> LAWD_CD :', LAWD_CD, 'DEAL_YMD :', m)
-            
+
             DEAL_YMD = m
-            
+
             df = self.DataReader(LAWD_CD, DEAL_YMD)
             df_sum = pd.concat([df_sum, df])
-            
+
         df_sum.index = range(len(df_sum))
 
         return df_sum
 
     def Agg(self, df):
         '''
-        동 별 집계 메소드
+        동 별 보증금액 집계 메소드
         '''
 
         df_dong = df.groupby('법정동').agg(
-            {'거래금액':['median', 'mean', 'min', 'max', 'std','count']}).reset_index()
+            {'보증금액':['median', 'mean', 'min', 'max', 'std','count']}).reset_index()
 
         df_dong.columns=['법정동', '중앙값', '평균값', '최솟값', '최댓값', '표준편차', '거래량']
 
