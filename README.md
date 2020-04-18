@@ -1,6 +1,9 @@
 # PublicDataReader
 
-Open Source Public Data Reader  
+![PNG](./img_logo.png){: .align-center}
+
+![](https://img.shields.io/badge/PublicDataReader-0.1.0-blue.svg)  
+Open Source Project PublicDataReader  
 
 - 기획/개발/관리: 정우일(Wooil Jeong)
 - e-mail: wooil@kakao.com
