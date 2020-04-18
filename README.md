@@ -45,25 +45,26 @@ AptOwnership = pdr.AptOwnershipReader(serviceKey)
 
 
 # 특정 월 데이터 조회
-df_code = Apt.CodeFinder("백현동")                           # 지역코드 : 41135
+df_code = AptTrade.CodeFinder("백현동")                           # 지역코드 : 41135
+df_code.head()
 
 # 데이터 프레임 만들기
 # Function("지역코드 5자리", "계약월(YYYYMM)")
 # 2020년 04월 백현동에 해당하는 자료를 Pandas DataFrame 으로 생성
-df_AptTrade = AptTrade.DataReader("41135", "20204")             # 아파트매매 실거래자료 조회
-df_AptTradeDetail = AptTradeDetail.DataReader("41135", "20204") # 아파트매매 실거래 상세 자료 조회
-df_AptRent = AptRent.DataReader("41135", "20204")               # 아파트 전월세 자료 조회
-df_AptOwnership = AptOwnership.DataReader("41135", "20204")     # 아파트 분양권전매 신고 자료 조회
+df_AptTrade = AptTrade.DataReader("41135", "202003")             # 아파트매매 실거래자료 조회
+df_AptTradeDetail = AptTradeDetail.DataReader("41135", "202003") # 아파트매매 실거래 상세 자료 조회
+df_AptRent = AptRent.DataReader("41135", "202003")               # 아파트 전월세 자료 조회
+df_AptOwnership = AptOwnership.DataReader("41135", "202003")     # 아파트 분양권전매 신고 자료 조회
 
 
 # 기간 설정하여 데이터 프레임 만들기
 # Function("지역코드 5자리", "시작 년월(YYYY-MM)", "종료 년월(YYYY-MM)")
-df_AptTradeSum = AptTrade.DataCollector("41135", "2020-01", "2020-04")
-df_AptTradeDetailSum = AptTradeDetail.DataCollector("41135", "2020-01", "2020-04")
-df_AptRentSum = AptRent.DataCollector("41135", "2020-01", "2020-04")
-df_AptOwnershipSum = AptOwnership.DataCollector("41135", "2020-01", "2020-04")
+df_AptTradeSum = AptTrade.DataCollector("41135", "2020-01", "2020-03")
+df_AptTradeDetailSum = AptTradeDetail.DataCollector("41135", "2020-01", "2020-03")
+df_AptRentSum = AptRent.DataCollector("41135", "2020-01", "2020-03")
+df_AptOwnershipSum = AptOwnership.DataCollector("41135", "2020-01", "2020-03")
 
 # 동 별 데이터 집계 (중앙값, 평균값, 최솟값, 최댓값, 표준편차, 거래량)
-df_agg = Apt.Agg(df_AptTrade)
-df_sum_agg = Apt.Agg(df_AptTradeSum)
+df_agg = AptTrade.Agg(df_AptTrade)
+df_sum_agg = AptTrade.Agg(df_AptTradeSum)
 ```
