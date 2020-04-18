@@ -3,21 +3,22 @@
 ![PNG](./img_logo.png)
 
 
-![](https://img.shields.io/badge/PublicDataReader-0.1.0-blue.svg) ![](https://img.shields.io/badge/Python-3.7.4-yellow.svg)
-
 ## Open Source Project
 
 - **기획/개발/관리: 정우일(Wooil Jeong)**
 - **e-mail: wooil@kakao.com**
 
+
 ## 소개
 
-- **Current Version : 0.1.0**
+- 최신 버전: ![](https://img.shields.io/badge/PublicDataReader-0.1.0-blue.svg)  
+- 요구 사항: ![](https://img.shields.io/badge/Python-3.7.4-yellow.svg) ![](https://img.shields.io/badge/Pandas-0.25.3-red.svg)
 
 PublicDataReader는 [공공데이터포털](https://data.go.kr)에서 제공하는 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 데이터 수집 라이브러리입니다. 2020년 04월 현재 [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do) 조회 서비스 중 '아파트매매 실거래자료', '아파트매매 실거래 상세 자료', '아파트 전월세 자료' 그리고 '아파트 분양권판매 신고 자료' 조회 서비스에 대한 인터페이스를 제공하고 있습니다. 추후 수요가 높은 Open API 서비스에 대한 인터페이스도 지속적으로 업데이트할 예정입니다.
 
 
 ## 설치 방법
+
 ```bash
 pip install PublicDataReader
 ```
@@ -65,6 +66,3 @@ df_AptOwnershipSum = AptOwnership.DataCollector("41135", "2020-01", "2020-04")
 df_agg = Apt.Agg(df_AptTrade)
 df_sum_agg = Apt.Agg(df_AptTradeSum)
 ```
-
-## Requirements
-python >= 3.7.4
