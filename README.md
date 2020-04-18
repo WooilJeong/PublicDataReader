@@ -27,8 +27,9 @@ pip install PublicDataReader
 ### (예시) 국토교통부 실거래가 정보 조회 서비스
 
 ```python
-# 라이브러리 임포트
+# 라이브러리 임포트 및 버전 확인
 import PublicDataReader as pdr
+print(pdr.__version__)
 
 # 공공 데이터 포털 Open API 서비스 인증키
 serviceKey = "<<YOUR API SERVICE KEY>>"
