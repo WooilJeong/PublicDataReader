@@ -21,18 +21,20 @@
 
 ## 사용 가능한 서비스
 
-- (AptTradeReader) 아파트매매 실거래자료 조회
-- (AptTradeDetailReader) 아파트매매 실거래 상세 자료 조회
-- (AptRentReader) 아파트 전월세 자료 조회
-- (AptOwnershipReader) 아파트 분양권 전매 신고 자료 조회
-- (OffiTradeReader) 오피스텔 매매 신고 조회
-- (OffiRentReader) 오피스텔 전월세 신고 조회
-- (RHTradeReader) 연립다세대 매매 실거래자료 조회
-- (RHRentReader) 연립다세대 전월세 실거래자료 조회
-- (DHTradeReader) 단독/다가구 매매 실거래 조회
-- (DHRentReader) 단독/다가구 전월세 자료 조회
-- (LandTradeReader) 토지 매매 신고 조회
-- (BizTradeReader) 상업업무용 부동산 매매 신고 자료 조회
+기능              | 서비스
+---------------- | --------------------
+AptTradeReader | 아파트매매 실거래자료 조회
+AptTradeDetailReader | 아파트매매 실거래 상세 자료 조회
+AptRentReader | 아파트 전월세 자료 조회
+AptOwnershipReader | 아파트 분양권 전매 신고 자료 조회
+OffiTradeReader | 오피스텔 매매 신고 조회
+OffiRentReader | 오피스텔 전월세 신고 조회
+RHTradeReader | 연립다세대 매매 실거래자료 조회
+RHRentReader | 연립다세대 전월세 실거래자료 조회
+DHTradeReader | 단독/다가구 매매 실거래 조회
+DHRentReader | 단독/다가구 전월세 자료 조회
+LandTradeReader | 토지 매매 신고 조회
+BizTradeReader | 상업업무용 부동산 매매 신고 자료 조회
 
 
 
