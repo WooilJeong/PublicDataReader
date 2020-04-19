@@ -12,7 +12,7 @@ import datetime
 import requests
 from bs4 import BeautifulSoup
 
-class AptTradeDetailReader:
+class LandTradeReader:
     
     def __init__(self, serviceKey):
         '''
@@ -22,7 +22,7 @@ class AptTradeDetailReader:
         self.serviceKey = serviceKey
 
         # ServiceKey 유효성 검사
-        api_url = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey=" + self.serviceKey
+        api_url = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade?serviceKey=" + self.serviceKey
         
         # Get raw data
         result = requests.get(api_url, verify=False)
@@ -38,7 +38,7 @@ class AptTradeDetailReader:
         
         else:
             print(">>> 서비스키 미등록 오류입니다.")
-
+            
 
         # 지역 코드 초기화
         # 법정동 코드 출처 : https://code.go.kr
@@ -61,15 +61,14 @@ class AptTradeDetailReader:
 
     def DataReader(self, LAWD_CD, DEAL_YMD):
         '''
-        지역코드와 계약월을 입력받고, 아파트 실거래 정보를 Pandas DataFrame 형식으로 출력합니다.
+        지역코드와 계약월을 입력받고, 관련 자료를 Pandas DataFrame 형식으로 출력합니다.
         '''
 
         # URL
-        url_1="http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?LAWD_CD="+LAWD_CD
+        url_1="http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade?LAWD_CD="+LAWD_CD
         url_2="&DEAL_YMD=" + DEAL_YMD
         url_3="&serviceKey=" + self.serviceKey
-        url_4="&numOfRows=99999"
-        url = url_1+url_2+url_3+url_4
+        url = url_1+url_2+url_3
 
         try:
             # Get raw data
@@ -83,13 +82,7 @@ class AptTradeDetailReader:
 
             # Creating Pandas Data Frame
             df = pd.DataFrame()    
-            variables = ['거래금액','건축년도','년','도로명','도로명건물본번호코드',
-                        '도로명건물부번호코드','도로명시군구코드','도로명일련번호코드',
-                        '도로명지상지하코드','도로명코드','법정동','법정동본번코드',
-                        '법정동부번코드','법정동시군구코드','법정동읍면동코드',
-                        '법정동지번코드','아파트','월','일','전용면적','지번',
-                        '지역코드','층']
-
+            variables = ['법정동','지역코드','시군구','용도지역','지목','년','월','일','지분거래구분','거래면적','거래금액']
             for t in te: 
                 for variable in variables:       
                     try :
@@ -97,20 +90,14 @@ class AptTradeDetailReader:
                     except :
                         globals()[variable] = np.nan
                 data = pd.DataFrame(
-                                    [[거래금액,건축년도,년,도로명,도로명건물본번호코드,도로명건물부번호코드,도로명시군구코드,도로명일련번호코드,
-                                    도로명지상지하코드,도로명코드,법정동,법정동본번코드,법정동부번코드,법정동시군구코드,법정동읍면동코드,
-                                    법정동지번코드,아파트,월,일,전용면적,지번,지역코드,층]], 
+                                    [[법정동,지역코드,시군구,용도지역,지목,년,월,일,지분거래구분,거래면적,거래금액]], 
                                     columns = variables
                                     )
                 df = pd.concat([df, data])
 
             # Set Columns
-            colNames = [
-                        '지역코드','법정동','거래일','아파트','지번','전용면적','층','건축년도','거래금액',
-                        '법정동본번코드','법정동부번코드','법정동시군구코드','법정동읍면동코드','법정동지번코드',
-                        '도로명','도로명건물본번호코드','도로명건물부번호코드','도로명시군구코드','도로명일련번호코드',
-                        '도로명지상지하코드','도로명코드'
-                       ]
+            colNames = ['지역코드','법정동','거래일','시군구','용도지역','지목','지분거래구분','거래면적','거래금액']
+
             # Feature Engineering
             try:
                 if len(df['년']!=0) & len(df['월']!=0) & len(df['일']!=0):
@@ -126,7 +113,6 @@ class AptTradeDetailReader:
 
             # Arange Columns
             df = df[colNames]
-            
             df = df.sort_values(['법정동','거래일'])
             df['법정동'] = df['법정동'].str.strip()
             df.index = range(len(df))

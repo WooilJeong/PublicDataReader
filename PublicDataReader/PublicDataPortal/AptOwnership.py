@@ -70,7 +70,7 @@ class AptOwnershipReader:
         url_2="&DEAL_YMD=" + DEAL_YMD
         url_3="&serviceKey=" + self.serviceKey
         url = url_1+url_2+url_3
-        
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -96,14 +96,24 @@ class AptOwnershipReader:
                                     columns = variables
                                     )
                 df = pd.concat([df, data])
+            
+            # Set Columns
+            colNames = ['지역코드','법정동','거래일','시군구','단지','지번','구분','전용면적','층','거래금액']
 
             # Feature Engineering
-            df['거래일'] = df['년'] + '-' + df['월'] + '-' + df['일']
-            df['거래일'] = pd.to_datetime(df['거래일'])
-            df['거래금액'] = pd.to_numeric(df['거래금액'].str.replace(',',''))
+            try:
+                if len(df['년']!=0) & len(df['월']!=0) & len(df['일']!=0):
+
+                    df['거래일'] = df['년'] + '-' + df['월'] + '-' + df['일']
+                    df['거래일'] = pd.to_datetime(df['거래일'])
+                    df['거래금액'] = pd.to_numeric(df['거래금액'].str.replace(',',''))
+
+            except:
+                df = pd.DataFrame(columns=colNames)
+                print("조회할 자료가 없습니다.")
 
             # Arange Columns
-            df = df[['지역코드','법정동','거래일','시군구','단지','지번','구분','전용면적','층','거래금액']]
+            df = df[colNames]
             df = df.sort_values(['법정동','거래일'])
             df['법정동'] = df['법정동'].str.strip()
             df.index = range(len(df))
@@ -158,20 +168,3 @@ class AptOwnershipReader:
         df_sum.index = range(len(df_sum))
 
         return df_sum
-
-    def Agg(self, df):
-        '''
-        동 별 거래금액 집계 메소드
-        '''
-
-        df_dong = df.groupby('법정동').agg(
-            {'거래금액':['median', 'mean', 'min', 'max', 'std','count']}).reset_index()
-
-        df_dong.columns=['법정동', '중앙값', '평균값', '최솟값', '최댓값', '표준편차', '거래량']
-
-        # 소수점 이하 첫 째 자리에서 반올림하여 정수형으로 변환 - 평균, 표준편차
-        df_dong['평균값'] = np.round(df_dong['평균값'], 0).astype(int)
-        df_dong['표준편차'] = np.round(df_dong['표준편차'], 0).astype(int)
-        df_dong.index = range(len(df_dong))
-
-        return df_dong

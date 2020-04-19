@@ -63,8 +63,4 @@ df_AptTradeSum = AptTrade.DataCollector("41135", "2020-01", "2020-03")
 df_AptTradeDetailSum = AptTradeDetail.DataCollector("41135", "2020-01", "2020-03")
 df_AptRentSum = AptRent.DataCollector("41135", "2020-01", "2020-03")
 df_AptOwnershipSum = AptOwnership.DataCollector("41135", "2020-01", "2020-03")
-
-# 동 별 데이터 집계 (중앙값, 평균값, 최솟값, 최댓값, 표준편차, 거래량)
-df_agg = AptTrade.Agg(df_AptTrade)
-df_sum_agg = AptTrade.Agg(df_AptTradeSum)
 ```
