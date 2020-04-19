@@ -98,7 +98,7 @@ df_LandTrade = LandTrade.DataReader("41135", "202003")           # 토지 매매
 df_BizTrade = BizTrade.DataReader("41135", "202003")             # 상업업무용 부동산 매매 신고 자료 조회
 
 
-# 4. 지역, 기간 별 데이터 프레임 만들기
+# 6. 지역, 기간 별 데이터 프레임 만들기
 # Function("지역코드 5자리", "시작 년월(YYYY-MM)", "종료 년월(YYYY-MM)")
 df_AptTradeSum = AptTrade.DataCollector("41135", "2020-01", "2020-03")   # 기타 서비스 함수 동일
 
