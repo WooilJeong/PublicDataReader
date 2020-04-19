@@ -7,7 +7,8 @@
 
 - **기획/개발/관리: 정우일(Wooil Jeong)**
 - **e-mail: wooil@kakao.com**
-
+- **사용 설명서: [PublicDataReader - 부동산 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_01/)**
+- **코랩 실습 코드: [Colab](https://colab.research.google.com/drive/1pFtMFr_te9T_maHjee8Sd8Yq9rTrE-4F)**
 
 ## 소개
 
