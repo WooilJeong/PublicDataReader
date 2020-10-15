@@ -68,7 +68,8 @@ class AptTradeReader:
         url_1="http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?LAWD_CD="+LAWD_CD
         url_2="&DEAL_YMD=" + DEAL_YMD
         url_3="&serviceKey=" + self.serviceKey
-        url = url_1+url_2+url_3
+        url_4="&numOfRows=99999"
+        url = url_1+url_2+url_3+url_4
 
         try:
             # Get raw data
