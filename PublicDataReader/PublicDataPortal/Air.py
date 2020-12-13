@@ -3,6 +3,7 @@ import numpy as np
 import datetime
 import requests
 from bs4 import BeautifulSoup
+from PublicDataReader.PublicDataPortal.__init__ import *
 
 class AirStation:
     '''
@@ -10,6 +11,7 @@ class AirStation:
     '''
     
     def __init__(self, serviceKey):
+        super().__init__(serviceKey)
         '''
         서비스키 초기화
         '''
@@ -151,6 +153,7 @@ class AirStation:
 class AirDataRT:
     
     def __init__(self, serviceKey):
+        super().__init__(serviceKey)
         '''
         서비스키 초기화
         '''
@@ -209,6 +212,7 @@ class AirDataRT:
 class AirData:
     
     def __init__(self, serviceKey):
+        super().__init__(serviceKey)
         '''
         서비스키 초기화
         '''
