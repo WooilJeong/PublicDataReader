@@ -27,7 +27,7 @@ class AirStation:
         url_2=url_1+"&tmY="+tmY
         url_3=url_2+"&ver="+ver
         url=url_3+"&ServiceKey="+self.serviceKey
-                
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -58,11 +58,10 @@ class AirStation:
             df.index = range(len(df))
 
             return df
-        
+
         except:
             error_msg = "serviceKey Error"
-            print(error_msg)
-            pass        
+            print(error_msg)        
     
     def GetList(self, addr, stationName, pageNo, numOfRows):
         '''
