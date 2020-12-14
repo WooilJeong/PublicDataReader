@@ -99,13 +99,13 @@ class AptTradeDetailReader(Common):
 
             # Arange Columns
             df = df[colNames]
-            
+
             df = df.sort_values(['법정동','거래일'])
             df['법정동'] = df['법정동'].str.strip()
             df.index = range(len(df))
 
             return df
-        
+
         except:
 
             # Get raw data
@@ -116,16 +116,14 @@ class AptTradeDetailReader(Common):
 
             # Filtering
             te = xmlsoup.findAll("header")
-            
+
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find('resultCode').text == "00":
                 print(">>> Python Logic Error. e-mail : wooil@kakao.com")
-            
+
             # Open API 서비스 제공처 오류
             else:
                 print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
-                
-            pass
 
 
     def DataCollector(self, LAWD_CD, start_date, end_date):

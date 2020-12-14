@@ -69,7 +69,7 @@ class AptOwnershipReader(Common):
                                     columns = variables
                                     )
                 df = pd.concat([df, data])
-            
+
             # Set Columns
             colNames = ['지역코드','법정동','거래일','시군구','단지','지번','구분','전용면적','층','거래금액']
 
@@ -111,8 +111,6 @@ class AptOwnershipReader(Common):
             # Open API 서비스 제공처 오류
             else:
                 print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
-
-            pass
 
 
     def DataCollector(self, LAWD_CD, start_date, end_date):

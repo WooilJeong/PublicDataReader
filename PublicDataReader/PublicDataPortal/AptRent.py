@@ -42,7 +42,7 @@ class AptRentReader(Common):
         url_2="&DEAL_YMD=" + DEAL_YMD
         url_3="&serviceKey=" + self.serviceKey
         url = url_1+url_2+url_3
-                
+
 
         try:
             # Get raw data
@@ -103,16 +103,14 @@ class AptRentReader(Common):
 
             # Filtering
             te = xmlsoup.findAll("header")
-            
+
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find('resultCode').text == "00":
                 print(">>> Python Logic Error. e-mail : wooil@kakao.com")
-            
+
             # Open API 서비스 제공처 오류
             else:
                 print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
-                
-            pass
         
 
     def DataCollector(self, LAWD_CD, start_date, end_date):
