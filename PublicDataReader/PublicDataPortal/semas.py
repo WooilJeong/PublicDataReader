@@ -107,7 +107,6 @@ class StoreInfo:
         입력: 반경(m), 중심점 경도(WGS84 좌표계), 중심점 위도(WGS84 좌표계)
         '''
         url = f'{self.urlBase}storeZoneInRadius?ServiceKey={self.serviceKey}&radius={radius}&cx={cx}&cy={cy}'
-
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -154,28 +153,245 @@ class StoreInfo:
         
         return df
     
-#     def storeZoneInRectangle(self):
-#         '''
-#         3. 사각형내 상권조회
-#         '''
+
+    def storeZoneInRectangle(self, minx, miny, maxx, maxy):
+        '''
+        3. 사각형내 상권조회
+        입력: 서쪽 경도, 남쪽 위도, 동쪽 경도, 북쪽 위도 (WGS84 좌표계)
+        '''
+        url = f'{self.urlBase}storeZoneInRectangle?ServiceKey={self.serviceKey}&minx={minx}&miny={miny}&maxx={maxx}&maxy={maxy}'
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['trarNo','mainTrarNm','ctprvnCd','ctprvnNm','signguCd','signguNm','trarArea','coordNum','coords','stdrDt']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[trarNo,mainTrarNm,ctprvnCd,ctprvnNm,signguCd,signguNm,trarArea,coordNum,coords,stdrDt]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            # Set col names
+            df.columns = variables
+            
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            elif te[0].find('resultCode').text == "03":
+                print(">>> NODATA_ERROR")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
         
+        return df        
         
-#     def storeZoneInAdmi(self):
-#         '''
-#         4. 행정구역 단위 상권조회        
-#         '''
+    def storeZoneInAdmi(self, divId, key):
+        '''
+        4. 행정구역 단위 상권조회
+        입력: 구분ID, 행정구역코드
+        구분ID - 시도(ctprvnCd), 시군구(signguCd), 행정동(adongCd)
+        행정구역코드 - 시도(시도코드값), 시군구(시군구코드값), 행정동(행정동코드값)
+        '''
+        url = f'{self.urlBase}storeZoneInAdmi?ServiceKey={self.serviceKey}&divId={divId}&key={key}'
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['trarNo','mainTrarNm','ctprvnCd','ctprvnNm','signguCd','signguNm','trarArea','coordNum','coords','stdrDt']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[trarNo,mainTrarNm,ctprvnCd,ctprvnNm,signguCd,signguNm,trarArea,coordNum,coords,stdrDt]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            # Set col names
+            df.columns = variables
+            
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            elif te[0].find('resultCode').text == "03":
+                print(">>> NODATA_ERROR")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
         
+        return df
+    
+
+    def storeOne(self, key):
+        '''
+        5. 단일 상가업소 조회
+        입력: 상가업소번호
+        '''
+        url = f'{self.urlBase}storeOne?ServiceKey={self.serviceKey}&key={key}'
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['bizesId','bizesNm','brchNm','indsLclsCd','indsLclsNm',
+                         'indsMclsCd','indsMclsNm','indsSclsCd','indsSclsNm','ksicCd',
+                         'ksicNm','ctprvnCd','ctprvnNm','signguCd','signguNm',
+                         'adongCd','adongNm','ldongCd','ldongNm','lnoCd',
+                         'plotSctCd','plotSctNm','lnoMnno','lnoSlno','lnoAdr',
+                         'rdnmCd','rdnm','bldMnno','bldSlno','bldMngNo',
+                         'bldNm','rdnmAdr','oldZipcd','newZipcd','dongNo',
+                         'flrNo','hoNo','lon','lat']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[bizesId,bizesNm,brchNm,indsLclsCd,indsLclsNm,
+                                     indsMclsCd,indsMclsNm,indsSclsCd,indsSclsNm,ksicCd,
+                                     ksicNm,ctprvnCd,ctprvnNm,signguCd,signguNm,
+                                     adongCd,adongNm,ldongCd,ldongNm,lnoCd,
+                                     plotSctCd,plotSctNm,lnoMnno,lnoSlno,lnoAdr,
+                                     rdnmCd,rdnm,bldMnno,bldSlno,bldMngNo,
+                                     bldNm,rdnmAdr,oldZipcd,newZipcd,dongNo,
+                                     flrNo,hoNo,lon,lat]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            # Set col names
+            df.columns = variables
+            
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            elif te[0].find('resultCode').text == "03":
+                print(">>> NODATA_ERROR")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
         
-#     def storeOne(self):
-#         '''
-#         5. 단일 상가업소 조회
-#         '''
+        return df        
         
+    def storeListInBuilding(self,indsLclsCd, indsMclsCd=None, indsSclsCd=None, numOfRows=1000):
+        '''
+        6. 건물단위 상가업소 조회
+        입력: 건물관리번호, 상권업종대분류코드, 상권업종중분류코드, 상권업종소분류코드, 페이지당 건수(최대 1000)
+        '''
+        url = f'{self.urlBase}storeListInBuilding?ServiceKey={self.serviceKey}&indsLclsCd={indsLclsCd}&indsMclsCd={indsMclsCd}&indsSclsCd={indsSclsCd}&numOfRows={numOfRows}'
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['bizesId','bizesNm','brchNm','indsLclsCd','indsLclsNm',
+                         'indsMclsCd','indsMclsNm','indsSclsCd','indsSclsNm','ksicCd',
+                         'ksicNm','ctprvnCd','ctprvnNm','signguCd','signguNm',
+                         'adongCd','adongNm','ldongCd','ldongNm','lnoCd',
+                         'plotSctCd','plotSctNm','lnoMnno','lnoSlno','lnoAdr',
+                         'rdnmCd','rdnm','bldMnno','bldSlno','bldMngNo',
+                         'bldNm','rdnmAdr','oldZipcd','newZipcd','dongNo',
+                         'flrNo','hoNo','lon','lat']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[bizesId,bizesNm,brchNm,indsLclsCd,indsLclsNm,
+                                     indsMclsCd,indsMclsNm,indsSclsCd,indsSclsNm,ksicCd,
+                                     ksicNm,ctprvnCd,ctprvnNm,signguCd,signguNm,
+                                     adongCd,adongNm,ldongCd,ldongNm,lnoCd,
+                                     plotSctCd,plotSctNm,lnoMnno,lnoSlno,lnoAdr,
+                                     rdnmCd,rdnm,bldMnno,bldSlno,bldMngNo,
+                                     bldNm,rdnmAdr,oldZipcd,newZipcd,dongNo,
+                                     flrNo,hoNo,lon,lat]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            # Set col names
+            df.columns = variables
+            
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            elif te[0].find('resultCode').text == "03":
+                print(">>> NODATA_ERROR")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
         
-#     def storeListInBuilding(self):
-#         '''
-#         6. 건물단위 상가업소 조회
-#         '''
+        return df        
         
         
 #     def storeListInPnu(self):
@@ -278,4 +494,5 @@ class StoreInfo:
 #         '''
 #         23. 상권정보 업종 소분류 조회
 #         '''
-
+        
+        
