@@ -19,15 +19,14 @@ semas(Small Enterprise And Market Service)
     13. storeListInUpjong: 업종별 상가업소 조회
     14. storeListByDate: 수정일자기준 상가업소 조회
     15. reqStoreModify: 상가업소정보 변경요청
-    16. storeStatsUpjongInAdmi: 행정구역내 업종별 상가업소 통계
-    17. storeStatsUpjongInBuilding: 건물내 업종별 상가업소 통계
-    18. storeStatsUpjongInRadius: 반경내 업종별 상가업소 통계
-    19. storeStatsUpjongInRectangle: 사각형내 업종별 상가업소 통계
-    20. storeStatsUpjongInPolygon: 다각형내 업종별 상가업소 통계
+    16. (보류) storeStatsUpjongInAdmi: 행정구역내 업종별 상가업소 통계
+    17. (보류) storeStatsUpjongInBuilding: 건물내 업종별 상가업소 통계
+    18. (보류) storeStatsUpjongInRadius: 반경내 업종별 상가업소 통계
+    19. (보류) storeStatsUpjongInRectangle: 사각형내 업종별 상가업소 통계
+    20. (보류) storeStatsUpjongInPolygon: 다각형내 업종별 상가업소 통계
     21. largeUpjongList: 상권정보 업종 대분류 조회
     22. middleUpjongList: 상권정보 업종 중분류 조회
     23. smallUpjongList: 상권정보 업종 소분류 조회
-
 '''
 
 import pandas as pd
@@ -1204,10 +1203,60 @@ class StoreInfo:
         return df
 
         
-#     def reqStoreModify(self):
-#         '''
-#         15. 상가업소정보 변경요청
-#         '''
+    def reqStoreModify(self,bizresId,bizresNm,brchNm,indsSclsCd,adongCd,lnoAdr,rdnmAdr,bldNm,dongNo,flrNo,hoNo,opbizDt,clbizDt,etcChgReqCnts):
+        '''
+        15. 상가업소정보 변경요청
+        입력: 상가업소번호, 상호명, 지점명, 상권업종소분류코드, 행정동코드, 지번주소, 도로명주소, 건물명, 동정보, 층정보, 호정보, 개업일자, 폐업일자, 기타입력사항
+        '''
+        url = f'{self.urlBase}reqStoreModify?ServiceKey={self.serviceKey}&bizresId={bizresId}&bizresNm={bizresNm}&brchNm={brchNm}&indsSclsCd={indsSclsCd}&adongCd={adongCd}&lnoAdr={lnoAdr}&rdnmAdr={rdnmAdr}&bldNm={bldNm}&dongNo={dongNo}&flrNo={flrNo}&hoNo={hoNo}&opbizDt={opbizDt}&clbizDt={clbizDt}&etcChgReqCnts={etcChgReqCnts}'
+
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['bizresId', 'result', 'message']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[bizresId, result, message]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            # Set col names
+            df.columns = variables
+            # Set Index
+            df.index = range(len(df))
+
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            elif te[0].find('resultCode').text == "03":
+                print(">>> NODATA_ERROR")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+        
+        return df
 
 
 #     def storeStatsUpjongInAdmi(self, divId, key, indsLclsCd_=None, indsMclsCd_=None, indsSclsCd_=None):
