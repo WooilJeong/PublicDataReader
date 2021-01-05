@@ -92,14 +92,17 @@ class TransInfo:
         
         return df
 
-    def CardBusTimeNew(self, start_index, end_index, use_mon):
+    def CardBusTimeNew(self, start_index, end_index, use_mon, bus_no=None):
         """
         버스 승하차 정보 조회
         입력: 시작 인덱스, 끝 인덱스, 조회 년월
         조건: 1회 1000건 제한        
         """
-
-        url = f"{self.urlBase}{self.serviceKey}/xml/CardBusTimeNew/{start_index}/{end_index}/{use_mon}"
+        
+        if bus_no == None:
+            url = f"{self.urlBase}{self.serviceKey}/xml/CardBusTimeNew/{start_index}/{end_index}/{use_mon}"
+        else:
+            url = f"{self.urlBase}{self.serviceKey}/xml/CardBusTimeNew/{start_index}/{end_index}/{use_mon}/{bus_no}"
 
         try:
             # Get raw data
