@@ -129,6 +129,10 @@ class TransInfo:
             df.columns = variables
             # Set Index
             df.index = range(len(df))
+            
+            # 숫자 형 변환
+            cols = df.columns.drop(['USE_MON','BUS_ROUTE_NO','BUS_ROUTE_NM','STND_BSST_ID','BSST_ARS_NO','BUS_STA_NM','WORK_DT'])
+            df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
          
         except:
             # Get raw data
