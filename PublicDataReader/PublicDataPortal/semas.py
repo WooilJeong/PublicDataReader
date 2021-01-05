@@ -3,7 +3,6 @@
 semas(Small Enterprise And Market Service)
 
 1. StoreInfo 클래스: 소상공인 상가업소 정보 조회
-    0. baroApi: 바로API
     1. storeZoneOne: 지정 상권조회
     2. storeZoneInRadius: 반경내 상권조회
     3. storeZoneInRectangle: 사각형내 상권조회
@@ -158,7 +157,6 @@ class StoreInfo:
             pass
         
         return df
-    
 
     def storeZoneInRectangle(self, minx, miny, maxx, maxy):
         '''
@@ -271,7 +269,6 @@ class StoreInfo:
             pass
         
         return df
-    
 
     def storeOne(self, key):
         '''
@@ -441,7 +438,6 @@ class StoreInfo:
         
         return df
 
-
     def storeListInPnu(self, key, indsLclsCd_=None, indsMclsCd_=None, indsSclsCd_=None, numOfRows=1000, pageNo=1):
         '''
         7. 지번단위 상가업소 조회
@@ -539,8 +535,6 @@ class StoreInfo:
             pass
         
         return df
-        
-        
         
     def storeListInDong(self, divId, key, indsLclsCd_=None, indsMclsCd_=None, indsSclsCd_=None, numOfRows=1000, pageNo=1):
         '''
@@ -737,7 +731,6 @@ class StoreInfo:
         
         return df
         
-        
     def storeListInRadius(self, radius, cx, cy, indsLclsCd_=None, indsMclsCd_=None, indsSclsCd_=None, numOfRows=1000, pageNo=1):
         '''
         10. 반경내 상가업소 조회
@@ -834,7 +827,6 @@ class StoreInfo:
             pass
         
         return df
-        
         
     def storeListInRectangle(self, minx, miny, maxx, maxy, indsLclsCd_=None, indsMclsCd_=None, indsSclsCd_=None, numOfRows=1000, pageNo=1):
         '''
@@ -933,7 +925,6 @@ class StoreInfo:
         
         return df
         
-        
     def storeListInPolygon(self, key, indsLclsCd_=None, indsMclsCd_=None, indsSclsCd_=None, numOfRows=1000, pageNo=1):
         '''
         12. 다각형내 상가업소 조회
@@ -1031,15 +1022,12 @@ class StoreInfo:
         
         return df
 
-
     def storeListInUpjong(self, divId, key, numOfRows=1000, pageNo=1):
         '''
         13. 업종별 상가업소 조회
         입력: 구분ID(대분류:indsLclsCd, 중분류:indsMclsCd, 소분류:indsSclsCd), 업종코드값, 페이지 번호
         '''
         url = f'{self.urlBase}storeListInUpjong?ServiceKey={self.serviceKey}&divId={divId}&key={key}&numOfRows={numOfRows}&pageNo={pageNo}'
-
-        
         
         try:
             # Get raw data
@@ -1102,8 +1090,6 @@ class StoreInfo:
             pass
         
         return df
-
-        
         
     def storeListByDate(self, key, indsLclsCd_=None, indsMclsCd_=None, indsSclsCd_=None, numOfRows=1000, pageNo=1):
         '''
@@ -1201,7 +1187,6 @@ class StoreInfo:
             pass
         
         return df
-
         
     def reqStoreModify(self,bizresId,bizresNm,brchNm,indsSclsCd,adongCd,lnoAdr,rdnmAdr,bldNm,dongNo,flrNo,hoNo,opbizDt,clbizDt,etcChgReqCnts):
         '''
@@ -1257,7 +1242,6 @@ class StoreInfo:
             pass
         
         return df
-
 
 #     def storeStatsUpjongInAdmi(self, divId, key, indsLclsCd_=None, indsMclsCd_=None, indsSclsCd_=None):
 #         '''
@@ -1748,15 +1732,11 @@ class StoreInfo:
 
 #         return df
         
-        
     def largeUpjongList(self):
         '''
         21. 상권정보 업종 대분류 조회
         '''
-        
         url = f'{self.urlBase}largeUpjongList?ServiceKey={self.serviceKey}'
-        
-        
         
         try:
             # Get raw data
@@ -1813,8 +1793,6 @@ class StoreInfo:
         '''
         url = f'{self.urlBase}middleUpjongList?ServiceKey={self.serviceKey}&indsLclsCd={indsLclsCd_}'
         
-        
-        
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -1862,8 +1840,6 @@ class StoreInfo:
             pass
 
         return df
-
-    
     
     def smallUpjongList(self, indsLclsCd_=None, indsMclsCd_=None):
         '''
