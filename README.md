@@ -21,6 +21,7 @@
     - 0.1.3 Version (2021-01): 
       - 소상공인 상가업소 정보 조회 기능 추가
       - 서울시 지하철호선별 역별 승하차 인원 정보 조회 기능 추가   
+      - 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보 조회 기능 추가
     - 0.1.2 Version (2020-12): 
       - 국토교통부 실거래가 정보 조회 기능 전면 수정
 
@@ -28,11 +29,17 @@
 - **요구 사항**  
 ![](https://img.shields.io/badge/Python-3.7.4-yellow.svg) ![](https://img.shields.io/badge/Pandas-0.25.3-red.svg)
 
-**PublicDataReader**는 [공공데이터포털](https://data.go.kr)에서 제공하는 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 수집 라이브러리**입니다. **2021년 01월** 현재 [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do)와 [소상공인 상가업소 정보](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15012005) 조회 서비스에 대한 인터페이스를 제공하고 있습니다. 추후 수요가 높은 Open API 서비스에 대한 인터페이스도 지속적으로 업데이트할 예정입니다.
+**PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 에서 제공하는 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 수집 라이브러리**입니다. 
+
+**2021년 01월** 현재 아래 Open API 서비스를 이용하여 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 추후 수요가 높은 Open API 서비스에 대한 인터페이스도 지속적으로 업데이트할 예정입니다.
+
+- [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do)
+- [소상공인 상가업소 정보](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15012005)
+- [서울시 지하철호선별 역별 승하차 인원 정보](https://data.seoul.go.kr/dataList/OA-12914/S/1/datasetView.do)
+- [서울시 버스노선별 정류장별 시간대별 승하차 인원 정보](https://data.seoul.go.kr/dataList/OA-12913/S/1/datasetView.do)
 
 
-
-## 사용 가능한 서비스
+## 공공 데이터 포털 서비스 목록
 
 ### 1) 국토교통부 실거래가 정보 조회 서비스
 
@@ -76,6 +83,16 @@ reqStoreModify | 상가업소정보 변경요청
 largeUpjongList | 상권정보 업종 대분류 조회
 middleUpjongList | 상권정보 업종 중분류 조회
 smallUpjongList | 상권정보 업종 소분류 조회
+
+
+## 서울 열린데이터 광장 서비스 목록
+
+### 1) 서울시 교통 관련 정보 조회 서비스
+
+**메서드**              | **서비스 명**
+---------------------- | --------------------
+CardSubwayStatsNew | 서울시 지하철호선별 역별 승하차 인원 정보
+CardBusTimeNew | 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보
 
 
 ## 설치 방법

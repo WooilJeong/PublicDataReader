@@ -4,6 +4,6 @@ from PublicDataReader.PublicDataPortal.molit import Transaction
 from PublicDataReader.PublicDataPortal.semas import StoreInfo
 
 # 서울시 지하철호선별 역별 승하차 인원 정보 Open API
-from PublicDataReader.Seoul.subway import SubwayInfo
+from PublicDataReader.Seoul.transportation import TransInfo
 
 from PublicDataReader.PublicDataPortal.Air import AirStation, AirDataRT, AirData
