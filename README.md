@@ -7,10 +7,10 @@
 
 - **Project Owner: 정우일(Wooil Jeong)**
 - **e-mail: wooil@kakao.com**
-- **사용 설명서: 
-  - [PublicDataReader - 부동산 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_01/)**
-- **코랩 실습 코드: 
-  - [Colab - 국토교통부 실거래가 정보 조회](https://colab.research.google.com/drive/1pFtMFr_te9T_maHjee8Sd8Yq9rTrE-4F)**
+- **사용 설명서**: 
+  - [PublicDataReader - 부동산 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_01/)
+- **코랩 실습 코드**: 
+  - [Colab - 국토교통부 실거래가 정보 조회](https://colab.research.google.com/drive/1pFtMFr_te9T_maHjee8Sd8Yq9rTrE-4F)
 
 
 ## 소개
