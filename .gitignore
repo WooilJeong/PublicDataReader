@@ -107,3 +107,4 @@ venv.bak/
 .DS_Store
 .api_key
 config.py
+.ipynb

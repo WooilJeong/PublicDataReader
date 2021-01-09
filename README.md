@@ -9,16 +9,18 @@
 - **e-mail: wooil@kakao.com**
 - **사용 설명서**: 
   - [PublicDataReader - 부동산 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_01/)
+  - [PublicDataReader - 상가업소 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_02/)
 - **코랩 실습 코드**: 
   - [Colab - 국토교통부 실거래가 정보 조회](https://colab.research.google.com/drive/1pFtMFr_te9T_maHjee8Sd8Yq9rTrE-4F)
+  - [Colab - 소상공인진흥공단 상가업소 정보 조회]()
 
 
 ## 소개
 
 - **최신 버전**  
-![](https://img.shields.io/badge/PublicDataReader-0.1.3-blue.svg)  
+![](https://img.shields.io/badge/PublicDataReader-2021.1.9-blue.svg)  
 
-    - 0.1.3 Version (2021-01): 
+    - 2021.1.9 Version (2021-01): 
       - 소상공인 상가업소 정보 조회 기능 추가
       - 서울시 지하철호선별 역별 승하차 인원 정보 조회 기능 추가   
       - 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보 조회 기능 추가
@@ -98,7 +100,7 @@ CardBusTimeNew | 서울시 버스노선별 정류장별 시간대별 승하차 �
 ## 설치 방법
 
 ```bash
-pip install PublicDataReader==0.1.3
+pip install PublicDataReader
 ```
 
 ## 사용 방법
