@@ -12,7 +12,7 @@
   - [PublicDataReader - 상가업소 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_02/)
 - **코랩 실습 코드**: 
   - [Colab - 국토교통부 실거래가 정보 조회](https://colab.research.google.com/drive/1pFtMFr_te9T_maHjee8Sd8Yq9rTrE-4F)
-  - [Colab - 소상공인진흥공단 상가업소 정보 조회]()
+  - [Colab - 소상공인진흥공단 상가업소 정보 조회](https://colab.research.google.com/drive/14AAR6dRiTubZ8rnc883GitaB5q9pnIox?usp=sharing)
 
 
 ## 소개
