@@ -110,4 +110,4 @@ venv.bak/
 
 .api_key
 
-test.py
+config.py
