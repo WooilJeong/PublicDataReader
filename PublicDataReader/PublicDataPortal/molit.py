@@ -15,6 +15,18 @@ molit(Ministry of Land, Infrastructure and Transport)
     - DHRent: 단독/다가구 전월세 자료 조회
     - LandTrade: 토지 매매 신고 조회
     - BizTrade: 상업업무용 부동산 매매 신고 자료 조회
+
+2. Building 클래스: 건축물대장정보 서비스
+    01 건축물대장 기본개요 조회: getBrBasisOulnInfo
+    02 건축물대장 총괄표제부 조회: getBrRecapTitleInfo
+    03 건축물대장 표제부 조회: getBrTitleInfo
+    04 건축물대장 층별개요 조회: getBrFlrOulnInfo
+    05 건축물대장 부속지번 조회: getBrAtchJibunInfo
+    06 건축물대장 전유공용면적 조회: getBrExposPubuseAreaInfo
+    07 건축물대장 오수정화시설 조회: getBrWclfInfo
+    08 건축물대장 주택가격 조회: getBrHsprcInfo
+    09 건축물대장 전유부 조회: getBrExposInfo
+    10 건축물대장 지역지구구역 조회: getBrJijiguInfo
 '''
 
 import pandas as pd
@@ -22,6 +34,564 @@ import numpy as np
 import datetime
 import requests
 from bs4 import BeautifulSoup
+
+class Building:
+    def __init__(self, serviceKey):
+        '''
+        공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
+        '''
+        # Open API 서비스 키 초기화
+        self.serviceKey = serviceKey
+
+        # ServiceKey 유효성 검사
+        self.baseUrl = "http://apis.data.go.kr/1613000/BldRgstService_v2/"
+
+        self.url_getBrBasisOulnInfo = self.baseUrl + "getBrBasisOulnInfo" + f"?serviceKey={self.serviceKey}"
+        self.url_getBrRecapTitleInfo = self.baseUrl + "getBrRecapTitleInfo" + f"?serviceKey={self.serviceKey}"
+        self.url_getBrTitleInfo = self.baseUrl + "getBrTitleInfo" + f"?serviceKey={self.serviceKey}"
+        self.url_getBrFlrOulnInfo = self.baseUrl + "getBrFlrOulnInfo" + f"?serviceKey={self.serviceKey}"
+        self.url_getBrAtchJibunInfo = self.baseUrl + "getBrAtchJibunInfo" + f"?serviceKey={self.serviceKey}"
+
+        self.url_getBrExposPubuseAreaInfo = self.baseUrl + "getBrExposPubuseAreaInfo" + f"?serviceKey={self.serviceKey}"
+        self.url_getBrWclfInfo = self.baseUrl + "getBrWclfInfo" + f"?serviceKey={self.serviceKey}"
+        self.url_getBrHsprcInfo = self.baseUrl + "getBrHsprcInfo" + f"?serviceKey={self.serviceKey}"
+        self.url_getBrExposInfo = self.baseUrl + "getBrExposInfo" + f"?serviceKey={self.serviceKey}"
+        self.url_getBrJijiguInfo = self.baseUrl + "getBrJijiguInfo" + f"?serviceKey={self.serviceKey}"
+
+        # Open API URL Dict
+        urlDict = {
+            '건축물대장 기본개요 조회': self.url_getBrBasisOulnInfo, 
+            '건축물대장 총괄표제부 조회': self.url_getBrRecapTitleInfo, 
+            '건축물대장 표제부 조회': self.url_getBrTitleInfo, 
+            '건축물대장 층별개요 조회': self.url_getBrFlrOulnInfo, 
+            '건축물대장 부속지번 조회': self.url_getBrAtchJibunInfo, 
+
+            '건축물대장 전유공용면적 조회': self.url_getBrExposPubuseAreaInfo, 
+            '건축물대장 오수정화시설 조회': self.url_getBrWclfInfo, 
+            '건축물대장 주택가격 조회': self.url_getBrHsprcInfo, 
+            '건축물대장 전유부 조회': self.url_getBrExposInfo, 
+            '건축물대장 지역지구구역 조회': self.url_getBrJijiguInfo
+            }
+
+        # 서비스 정상 작동 여부 확인
+        for serviceName, url in urlDict.items():
+            result = requests.get(url, verify=False)
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            te = xmlsoup.findAll('header')
+            if te[0].find('resultCode').text =='00':
+                print(f'>>> {serviceName} 서비스가 정상 작동합니다.')
+            else:
+                print(f'>>> {serviceName} 서비스키 미등록 오류입니다.')
+
+        # 지역 코드 초기화
+        # 법정동 코드 출처 : https://code.go.kr
+        path_code = "https://raw.githubusercontent.com/WooilJeong/PublicDataReader/f14e4de3410cc0f798a83ee5934070d651cbd67b/docs/%EB%B2%95%EC%A0%95%EB%8F%99%EC%BD%94%EB%93%9C%20%EC%A0%84%EC%B2%B4%EC%9E%90%EB%A3%8C.txt"
+        code = pd.read_csv(path_code, encoding='cp949', sep='\t')
+        code = code.loc[code['폐지여부']=='존재']
+        code['법정구코드'] = list(map(lambda a: str(a)[:5], list(code['법정동코드'])))
+        self.code = code
+
+    def CodeFinder(self, name):
+        '''
+        국토교통부 실거래가 정보 오픈API는 법정동코드 10자리 중 앞 5자리인 구를 나타내는 지역코드를 사용합니다.
+        API에 사용할 구 별 코드를 조회하는 메서드이며, 문자열 지역 명을 입력받고, 조회 결과를 Pandas DataFrame형식으로 출력합니다.
+        '''
+        result = self.code[self.code['법정동명'].str.contains(name)][['법정동명','법정구코드']]
+        result.index = range(len(result))
+        return result
+
+
+    def getBrBasisOulnInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji):
+        '''
+        01 건축물대장 기본개요 조회
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지
+        '''
+        # URL
+        url = f"{self.url_getBrBasisOulnInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&numOfRows=99999"
+
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['bjdongCd','bldNm','block','bun','bylotCnt','crtnDay','guyukCd','guyukCdNm','ji','jiguCd','jiguCdNm','jiyukCd','jiyukCdNm','lot','mgmBldrgstPk','mgmUpBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','platGbCd','platPlc','regstrGbCd','regstrGbCdNm','regstrKindCd','regstrKindCdNm','rnum','sigunguCd','splotNm']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[bjdongCd,bldNm,block,bun,bylotCnt,crtnDay,guyukCd,guyukCdNm,ji,jiguCd,jiguCdNm,jiyukCd,jiyukCdNm,lot,mgmBldrgstPk,mgmUpBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,platGbCd,platPlc,regstrGbCd,regstrGbCdNm,regstrKindCd,regstrKindCdNm,rnum,sigunguCd,splotNm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrRecapTitleInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate=""):
+        '''
+        02 건축물대장 총괄표제부 조회
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrRecapTitleInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['archArea','atchBldArea','atchBldCnt','bcRat','bjdongCd','bldNm','block','bun','bylotCnt','crtnDay','engrEpi','engrGrade','engrRat','etcPurps','fmlyCnt','gnBldCert','gnBldGrade','hhldCnt','hoCnt','indrAutoArea','indrAutoUtcnt','indrMechArea','indrMechUtcnt','itgBldCert','itgBldGrade','ji','lot','mainBldCnt','mainPurpsCd','mainPurpsCdNm','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newOldRegstrGbCd','newOldRegstrGbCdNm','newPlatPlc','oudrAutoArea','oudrAutoUtcnt','oudrMechArea','oudrMechUtcnt','platArea','platGbCd','platPlc','pmsDay','pmsnoGbCd','pmsnoGbCdNm','pmsnoKikCd','pmsnoKikCdNm','pmsnoYear','regstrGbCd','regstrGbCdNm','regstrKindCd','regstrKindCdNm','rnum','sigunguCd','splotNm','stcnsDay','totArea','totPkngCnt','useAprDay','vlRat','vlRatEstmTotArea']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[archArea,atchBldArea,atchBldCnt,bcRat,bjdongCd,bldNm,block,bun,bylotCnt,crtnDay,engrEpi,engrGrade,engrRat,etcPurps,fmlyCnt,gnBldCert,gnBldGrade,hhldCnt,hoCnt,indrAutoArea,indrAutoUtcnt,indrMechArea,indrMechUtcnt,itgBldCert,itgBldGrade,ji,lot,mainBldCnt,mainPurpsCd,mainPurpsCdNm,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newOldRegstrGbCd,newOldRegstrGbCdNm,newPlatPlc,oudrAutoArea,oudrAutoUtcnt,oudrMechArea,oudrMechUtcnt,platArea,platGbCd,platPlc,pmsDay,pmsnoGbCd,pmsnoGbCdNm,pmsnoKikCd,pmsnoKikCdNm,pmsnoYear,regstrGbCd,regstrGbCdNm,regstrKindCd,regstrKindCdNm,rnum,sigunguCd,splotNm,stcnsDay,totArea,totPkngCnt,useAprDay,vlRat,vlRatEstmTotArea]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrTitleInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate=""):
+        '''
+        03 건축물대장 표제부 조회: getBrTitleInfo
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrTitleInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['archArea','atchBldArea','atchBldCnt','bcRat','bjdongCd','bldNm','block','bun','bylotCnt','crtnDay','dongNm','emgenUseElvtCnt','engrEpi','engrGrade','engrRat','etcPurps','etcRoof','etcStrct','fmlyCnt','gnBldCert','gnBldGrade','grndFlrCnt','heit','hhldCnt','hoCnt','indrAutoArea','indrAutoUtcnt','indrMechArea','indrMechUtcnt','itgBldCert','itgBldGrade','ji','lot','mainAtchGbCd','mainAtchGbCdNm','mainPurpsCd','mainPurpsCdNm','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','oudrAutoArea','oudrAutoUtcnt','oudrMechArea','oudrMechUtcnt','platArea','platGbCd','platPlc','pmsDay','pmsnoGbCd','pmsnoGbCdNm','pmsnoKikCd','pmsnoKikCdNm','pmsnoYear','regstrGbCd','regstrGbCdNm','regstrKindCd','regstrKindCdNm','rideUseElvtCnt','rnum','roofCd','roofCdNm','rserthqkAblty','rserthqkDsgnApplyYn','sigunguCd','splotNm','stcnsDay','strctCd','strctCdNm','totArea','totDongTotArea','ugrndFlrCnt','useAprDay','vlRat','vlRatEstmTotArea']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[archArea,atchBldArea,atchBldCnt,bcRat,bjdongCd,bldNm,block,bun,bylotCnt,crtnDay,dongNm,emgenUseElvtCnt,engrEpi,engrGrade,engrRat,etcPurps,etcRoof,etcStrct,fmlyCnt,gnBldCert,gnBldGrade,grndFlrCnt,heit,hhldCnt,hoCnt,indrAutoArea,indrAutoUtcnt,indrMechArea,indrMechUtcnt,itgBldCert,itgBldGrade,ji,lot,mainAtchGbCd,mainAtchGbCdNm,mainPurpsCd,mainPurpsCdNm,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,oudrAutoArea,oudrAutoUtcnt,oudrMechArea,oudrMechUtcnt,platArea,platGbCd,platPlc,pmsDay,pmsnoGbCd,pmsnoGbCdNm,pmsnoKikCd,pmsnoKikCdNm,pmsnoYear,regstrGbCd,regstrGbCdNm,regstrKindCd,regstrKindCdNm,rideUseElvtCnt,rnum,roofCd,roofCdNm,rserthqkAblty,rserthqkDsgnApplyYn,sigunguCd,splotNm,stcnsDay,strctCd,strctCdNm,totArea,totDongTotArea,ugrndFlrCnt,useAprDay,vlRat,vlRatEstmTotArea]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrFlrOulnInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate=""):
+        '''
+        04 건축물대장 층별개요 조회
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrFlrOulnInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['area','areaExctYn','bjdongCd','bldNm','block','bun','crtnDay','dongNm','etcPurps','etcStrct','flrGbCd','flrGbCdNm','flrNo','flrNoNm','ji','lot','mainAtchGbCd','mainAtchGbCdNm','mainPurpsCd','mainPurpsCdNm','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','platGbCd','platPlc','rnum','sigunguCd','splotNm','strctCd','strctCdNm']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[area,areaExctYn,bjdongCd,bldNm,block,bun,crtnDay,dongNm,etcPurps,etcStrct,flrGbCd,flrGbCdNm,flrNo,flrNoNm,ji,lot,mainAtchGbCd,mainAtchGbCdNm,mainPurpsCd,mainPurpsCdNm,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,platGbCd,platPlc,rnum,sigunguCd,splotNm,strctCd,strctCdNm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrAtchJibunInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate=""):
+        '''
+        05 건축물대장 부속지번 조회: getBrAtchJibunInfo
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrAtchJibunInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['atchBjdongCd','atchBlock','atchBun','atchEtcJibunNm','atchJi','atchLot','atchPlatGbCd','atchRegstrGbCd','atchRegstrGbCdNm','atchSigunguCd','atchSplotNm','bjdongCd','bldNm','block','bun','crtnDay','ji','lot','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','platGbCd','platPlc','regstrGbCd','regstrGbCdNm','regstrKindCd','regstrKindCdNm','rnum','sigunguCd','splotNm']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[atchBjdongCd,atchBlock,atchBun,atchEtcJibunNm,atchJi,atchLot,atchPlatGbCd,atchRegstrGbCd,atchRegstrGbCdNm,atchSigunguCd,atchSplotNm,bjdongCd,bldNm,block,bun,crtnDay,ji,lot,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,platGbCd,platPlc,regstrGbCd,regstrGbCdNm,regstrKindCd,regstrKindCdNm,rnum,sigunguCd,splotNm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrExposPubuseAreaInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate="", dongNm="", hoNm=""):
+        '''
+        06 건축물대장 전유공용면적 조회: getBrExposPubuseAreaInfo
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrExposPubuseAreaInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&dongNm={dongNm}&hoNm={hoNm}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['area','bjdongCd','bldNm','block','bun','crtnDay','dongNm','etcPurps','etcStrct','exposPubuseGbCd','exposPubuseGbCdNm','flrGbCd','flrGbCdNm','flrNo','flrNoNm','hoNm','ji','lot','mainAtchGbCd','mainAtchGbCdNm','mainPurpsCd','mainPurpsCdNm','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','platGbCd','platPlc','regstrGbCd','regstrGbCdNm','regstrKindCd','regstrKindCdNm','rnum','sigunguCd','splotNm','strctCd','strctCdNm']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[area,bjdongCd,bldNm,block,bun,crtnDay,dongNm,etcPurps,etcStrct,exposPubuseGbCd,exposPubuseGbCdNm,flrGbCd,flrGbCdNm,flrNo,flrNoNm,hoNm,ji,lot,mainAtchGbCd,mainAtchGbCdNm,mainPurpsCd,mainPurpsCdNm,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,platGbCd,platPlc,regstrGbCd,regstrGbCdNm,regstrKindCd,regstrKindCdNm,rnum,sigunguCd,splotNm,strctCd,strctCdNm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrWclfInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate=""):
+        '''
+        07 건축물대장 오수정화시설 조회: getBrWclfInfo
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrWclfInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['area','areaExctYn','bjdongCd','bldNm','block','bun','crtnDay','dongNm','etcPurps','etcStrct','flrGbCd','flrGbCdNm','flrNo','flrNoNm','ji','lot','mainAtchGbCd','mainAtchGbCdNm','mainPurpsCd','mainPurpsCdNm','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','platGbCd','platPlc','rnum','sigunguCd','splotNm','strctCd','strctCdNm']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[area,areaExctYn,bjdongCd,bldNm,block,bun,crtnDay,dongNm,etcPurps,etcStrct,flrGbCd,flrGbCdNm,flrNo,flrNoNm,ji,lot,mainAtchGbCd,mainAtchGbCdNm,mainPurpsCd,mainPurpsCdNm,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,platGbCd,platPlc,rnum,sigunguCd,splotNm,strctCd,strctCdNm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrHsprcInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate=""):
+        '''
+        08 건축물대장 주택가격 조회: getBrHsprcInfo
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrHsprcInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['area','areaExctYn','bjdongCd','bldNm','block','bun','crtnDay','dongNm','etcPurps','etcStrct','flrGbCd','flrGbCdNm','flrNo','flrNoNm','ji','lot','mainAtchGbCd','mainAtchGbCdNm','mainPurpsCd','mainPurpsCdNm','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','platGbCd','platPlc','rnum','sigunguCd','splotNm','strctCd','strctCdNm']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[area,areaExctYn,bjdongCd,bldNm,block,bun,crtnDay,dongNm,etcPurps,etcStrct,flrGbCd,flrGbCdNm,flrNo,flrNoNm,ji,lot,mainAtchGbCd,mainAtchGbCdNm,mainPurpsCd,mainPurpsCdNm,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,platGbCd,platPlc,rnum,sigunguCd,splotNm,strctCd,strctCdNm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrExposInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate=""):
+        '''
+        09 건축물대장 전유부 조회: getBrExposInfo
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrExposInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['area','areaExctYn','bjdongCd','bldNm','block','bun','crtnDay','dongNm','etcPurps','etcStrct','flrGbCd','flrGbCdNm','flrNo','flrNoNm','ji','lot','mainAtchGbCd','mainAtchGbCdNm','mainPurpsCd','mainPurpsCdNm','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','platGbCd','platPlc','rnum','sigunguCd','splotNm','strctCd','strctCdNm']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[area,areaExctYn,bjdongCd,bldNm,block,bun,crtnDay,dongNm,etcPurps,etcStrct,flrGbCd,flrGbCdNm,flrNo,flrNoNm,ji,lot,mainAtchGbCd,mainAtchGbCdNm,mainPurpsCd,mainPurpsCdNm,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,platGbCd,platPlc,rnum,sigunguCd,splotNm,strctCd,strctCdNm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+    def getBrJijiguInfo(self, sigunguCd, bjdongCd, platGbCd, bun, ji, startDate="", endDate=""):
+        '''
+        10 건축물대장 지역지구구역 조회: getBrJijiguInfo
+        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
+        '''
+        # URL
+        url = f"{self.url_getBrJijiguInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        print(url)
+        try:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("item")
+            # Creating Pandas Data Frame
+            df = pd.DataFrame()    
+            variables = ['area','areaExctYn','bjdongCd','bldNm','block','bun','crtnDay','dongNm','etcPurps','etcStrct','flrGbCd','flrGbCdNm','flrNo','flrNoNm','ji','lot','mainAtchGbCd','mainAtchGbCdNm','mainPurpsCd','mainPurpsCdNm','mgmBldrgstPk','naBjdongCd','naMainBun','naRoadCd','naSubBun','naUgrndCd','newPlatPlc','platGbCd','platPlc','rnum','sigunguCd','splotNm','strctCd','strctCdNm']
+
+            for t in te: 
+                for variable in variables:       
+                    try :
+                        globals()[variable] = t.find(variable).text
+                    except :
+                        globals()[variable] = np.nan
+                data = pd.DataFrame(
+                                    [[area,areaExctYn,bjdongCd,bldNm,block,bun,crtnDay,dongNm,etcPurps,etcStrct,flrGbCd,flrGbCdNm,flrNo,flrNoNm,ji,lot,mainAtchGbCd,mainAtchGbCdNm,mainPurpsCd,mainPurpsCdNm,mgmBldrgstPk,naBjdongCd,naMainBun,naRoadCd,naSubBun,naUgrndCd,newPlatPlc,platGbCd,platPlc,rnum,sigunguCd,splotNm,strctCd,strctCdNm]], 
+                                    columns = variables
+                                    )
+                df = pd.concat([df, data])
+
+            return df
+        
+        except:
+            # Get raw data
+            result = requests.get(url, verify=False)
+            # Parsing
+            xmlsoup = BeautifulSoup(result.text, 'lxml-xml')
+            # Filtering
+            te = xmlsoup.findAll("header")
+            # 정상 요청시 에러 발생 -> Python 코드 에러
+            if te[0].find('resultCode').text == "00":
+                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            # Open API 서비스 제공처 오류
+            else:
+                print(">>> Open API Error: {}".format(te[0].find['resultMsg']))
+            pass
+
+
+
 
 
 class Transaction:
