@@ -1499,7 +1499,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrRecapTitleInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -1684,7 +1684,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrTitleInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -1895,7 +1895,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrFlrOulnInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -2018,7 +2018,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrAtchJibunInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -2150,7 +2150,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrExposPubuseAreaInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&dongNm={dongNm}&hoNm={hoNm}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -2285,7 +2285,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrWclfInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -2400,7 +2400,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrHsprcInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -2505,7 +2505,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrExposInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
@@ -2616,7 +2616,7 @@ class Building:
         """
         # URL
         url = f"{self.url_getBrJijiguInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
-        print(url)
+
         try:
             # Get raw data
             result = requests.get(url, verify=False)
