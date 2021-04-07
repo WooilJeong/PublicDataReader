@@ -2,17 +2,17 @@ import setuptools
 
 setuptools.setup(
     name="PublicDataReader",
-    version="2021.1.9",
-    license='MIT',
+    version="2021.4.7",
+    license="MIT",
     author="Wooil Jeong",
     author_email="wooil@kakao.com",
     description="Open Source Public Data Reader",
-    long_description=open('pip_README.md').read(),
+    long_description=open("pip_README.md").read(),
     url="https://github.com/WooilJeong/PublicDataReader",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent"
+        "Operating System :: OS Independent",
     ],
 )
