@@ -1,6 +1,6 @@
 from .data import *
 
-version = "2021.1.9"
+version = "2021.4.7"
 
 __version__ = f"""
 >>> PublicDataReader Version : {version}
@@ -11,4 +11,4 @@ __version__ = f"""
 - Blog : https://wooiljeong.github.io
 """
 
-__all__=['__version__', 'Transaction']
+__all__ = ["__version__", "Transaction"]
