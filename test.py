@@ -2,25 +2,152 @@ import PublicDataReader as pdr
 from config import OpenAPI
 
 if __name__ == "__main__":
-    
-    # 서울 열린데이터 광장 Open API 서비스키
-    serviceKey = OpenAPI.seoul
-    # 소상공인 상가업소 정보 조회 인스턴스 생성
-    seoul = pdr.TransInfo(serviceKey)
 
-    # 지하철 승하차 데이터 조회
-    start_index = 1
-    end_index = 1000
-    use_dt = 20210101
-    df = seoul.CardSubwayStatsNew(start_index, end_index, use_dt)
+    # 공공 데이터 포털 Open API 서비스키
+    serviceKey = OpenAPI.molit
+    molit = pdr.Building(serviceKey)
 
-    print(df.head(20))
+    # # Operation 01
+    # print(">>> Operation 01")
 
-    # 버스 승하차 데이터 조회
-    # Set Params
-    start_index = 1
-    end_index = 1000
-    use_mon = 202012
-    df = seoul.CardBusTimeNew(start_index=start_index, end_index=end_index, use_mon=use_mon)
-    
-    print(df.head(10))
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+
+    # df = molit.getBrBasisOulnInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(2))
+
+    # # Operation 02
+    # print(">>> Operation 02")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+
+    # df = molit.getBrRecapTitleInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(1))
+
+    # # Operation 03
+    # print(">>> Operation 03")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+
+    # df = molit.getBrTitleInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(1))
+
+    # # Operation 04
+    # print(">>> Operation 04")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+
+    # df = molit.getBrFlrOulnInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(1))
+
+    # # Operation 05
+    # print(">>> Operation 05")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0005"
+    # startDate = ""
+    # endDate = ""
+
+    # df = molit.getBrAtchJibunInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(2))
+
+    # # Operation 06
+    # print(">>> Operation 06")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+    # dongNm = ""
+    # hoNm = ""
+
+    # df = molit.getBrExposPubuseAreaInfo(
+    #     sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate, dongNm, hoNm
+    # )
+    # print(df.head(1))
+
+    # # Operation 07
+    # print(">>> Operation 07")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+
+    # df = molit.getBrWclfInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(1))
+
+    # # Operation 08
+    # print(">>> Operation 08")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+
+    # df = molit.getBrHsprcInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(2))
+
+    # # Operation 09
+    # print(">>> Operation 09")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+
+    # df = molit.getBrExposInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(2))
+
+    # # Operation 10
+    # print(">>> Operation 10")
+
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+
+    # df = molit.getBrJijiguInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # print(df.head(2))
+
