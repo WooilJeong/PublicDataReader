@@ -18,8 +18,10 @@
 ## 소개
 
 - **최신 버전**  
-![](https://img.shields.io/badge/PublicDataReader-2021.1.9-blue.svg)  
+![](https://img.shields.io/badge/PublicDataReader-2021.4.7-blue.svg)  
 
+    - 20121.4.7 Version (2021-04):
+      - 국토교통부 건축물대장정보 서비스 추가
     - 2021.1.9 Version (2021-01): 
       - 소상공인 상가업소 정보 조회 기능 추가
       - 서울시 지하철호선별 역별 승하차 인원 정보 조회 기능 추가   
@@ -33,9 +35,10 @@
 
 **PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 에서 제공하는 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 수집 라이브러리**입니다. 
 
-**2021년 01월** 현재 아래 Open API 서비스를 이용하여 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 추후 수요가 높은 Open API 서비스에 대한 인터페이스도 지속적으로 업데이트할 예정입니다.
+**2021년 04월** 현재 아래 Open API 서비스를 이용하여 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 추후 수요가 높은 Open API 서비스에 대한 인터페이스도 지속적으로 업데이트할 예정입니다.
 
 - [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do)
+- [국토교통부 건축물대장정보 서비스](https://www.data.go.kr/data/15044713/openapi.do)
 - [소상공인 상가업소 정보](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15012005)
 - [서울시 지하철호선별 역별 승하차 인원 정보](https://data.seoul.go.kr/dataList/OA-12914/S/1/datasetView.do)
 - [서울시 버스노선별 정류장별 시간대별 승하차 인원 정보](https://data.seoul.go.kr/dataList/OA-12913/S/1/datasetView.do)
@@ -45,56 +48,72 @@
 
 ### 1) 국토교통부 실거래가 정보 조회 서비스
 
-**메서드**              | **서비스 명**
----------------------- | --------------------
-CondeFinder | 지역코드 조회
-DataCollector | 서비스/기간 별 데이터 조회
-AptTrade | 아파트매매 실거래자료 조회
-AptTradeDetail | 아파트매매 실거래 상세 자료 조회
-AptRent | 아파트 전월세 자료 조회
-AptOwnership | 아파트 분양권전매 신고 자료 조회
-OffiTrade | 오피스텔 매매 신고 조회
-OffiRent | 오피스텔 전월세 신고 조회
-RHTrade | 연립다세대 매매 실거래자료 조회
-RHRent | 연립다세대 전월세 실거래자료 조회
-DHTrade | 단독/다가구 매매 실거래 조회
-DHRent | 단독/다가구 전월세 자료 조회
-LandTrade | 토지 매매 신고 조회
-BizTrade | 상업업무용 부동산 매매 신고 자료 조회
+| **메서드**     | **서비스 명**                         |
+| -------------- | ------------------------------------- |
+| CondeFinder    | 지역코드 조회                         |
+| DataCollector  | 서비스/기간 별 데이터 조회            |
+| AptTrade       | 아파트매매 실거래자료 조회            |
+| AptTradeDetail | 아파트매매 실거래 상세 자료 조회      |
+| AptRent        | 아파트 전월세 자료 조회               |
+| AptOwnership   | 아파트 분양권전매 신고 자료 조회      |
+| OffiTrade      | 오피스텔 매매 신고 조회               |
+| OffiRent       | 오피스텔 전월세 신고 조회             |
+| RHTrade        | 연립다세대 매매 실거래자료 조회       |
+| RHRent         | 연립다세대 전월세 실거래자료 조회     |
+| DHTrade        | 단독/다가구 매매 실거래 조회          |
+| DHRent         | 단독/다가구 전월세 자료 조회          |
+| LandTrade      | 토지 매매 신고 조회                   |
+| BizTrade       | 상업업무용 부동산 매매 신고 자료 조회 |
 
 
-### 2) 소상공인 상가업소 정보 조회 서비스
+### 2) 국토교통부 건축물대장정보 서비스
 
-**메서드**              | **서비스 명**
----------------------- | --------------------
-storeZoneOne | 지정 상권조회
-storeZoneInRadius | 반경내 상권조회
-storeZoneInRectangle | 사각형내 상권조회
-storeZoneInAdmi | 행정구역 단위 상권조회
-storeOne | 단일 상가업소 조회
-storeListInBuilding | 건물단위 상가업소 조회
-storeListInPnu | 지번단위 상가업소 조회
-storeListInDong | 행정동 단위 상가업소 조회
-storeListInArea | 상권내 상가업소 조회
-storeListInRadius | 반경내 상가업소 조회
-storeListInRectangle | 사각형내 상가업소 조회
-storeListInPolygon | 다각형내 상가업소 조회
-storeListInUpjong | 업종별 상가업소 조회
-storeListByDate | 수정일자기준 상가업소 조회
-reqStoreModify | 상가업소정보 변경요청
-largeUpjongList | 상권정보 업종 대분류 조회
-middleUpjongList | 상권정보 업종 중분류 조회
-smallUpjongList | 상권정보 업종 소분류 조회
+| **메서드**               | **서비스 명**                |
+| ------------------------ | ---------------------------- |
+| getBrBasisOulnInfo       | 건축물대장 기본개요 조회     |
+| getBrRecapTitleInfo      | 건축물대장 총괄표제부 조회   |
+| getBrTitleInfo           | 건축물대장 표제부 조회       |
+| getBrFlrOulnInfo         | 건축물대장 층별개요 조회     |
+| getBrAtchJibunInfo       | 건축물대장 부속지번 조회     |
+| getBrExposPubuseAreaInfo | 건축물대장 전유공용면적 조회 |
+| getBrWclfInfo            | 건축물대장 오수정화시설 조회 |
+| getBrHsprcInfo           | 건축물대장 주택가격 조회     |
+| getBrExposInfo           | 건축물대장 전유부 조회       |
+| getBrJijiguInfo          | 건축물대장 지역지구구역 조회 |
+
+
+### 3) 소상공인 상가업소 정보 조회 서비스
+
+| **메서드**           | **서비스 명**              |
+| -------------------- | -------------------------- |
+| storeZoneOne         | 지정 상권조회              |
+| storeZoneInRadius    | 반경내 상권조회            |
+| storeZoneInRectangle | 사각형내 상권조회          |
+| storeZoneInAdmi      | 행정구역 단위 상권조회     |
+| storeOne             | 단일 상가업소 조회         |
+| storeListInBuilding  | 건물단위 상가업소 조회     |
+| storeListInPnu       | 지번단위 상가업소 조회     |
+| storeListInDong      | 행정동 단위 상가업소 조회  |
+| storeListInArea      | 상권내 상가업소 조회       |
+| storeListInRadius    | 반경내 상가업소 조회       |
+| storeListInRectangle | 사각형내 상가업소 조회     |
+| storeListInPolygon   | 다각형내 상가업소 조회     |
+| storeListInUpjong    | 업종별 상가업소 조회       |
+| storeListByDate      | 수정일자기준 상가업소 조회 |
+| reqStoreModify       | 상가업소정보 변경요청      |
+| largeUpjongList      | 상권정보 업종 대분류 조회  |
+| middleUpjongList     | 상권정보 업종 중분류 조회  |
+| smallUpjongList      | 상권정보 업종 소분류 조회  |
 
 
 ## 서울 열린데이터 광장 서비스 목록
 
 ### 1) 서울시 교통 관련 정보 조회 서비스
 
-**메서드**              | **서비스 명**
----------------------- | --------------------
-CardSubwayStatsNew | 서울시 지하철호선별 역별 승하차 인원 정보
-CardBusTimeNew | 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보
+| **메서드**         | **서비스 명**                                        |
+| ------------------ | ---------------------------------------------------- |
+| CardSubwayStatsNew | 서울시 지하철호선별 역별 승하차 인원 정보            |
+| CardBusTimeNew     | 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보 |
 
 
 ## 설치 방법
