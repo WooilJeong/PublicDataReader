@@ -1374,14 +1374,14 @@ class Building:
         return result
 
     def getBrBasisOulnInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         01 건축물대장 기본개요 조회
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지
         """
         # URL
-        url = f"{self.url_getBrBasisOulnInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrBasisOulnInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -1491,14 +1491,14 @@ class Building:
             pass
 
     def getBrRecapTitleInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         02 건축물대장 총괄표제부 조회
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
         """
         # URL
-        url = f"{self.url_getBrRecapTitleInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrRecapTitleInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -1676,14 +1676,14 @@ class Building:
             pass
 
     def getBrTitleInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         03 건축물대장 표제부 조회: getBrTitleInfo
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
         """
         # URL
-        url = f"{self.url_getBrTitleInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrTitleInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -1887,14 +1887,14 @@ class Building:
             pass
 
     def getBrFlrOulnInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         04 건축물대장 층별개요 조회
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
         """
         # URL
-        url = f"{self.url_getBrFlrOulnInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrFlrOulnInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -2010,14 +2010,14 @@ class Building:
             pass
 
     def getBrAtchJibunInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         05 건축물대장 부속지번 조회: getBrAtchJibunInfo
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
         """
         # URL
-        url = f"{self.url_getBrAtchJibunInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrAtchJibunInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -2134,22 +2134,22 @@ class Building:
 
     def getBrExposPubuseAreaInfo(
         self,
-        sigunguCd,
-        bjdongCd,
-        platGbCd="",
-        bun="",
-        ji="",
-        startDate="",
-        endDate="",
-        dongNm="",
-        hoNm="",
+        sigunguCd_,
+        bjdongCd_,
+        platGbCd_="",
+        bun_="",
+        ji_="",
+        startDate_="",
+        endDate_="",
+        dongNm_="",
+        hoNm_="",
     ):
         """
         06 건축물대장 전유공용면적 조회: getBrExposPubuseAreaInfo
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일, 동명칭, 호명칭
         """
         # URL
-        url = f"{self.url_getBrExposPubuseAreaInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&dongNm={dongNm}&hoNm={hoNm}&numOfRows=99999"
+        url = f"{self.url_getBrExposPubuseAreaInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&dongNm={dongNm_}&hoNm={hoNm_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -2277,14 +2277,14 @@ class Building:
             pass
 
     def getBrWclfInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         07 건축물대장 오수정화시설 조회: getBrWclfInfo
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
         """
         # URL
-        url = f"{self.url_getBrWclfInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrWclfInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -2392,14 +2392,14 @@ class Building:
             pass
 
     def getBrHsprcInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         08 건축물대장 주택가격 조회: getBrHsprcInfo
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
         """
         # URL
-        url = f"{self.url_getBrHsprcInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrHsprcInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -2497,14 +2497,14 @@ class Building:
             pass
 
     def getBrExposInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         09 건축물대장 전유부 조회: getBrExposInfo
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
         """
         # URL
-        url = f"{self.url_getBrExposInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrExposInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
@@ -2608,14 +2608,14 @@ class Building:
             pass
 
     def getBrJijiguInfo(
-        self, sigunguCd, bjdongCd, platGbCd="", bun="", ji="", startDate="", endDate=""
+        self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""
     ):
         """
         10 건축물대장 지역지구구역 조회: getBrJijiguInfo
         입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
         """
         # URL
-        url = f"{self.url_getBrJijiguInfo}&sigunguCd={sigunguCd}&bjdongCd={bjdongCd}&platGbCd={platGbCd}&bun={bun}&ji={ji}&startDate={startDate}&endDate={endDate}&numOfRows=99999"
+        url = f"{self.url_getBrJijiguInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
 
         try:
             # Get raw data
