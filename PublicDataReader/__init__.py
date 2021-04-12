@@ -1,6 +1,6 @@
 from .data import *
 
-version = "2021.4.9.1"
+version = "2021.4.12"
 
 __version__ = f"""
 >>> PublicDataReader Version : {version}

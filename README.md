@@ -18,9 +18,9 @@
 ## 소개
 
 - **최신 버전**  
-![](https://img.shields.io/badge/PublicDataReader-2021.4.9.1-blue.svg)  
+![](https://img.shields.io/badge/PublicDataReader-2021.4.12-blue.svg)  
 
-    - 2021.4.9.1 Version (2021-04):
+    - 2021.4.12 Version (2021-04):
       - 국토교통부 건축물대장정보 서비스 추가
     - 2021.1.9 Version (2021-01): 
       - 소상공인 상가업소 정보 조회 기능 추가
