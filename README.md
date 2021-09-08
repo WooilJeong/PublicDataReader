@@ -194,7 +194,7 @@ print(pdr.__version__)
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # 3. 국토교통부(molit) 건축물대장정보 서비스 Open API 인스턴스 생성하기
-molit = pdr.Transaction(serviceKey)
+molit = pdr.Building(serviceKey)
 
 # 4. 건축물대장정보 오퍼레이션별 데이터 조회
 
