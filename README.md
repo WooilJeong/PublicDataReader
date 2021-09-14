@@ -9,8 +9,8 @@
 - **e-mail: wooil@kakao.com**
 - **사용 설명서**: 
   - [PublicDataReader - 부동산 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_01/)
-  - [PublicDataReader - 상가업소 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_02/)
   - [PublicDataReader - 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
+  - [PublicDataReader - 상가업소 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_02/)
 - **[카카오톡 오픈채팅방 링크](https://open.kakao.com/o/gFYXtP2c)**
   - PublicDataReader 사용 관련 Q&A를 위한 오픈채팅방입니다.
 
