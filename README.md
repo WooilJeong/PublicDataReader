@@ -10,9 +10,7 @@
 - **사용 설명서**: 
   - [PublicDataReader - 부동산 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [PublicDataReader - 상가업소 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_02/)
-- **코랩 실습 코드**: 
-  - [Colab - 국토교통부 실거래가 정보 조회](https://colab.research.google.com/drive/1pFtMFr_te9T_maHjee8Sd8Yq9rTrE-4F)
-  - [Colab - 소상공인진흥공단 상가업소 정보 조회](https://colab.research.google.com/drive/14AAR6dRiTubZ8rnc883GitaB5q9pnIox?usp=sharing)
+  - [PublicDataReader - 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
 - **[카카오톡 오픈채팅방 링크](https://open.kakao.com/o/gFYXtP2c)**
   - PublicDataReader 사용 관련 Q&A를 위한 오픈채팅방입니다.
 
