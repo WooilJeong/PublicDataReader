@@ -1,168 +1,173 @@
 import PublicDataReader as pdr
 from config import OpenAPI
 
+print(pdr.__all__)
+print(pdr.__version__)
+
 if __name__ == "__main__":
 
-    # 공공 데이터 포털 Open API 서비스키
-    serviceKey = OpenAPI.molit
-    molit = pdr.Building(serviceKey)
+    df = pdr.code_list()
+    print(df.head())
 
-    # # Operation 01
-    print(">>> Operation 01")
+    # # 공공 데이터 포털 Open API 서비스키
+    # serviceKey = OpenAPI.molit
+    # molit = pdr.Building(serviceKey)
 
-    sigunguCd = "41590"
-    bjdongCd = "26221"
-    platGbCd = "0"
-    bun = ""
-    ji = ""
-    startDate = "202001"
-    endDate = "202012"
+    # # # Operation 01
+    # print(">>> Operation 01")
 
-    df = molit.getBrBasisOulnInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrBasisOulnInfo")
-    print(df.head(2))
+    # sigunguCd = "41590"
+    # bjdongCd = "26221"
+    # platGbCd = "0"
+    # bun = ""
+    # ji = ""
+    # startDate = "202001"
+    # endDate = "202012"
 
-    # Operation 02
-    print(">>> Operation 02")
+    # df = molit.getBrBasisOulnInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrBasisOulnInfo")
+    # print(df.head(2))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0000"
-    startDate = "202001"
-    endDate = "202012"
+    # # Operation 02
+    # print(">>> Operation 02")
 
-    df = molit.getBrRecapTitleInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrRecapTitleInfo")
-    print(df.head(1))
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
 
-    # Operation 03
-    print(">>> Operation 03")
+    # df = molit.getBrRecapTitleInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrRecapTitleInfo")
+    # print(df.head(1))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0000"
-    startDate = "202001"
-    endDate = "202012"
+    # # Operation 03
+    # print(">>> Operation 03")
 
-    df = molit.getBrTitleInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrTitleInfo")
-    print(df.head(1))
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
 
-    # Operation 04
-    print(">>> Operation 04")
+    # df = molit.getBrTitleInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrTitleInfo")
+    # print(df.head(1))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0000"
-    startDate = "202001"
-    endDate = "202012"
+    # # Operation 04
+    # print(">>> Operation 04")
 
-    df = molit.getBrFlrOulnInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrFlrOulnInfo")
-    print(df.head(1))
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
 
-    # Operation 05
-    print(">>> Operation 05")
+    # df = molit.getBrFlrOulnInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrFlrOulnInfo")
+    # print(df.head(1))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0005"
-    startDate = ""
-    endDate = ""
+    # # Operation 05
+    # print(">>> Operation 05")
 
-    df = molit.getBrAtchJibunInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrAtchJibunInfo")
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0005"
+    # startDate = ""
+    # endDate = ""
 
-    print(df.head(2))
+    # df = molit.getBrAtchJibunInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrAtchJibunInfo")
 
-    # Operation 06
-    print(">>> Operation 06")
+    # print(df.head(2))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0000"
-    startDate = "202001"
-    endDate = "202012"
-    dongNm = ""
-    hoNm = ""
+    # # Operation 06
+    # print(">>> Operation 06")
 
-    df = molit.getBrExposPubuseAreaInfo(
-        sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate, dongNm, hoNm
-    )
-    df = molit.ChangeCols(df, "getBrExposPubuseAreaInfo")
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
+    # dongNm = ""
+    # hoNm = ""
 
-    print(df.head(1))
+    # df = molit.getBrExposPubuseAreaInfo(
+    #     sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate, dongNm, hoNm
+    # )
+    # df = molit.ChangeCols(df, "getBrExposPubuseAreaInfo")
 
-    # Operation 07
-    print(">>> Operation 07")
+    # print(df.head(1))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0000"
-    startDate = "202001"
-    endDate = "202012"
+    # # Operation 07
+    # print(">>> Operation 07")
 
-    df = molit.getBrWclfInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrWclfInfo")
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
 
-    print(df.head(1))
+    # df = molit.getBrWclfInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrWclfInfo")
 
-    # Operation 08
-    print(">>> Operation 08")
+    # print(df.head(1))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0000"
-    startDate = "202001"
-    endDate = "202012"
+    # # Operation 08
+    # print(">>> Operation 08")
 
-    df = molit.getBrHsprcInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrHsprcInfo")
-    print(df.head(2))
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
 
-    # Operation 09
-    print(">>> Operation 09")
+    # df = molit.getBrHsprcInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrHsprcInfo")
+    # print(df.head(2))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0000"
-    startDate = "202001"
-    endDate = "202012"
+    # # Operation 09
+    # print(">>> Operation 09")
 
-    df = molit.getBrExposInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrExposInfo")
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
 
-    print(df.head(2))
+    # df = molit.getBrExposInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrExposInfo")
 
-    # Operation 10
-    print(">>> Operation 10")
+    # print(df.head(2))
 
-    sigunguCd = "11680"
-    bjdongCd = "10300"
-    platGbCd = "0"
-    bun = "0012"
-    ji = "0000"
-    startDate = "202001"
-    endDate = "202012"
+    # # Operation 10
+    # print(">>> Operation 10")
 
-    df = molit.getBrJijiguInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
-    df = molit.ChangeCols(df, "getBrJijiguInfo")
+    # sigunguCd = "11680"
+    # bjdongCd = "10300"
+    # platGbCd = "0"
+    # bun = "0012"
+    # ji = "0000"
+    # startDate = "202001"
+    # endDate = "202012"
 
-    print(df.head(2))
+    # df = molit.getBrJijiguInfo(sigunguCd, bjdongCd, platGbCd, bun, ji, startDate, endDate)
+    # df = molit.ChangeCols(df, "getBrJijiguInfo")
 
+    # print(df.head(2))
