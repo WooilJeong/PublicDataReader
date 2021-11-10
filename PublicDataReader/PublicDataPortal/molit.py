@@ -3,51 +3,67 @@
 molit(Ministry of Land, Infrastructure and Transport)
 
 1. Transaction 클래스: 부동산 실거래가 조회
-    - AptTrade: 아파트매매 실거래자료 조회
-    - AptTradeDetail: 아파트매매 실거래 상세 자료 조회
-    - AptRent: 아파트 전월세 자료 조회
-    - AptOwnership: 아파트 분양권전매 신고 자료 조회
-    - OffiTrade: 오피스텔 매매 신고 조회
-    - OffiRent: 오피스텔 전월세 신고 조회
-    - RHTrade: 연립다세대 매매 실거래자료 조회
-    - RHRent: 연립다세대 전월세 실거래자료 조회
-    - DHTrade: 단독/다가구 매매 실거래 조회
-    - DHRent: 단독/다가구 전월세 자료 조회
-    - LandTrade: 토지 매매 신고 조회
-    - BizTrade: 상업업무용 부동산 매매 신고 자료 조회
+    01. AptTrade: 아파트매매 실거래자료 조회
+    02. AptTradeDetail: 아파트매매 실거래 상세 자료 조회
+    03. AptRent: 아파트 전월세 자료 조회
+    04. AptOwnership: 아파트 분양권전매 신고 자료 조회
+    05. OffiTrade: 오피스텔 매매 신고 조회
+    06. OffiRent: 오피스텔 전월세 신고 조회
+    07. RHTrade: 연립다세대 매매 실거래자료 조회
+    08. RHRent: 연립다세대 전월세 실거래자료 조회
+    09. DHTrade: 단독/다가구 매매 실거래 조회
+    10. DHRent: 단독/다가구 전월세 자료 조회
+    11. LandTrade: 토지 매매 신고 조회
+    12. BizTrade: 상업업무용 부동산 매매 신고 자료 조회
 
 2. Building 클래스: 건축물대장정보 서비스
-    01 건축물대장 기본개요 조회: getBrBasisOulnInfo
-    02 건축물대장 총괄표제부 조회: getBrRecapTitleInfo
-    03 건축물대장 표제부 조회: getBrTitleInfo
-    04 건축물대장 층별개요 조회: getBrFlrOulnInfo
-    05 건축물대장 부속지번 조회: getBrAtchJibunInfo
-    06 건축물대장 전유공용면적 조회: getBrExposPubuseAreaInfo
-    07 건축물대장 오수정화시설 조회: getBrWclfInfo
-    08 건축물대장 주택가격 조회: getBrHsprcInfo
-    09 건축물대장 전유부 조회: getBrExposInfo
-    10 건축물대장 지역지구구역 조회: getBrJijiguInfo
+    01. 건축물대장 기본개요 조회: getBrBasisOulnInfo
+    02. 건축물대장 총괄표제부 조회: getBrRecapTitleInfo
+    03. 건축물대장 표제부 조회: getBrTitleInfo
+    04. 건축물대장 층별개요 조회: getBrFlrOulnInfo
+    05. 건축물대장 부속지번 조회: getBrAtchJibunInfo
+    06. 건축물대장 전유공용면적 조회: getBrExposPubuseAreaInfo
+    07. 건축물대장 오수정화시설 조회: getBrWclfInfo
+    08. 건축물대장 주택가격 조회: getBrHsprcInfo
+    09. 건축물대장 전유부 조회: getBrExposInfo
+    10. 건축물대장 지역지구구역 조회: getBrJijiguInfo
 """
 
 import pandas as pd
 import numpy as np
 import datetime
+import logging
 import requests
 from bs4 import BeautifulSoup
-
 
 class Transaction:
     """
     부동산 실거래가 조회 클래스
     """
 
-    def __init__(self, serviceKey):
+    def __init__(self, serviceKey, debug=False):
         """
         공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
+        - serviceKey: 서비스 인증키 문자열
+        - debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
         """
+        # 로거 설정
+        self.logger = logging.getLogger("root")
+        # 로깅 레벨 설정
+        if debug == True:
+            self.logger.setLevel(logging.INFO)
+        else:
+            self.logger.setLevel(logging.ERROR)
+        # 출력 포매팅 설정 - 시간, 로거이름, 로깅레벨, 메세지
+        formatter = logging.Formatter("[%(levelname)s] %(message)s")
+        if len(self.logger.handlers) == 0:
+            # 스트림 핸들러 설정 - 콘솔에 출력
+            stream_handler = logging.StreamHandler()
+            stream_handler.setFormatter(formatter)
+            self.logger.addHandler(stream_handler)
+
         # Open API 서비스 키 초기화
         self.serviceKey = serviceKey
-
         # ServiceKey 유효성 검사
         self.urlAptTrade = (
             "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?serviceKey="
@@ -118,28 +134,82 @@ class Transaction:
         for serviceName, url in urlDict.items():
             result = requests.get(url, verify=False)
             xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            te = xmlsoup.findAll("header")
-            if te[0].find("resultCode").text == "00":
-                print(f">>> {serviceName} 서비스가 정상 작동합니다.")
+            header = xmlsoup.findAll("header")[0]
+            result_code = header.find('resultCode').text
+            result_message = header.find('resultMsg').text
+            if result_code == "00":
+                self.logger.info(f"{serviceName} - ({result_code}) {result_message}")
             else:
-                print(f">>> {serviceName} 서비스키 미등록 오류입니다.")
+                self.logger.error(f"{serviceName} - ({result_code}) {result_message}")
 
-        # 지역 코드 초기화
-        # 법정동 코드 출처 : https://code.go.kr
-        path_code = "https://raw.githubusercontent.com/WooilJeong/PublicDataReader/f14e4de3410cc0f798a83ee5934070d651cbd67b/docs/%EB%B2%95%EC%A0%95%EB%8F%99%EC%BD%94%EB%93%9C%20%EC%A0%84%EC%B2%B4%EC%9E%90%EB%A3%8C.txt"
-        code = pd.read_csv(path_code, encoding="cp949", sep="\t")
-        code = code.loc[code["폐지여부"] == "존재"]
-        code["법정구코드"] = list(map(lambda a: str(a)[:5], list(code["법정동코드"])))
-        self.code = code
+        # URL 및 컬럼 리스트 매핑
+        self.metaDict = {
+            "아파트": {
+                "매매": {
+                    "url": self.urlAptTradeDetail,
+                    "columns": ['거래금액','거래유형','건축년도','년','도로명','도로명건물본번호코드','도로명건물부번호코드','도로명시군구코드','도로명일련번호코드','도로명지상지하코드','도로명코드','법정동','법정동본번코드','법정동부번코드','법정동시군구코드','법정동읍면동코드','법정동지번코드','아파트','월','일','일련번호','전용면적','중개사소재지','지번','지역코드','층','해제사유발생일','해제여부']
+                },
+                "전월세": {
+                    "url": self.urlAptRent,
+                    "columns": ['건축년도','년','법정동','보증금액','아파트','월','월세금액','일','전용면적','지번','지역코드','층']
+                }
+            },
+            
+            "오피스텔": {
+                "매매": {
+                    "url": self.urlOffiTrade,
+                    "columns": ['거래금액','거래유형','건축년도','년','단지','법정동','시군구','월','일','전용면적','중개사소재지','지번','지역코드','층','해제사유발생일','해제여부']
+                },
+                "전월세": {
+                    "url": self.urlOffiRent,
+                    "columns": ['건축년도','년','단지','법정동','보증금','시군구','월','월세','일','전용면적','지번','지역코드','층']
+                }
+            },
+            
+            "단독다가구": {
+                "매매": {
+                    "url": self.urlDHTrade,
+                    "columns": ['거래금액','거래유형','건축년도','년','대지면적','법정동','연면적','월','일','주택유형','중개사소재지','지역코드','해제사유발생일','해제여부']
+                },
+                "전월세": {
+                    "url": self.urlDHRent,
+                    "columns": ['건축년도','계약면적','년','법정동','보증금액','월','월세금액','일','지역코드']
+                }
+            },
+            
+            "연립다세대": {
+                "매매": {
+                    "url": self.urlRHTrade,
+                    "columns": ['거래금액','거래유형','건축년도','년','대지권면적','법정동','연립다세대','월','일','전용면적','중개사소재지','지번','지역코드','층','해제사유발생일','해제여부']
+                },
+                "전월세": {
+                    "url": self.urlRHRent,
+                    "columns": ['건축년도','년','법정동','보증금액','연립다세대','월','월세금액','일','전용면적','지번','지역코드','층']
+                }
+            },
+            
+            "상업업무용": {
+                "매매": {
+                    "url": self.urlBizTrade,
+                    "columns": ['거래금액','거래유형','건물면적','건물주용도','건축년도','년','대지면적','법정동','시군구','용도지역','월','유형','일','중개사소재지','지역코드','해제사유발생일','해제여부']
+                },
+            },
 
-    def CodeFinder(self, name):
-        """
-        국토교통부 실거래가 정보 오픈API는 법정동코드 10자리 중 앞 5자리인 구를 나타내는 지역코드를 사용합니다.
-        API에 사용할 구 별 코드를 조회하는 메서드이며, 문자열 지역 명을 입력받고, 조회 결과를 Pandas DataFrame형식으로 출력합니다.
-        """
-        result = self.code[self.code["법정동명"].str.contains(name)][["법정동명", "법정구코드"]]
-        result.index = range(len(result))
-        return result
+            "토지": {
+                "매매": {
+                    "url": self.urlLandTrade,
+                    "columns": ['거래금액','거래면적','거래유형','년','법정동','시군구','용도지역','월','일','중개사소재지','지목','지역코드','해제사유발생일','해제여부']
+                },
+            },
+            
+            "분양입주권": {
+                "매매": {
+                    "url": self.urlAptOwnership,
+                    "columns": ['거래금액','거래유형','구분','년','단지','법정동','시군구','월','일','전용면적','중개사소재지','지번','지역코드','층','해제사유발생일','해제여부']
+                },
+            },
+        }
+
 
     def DataCollector(self, service, LAWD_CD, start_date, end_date):
         """
@@ -159,13 +229,77 @@ class Transaction:
         df = pd.DataFrame()
         df_sum = pd.DataFrame()
         for m in date_list:
-            print(">>> LAWD_CD :", LAWD_CD, "DEAL_YMD :", m)
+            self.logger.info("LAWD_CD :", LAWD_CD, "DEAL_YMD :", m)
             DEAL_YMD = m
             df = service(LAWD_CD, DEAL_YMD)
             df_sum = pd.concat([df_sum, df])
         df_sum.index = range(len(df_sum))
 
         return df_sum
+
+    def read_data(self, prod, trans, sigunguCode, yearMonth):
+        """
+        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용)
+        trans: 매매, 전월세
+        sigunguCode: 시군구코드(5자리)
+        yearMonth: 계약년월("YYYYmm")
+        """
+        # 엔드포인트 및 컬럼 목록 매핑
+        try:
+            endpoint = self.metaDict[prod][trans]['url']
+            columns = self.metaDict[prod][trans]['columns']
+        except:
+            self.logger.error(f"{prod} {trans} 참조 오류")
+            return
+        
+        try:
+            # URL
+            url=f"""{endpoint}&LAWD_CD={str(sigunguCode)}&DEAL_YMD={str(yearMonth)}&numOfRows=99999"""
+
+            # Open API 호출
+            result = requests.get(url, verify=False)
+            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
+            header = xmlsoup.find("header")
+            result_code = header.find("resultCode").text
+            result_msg = header.find("resultMsg").text
+            items = xmlsoup.findAll("item")
+            
+        except:
+            self.logger.error(f"Open API 호출 오류")
+            return
+        
+        if result_code == "00":
+            """
+            결과 정상
+            """
+            # 데이터프레임 생성
+            df = pd.DataFrame()
+            for item in items:
+                row = {}
+                for tag in item:
+                    row[tag.name] = tag.text.strip()
+                df_ = pd.DataFrame([row])
+                df = df.append(df_)
+            df = df[columns]    
+            df.index = range(len(df))
+
+        else:
+            """
+            결과 에러
+            """
+            self.logger.error(f"({result_code}) {result_msg}")
+            return
+        
+        return df
+
+
+
+
+    #======================================================================================================================
+    #
+    # 이하 제거
+    #
+    #======================================================================================================================
 
     def AptTrade(self, LAWD_CD, DEAL_YMD):
         """
@@ -211,7 +345,7 @@ class Transaction:
                     df["거래금액"] = pd.to_numeric(df["거래금액"].str.replace(",", ""))
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -235,10 +369,10 @@ class Transaction:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def AptTradeDetail(self, LAWD_CD, DEAL_YMD):
@@ -359,7 +493,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -383,10 +517,10 @@ class Transaction:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def AptRent(self, LAWD_CD, DEAL_YMD):
@@ -451,7 +585,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -478,11 +612,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -535,7 +669,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -562,11 +696,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -619,7 +753,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -646,11 +780,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -703,7 +837,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -730,11 +864,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -786,7 +920,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -813,11 +947,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -883,7 +1017,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -910,11 +1044,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -966,7 +1100,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -993,11 +1127,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -1048,7 +1182,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -1075,11 +1209,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -1143,7 +1277,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -1170,11 +1304,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -1257,7 +1391,7 @@ class Transaction:
 
             except:
                 df = pd.DataFrame(columns=colNames)
-                print("조회할 자료가 없습니다.")
+                self.logger.info("조회할 자료가 없습니다.")
 
             # Arange Columns
             df = df[colNames]
@@ -1284,11 +1418,11 @@ class Transaction:
 
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
 
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
 
             pass
 
@@ -1298,10 +1432,27 @@ class Building:
     건축물대장정보 서비스
     """
 
-    def __init__(self, serviceKey):
+    def __init__(self, serviceKey, debug=False):
         """
         공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
+        - serviceKey: 서비스 인증키 문자열
+        - debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
         """
+        # 로거 설정
+        self.logger = logging.getLogger("root")
+        # 로깅 레벨 설정
+        if debug == True:
+            self.logger.setLevel(logging.INFO)
+        else:
+            self.logger.setLevel(logging.ERROR)
+        # 출력 포매팅 설정 - 시간, 로거이름, 로깅레벨, 메세지
+        formatter = logging.Formatter("[%(levelname)s] %(message)s")
+        if len(self.logger.handlers) == 0:
+            # 스트림 핸들러 설정 - 콘솔에 출력
+            stream_handler = logging.StreamHandler()
+            stream_handler.setFormatter(formatter)
+            self.logger.addHandler(stream_handler)
+
         # Open API 서비스 키 초기화
         self.serviceKey = serviceKey
 
@@ -1350,11 +1501,13 @@ class Building:
         for serviceName, url in urlDict.items():
             result = requests.get(url, verify=False)
             xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            te = xmlsoup.findAll("header")
-            if te[0].find("resultCode").text == "00":
-                print(f">>> {serviceName} 서비스가 정상 작동합니다.")
+            header = xmlsoup.findAll("header")[0]
+            result_code = header.find('resultCode').text
+            result_message = header.find('resultMsg').text
+            if result_code == "00":
+                self.logger.info(f"{serviceName} - ({result_code}) {result_message}")
             else:
-                print(f">>> {serviceName} 서비스키 미등록 오류입니다.")
+                self.logger.error(f"{serviceName} - ({result_code}) {result_message}")
 
         # 지역 코드 초기화
         # 법정동 코드 출처 : https://code.go.kr
@@ -1917,10 +2070,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrRecapTitleInfo(
@@ -2102,10 +2255,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrTitleInfo(
@@ -2313,10 +2466,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrFlrOulnInfo(
@@ -2436,10 +2589,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrAtchJibunInfo(
@@ -2559,10 +2712,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrExposPubuseAreaInfo(
@@ -2703,10 +2856,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrWclfInfo(
@@ -2818,10 +2971,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrHsprcInfo(
@@ -2923,10 +3076,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrExposInfo(
@@ -3034,10 +3187,10 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass
 
     def getBrJijiguInfo(
@@ -3127,8 +3280,8 @@ class Building:
             te = xmlsoup.findAll("header")
             # 정상 요청시 에러 발생 -> Python 코드 에러
             if te[0].find("resultCode").text == "00":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
             # Open API 서비스 제공처 오류
             else:
-                print(">>> Open API Error: {}".format(te[0].find["resultMsg"]))
+                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
             pass

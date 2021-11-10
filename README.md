@@ -30,8 +30,8 @@
       - 국토교통부 실거래가 정보 조회 기능 전면 수정
 
 
-- **요구 사항**  
-![](https://img.shields.io/badge/Python-3.7.4-yellow.svg) ![](https://img.shields.io/badge/Pandas-0.25.3-red.svg)
+- **의존성**  
+![](https://img.shields.io/badge/Python-3.8.12-yellow.svg) ![](https://img.shields.io/badge/Pandas-1.3.4-red.svg) ![](https://img.shields.io/badge/beautifulsoup4-4.10.0-blue.svg)
 
 **PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 에서 제공하는 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 수집 라이브러리**입니다. 
 
@@ -119,7 +119,7 @@
 ## 설치 방법
 
 ```bash
-pip install PublicDataReader
+pip install --upgrade PublicDataReader
 ```
 
 ## 사용 방법

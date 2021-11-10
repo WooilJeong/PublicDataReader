@@ -1,14 +1,14 @@
 from .data import *
 
-version = "2021.4.12"
+version = "2021.11."
 
-__version__ = f"""
->>> PublicDataReader Version : {version}
+__version__ = f"""{version}"""
 
+__info__ = """\
 - Author : Wooil Jeong
 - E-mail : wooil@kakao.com
 - Github : https://github.com/WooilJeong/PublicDataReader
-- Blog : https://wooiljeong.github.io
+- Blog : https://wooiljeong.github.io\
 """
 
-__all__ = ["__version__", "Transaction"]
+__all__ = ["__version__", "__info__", "Transaction", "Building"]
