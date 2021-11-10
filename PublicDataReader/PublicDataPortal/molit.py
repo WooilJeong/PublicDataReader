@@ -31,10 +31,12 @@ molit(Ministry of Land, Infrastructure and Transport)
 
 import pandas as pd
 import numpy as np
+from dateutil.relativedelta import relativedelta
 import datetime
 import logging
 import requests
 from bs4 import BeautifulSoup
+
 
 class Transaction:
     """
@@ -236,6 +238,34 @@ class Transaction:
         df_sum.index = range(len(df_sum))
 
         return df_sum
+
+    def collect_data(self, prod, trans, sigunguCode, startYearMonth, endYearMonth):
+        """
+        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용)
+        trans: 매매, 전월세
+        sigunguCode: 시군구코드(5자리)
+        startYearMonth: 조회시작 계약년월("YYYYmm")
+        endYearMonth: 조회종료 계약년월("YYYYmm")
+        """
+        start_date = datetime.datetime.strptime(str(startYearMonth), "%Y%m")
+        start_date = datetime.datetime.strftime(start_date, "%Y-%m")
+        end_date = datetime.datetime.strptime(str(endYearMonth), "%Y%m")
+        end_date = end_date + datetime.timedelta(days=31)
+        end_date = datetime.datetime.strftime(end_date, "%Y-%m")
+        ts = pd.date_range(start=start_date, end=end_date, freq="m")
+        date_list = list(ts.strftime("%Y%m"))
+        df = pd.DataFrame()
+        for yearMonth in date_list:
+            try:
+                self.logger.info(f"{prod} {trans} {yearMonth} 조회 시작")
+                df_ = self.read_data(prod, trans, sigunguCode, yearMonth)
+                df = df.append(df_)
+            except:
+                self.logger.eeror(f"{prod} {trans} {yearMonth} 조회 오류")
+                return
+        df.index = range(len(df))
+        return df
+
 
     def read_data(self, prod, trans, sigunguCode, yearMonth):
         """
