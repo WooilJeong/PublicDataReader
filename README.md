@@ -18,7 +18,7 @@
 ## 소개
 
 - **최신 버전**  
-![](https://img.shields.io/badge/PublicDataReader-2021.4.12-blue.svg)  
+![](https://img.shields.io/badge/PublicDataReader-2021.11.-blue.svg)  
 
     - 2021.4.12 Version (2021-04):
       - 국토교통부 건축물대장정보 서비스 추가
@@ -31,7 +31,7 @@
 
 
 - **의존성**  
-![](https://img.shields.io/badge/Python-3.8.12-yellow.svg) ![](https://img.shields.io/badge/Pandas-1.3.4-red.svg) ![](https://img.shields.io/badge/beautifulsoup4-4.10.0-blue.svg)
+![](https://img.shields.io/badge/Python-3.8.12-yellow.svg) ![](https://img.shields.io/badge/Pandas-1.3.4-red.svg) ![](https://img.shields.io/badge/beautifulsoup4-4.10.0-green.svg)
 
 **PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 에서 제공하는 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 수집 라이브러리**입니다. 
 
@@ -50,8 +50,7 @@
 
 | **메서드**     | **서비스 명**                         |
 | -------------- | ------------------------------------- |
-| CondeFinder    | 지역코드 조회                         |
-| DataCollector  | 서비스/기간 별 데이터 조회            |
+| read_data("아파트", "매매", "41135", "202111")  | 서비스/기간 별 데이터 조회            |
 | AptTrade       | 아파트매매 실거래자료 조회            |
 | AptTradeDetail | 아파트매매 실거래 상세 자료 조회      |
 | AptRent        | 아파트 전월세 자료 조회               |
@@ -136,29 +135,28 @@ serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 # 3. 국토교통부(molit) 실거래가 정보 조회 Open API 인스턴스 생성하기
 molit = pdr.Transaction(serviceKey)
 
-# 4. 지역코드 검색하기
-codeResult = molit.CodeFinder("분당구")                            # 지역코드 : 41135
-codeResult.head()
-
+# 4. 지역코드(시군구코드) 검색하기
+sigunguName = "분당구"                           # 시군구코드: 41135
+code = pdr.code_list()
+code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
+         (code['읍면동명'].isna())]
 
 # 5. 지역, 월 별 데이터 프레임 만들기
-# Function(지역코드(5자리), 계약월(YYYYMM))
-# (예시) '2020년 12월', '분당구'에 해당하는 자료를 Pandas DataFrame으로 반환
+# (예시) '2021년 11월', '분당구'에 해당하는 자료를 Pandas DataFrame으로 조회
 
-df_AptTrade = molit.AptTrade(41135, 202012)             # 아파트매매 실거래자료 조회
-df_AptTradeDetail = molit.AptTradeDetail(41135, 202012) # 아파트매매 실거래 상세 자료 조회
-df_AptRent = molit.AptRent(41135, 202012)               # 아파트 전월세 자료 조회
-df_AptOwnership = molit.AptOwnership(41135, 202012)     # 아파트 분양권전매 신고 자료 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 아파트매매 실거래 상세 자료 조회
+df = molit.read_data("아파트", "전월세", "41135", "202111")           # 아파트 전월세 자료 조회
+df = molit.read_data("분양입주권", "매매", "41135", "202111")           # 아파트 분양권전매 신고 자료 조회
 
-df_OffiTrade = molit.OffiTrade(41135, 202012)           # 오피스텔 매매 신고 조회
-df_OffiRent = molit.OffiRent(41135, 202012)             # 오피스텔 전월세 신고 조회
-df_RHTrade = molit.RHTrade(41135, 202012)               # 연립다세대 매매 실거래자료 조회
-df_RHRent = molit.RHRent(41135, 202012)                 # 연립다세대 전월세 실거래자료 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 오피스텔 매매 신고 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 오피스텔 전월세 신고 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 연립다세대 매매 실거래자료 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 연립다세대 전월세 실거래자료 조회
 
-df_DHTrade = molit.DHTrade(41135, 202012)               # 단독/다가구 매매 실거래 조회
-df_DHRent = molit.DHRent(41135, 202012)                 # 단독/다가구 전월세 자료 조회
-df_LandTrade = molit.LandTrade(41135, 202012)           # 토지 매매 신고 조회
-df_BizTrade = molit.BizTrade(41135, 202012)             # 상업업무용 부동산 매매 신고 자료 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 단독/다가구 매매 실거래 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 단독/다가구 전월세 자료 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 토지 매매 신고 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")           # 상업업무용 부동산 매매 신고 자료 조회
 
 
 # 6. 지역, 기간 별 데이터 프레임 만들기

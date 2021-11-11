@@ -258,7 +258,6 @@ class Transaction:
         try:
             # URL
             url=f"""{endpoint}&LAWD_CD={str(sigunguCode)}&DEAL_YMD={str(yearMonth)}&numOfRows=99999"""
-
             # Open API 호출
             result = requests.get(url, verify=False)
             xmlsoup = BeautifulSoup(result.text, "lxml-xml")
@@ -276,15 +275,29 @@ class Transaction:
             결과 정상
             """
             # 데이터프레임 생성
-            df = pd.DataFrame()
-            for item in items:
-                row = {}
-                for tag in item:
-                    row[tag.name] = tag.text.strip()
-                df_ = pd.DataFrame([row])
-                df = df.append(df_)
-            df = df[columns]    
-            df.index = range(len(df))
+            try:
+                df = pd.DataFrame()
+                for item in items:
+                    row = {}
+                    for col in columns:
+                        try:
+                            tag = item.find(col)
+                            row[col] = tag.text.strip()
+                        except:
+                            row[col] = ""
+                    df_ = pd.DataFrame([row])
+                    df = df.append(df_)
+                        
+                if len(df) != 0:
+                    df = df[columns]
+                    df.index = range(len(df))
+                else:
+                    self.logger.info(f"조회 결과 없음")
+                    return pd.DataFrame(columns=columns)
+
+            except:
+                self.logger.error(f"조회 로직 오류")
+                return
 
         else:
             """
