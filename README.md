@@ -133,48 +133,47 @@ print(pdr.__version__)
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # 3. 국토교통부(molit) 실거래가 정보 조회 Open API 인스턴스 생성하기
-molit = pdr.Transaction(serviceKey)
+# debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
+molit = pdr.Transaction(serviceKey, debug=True)
 
 # 4. 지역코드(시군구코드) 검색하기
-sigunguName = "분당구"                           # 시군구코드: 41135
+sigunguName = "분당구"                                                              # 시군구코드: 41135
 code = pdr.code_list()
 code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
          (code['읍면동명'].isna())]
 
 # 5. 지역, 월 별 데이터 프레임 만들기
-# (예시) '2021년 11월', '분당구'에 해당하는 자료를 Pandas DataFrame으로 조회
 
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 아파트매매 실거래 상세 자료 조회
-df = molit.read_data("아파트", "전월세", "41135", "202111")           # 아파트 전월세 자료 조회
-df = molit.read_data("분양입주권", "매매", "41135", "202111")           # 아파트 분양권전매 신고 자료 조회
+df = molit.read_data("아파트", "매매", "41135", "202111")                           # 아파트매매 실거래 상세 자료 조회
+df = molit.read_data("아파트", "전월세", "41135", "202111")                         # 아파트 전월세 자료 조회
+df = molit.read_data("분양입주권", "매매", "41135", "202111")                       # 아파트 분양권전매 신고 자료 조회
 
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 오피스텔 매매 신고 조회
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 오피스텔 전월세 신고 조회
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 연립다세대 매매 실거래자료 조회
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 연립다세대 전월세 실거래자료 조회
+df = molit.read_data("오피스텔", "매매", "41135", "202111")                         # 오피스텔 매매 신고 조회
+df = molit.read_data("오피스텔", "전월세", "41135", "202111")                       # 오피스텔 전월세 신고 조회
+df = molit.read_data("연립다세대", "매매", "41135", "202111")                       # 연립다세대 매매 실거래자료 조회
+df = molit.read_data("연립다세대", "전월세", "41135", "202111")                     # 연립다세대 전월세 실거래자료 조회
 
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 단독/다가구 매매 실거래 조회
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 단독/다가구 전월세 자료 조회
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 토지 매매 신고 조회
-df = molit.read_data("아파트", "매매", "41135", "202111")           # 상업업무용 부동산 매매 신고 자료 조회
+df = molit.read_data("단독다가구", "매매", "41135", "202111")                       # 단독/다가구 매매 실거래 조회
+df = molit.read_data("단독다가구", "전월세", "41135", "202111")                     # 단독/다가구 전월세 자료 조회
+df = molit.read_data("토지", "매매", "41135", "202111")                             # 토지 매매 신고 조회
+df = molit.read_data("상업업무용", "매매", "41135", "202111")                       # 상업업무용 부동산 매매 신고 자료 조회
 
 
 # 6. 지역, 기간 별 데이터 프레임 만들기
-# Function(API서비스 메서드, 지역코드(5자리), 시작월(YYYYMM), 종료월(YYYYMM))
-df_AptTradeSum = molit.DataCollector(molit.AptTrade, 41135, 202001, 202012)
-df_AptTradeDetailSum = molit.DataCollector(molit.AptTradeDetail, 41135, 202001, 202012)
-df_AptRentSum = molit.DataCollector(molit.AptRent, 41135, 202001, 202012)
-df_AptOwnershipSum = molit.DataCollector(molit.AptOwnership, 41135, 202001, 202012)
 
-df_OffiTradeSum = molit.DataCollector(molit.OffiTrade, 41135, 202001, 202012)
-df_OffiRentSum = molit.DataCollector(molit.OffiRent, 41135, 202001, 202012)
-df_RHTradeSum = molit.DataCollector(molit.RHTrade, 41135, 202001, 202012)
-df_RHRentSum = molit.DataCollector(molit.RHRent, 41135, 202001, 202012)
+df = molit.collect_data("아파트", "매매", "41135", "202101", "202111")              # 아파트매매 실거래 상세 자료 조회
+df = molit.collect_data("아파트", "전월세", "41135", "202101", "202111")            # 아파트 전월세 자료 조회
+df = molit.collect_data("분양입주권", "매매", "41135", "202101", "202111")          # 아파트 분양권전매 신고 자료 조회
 
-df_DHTradeSum = molit.DataCollector(molit.DHTrade, 41135, 202001, 202012)
-df_DHRentSum = molit.DataCollector(molit.DHRent, 41135, 202001, 202012)
-df_LandTradeSum = molit.DataCollector(molit.LandTrade, 41135, 202001, 202012)
-df_BizTradeSum = molit.DataCollector(molit.BizTrade, 41135, 202001, 202012)
+df = molit.collect_data("오피스텔", "매매", "41135", "202101", "202111")            # 오피스텔 매매 신고 조회
+df = molit.collect_data("오피스텔", "전월세", "41135", "202101", "202111")          # 오피스텔 전월세 신고 조회
+df = molit.collect_data("연립다세대", "매매", "41135", "202101", "202111")          # 연립다세대 매매 실거래자료 조회
+df = molit.collect_data("연립다세대", "전월세", "41135", "202101", "202111")        # 연립다세대 전월세 실거래자료 조회
+
+df = molit.collect_data("단독다가구", "매매", "41135", "202101", "202111")          # 단독/다가구 매매 실거래 조회
+df = molit.collect_data("단독다가구", "전월세", "41135", "202101", "202111")        # 단독/다가구 전월세 자료 조회
+df = molit.collect_data("토지", "매매", "41135", "202101", "202111")                # 토지 매매 신고 조회
+df = molit.collect_data("상업업무용", "매매", "41135", "202101", "202111")          # 상업업무용 부동산 매매 신고 자료 조회
 
 ```
 
