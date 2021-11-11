@@ -391,22 +391,6 @@ class Building:
             else:
                 self.logger.error(f"{serviceName} - ({result_code}) {result_message}")
 
-        # 지역 코드 초기화
-        # 법정동 코드 출처 : https://code.go.kr
-        path_code = "https://raw.githubusercontent.com/WooilJeong/PublicDataReader/f14e4de3410cc0f798a83ee5934070d651cbd67b/docs/%EB%B2%95%EC%A0%95%EB%8F%99%EC%BD%94%EB%93%9C%20%EC%A0%84%EC%B2%B4%EC%9E%90%EB%A3%8C.txt"
-        code = pd.read_csv(path_code, encoding="cp949", sep="\t")
-        code = code.loc[code["폐지여부"] == "존재"]
-        code["법정구코드"] = list(map(lambda a: str(a)[:5], list(code["법정동코드"])))
-        self.code = code
-
-    def CodeFinder(self, name):
-        """
-        국토교통부 실거래가 정보 오픈API는 법정동코드 10자리 중 앞 5자리인 구를 나타내는 지역코드를 사용합니다.
-        API에 사용할 구 별 코드를 조회하는 메서드이며, 문자열 지역 명을 입력받고, 조회 결과를 Pandas DataFrame형식으로 출력합니다.
-        """
-        result = self.code[self.code["법정동명"].str.contains(name)][["법정동명", "법정구코드"]]
-        result.index = range(len(result))
-        return result
 
     def ChangeCols(self, df, operationName):
         """
@@ -600,7 +584,7 @@ class Building:
             }
 
         elif operationName == "getBrFlrOulnInfo":
-            self.colDict = colDict = {
+            self.colDict = {
                 "area": "면적",
                 "areaExctYn": "면적제외여부",
                 "bjdongCd": "법정동코드",
@@ -638,7 +622,7 @@ class Building:
             }
 
         elif operationName == "getBrAtchJibunInfo":
-            self.colDict = colDict = {
+            self.colDict = {
                 "atchBjdongCd": "부속법정동코드",
                 "atchBlock": "부속블록",
                 "atchBun": "부속번",
@@ -676,7 +660,7 @@ class Building:
             }
 
         elif operationName == "getBrExposPubuseAreaInfo":
-            self.colDict = colDict = {
+            self.colDict = {
                 "area": "면적",
                 "bjdongCd": "법정동코드",
                 "bldNm": "건물명",
@@ -720,7 +704,7 @@ class Building:
             }
 
         elif operationName == "getBrWclfInfo":
-            self.colDict = colDict = {
+            self.colDict = {
                 "bjdongCd": "법정동코드",
                 "bldNm": "건물명",
                 "block": "블록",
@@ -754,7 +738,7 @@ class Building:
             }
 
         elif operationName == "getBrHsprcInfo":
-            self.colDict = colDict = {
+            self.colDict = {
                 "bjdongCd": "법정동코드",
                 "bldNm": "건물명",
                 "block": "블록",
@@ -783,7 +767,7 @@ class Building:
             }
 
         elif operationName == "getBrExposInfo":
-            self.colDict = colDict = {
+            self.colDict = {
                 "bjdongCd": "법정동코드",
                 "bldNm": "건물명",
                 "block": "블록",
@@ -815,7 +799,7 @@ class Building:
             }
 
         elif operationName == "getBrJijiguInfo":
-            self.colDict = colDict = {
+            self.colDict = {
                 "bjdongCd": "법정동코드",
                 "block": "블록",
                 "bun": "번",
