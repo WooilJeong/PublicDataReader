@@ -213,32 +213,6 @@ class Transaction:
         }
 
 
-    def DataCollector(self, service, LAWD_CD, start_date, end_date):
-        """
-        서비스별 기간별 조회
-        입력: 서비스별 조회 메서드, 지역코드, 시작월(YYYYmm), 종료월(YYYYmm)
-        """
-        start_date = datetime.datetime.strptime(str(start_date), "%Y%m")
-        start_date = datetime.datetime.strftime(start_date, "%Y-%m")
-
-        end_date = datetime.datetime.strptime(str(end_date), "%Y%m")
-        end_date = end_date + datetime.timedelta(days=31)
-        end_date = datetime.datetime.strftime(end_date, "%Y-%m")
-
-        ts = pd.date_range(start=start_date, end=end_date, freq="m")
-        date_list = list(ts.strftime("%Y%m"))
-
-        df = pd.DataFrame()
-        df_sum = pd.DataFrame()
-        for m in date_list:
-            self.logger.info("LAWD_CD :", LAWD_CD, "DEAL_YMD :", m)
-            DEAL_YMD = m
-            df = service(LAWD_CD, DEAL_YMD)
-            df_sum = pd.concat([df_sum, df])
-        df_sum.index = range(len(df_sum))
-
-        return df_sum
-
     def collect_data(self, prod, trans, sigunguCode, startYearMonth, endYearMonth):
         """
         prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용)
@@ -327,9 +301,36 @@ class Transaction:
 
     #======================================================================================================================
     #
-    # 이하 제거
+    # 이하 제거 예정
     #
     #======================================================================================================================
+    
+    def DataCollector(self, service, LAWD_CD, start_date, end_date):
+        """
+        서비스별 기간별 조회
+        입력: 서비스별 조회 메서드, 지역코드, 시작월(YYYYmm), 종료월(YYYYmm)
+        """
+        start_date = datetime.datetime.strptime(str(start_date), "%Y%m")
+        start_date = datetime.datetime.strftime(start_date, "%Y-%m")
+
+        end_date = datetime.datetime.strptime(str(end_date), "%Y%m")
+        end_date = end_date + datetime.timedelta(days=31)
+        end_date = datetime.datetime.strftime(end_date, "%Y-%m")
+
+        ts = pd.date_range(start=start_date, end=end_date, freq="m")
+        date_list = list(ts.strftime("%Y%m"))
+
+        df = pd.DataFrame()
+        df_sum = pd.DataFrame()
+        for m in date_list:
+            self.logger.info("LAWD_CD :", LAWD_CD, "DEAL_YMD :", m)
+            DEAL_YMD = m
+            df = service(LAWD_CD, DEAL_YMD)
+            df_sum = pd.concat([df_sum, df])
+        df_sum.index = range(len(df_sum))
+
+        return df_sum
+
 
     def AptTrade(self, LAWD_CD, DEAL_YMD):
         """
