@@ -455,12 +455,89 @@ class Building:
 
         }
 
-    def ChangeCols(self, df, operationName):
+    def read_data(self, category, **kwargs):
+        
+        # 엔드포인트, 파라미터 및 컬럼 목록 매핑
+        try:
+            endpoint = self.metaDict[category]['url']
+            parameters = self.metaDict[category]['parameters']
+            columns = self.metaDict[category]['columns']
+        except:
+            self.logger.error(f"{category} 참조 오류")
+            return
+
+        try:
+            params = ""
+            for key, value in kwargs.items():
+                params += f"&{key}={value}"
+        except:
+            self.logger.error(f"{category} 파라미터 파싱 오류")
+            return
+        
+        try:
+            # URL
+            url=f"""{endpoint}{params}&numOfRows=99999"""
+            
+            # Open API 호출
+            result = requests.get(url, verify=False)
+            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
+            header = xmlsoup.find("header")
+            result_code = header.find("resultCode").text
+            result_msg = header.find("resultMsg").text
+            items = xmlsoup.findAll("item")
+
+        except:
+            self.logger.error(f"Open API 호출 오류")
+            return
+        
+        if result_code == "00":
+            """
+            결과 정상
+            """
+            # 데이터프레임 생성
+            try:
+                df = pd.DataFrame()
+                for item in items:
+                    row = {}
+                    for col in columns:
+                        try:
+                            tag = item.find(col)
+                            row[col] = tag.text.strip()
+                        except:
+                            row[col] = ""
+                    df_ = pd.DataFrame([row])
+                    df = df.append(df_)
+
+                if len(df) != 0:
+                    df = df[columns]
+                    df = self.ChangeCols(df, category)
+                    df.index = range(len(df))
+
+                else:
+                    self.logger.info(f"조회 결과 없음")
+                    df = pd.DataFrame(columns=columns)
+                    return df
+
+            except:
+                self.logger.error(f"조회 로직 오류")
+                return
+
+        else:
+            """
+            결과 에러
+            """
+            self.logger.error(f"({result_code}) {result_msg}")
+            return
+
+        return df
+
+
+    def ChangeCols(self, df, category):
         """
         영문 컬럼명을 국문 컬럼명으로 변경
         """
 
-        if operationName == "getBrBasisOulnInfo":
+        if category == "기본개요":
             self.colDict = {
                 "bjdongCd": "법정동코드",
                 "bldNm": "건물명",
@@ -495,7 +572,7 @@ class Building:
                 "splotNm": "특수지명",
             }
 
-        elif operationName == "getBrRecapTitleInfo":
+        elif category == "총괄표제부":
             self.colDict = {
                 "archArea": "건축면적",
                 "atchBldArea": "부속건축물면적",
@@ -564,7 +641,7 @@ class Building:
                 "vlRatEstmTotArea": "용적률산정연면적",
             }
 
-        elif operationName == "getBrTitleInfo":
+        elif category == "표제부":
             self.colDict = {
                 "archArea": "건축면적",
                 "atchBldArea": "부속건축물면적",
@@ -646,7 +723,7 @@ class Building:
                 "vlRatEstmTotArea": "용적률산정연면적",
             }
 
-        elif operationName == "getBrFlrOulnInfo":
+        elif category == "층별개요":
             self.colDict = {
                 "area": "면적",
                 "areaExctYn": "면적제외여부",
@@ -684,7 +761,7 @@ class Building:
                 "strctCdNm": "구조코드명",
             }
 
-        elif operationName == "getBrAtchJibunInfo":
+        elif category == "부속지번":
             self.colDict = {
                 "atchBjdongCd": "부속법정동코드",
                 "atchBlock": "부속블록",
@@ -722,7 +799,7 @@ class Building:
                 "splotNm": "특수지명",
             }
 
-        elif operationName == "getBrExposPubuseAreaInfo":
+        elif category == "전유공용면적":
             self.colDict = {
                 "area": "면적",
                 "bjdongCd": "법정동코드",
@@ -766,7 +843,7 @@ class Building:
                 "strctCdNm": "구조코드명",
             }
 
-        elif operationName == "getBrWclfInfo":
+        elif category == "오수정화시설":
             self.colDict = {
                 "bjdongCd": "법정동코드",
                 "bldNm": "건물명",
@@ -800,7 +877,7 @@ class Building:
                 "unitGbCdNm": "단위구분코드명",
             }
 
-        elif operationName == "getBrHsprcInfo":
+        elif category == "주택가격":
             self.colDict = {
                 "bjdongCd": "법정동코드",
                 "bldNm": "건물명",
@@ -829,7 +906,7 @@ class Building:
                 "splotNm": "특수지명",
             }
 
-        elif operationName == "getBrExposInfo":
+        elif category == "전유부":
             self.colDict = {
                 "bjdongCd": "법정동코드",
                 "bldNm": "건물명",
@@ -861,7 +938,7 @@ class Building:
                 "splotNm": "특수지명",
             }
 
-        elif operationName == "getBrJijiguInfo":
+        elif category == "지역지구구역":
             self.colDict = {
                 "bjdongCd": "법정동코드",
                 "block": "블록",
@@ -890,1302 +967,3 @@ class Building:
 
 
 
-
-    def getBrBasisOulnInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        01 건축물대장 기본개요 조회
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지
-        """
-        # URL
-        url = f"{self.url_getBrBasisOulnInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "bylotCnt",
-                "crtnDay",
-                "guyukCd",
-                "guyukCdNm",
-                "ji",
-                "jiguCd",
-                "jiguCdNm",
-                "jiyukCd",
-                "jiyukCdNm",
-                "lot",
-                "mgmBldrgstPk",
-                "mgmUpBldrgstPk",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newPlatPlc",
-                "platGbCd",
-                "platPlc",
-                "regstrGbCd",
-                "regstrGbCdNm",
-                "regstrKindCd",
-                "regstrKindCdNm",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            bylotCnt,
-                            crtnDay,
-                            guyukCd,
-                            guyukCdNm,
-                            ji,
-                            jiguCd,
-                            jiguCdNm,
-                            jiyukCd,
-                            jiyukCdNm,
-                            lot,
-                            mgmBldrgstPk,
-                            mgmUpBldrgstPk,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newPlatPlc,
-                            platGbCd,
-                            platPlc,
-                            regstrGbCd,
-                            regstrGbCdNm,
-                            regstrKindCd,
-                            regstrKindCdNm,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-    def getBrRecapTitleInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        02 건축물대장 총괄표제부 조회
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
-        """
-        # URL
-        url = f"{self.url_getBrRecapTitleInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "archArea",
-                "atchBldArea",
-                "atchBldCnt",
-                "bcRat",
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "bylotCnt",
-                "crtnDay",
-                "engrEpi",
-                "engrGrade",
-                "engrRat",
-                "etcPurps",
-                "fmlyCnt",
-                "gnBldCert",
-                "gnBldGrade",
-                "hhldCnt",
-                "hoCnt",
-                "indrAutoArea",
-                "indrAutoUtcnt",
-                "indrMechArea",
-                "indrMechUtcnt",
-                "itgBldCert",
-                "itgBldGrade",
-                "ji",
-                "lot",
-                "mainBldCnt",
-                "mainPurpsCd",
-                "mainPurpsCdNm",
-                "mgmBldrgstPk",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newOldRegstrGbCd",
-                "newOldRegstrGbCdNm",
-                "newPlatPlc",
-                "oudrAutoArea",
-                "oudrAutoUtcnt",
-                "oudrMechArea",
-                "oudrMechUtcnt",
-                "platArea",
-                "platGbCd",
-                "platPlc",
-                "pmsDay",
-                "pmsnoGbCd",
-                "pmsnoGbCdNm",
-                "pmsnoKikCd",
-                "pmsnoKikCdNm",
-                "pmsnoYear",
-                "regstrGbCd",
-                "regstrGbCdNm",
-                "regstrKindCd",
-                "regstrKindCdNm",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-                "stcnsDay",
-                "totArea",
-                "totPkngCnt",
-                "useAprDay",
-                "vlRat",
-                "vlRatEstmTotArea",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            archArea,
-                            atchBldArea,
-                            atchBldCnt,
-                            bcRat,
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            bylotCnt,
-                            crtnDay,
-                            engrEpi,
-                            engrGrade,
-                            engrRat,
-                            etcPurps,
-                            fmlyCnt,
-                            gnBldCert,
-                            gnBldGrade,
-                            hhldCnt,
-                            hoCnt,
-                            indrAutoArea,
-                            indrAutoUtcnt,
-                            indrMechArea,
-                            indrMechUtcnt,
-                            itgBldCert,
-                            itgBldGrade,
-                            ji,
-                            lot,
-                            mainBldCnt,
-                            mainPurpsCd,
-                            mainPurpsCdNm,
-                            mgmBldrgstPk,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newOldRegstrGbCd,
-                            newOldRegstrGbCdNm,
-                            newPlatPlc,
-                            oudrAutoArea,
-                            oudrAutoUtcnt,
-                            oudrMechArea,
-                            oudrMechUtcnt,
-                            platArea,
-                            platGbCd,
-                            platPlc,
-                            pmsDay,
-                            pmsnoGbCd,
-                            pmsnoGbCdNm,
-                            pmsnoKikCd,
-                            pmsnoKikCdNm,
-                            pmsnoYear,
-                            regstrGbCd,
-                            regstrGbCdNm,
-                            regstrKindCd,
-                            regstrKindCdNm,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                            stcnsDay,
-                            totArea,
-                            totPkngCnt,
-                            useAprDay,
-                            vlRat,
-                            vlRatEstmTotArea,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-
-    def getBrTitleInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        03 건축물대장 표제부 조회: getBrTitleInfo
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
-        """
-        # URL
-        url = f"{self.url_getBrTitleInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "archArea",
-                "atchBldArea",
-                "atchBldCnt",
-                "bcRat",
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "bylotCnt",
-                "crtnDay",
-                "dongNm",
-                "emgenUseElvtCnt",
-                "engrEpi",
-                "engrGrade",
-                "engrRat",
-                "etcPurps",
-                "etcRoof",
-                "etcStrct",
-                "fmlyCnt",
-                "gnBldCert",
-                "gnBldGrade",
-                "grndFlrCnt",
-                "heit",
-                "hhldCnt",
-                "hoCnt",
-                "indrAutoArea",
-                "indrAutoUtcnt",
-                "indrMechArea",
-                "indrMechUtcnt",
-                "itgBldCert",
-                "itgBldGrade",
-                "ji",
-                "lot",
-                "mainAtchGbCd",
-                "mainAtchGbCdNm",
-                "mainPurpsCd",
-                "mainPurpsCdNm",
-                "mgmBldrgstPk",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newPlatPlc",
-                "oudrAutoArea",
-                "oudrAutoUtcnt",
-                "oudrMechArea",
-                "oudrMechUtcnt",
-                "platArea",
-                "platGbCd",
-                "platPlc",
-                "pmsDay",
-                "pmsnoGbCd",
-                "pmsnoGbCdNm",
-                "pmsnoKikCd",
-                "pmsnoKikCdNm",
-                "pmsnoYear",
-                "regstrGbCd",
-                "regstrGbCdNm",
-                "regstrKindCd",
-                "regstrKindCdNm",
-                "rideUseElvtCnt",
-                "rnum",
-                "roofCd",
-                "roofCdNm",
-                "rserthqkAblty",
-                "rserthqkDsgnApplyYn",
-                "sigunguCd",
-                "splotNm",
-                "stcnsDay",
-                "strctCd",
-                "strctCdNm",
-                "totArea",
-                "totDongTotArea",
-                "ugrndFlrCnt",
-                "useAprDay",
-                "vlRat",
-                "vlRatEstmTotArea",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            archArea,
-                            atchBldArea,
-                            atchBldCnt,
-                            bcRat,
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            bylotCnt,
-                            crtnDay,
-                            dongNm,
-                            emgenUseElvtCnt,
-                            engrEpi,
-                            engrGrade,
-                            engrRat,
-                            etcPurps,
-                            etcRoof,
-                            etcStrct,
-                            fmlyCnt,
-                            gnBldCert,
-                            gnBldGrade,
-                            grndFlrCnt,
-                            heit,
-                            hhldCnt,
-                            hoCnt,
-                            indrAutoArea,
-                            indrAutoUtcnt,
-                            indrMechArea,
-                            indrMechUtcnt,
-                            itgBldCert,
-                            itgBldGrade,
-                            ji,
-                            lot,
-                            mainAtchGbCd,
-                            mainAtchGbCdNm,
-                            mainPurpsCd,
-                            mainPurpsCdNm,
-                            mgmBldrgstPk,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newPlatPlc,
-                            oudrAutoArea,
-                            oudrAutoUtcnt,
-                            oudrMechArea,
-                            oudrMechUtcnt,
-                            platArea,
-                            platGbCd,
-                            platPlc,
-                            pmsDay,
-                            pmsnoGbCd,
-                            pmsnoGbCdNm,
-                            pmsnoKikCd,
-                            pmsnoKikCdNm,
-                            pmsnoYear,
-                            regstrGbCd,
-                            regstrGbCdNm,
-                            regstrKindCd,
-                            regstrKindCdNm,
-                            rideUseElvtCnt,
-                            rnum,
-                            roofCd,
-                            roofCdNm,
-                            rserthqkAblty,
-                            rserthqkDsgnApplyYn,
-                            sigunguCd,
-                            splotNm,
-                            stcnsDay,
-                            strctCd,
-                            strctCdNm,
-                            totArea,
-                            totDongTotArea,
-                            ugrndFlrCnt,
-                            useAprDay,
-                            vlRat,
-                            vlRatEstmTotArea,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-    def getBrFlrOulnInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        04 건축물대장 층별개요 조회
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
-        """
-        # URL
-        url = f"{self.url_getBrFlrOulnInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "area",
-                "areaExctYn",
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "crtnDay",
-                "dongNm",
-                "etcPurps",
-                "etcStrct",
-                "flrGbCd",
-                "flrGbCdNm",
-                "flrNo",
-                "flrNoNm",
-                "ji",
-                "lot",
-                "mainAtchGbCd",
-                "mainAtchGbCdNm",
-                "mainPurpsCd",
-                "mainPurpsCdNm",
-                "mgmBldrgstPk",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newPlatPlc",
-                "platGbCd",
-                "platPlc",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-                "strctCd",
-                "strctCdNm",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            area,
-                            areaExctYn,
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            crtnDay,
-                            dongNm,
-                            etcPurps,
-                            etcStrct,
-                            flrGbCd,
-                            flrGbCdNm,
-                            flrNo,
-                            flrNoNm,
-                            ji,
-                            lot,
-                            mainAtchGbCd,
-                            mainAtchGbCdNm,
-                            mainPurpsCd,
-                            mainPurpsCdNm,
-                            mgmBldrgstPk,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newPlatPlc,
-                            platGbCd,
-                            platPlc,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                            strctCd,
-                            strctCdNm,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-    def getBrAtchJibunInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        05 건축물대장 부속지번 조회: getBrAtchJibunInfo
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
-        """
-        # URL
-        url = f"{self.url_getBrAtchJibunInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "atchBjdongCd",
-                "atchBlock",
-                "atchBun",
-                "atchEtcJibunNm",
-                "atchJi",
-                "atchLot",
-                "atchPlatGbCd",
-                "atchRegstrGbCd",
-                "atchRegstrGbCdNm",
-                "atchSigunguCd",
-                "atchSplotNm",
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "crtnDay",
-                "ji",
-                "lot",
-                "mgmBldrgstPk",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newPlatPlc",
-                "platGbCd",
-                "platPlc",
-                "regstrGbCd",
-                "regstrGbCdNm",
-                "regstrKindCd",
-                "regstrKindCdNm",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            atchBjdongCd,
-                            atchBlock,
-                            atchBun,
-                            atchEtcJibunNm,
-                            atchJi,
-                            atchLot,
-                            atchPlatGbCd,
-                            atchRegstrGbCd,
-                            atchRegstrGbCdNm,
-                            atchSigunguCd,
-                            atchSplotNm,
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            crtnDay,
-                            ji,
-                            lot,
-                            mgmBldrgstPk,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newPlatPlc,
-                            platGbCd,
-                            platPlc,
-                            regstrGbCd,
-                            regstrGbCdNm,
-                            regstrKindCd,
-                            regstrKindCdNm,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-    def getBrExposPubuseAreaInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_="", dongNm_="", hoNm_=""):
-        """
-        06 건축물대장 전유공용면적 조회: getBrExposPubuseAreaInfo
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일, 동명칭, 호명칭
-        """
-        # URL
-        url = f"{self.url_getBrExposPubuseAreaInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&dongNm={dongNm_}&hoNm={hoNm_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "area",
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "crtnDay",
-                "dongNm",
-                "etcPurps",
-                "etcStrct",
-                "exposPubuseGbCd",
-                "exposPubuseGbCdNm",
-                "flrGbCd",
-                "flrGbCdNm",
-                "flrNo",
-                "flrNoNm",
-                "hoNm",
-                "ji",
-                "lot",
-                "mainAtchGbCd",
-                "mainAtchGbCdNm",
-                "mainPurpsCd",
-                "mainPurpsCdNm",
-                "mgmBldrgstPk",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newPlatPlc",
-                "platGbCd",
-                "platPlc",
-                "regstrGbCd",
-                "regstrGbCdNm",
-                "regstrKindCd",
-                "regstrKindCdNm",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-                "strctCd",
-                "strctCdNm",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            area,
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            crtnDay,
-                            dongNm,
-                            etcPurps,
-                            etcStrct,
-                            exposPubuseGbCd,
-                            exposPubuseGbCdNm,
-                            flrGbCd,
-                            flrGbCdNm,
-                            flrNo,
-                            flrNoNm,
-                            hoNm,
-                            ji,
-                            lot,
-                            mainAtchGbCd,
-                            mainAtchGbCdNm,
-                            mainPurpsCd,
-                            mainPurpsCdNm,
-                            mgmBldrgstPk,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newPlatPlc,
-                            platGbCd,
-                            platPlc,
-                            regstrGbCd,
-                            regstrGbCdNm,
-                            regstrKindCd,
-                            regstrKindCdNm,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                            strctCd,
-                            strctCdNm,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-    def getBrWclfInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        07 건축물대장 오수정화시설 조회: getBrWclfInfo
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
-        """
-        # URL
-        url = f"{self.url_getBrWclfInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "capaLube",
-                "capaPsper",
-                "crtnDay",
-                "etcMode",
-                "ji",
-                "lot",
-                "mgmBldrgstPk",
-                "modeCd",
-                "modeCdNm",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newPlatPlc",
-                "platGbCd",
-                "platPlc",
-                "regstrGbCd",
-                "regstrGbCdNm",
-                "regstrKindCd",
-                "regstrKindCdNm",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-                "unitGbCd",
-                "unitGbCdNm",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            capaLube,
-                            capaPsper,
-                            crtnDay,
-                            etcMode,
-                            ji,
-                            lot,
-                            mgmBldrgstPk,
-                            modeCd,
-                            modeCdNm,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newPlatPlc,
-                            platGbCd,
-                            platPlc,
-                            regstrGbCd,
-                            regstrGbCdNm,
-                            regstrKindCd,
-                            regstrKindCdNm,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                            unitGbCd,
-                            unitGbCdNm,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-    def getBrHsprcInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        08 건축물대장 주택가격 조회: getBrHsprcInfo
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
-        """
-        # URL
-        url = f"{self.url_getBrHsprcInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "bylotCnt",
-                "crtnDay",
-                "hsprc",
-                "ji",
-                "lot",
-                "mgmBldrgstPk",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newPlatPlc",
-                "platGbCd",
-                "platPlc",
-                "regstrGbCd",
-                "regstrGbCdNm",
-                "regstrKindCd",
-                "regstrKindCdNm",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            bylotCnt,
-                            crtnDay,
-                            hsprc,
-                            ji,
-                            lot,
-                            mgmBldrgstPk,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newPlatPlc,
-                            platGbCd,
-                            platPlc,
-                            regstrGbCd,
-                            regstrGbCdNm,
-                            regstrKindCd,
-                            regstrKindCdNm,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-    def getBrExposInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        09 건축물대장 전유부 조회: getBrExposInfo
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
-        """
-        # URL
-        url = f"{self.url_getBrExposInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "bjdongCd",
-                "bldNm",
-                "block",
-                "bun",
-                "crtnDay",
-                "dongNm",
-                "flrGbCd",
-                "flrGbCdNm",
-                "flrNo",
-                "hoNm",
-                "ji",
-                "lot",
-                "mgmBldrgstPk",
-                "naBjdongCd",
-                "naMainBun",
-                "naRoadCd",
-                "naSubBun",
-                "naUgrndCd",
-                "newPlatPlc",
-                "platGbCd",
-                "platPlc",
-                "regstrGbCd",
-                "regstrGbCdNm",
-                "regstrKindCd",
-                "regstrKindCdNm",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            bjdongCd,
-                            bldNm,
-                            block,
-                            bun,
-                            crtnDay,
-                            dongNm,
-                            flrGbCd,
-                            flrGbCdNm,
-                            flrNo,
-                            hoNm,
-                            ji,
-                            lot,
-                            mgmBldrgstPk,
-                            naBjdongCd,
-                            naMainBun,
-                            naRoadCd,
-                            naSubBun,
-                            naUgrndCd,
-                            newPlatPlc,
-                            platGbCd,
-                            platPlc,
-                            regstrGbCd,
-                            regstrGbCdNm,
-                            regstrKindCd,
-                            regstrKindCdNm,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
-
-    def getBrJijiguInfo(self, sigunguCd_, bjdongCd_, platGbCd_="", bun_="", ji_="", startDate_="", endDate_=""):
-        """
-        10 건축물대장 지역지구구역 조회: getBrJijiguInfo
-        입력: 시군구코드, 법정동코드, 대지구분코드, 번, 지, 검색시작일, 검색종료일
-        """
-        # URL
-        url = f"{self.url_getBrJijiguInfo}&sigunguCd={sigunguCd_}&bjdongCd={bjdongCd_}&platGbCd={platGbCd_}&bun={bun_}&ji={ji_}&startDate={startDate_}&endDate={endDate_}&numOfRows=99999"
-
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("item")
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "bjdongCd",
-                "block",
-                "bun",
-                "crtnDay",
-                "etcJijigu",
-                "ji",
-                "jijiguCd",
-                "jijiguCdNm",
-                "jijiguGbCd",
-                "jijiguGbCdNm",
-                "lot",
-                "mgmBldrgstPk",
-                "newPlatPlc",
-                "platGbCd",
-                "platPlc",
-                "reprYn",
-                "rnum",
-                "sigunguCd",
-                "splotNm",
-            ]
-
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            bjdongCd,
-                            block,
-                            bun,
-                            crtnDay,
-                            etcJijigu,
-                            ji,
-                            jijiguCd,
-                            jijiguCdNm,
-                            jijiguGbCd,
-                            jijiguGbCdNm,
-                            lot,
-                            mgmBldrgstPk,
-                            newPlatPlc,
-                            platGbCd,
-                            platPlc,
-                            reprYn,
-                            rnum,
-                            sigunguCd,
-                            splotNm,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-                df.index = range(len(df))
-
-            return df
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("header")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("resultCode").text == "00":
-                self.logger.info("Python Logic Error. e-mail : wooil@kakao.com")
-            # Open API 서비스 제공처 오류
-            else:
-                self.logger.info("Open API Error: {}".format(te[0].find["resultMsg"]))
-            pass
