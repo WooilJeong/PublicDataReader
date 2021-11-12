@@ -30,7 +30,6 @@ molit(Ministry of Land, Infrastructure and Transport)
 
 import pandas as pd
 import numpy as np
-from dateutil.relativedelta import relativedelta
 import datetime
 import logging
 import requests
@@ -431,7 +430,6 @@ class Building:
                 self.logger.err(f"{category} 조회 서비스 오류 - ({result_code}) {result_msg}")
 
 
-
     def read_data(self, category, **kwargs):
         
         # 엔드포인트, 파라미터 및 컬럼 목록 매핑
@@ -493,6 +491,7 @@ class Building:
                 else:
                     self.logger.info(f"조회 결과 없음")
                     df = pd.DataFrame(columns=columns)
+                    df = self.ChangeCols(df, category)
                     return df
 
             except:

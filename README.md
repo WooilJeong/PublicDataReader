@@ -48,59 +48,58 @@
 
 ### 1) 국토교통부 실거래가 정보 조회 서비스
 
-| **서비스 명**                         | **메서드**                                            |
-| ------------------------------------- | ----------------------------------------------------- |
-| 아파트매매 실거래 상세 자료 조회      | read_data("아파트", "매매", "41135", "202111")        |
-| 아파트 전월세 자료 조회               | read_data("아파트", "전월세", "41135", "202111")      |
-| 아파트 분양권전매 신고 자료 조회      | read_data("분양입주권", "매매", "41135", "202111")    |
-| 오피스텔 매매 신고 조회               | read_data("오피스텔", "매매", "41135", "202111")      |
-| 오피스텔 전월세 신고 조회             | read_data("오피스텔", "전월세", "41135", "202111")    |
-| 연립다세대 매매 실거래자료 조회       | read_data("연립다세대", "매매", "41135", "202111")    |
-| 연립다세대 전월세 실거래자료 조회     | read_data("연립다세대", "전월세", "41135", "202111")  |
-| 단독/다가구 매매 실거래 조회          | read_data("단독다가구", "매매", "41135", "202111")    |
-| 단독/다가구 전월세 자료 조회          | read_data("단독다가구", "전월세", "41135", "202111")  |
-| 토지 매매 신고 조회                   | read_data("토지", "매매", "41135", "202111")          |
-| 상업업무용 부동산 매매 신고 자료 조회 | read_data("상업업무용", "매매", "41135", "202111")    |
+| **서비스명**                          | **상품유형** | **거래유형** |
+| ------------------------------------- | ------------ | ------------ |
+| 아파트매매 실거래 상세 자료 조회      | 아파트       | 매매         |
+| 아파트 전월세 자료 조회               | 아파트       | 전월세       |
+| 아파트 분양권전매 신고 자료 조회      | 분양입주권   | 매매         |
+| 오피스텔 매매 신고 조회               | 오피스텔     | 매매         |
+| 오피스텔 전월세 신고 조회             | 오피스텔     | 전월세       |
+| 연립다세대 매매 실거래자료 조회       | 연립다세대   | 매매         |
+| 연립다세대 전월세 실거래자료 조회     | 연립다세대   | 전월세       |
+| 단독/다가구 매매 실거래 조회          | 단독다가구   | 매매         |
+| 단독/다가구 전월세 자료 조회          | 단독다가구   | 전월세       |
+| 토지 매매 신고 조회                   | 토지         | 매매         |
+| 상업업무용 부동산 매매 신고 자료 조회 | 상업업무용   | 매매         |
 
 
 ### 2) 국토교통부 건축물대장정보 서비스
 
-| **서비스 명**                | **메서드**                                                                                |
-| ---------------------------- | ----------------------------------------------------------------------------------------- |
-| 건축물대장 기본개요 조회     | read_data("기본개요", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")         |
-| 건축물대장 총괄표제부 조회   | read_data("총괄표제부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")       |
-| 건축물대장 표제부 조회       | read_data("표제부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")           |
-| 건축물대장 층별개요 조회     | read_data("층별개요", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")         |
-| 건축물대장 부속지번 조회     | read_data("부속지번", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")         |
-| 건축물대장 전유공용면적 조회 | read_data("전유공용면적", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")     |
-| 건축물대장 오수정화시설 조회 | read_data("오수정화시설", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")     |
-| 건축물대장 주택가격 조회     | read_data("주택가격", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")         |
-| 건축물대장 전유부 조회       | read_data("전유부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")           |
-| 건축물대장 지역지구구역 조회 | read_data("지역지구구역", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")     |
+| **서비스명**                 | **카테고리명** |
+| ---------------------------- | -------------- |
+| 건축물대장 기본개요 조회     | 기본개요       |
+| 건축물대장 총괄표제부 조회   | 총괄표제부     |
+| 건축물대장 표제부 조회       | 표제부         |
+| 건축물대장 층별개요 조회     | 층별개요       |
+| 건축물대장 부속지번 조회     | 부속지번       |
+| 건축물대장 전유공용면적 조회 | 전유공용면적   |
+| 건축물대장 오수정화시설 조회 | 오수정화시설   |
+| 건축물대장 주택가격 조회     | 주택가격       |
+| 건축물대장 전유부 조회       | 전유부         |
+| 건축물대장 지역지구구역 조회 | 지역지구구역   |
 
 
 ### 3) 소상공인 상가업소 정보 조회 서비스
 
-| **서비스 명**              | **메서드**           |
-| -------------------------- | -------------------- |
-| 지정 상권조회              | storeZoneOne         |
-| 반경내 상권조회            | storeZoneInRadius    |
-| 사각형내 상권조회          | storeZoneInRectangle |
-| 행정구역 단위 상권조회     | storeZoneInAdmi      |
-| 단일 상가업소 조회         | storeOne             |
-| 건물단위 상가업소 조회     | storeListInBuilding  |
-| 지번단위 상가업소 조회     | storeListInPnu       |
-| 행정동 단위 상가업소 조회  | storeListInDong      |
-| 상권내 상가업소 조회       | storeListInArea      |
-| 반경내 상가업소 조회       | storeListInRadius    |
-| 사각형내 상가업소 조회     | storeListInRectangle |
-| 다각형내 상가업소 조회     | storeListInPolygon   |
-| 업종별 상가업소 조회       | storeListInUpjong    |
-| 수정일자기준 상가업소 조회 | storeListByDate      |
-| 상가업소정보 변경요청      | reqStoreModify       |
-| 상권정보 업종 대분류 조회  | largeUpjongList      |
-| 상권정보 업종 중분류 조회  | middleUpjongList     |
-| 상권정보 업종 소분류 조회  | smallUpjongList      |
+| **서비스명**               | **카테고리명** |
+| -------------------------- | -------------- |
+| 지정 상권조회              | 지정상권       |
+| 반경내 상권조회            | 반경상권       |
+| 사각형내 상권조회          | 사각형상권     |
+| 행정구역 단위 상권조회     | 행정구역상권   |
+| 단일 상가업소 조회         | 단일상가       |
+| 건물단위 상가업소 조회     | 건물상가       |
+| 지번단위 상가업소 조회     | 지번상가       |
+| 행정동 단위 상가업소 조회  | 행정동상가     |
+| 상권내 상가업소 조회       | 상권상가       |
+| 반경내 상가업소 조회       | 반경상가       |
+| 사각형내 상가업소 조회     | 사각형상가     |
+| 다각형내 상가업소 조회     | 다각형상가     |
+| 업종별 상가업소 조회       | 업종별상가     |
+| 수정일자기준 상가업소 조회 | 수정일자상가   |
+| 상권정보 업종 대분류 조회  | 업종대분류     |
+| 상권정보 업종 중분류 조회  | 업종중분류     |
+| 상권정보 업종 소분류 조회  | 업종소분류     |
 
 
 ## 서울 열린데이터 광장 서비스 목록
@@ -191,7 +190,7 @@ bjdongCd = "11000"                                      # 읍면동코드(5)
 bun = "0541"                                            # 본번(4)
 ji = "0000"                                             # 부번(4)
 
-df = bd.read_data("기본개요", sigunguCd=sigunguCd, bjdongCd=bjdongCd, bun=bun, ji=ji)
+df = bd.read_data(category=category, sigunguCd=sigunguCd, bjdongCd=bjdongCd, bun=bun, ji=ji)
 ```
 
 
@@ -211,128 +210,142 @@ semas = pdr.StoreInfo(serviceKey)
 
 # 4. 데이터프레임으로 자료 조회하기
 
-## 4-1 지정 상권조회
-## 입력: 상권번호
-key = 1
-df = semas.storeZoneOne(key=key)
+# 4-1. 지정상권
+category = "지정상권"
 
-## 4-2 반경내 상권조회
-## 입력: 반경(m), 중심점 경도(WGS84 좌표계), 중심점 위도(WGS84 좌표계)
+key = "9174"
+
+df = semas.read_data(category=category, key=key)
+
+# 4-2. 반경상권
+category = "반경상권"
+
 radius = 500
 cx = 127.03641615737838
 cy = 37.50059843782878
-df = semas.storeZoneInRadius(radius=radius, cx=cx, cy=cy)
 
-## 4-3 사각형내 상권조회
-## 입력: 서쪽 경도, 남쪽 위도, 동쪽 경도, 북쪽 위도 (WGS84 좌표계)
+df = semas.read_data(category=category, radius=radius, cx=cx, cy=cy)
+
+# 4-3. 사각형상권
+category = "사각형상권"
+
 minx = 127.0327683531071
 miny = 37.495967935149146
 maxx = 127.04268179746694
 maxy = 37.502402894207286
-df = semas.storeZoneInRectangle(minx=minx, miny=miny, maxx=maxx, maxy=maxy)
 
-## 4-4 행정구역 단위 상권조회
-## 입력: 구분ID, 행정구역코드
-## 구분ID - 시도(ctprvnCd), 시군구(signguCd), 행정동(adongCd)
-## 행정구역코드 - 시도(시도코드값), 시군구(시군구코드값), 행정동(행정동코드값)
+df = semas.read_data(category=category, minx=minx, miny=miny, maxx=maxx, maxy=maxy)
+
+# 4-4. 행정구역상권
+category = "행정구역상권"
+
 divId = 'adongCd'
 key = '1168058000'
-df = semas.storeZoneInAdmi(divId=divId, key=key)
 
-## 4-5 단일 상가업소 조회
-## 입력: 상가업소번호
-key = '19911027'
-df = semas.storeOne(key=key)
+df = semas.read_data(category=category,divId=divId, key=key)
 
-## 4-6. 건물단위 상가업소 조회
-## 입력: 건물관리번호, 상권업종대분류코드, 상권업종중분류코드, 상권업종소분류코드, 페이지당 건수(최대 1000), 페이지 번호
+# 4-5. 단일상가
+category = "단일상가"
+
+key = '11757465'
+
+df = semas.read_data(category=category, key=key)
+
+# 4-6. 건물상가
+category = "건물상가"
+
 key = '1168011000104940000004966'
-pageNo = '1'
-df = semas.storeListInBuilding(key=key, pageNo=1)
 
-## 4-7. 지번단위 상가업소 조회
-## 입력: PNU코드, 상권업종대분류코드, 상권업종중분류코드, 상권업종소분류코드, 페이지 번호
-key = '1168010600209380024'
-pageNo = '1'
+df = semas.read_data(category=category, key=key)
+
+# 4-7. 지번상가
+category = "지번상가"
+
+key = '1165010100108120002'
 indsLclsCd = 'Q'
-indsMclsCd = 'Q12'
-indsSclsCd = 'Q12A01' 
-df = semas.storeListInPnu(key=key, indsLclsCd_=indsLclsCd, pageNo=1)
 
-## 4-8. 행정동 단위 상가업소 조회
-## 입력: 구분ID(시도:ctprvnCd, 시군구:signguCd, 행정동:adongCd), 행정구역코드, 상권업종대분류코드, 상권업종중분류코드, 상권업종소분류코드, 페이지 번호
+df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
+
+# 4-8. 행정동상가
+category = "행정동상가"
+
 divId = 'adongCd'
 key = '1168064000'
 indsLclsCd = 'Q'
-pageNo = 1
 
-df = semas.storeListInDong(divId = divId, key = key, indsLclsCd_=indsLclsCd, pageNo = pageNo)
+df = semas.read_data(category=category, divId=divId, key=key, indsLclsCd=indsLclsCd)
 
-## 4-9 상권내 상가업소 조회
-## 입력: 상권번호, 상권업종 대분류코드, 상권업종 중분류코드, 상권업종 소분류코드, 페이지 번호
-key = '1819'
-pageNo = '1'
+# 4-9. 상권상가
+category = "상권상가"
+
+key = '9368'
 indsLclsCd = 'Q'
 
-df = semas.storeListInArea(key=key, pageNo=pageNo, indsLclsCd_=indsLclsCd)
+df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
 
-## 4-10. 반경내 상가업소 조회
-## 입력: 반경, 중심점 경도, 중심점 위도, 상권업종 대분류코드, 상권업종 중분류코드, 상권업종 소분류코드, 페이지 번호
+# 4-10. 반경상가
+category = "반경상가"
+
 radius = '500'
 cx = 127.03641615737838
 cy = 37.50059843782878
 indsLclsCd = 'Q'
-pageNo = '1'
 
-df = semas.storeListInRadius(radius=radius, cx=cx, cy=cy, indsLclsCd_=indsLclsCd, pageNo=pageNo)
+df = semas.read_data(category=category, radius=radius, cx=cx, cy=cy, indsLclsCd=indsLclsCd)
 
-## 4-11. 사각형내 상가업소 조회
-## 입력: 서쪽 경도, 남쪽 위도, 동쪽 경도, 북쪽 위도, 상권업종 대분류코드, 상권업종 중분류코드, 상권업종 소분류코드, 페이지 번호
+# 4-11. 사각형상가
+category = "사각형상가"
+
 minx = 127.0327683531071
 miny = 37.495967935149146
 maxx = 127.04268179746694
 maxy = 37.502402894207286
 indsLclsCd = 'Q'
-pageNo = 1
 
-df = semas.storeListInRectangle(minx=minx, miny=miny, maxx=maxx, maxy=maxy, indsLclsCd_=indsLclsCd, pageNo=1)
+df = semas.read_data(category=category, minx=minx, miny=miny, maxx=maxx, maxy=maxy, indsLclsCd=indsLclsCd)
 
-## 4-12. 다각형내 상가업소 조회
-## 입력: 다각형 좌표값, 상권업종 대분류코드, 상권업종 중분류코드, 상권업종 소분류코드, 페이지 번호
+# 4-12. 다각형상가
+category = "다각형상가"
+
 key = 'POLYGON((127.02355609555755 37.504264372557095, 127.02496157306963 37.50590702991155, 127.0270858825753 37.50486867039889, 127.02628121988377 37.503489842823114))'
-pageNo = 1
 indsLclsCd = 'Q'
-df = semas.storeListInPolygon(key, indsLclsCd_=indsLclsCd, pageNo=pageNo)
 
-## 4-13. 업종별 상가업소 조회
-## 입력: 구분ID(대분류:indsLclsCd, 중분류:indsMclsCd, 소분류:indsSclsCd), 업종코드값, 페이지 번호
+df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
+
+# 4-13. 업종별상가
+category = "업종별상가"
+
 divId = 'indsLclsCd'
 key = 'Q'
-pageNo = 1
 
-df = semas.storeListInUpjong(divId=divId, key=key, pageNo=pageNo)
+df = semas.read_data(category=category, divId=divId, key=key)
 
-## 4-14. 수정일자기준 상가업소 조회
-## 입력: 일자(YYYYMMDD), 상권업종 대분류코드, 상권업종 중분류코드, 상권업종 소분류코드, 페이지 번호소분류코드, 페이지 번호
+# 4-14. 수정일자상가
+category = "수정일자상가"
+
 key = '20200101'
 indsLclsCd = 'Q'
-pageNo = '1'
 
-df = semas.storeListByDate(key=key, pageNo=pageNo)
+df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
 
-## 4-21. 상권정보 업종 대분류 조회
-df = semas.largeUpjongList()
+# 4-15. 업종대분류
+category = "업종대분류"
 
-## 4-22. 상권정보 업종 중분류 조회
-## 입력: 상권업종 업종 대분류코드
+df = semas.read_data(category=category, key=key)
+
+# 4-16. 업종중분류
+category = "업종중분류"
+
 indsLclsCd = 'Q'
 
-df = semas.middleUpjongList(indsLclsCd_=indsLclsCd)
+df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
 
-## 4-23. 상권정보 업종 소분류 조회
-## 입력: 상권정보 업종 대분류코드, 상권정보 업종 중분류코드
+# 4-17. 업종소분류
+category = "업종소분류"
+
 indsLclsCd = 'Q'
 indsMclsCd = 'Q01'
 
-df = semas.smallUpjongList(indsLclsCd_=indsLclsCd)
+df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd, indsMclsCd=indsMclsCd)
+
 ```

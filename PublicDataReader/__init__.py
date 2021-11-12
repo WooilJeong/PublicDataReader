@@ -11,4 +11,4 @@ __info__ = """\
 - Blog : https://wooiljeong.github.io\
 """
 
-__all__ = ["__version__", "__info__", "Transaction", "Building", "code_list"]
+__all__ = ["__version__", "__info__", "Transaction", "Building", "StoreInfo", "code_list"]
