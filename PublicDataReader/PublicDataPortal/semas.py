@@ -215,13 +215,13 @@ class StoreInfo:
 
                 if len(df) != 0:
                     df = df[columns]
-    #                 df = self.ChangeCols(df, category)
+                    df = self.ChangeCols(df)
                     df.index = range(len(df))
 
                 else:
                     self.logger.info(f"조회 결과 없음")
                     df = pd.DataFrame(columns=columns)
-    #                 df = self.ChangeCols(df, category)
+                    df = self.ChangeCols(df)
                     return df
 
             except:
@@ -235,4 +235,60 @@ class StoreInfo:
             self.logger.error(f"({result_code}) {result_msg}")
             return
 
+        return df
+
+    def ChangeCols(self, df):
+        """
+        영문 컬럼명을 국문 컬럼명으로 변경
+        """
+        
+        self.colDict = {
+            'adongCd': '행정동코드',
+            'adongNm': '행정동명',
+            'bizesId': '상가업소번호',
+            'bizesNm': '상호명',
+            'bldMngNo': '건물관리번호',
+            'bldMnno': '건물본번지',
+            'bldNm': '건물명',
+            'bldSlno': '건물부번지',
+            'brchNm': '지점명',
+            'coordNum': '좌표개수',
+            'coords': '좌표값',
+            'ctprvnCd': '시도코드',
+            'ctprvnNm': '시도명',
+            'dongNo': '동정보',
+            'flrNo': '층정보',
+            'hoNo': '호정보',
+            'indsLclsCd': '상권업종대분류코드',
+            'indsLclsNm': '상권업종대분류명',
+            'indsMclsCd': '상권업종중분류코드',
+            'indsMclsNm': '상권업종중분류명',
+            'indsSclsCd': '상권업종소분류코드',
+            'indsSclsNm': '상권업종소분류명',
+            'ksicCd': '표준산업분류코드',
+            'ksicNm': '표준산업분류명',
+            'lat': '위도',
+            'ldongCd': '법정동코드',
+            'ldongNm': '법정동명',
+            'lnoAdr': '지번주소',
+            'lnoCd': 'PNU코드',
+            'lnoMnno': '지번본번지',
+            'lnoSlno': '지번부번지',
+            'lon': '경도',
+            'mainTrarNm': '상권명',
+            'newZipcd': '신우편번호',
+            'oldZipcd': '구우편번호',
+            'plotSctCd': '대지구분코드',
+            'plotSctNm': '대지구분명',
+            'rdnm': '도로명',
+            'rdnmAdr': '도로명주소',
+            'rdnmCd': '도로명코드',
+            'signguCd': '시군구코드',
+            'signguNm': '시군구명',
+            'stdrDt': '데이터기준일자',
+            'trarArea': '면적',
+            'trarNo': '상권번호'
+        }
+        
+        df = df.rename(columns=self.colDict)
         return df
