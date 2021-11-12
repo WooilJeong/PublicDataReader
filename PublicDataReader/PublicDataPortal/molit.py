@@ -115,34 +115,6 @@ class Transaction:
             + self.serviceKey
         )
 
-        # Open API URL Dict
-        urlDict = {
-            "아파트매매 실거래자료 조회": self.urlAptTrade,
-            "아파트매매 실거래 상세 자료 조회": self.urlAptTradeDetail,
-            "아파트 전월세 자료 조회": self.urlAptRent,
-            "아파트 분양권전매 신고 자료 조회": self.urlAptOwnership,
-            "오피스텔 매매 신고 조회": self.urlOffiTrade,
-            "오피스텔 전월세 신고 조회": self.urlOffiRent,
-            "연립다세대 매매 실거래자료 조회": self.urlRHTrade,
-            "연립다세대 전월세 실거래자료 조회": self.urlRHRent,
-            "단독/다가구 매매 실거래 조회": self.urlDHTrade,
-            "단독/다가구 전월세 자료 조회": self.urlDHRent,
-            "토지 매매 신고 조회": self.urlLandTrade,
-            "상업업무용 부동산 매매 신고 자료 조회": self.urlBizTrade,
-        }
-
-        # 서비스 정상 작동 여부 확인
-        for serviceName, url in urlDict.items():
-            result = requests.get(url, verify=False)
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            header = xmlsoup.findAll("header")[0]
-            result_code = header.find('resultCode').text
-            result_message = header.find('resultMsg').text
-            if result_code == "00":
-                self.logger.info(f"{serviceName} - ({result_code}) {result_message}")
-            else:
-                self.logger.error(f"{serviceName} - ({result_code}) {result_message}")
-
         # URL 및 컬럼 리스트 매핑
         self.metaDict = {
             "아파트": {
@@ -210,6 +182,21 @@ class Transaction:
                 },
             },
         }
+
+        # 서비스 정상 작동 여부 확인
+        for prod in self.metaDict.keys():
+            for trans in self.metaDict[prod].keys():
+                # Endpoint
+                url = self.metaDict[prod][trans]['url']
+                result = requests.get(url, verify=False)
+                xmlsoup = BeautifulSoup(result.text, "lxml-xml")
+                header = xmlsoup.find('header')
+                result_code = header.find('resultCode').text
+                result_msg = header.find('resultMsg').text
+                if result_code == "00":
+                    self.logger.info(f"{prod} {trans} 조회 서비스 정상 - ({result_code}) {result_msg}")
+                else:
+                    self.logger.err(f"{prod} {trans} 조회 서비스 오류 - ({result_code}) {result_msg}")
 
 
     def collect_data(self, prod, trans, sigunguCode, startYearMonth, endYearMonth):
@@ -365,31 +352,6 @@ class Building:
             self.baseUrl + "getBrJijiguInfo" + f"?serviceKey={self.serviceKey}"
         )
 
-        # Open API URL Dict
-        urlDict = {
-            "건축물대장 기본개요 조회": self.url_getBrBasisOulnInfo,
-            "건축물대장 총괄표제부 조회": self.url_getBrRecapTitleInfo,
-            "건축물대장 표제부 조회": self.url_getBrTitleInfo,
-            "건축물대장 층별개요 조회": self.url_getBrFlrOulnInfo,
-            "건축물대장 부속지번 조회": self.url_getBrAtchJibunInfo,
-            "건축물대장 전유공용면적 조회": self.url_getBrExposPubuseAreaInfo,
-            "건축물대장 오수정화시설 조회": self.url_getBrWclfInfo,
-            "건축물대장 주택가격 조회": self.url_getBrHsprcInfo,
-            "건축물대장 전유부 조회": self.url_getBrExposInfo,
-            "건축물대장 지역지구구역 조회": self.url_getBrJijiguInfo,
-        }
-
-        # 서비스 정상 작동 여부 확인
-        for serviceName, url in urlDict.items():
-            result = requests.get(url, verify=False)
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            header = xmlsoup.findAll("header")[0]
-            result_code = header.find('resultCode').text
-            result_message = header.find('resultMsg').text
-            if result_code == "00":
-                self.logger.info(f"{serviceName} - ({result_code}) {result_message}")
-            else:
-                self.logger.error(f"{serviceName} - ({result_code}) {result_message}")
         
         self.metaDict = {
             
@@ -454,6 +416,21 @@ class Building:
             },
 
         }
+
+        for category in self.metaDict.keys():
+            # Endpoint
+            url = self.metaDict[category]['url']
+            result = requests.get(url, verify=False)
+            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
+            header = xmlsoup.find('header')
+            result_code = header.find('resultCode').text
+            result_msg = header.find('resultMsg').text
+            if result_code == "00":
+                self.logger.info(f"{category} 조회 서비스 정상 - ({result_code}) {result_msg}")
+            else:
+                self.logger.err(f"{category} 조회 서비스 오류 - ({result_code}) {result_msg}")
+
+
 
     def read_data(self, category, **kwargs):
         
