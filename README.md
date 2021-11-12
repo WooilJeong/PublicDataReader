@@ -65,18 +65,18 @@
 
 ### 2) 국토교통부 건축물대장정보 서비스
 
-| **메서드**               | **서비스 명**                |
-| ------------------------ | ---------------------------- |
-| getBrBasisOulnInfo       | 건축물대장 기본개요 조회     |
-| getBrRecapTitleInfo      | 건축물대장 총괄표제부 조회   |
-| getBrTitleInfo           | 건축물대장 표제부 조회       |
-| getBrFlrOulnInfo         | 건축물대장 층별개요 조회     |
-| getBrAtchJibunInfo       | 건축물대장 부속지번 조회     |
-| getBrExposPubuseAreaInfo | 건축물대장 전유공용면적 조회 |
-| getBrWclfInfo            | 건축물대장 오수정화시설 조회 |
-| getBrHsprcInfo           | 건축물대장 주택가격 조회     |
-| getBrExposInfo           | 건축물대장 전유부 조회       |
-| getBrJijiguInfo          | 건축물대장 지역지구구역 조회 |
+| **서비스 명**                | **메서드**                                                                                     |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| 건축물대장 기본개요 조회     | read_data("기본개요", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")              |
+| 건축물대장 총괄표제부 조회   | read_data("총괄표제부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")            |
+| 건축물대장 표제부 조회       | read_data("표제부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")                |
+| 건축물대장 층별개요 조회     | read_data("층별개요", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")              |
+| 건축물대장 부속지번 조회     | read_data("부속지번", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")              |
+| 건축물대장 전유공용면적 조회 | read_data("전유공용면적", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")          |
+| 건축물대장 오수정화시설 조회 | read_data("오수정화시설", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")          |
+| 건축물대장 주택가격 조회     | read_data("주택가격", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")              |
+| 건축물대장 전유부 조회       | read_data("전유부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")                |
+| 건축물대장 지역지구구역 조회 | read_data("지역지구구역", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")          |
 
 
 ### 3) 소상공인 상가업소 정보 조회 서비스
@@ -131,9 +131,9 @@ print(pdr.__info__)
 # 2. 공공 데이터 포털 Open API 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 국토교통부(molit) 실거래가 정보 조회 Open API 인스턴스 생성하기
+# 3. 국토교통부 실거래가 정보 조회 Open API 인스턴스 생성하기
 # debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
-molit = pdr.Transaction(serviceKey, debug=True)
+ts = pdr.Transaction(serviceKey, debug=True)
 
 # 4. 지역코드(시군구코드) 검색하기
 sigunguName = "분당구"                                  # 시군구코드: 41135
@@ -147,7 +147,7 @@ trans="매매"
 sigunguCode="41135"
 yearMonth="202101"
 
-df = molit.read_data(prod, trans, sigunguCode, yearMonth)
+df = ts.read_data(prod, trans, sigunguCode, yearMonth)
 
 
 # 6. 지역, 기간 별 데이터 프레임 만들기
@@ -157,8 +157,7 @@ sigunguCode="41135"
 startYearMonth="202101"
 endYearMonth="202111"
 
-df = molit.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
-
+df = ts.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
 ```
 
 
@@ -168,146 +167,22 @@ df = molit.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
 # 1. 라이브러리 임포트 및 버전 확인하기
 import PublicDataReader as pdr
 print(pdr.__version__)
+print(pdr.__info__)
 
 # 2. 공공 데이터 포털 Open API 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 국토교통부(molit) 건축물대장정보 서비스 Open API 인스턴스 생성하기
-molit = pdr.Building(serviceKey)
+# 3. 국토교통부 건축물대장정보 서비스 Open API 인스턴스 생성하기
+bd = pdr.Building(serviceKey)
 
 # 4. 건축물대장정보 오퍼레이션별 데이터 조회
+category = "기본개요"            # 건축물대장 종류
+sigunguCd = "41135"              # 시군구코드(5)
+bjdongCd = "11000"               # 읍면동코드(5)
+bun = "0541"                     # 본번(4)
+ji = "0000"                      # 부번(4)
 
-# Sample Parameter - (판교 현대백화점)
-# 시군구코드(5)
-sigunguCd = "41135"
-# 읍면동코드(5)
-bjdongCd = "11000"
-# 본번
-bun = "541".zfill(4)
-# 부번
-ji = "".zfill(4)
-
-# (Operaion 01) 기본개요
-df1 = molit.getBrBasisOulnInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df1 = molit.ChangeCols(df1, "getBrBasisOulnInfo")
-
-# (Operaion 02) 총괄표제부
-df2 = molit.getBrRecapTitleInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df2 = molit.ChangeCols(df2, "getBrRecapTitleInfo")
-
-# (Operaion 03) 표제부
-df3 = molit.getBrTitleInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df3 = molit.ChangeCols(df3, "getBrTitleInfo")
-
-# (Operaion 04) 층별개요
-df4 = molit.getBrFlrOulnInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df4 = molit.ChangeCols(df4, "getBrFlrOulnInfo")
-
-# (Operaion 05) 부속지번
-df5 = molit.getBrAtchJibunInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df5 = molit.ChangeCols(df5, "getBrAtchJibunInfo")
-
-# (Operaion 06) 전유공용면적
-df6 = molit.getBrExposPubuseAreaInfo(
-    sigunguCd_ = sigunguCd, 
-    bjdongCd_ = bjdongCd, 
-    platGbCd_ = "0", 
-    bun_ = bun, 
-    ji_ = ji, 
-    startDate_ = "", 
-    endDate_ = "", 
-    dongNm_ = "", 
-    hoNm_ = ""
-)
-df6 = molit.ChangeCols(df6, "getBrExposPubuseAreaInfo")
-
-# (Operaion 07) 오수정화시설
-df7 = molit.getBrWclfInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df7 = molit.ChangeCols(df7, "getBrWclfInfo")
-
-# (Operaion 08) 주택가격
-df8 = molit.getBrHsprcInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df8 = molit.ChangeCols(df8, "getBrHsprcInfo")
-
-# (Operaion 09) 전유부
-df9 = molit.getBrExposInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df9 = molit.ChangeCols(df9, "getBrExposInfo")
-
-# (Operaion 10) 지역지구구역
-df10 = molit.getBrJijiguInfo(
-    sigunguCd_=sigunguCd,
-    bjdongCd_=bjdongCd,
-    platGbCd_="0",
-    bun_=bun,
-    ji_=ji,
-    startDate_="",
-    endDate_=""
-)
-df10 = molit.ChangeCols(df10, "getBrJijiguInfo")
+df = bd.read_data("기본개요", sigunguCd=sigunguCd, bjdongCd=bjdongCd, bun=bun, ji=ji)
 ```
 
 
@@ -317,6 +192,7 @@ df10 = molit.ChangeCols(df10, "getBrJijiguInfo")
 # 1. 라이브러리 임포트 및 버전 확인하기
 import PublicDataReader as pdr
 print(pdr.__version__)
+print(pdr.__info__)
 
 # 2. 공공 데이터 포털 Open API 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
