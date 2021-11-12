@@ -65,52 +65,52 @@
 
 ### 2) 국토교통부 건축물대장정보 서비스
 
-| **서비스 명**                | **메서드**                                                                                     |
-| ---------------------------- | ---------------------------------------------------------------------------------------------- |
-| 건축물대장 기본개요 조회     | read_data("기본개요", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")              |
-| 건축물대장 총괄표제부 조회   | read_data("총괄표제부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")            |
-| 건축물대장 표제부 조회       | read_data("표제부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")                |
-| 건축물대장 층별개요 조회     | read_data("층별개요", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")              |
-| 건축물대장 부속지번 조회     | read_data("부속지번", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")              |
-| 건축물대장 전유공용면적 조회 | read_data("전유공용면적", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")          |
-| 건축물대장 오수정화시설 조회 | read_data("오수정화시설", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")          |
-| 건축물대장 주택가격 조회     | read_data("주택가격", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")              |
-| 건축물대장 전유부 조회       | read_data("전유부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")                |
-| 건축물대장 지역지구구역 조회 | read_data("지역지구구역", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")          |
+| **서비스 명**                | **메서드**                                                                                |
+| ---------------------------- | ----------------------------------------------------------------------------------------- |
+| 건축물대장 기본개요 조회     | read_data("기본개요", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")         |
+| 건축물대장 총괄표제부 조회   | read_data("총괄표제부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")       |
+| 건축물대장 표제부 조회       | read_data("표제부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")           |
+| 건축물대장 층별개요 조회     | read_data("층별개요", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")         |
+| 건축물대장 부속지번 조회     | read_data("부속지번", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")         |
+| 건축물대장 전유공용면적 조회 | read_data("전유공용면적", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")     |
+| 건축물대장 오수정화시설 조회 | read_data("오수정화시설", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")     |
+| 건축물대장 주택가격 조회     | read_data("주택가격", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")         |
+| 건축물대장 전유부 조회       | read_data("전유부", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")           |
+| 건축물대장 지역지구구역 조회 | read_data("지역지구구역", sigunguCd="41135", bjdongCd="11000", bun="0542", ji="0000")     |
 
 
 ### 3) 소상공인 상가업소 정보 조회 서비스
 
-| **메서드**           | **서비스 명**              |
-| -------------------- | -------------------------- |
-| storeZoneOne         | 지정 상권조회              |
-| storeZoneInRadius    | 반경내 상권조회            |
-| storeZoneInRectangle | 사각형내 상권조회          |
-| storeZoneInAdmi      | 행정구역 단위 상권조회     |
-| storeOne             | 단일 상가업소 조회         |
-| storeListInBuilding  | 건물단위 상가업소 조회     |
-| storeListInPnu       | 지번단위 상가업소 조회     |
-| storeListInDong      | 행정동 단위 상가업소 조회  |
-| storeListInArea      | 상권내 상가업소 조회       |
-| storeListInRadius    | 반경내 상가업소 조회       |
-| storeListInRectangle | 사각형내 상가업소 조회     |
-| storeListInPolygon   | 다각형내 상가업소 조회     |
-| storeListInUpjong    | 업종별 상가업소 조회       |
-| storeListByDate      | 수정일자기준 상가업소 조회 |
-| reqStoreModify       | 상가업소정보 변경요청      |
-| largeUpjongList      | 상권정보 업종 대분류 조회  |
-| middleUpjongList     | 상권정보 업종 중분류 조회  |
-| smallUpjongList      | 상권정보 업종 소분류 조회  |
+| **서비스 명**              | **메서드**           |
+| -------------------------- | -------------------- |
+| 지정 상권조회              | storeZoneOne         |
+| 반경내 상권조회            | storeZoneInRadius    |
+| 사각형내 상권조회          | storeZoneInRectangle |
+| 행정구역 단위 상권조회     | storeZoneInAdmi      |
+| 단일 상가업소 조회         | storeOne             |
+| 건물단위 상가업소 조회     | storeListInBuilding  |
+| 지번단위 상가업소 조회     | storeListInPnu       |
+| 행정동 단위 상가업소 조회  | storeListInDong      |
+| 상권내 상가업소 조회       | storeListInArea      |
+| 반경내 상가업소 조회       | storeListInRadius    |
+| 사각형내 상가업소 조회     | storeListInRectangle |
+| 다각형내 상가업소 조회     | storeListInPolygon   |
+| 업종별 상가업소 조회       | storeListInUpjong    |
+| 수정일자기준 상가업소 조회 | storeListByDate      |
+| 상가업소정보 변경요청      | reqStoreModify       |
+| 상권정보 업종 대분류 조회  | largeUpjongList      |
+| 상권정보 업종 중분류 조회  | middleUpjongList     |
+| 상권정보 업종 소분류 조회  | smallUpjongList      |
 
 
 ## 서울 열린데이터 광장 서비스 목록
 
 ### 1) 서울시 교통 관련 정보 조회 서비스
 
-| **메서드**         | **서비스 명**                                        |
-| ------------------ | ---------------------------------------------------- |
-| CardSubwayStatsNew | 서울시 지하철호선별 역별 승하차 인원 정보            |
-| CardBusTimeNew     | 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보 |
+| **서비스 명**                                        | **메서드**         |
+| ---------------------------------------------------- | ------------------ |
+| 서울시 지하철호선별 역별 승하차 인원 정보            | CardSubwayStatsNew |
+| 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보 | CardBusTimeNew     |
 
 
 ## 설치 방법
@@ -119,7 +119,9 @@
 pip install --upgrade PublicDataReader
 ```
 
-## 사용 방법
+
+## Quick Start
+
 ### (예시1) 국토교통부 실거래가 정보 조회 서비스
 
 ```python
@@ -131,7 +133,7 @@ print(pdr.__info__)
 # 2. 공공 데이터 포털 Open API 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 국토교통부 실거래가 정보 조회 Open API 인스턴스 생성하기
+# 3. 국토교통부 실거래가 정보 조회 Open API 세션 정의하기
 # debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
 ts = pdr.Transaction(serviceKey, debug=True)
 
@@ -172,15 +174,22 @@ print(pdr.__info__)
 # 2. 공공 데이터 포털 Open API 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 국토교통부 건축물대장정보 서비스 Open API 인스턴스 생성하기
-bd = pdr.Building(serviceKey)
+# 3. 국토교통부 건축물대장정보 서비스 Open API 세션 정의하기
+# debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
+bd = pdr.Building(serviceKey, debug=True)
 
-# 4. 건축물대장정보 오퍼레이션별 데이터 조회
-category = "기본개요"            # 건축물대장 종류
-sigunguCd = "41135"              # 시군구코드(5)
-bjdongCd = "11000"               # 읍면동코드(5)
-bun = "0541"                     # 본번(4)
-ji = "0000"                      # 부번(4)
+# 4. 지역코드(시군구코드) 검색하기
+sigunguName = "분당구"                                  # 시군구코드: 41135
+code = pdr.code_list()
+code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
+         (code['읍면동명'].isna())]
+
+# 5. 건축물대장정보 오퍼레이션별 데이터 조회
+category = "기본개요"                                   # 건축물대장 종류
+sigunguCd = "41135"                                     # 시군구코드(5)
+bjdongCd = "11000"                                      # 읍면동코드(5)
+bun = "0541"                                            # 본번(4)
+ji = "0000"                                             # 부번(4)
 
 df = bd.read_data("기본개요", sigunguCd=sigunguCd, bjdongCd=bjdongCd, bun=bun, ji=ji)
 ```
