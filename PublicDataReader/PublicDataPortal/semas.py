@@ -3,38 +3,30 @@
 semas(Small Enterprise And Market Service)
 
 1. StoreInfo 클래스: 소상공인 상가업소 정보 조회
-    1. storeZoneOne: 지정 상권조회
-    2. storeZoneInRadius: 반경내 상권조회
-    3. storeZoneInRectangle: 사각형내 상권조회
-    4. storeZoneInAdmi: 행정구역 단위 상권조회
-    5. storeOne: 단일 상가업소 조회
-    6. storeListInBuilding: 건물단위 상가업소 조회
-    7. storeListInPnu: 지번단위 상가업소 조회
-    8. storeListInDong: 행정동 단위 상가업소 조회
-    9. storeListInArea: 상권내 상가업소 조회
-    10. storeListInRadius: 반경내 상가업소 조회
-    11. storeListInRectangle: 사각형내 상가업소 조회
-    12. storeListInPolygon: 다각형내 상가업소 조회
-    13. storeListInUpjong: 업종별 상가업소 조회
-    14. storeListByDate: 수정일자기준 상가업소 조회
-    15. reqStoreModify: 상가업소정보 변경요청
-    16. (보류) storeStatsUpjongInAdmi: 행정구역내 업종별 상가업소 통계
-    17. (보류) storeStatsUpjongInBuilding: 건물내 업종별 상가업소 통계
-    18. (보류) storeStatsUpjongInRadius: 반경내 업종별 상가업소 통계
-    19. (보류) storeStatsUpjongInRectangle: 사각형내 업종별 상가업소 통계
-    20. (보류) storeStatsUpjongInPolygon: 다각형내 업종별 상가업소 통계
-    21. largeUpjongList: 상권정보 업종 대분류 조회
-    22. middleUpjongList: 상권정보 업종 중분류 조회
-    23. smallUpjongList: 상권정보 업종 소분류 조회
+    01.지정 상권조회
+    02.반경내 상권조회
+    03.사각형내 상권조회
+    04.행정구역 단위 상권조회
+    05.단일 상가업소 조회
+    06.건물단위 상가업소 조회
+    07.지번단위 상가업소 조회
+    08.행정동 단위 상가업소 조회
+    09.상권내 상가업소 조회
+    10.반경내 상가업소 조회
+    11.사각형내 상가업소 조회
+    12.다각형내 상가업소 조회
+    13.업종별 상가업소 조회
+    14.수정일자기준 상가업소 조회
+    15.상권정보 업종 대분류 조회
+    16.상권정보 업종 중분류 조회
+    17.상권정보 업종 소분류 조회
 """
 
 import pandas as pd
-import numpy as np
 import datetime
 import logging
 import requests
 from bs4 import BeautifulSoup
-
 
 
 class StoreInfo:
@@ -67,7 +59,6 @@ class StoreInfo:
         self.serviceKey = serviceKey
 
         # ServiceKey 등록
-        self.urlBase = f"http://apis.data.go.kr/B553077/api/open/sdsc/"
         self.endpoint = f"http://apis.data.go.kr/B553077/api/open/sdsc/"
 
         # 오퍼레이션별 URL 및 컬럼 매핑 딕셔너리
@@ -162,6 +153,9 @@ class StoreInfo:
 
 
     def read_data(self, category, **kwargs):
+        """
+        category: 건축물대장 종류
+        """
 
         # 엔드포인트, 파라미터 및 컬럼 목록 매핑
         try:

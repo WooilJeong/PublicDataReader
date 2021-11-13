@@ -15,27 +15,17 @@
   - PublicDataReader 사용 관련 Q&A를 위한 오픈채팅방입니다.
 
 
-## 소개
+## PublicDataReader
 
 - **최신 버전**  
-![](https://img.shields.io/badge/PublicDataReader-2021.11.-blue.svg)  
-
-    - 2021.4.12 Version (2021-04):
-      - 국토교통부 건축물대장정보 서비스 추가
-    - 2021.1.9 Version (2021-01): 
-      - 소상공인 상가업소 정보 조회 기능 추가
-      - 서울시 지하철호선별 역별 승하차 인원 정보 조회 기능 추가   
-      - 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보 조회 기능 추가
-    - 0.1.2 Version (2020-12): 
-      - 국토교통부 실거래가 정보 조회 기능 전면 수정
-
+![](https://img.shields.io/badge/PublicDataReader-2021.11.-blue.svg)
 
 - **의존성**  
 ![](https://img.shields.io/badge/Python-3.8.12-yellow.svg) ![](https://img.shields.io/badge/Pandas-1.3.4-red.svg) ![](https://img.shields.io/badge/beautifulsoup4-4.10.0-green.svg)
 
-**PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 에서 제공하는 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 수집 라이브러리**입니다. 
+**PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 기관에서 제공하고 있는 데이터 관련 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 수집 라이브러리**입니다. 
 
-**2021년 04월** 현재 아래 Open API 서비스를 이용하여 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 추후 수요가 높은 Open API 서비스에 대한 인터페이스도 지속적으로 업데이트할 예정입니다.
+**2021년 11월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다.
 
 - [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do)
 - [국토교통부 건축물대장정보 서비스](https://www.data.go.kr/data/15044713/openapi.do)
@@ -112,7 +102,7 @@
 | 서울시 버스노선별 정류장별 시간대별 승하차 인원 정보 | CardBusTimeNew     |
 
 
-## 설치 방법
+## Installation
 
 ```bash
 pip install --upgrade PublicDataReader
@@ -129,10 +119,10 @@ import PublicDataReader as pdr
 print(pdr.__version__)
 print(pdr.__info__)
 
-# 2. 공공 데이터 포털 Open API 서비스 인증키 입력하기
+# 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 국토교통부 실거래가 정보 조회 Open API 세션 정의하기
+# 3. 국토교통부 실거래가 정보 조회 OpenAPI 세션 정의하기
 # debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
 ts = pdr.Transaction(serviceKey, debug=True)
 
@@ -170,10 +160,10 @@ import PublicDataReader as pdr
 print(pdr.__version__)
 print(pdr.__info__)
 
-# 2. 공공 데이터 포털 Open API 서비스 인증키 입력하기
+# 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 국토교통부 건축물대장정보 서비스 Open API 세션 정의하기
+# 3. 국토교통부 건축물대장정보 서비스 OpenAPI 세션 정의하기
 # debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
 bd = pdr.Building(serviceKey, debug=True)
 
@@ -202,10 +192,10 @@ import PublicDataReader as pdr
 print(pdr.__version__)
 print(pdr.__info__)
 
-# 2. 공공 데이터 포털 Open API 서비스 인증키 입력하기
+# 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 소상공인 상가업소 정보 조회 Open API 인스턴스 생성하기
+# 3. 소상공인 상가업소 정보 조회 OpenAPI 인스턴스 생성하기
 semas = pdr.StoreInfo(serviceKey)
 
 # 4. 데이터프레임으로 자료 조회하기
