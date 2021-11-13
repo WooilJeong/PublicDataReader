@@ -196,7 +196,8 @@ print(pdr.__info__)
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # 3. 소상공인 상가업소 정보 조회 OpenAPI 인스턴스 생성하기
-semas = pdr.StoreInfo(serviceKey)
+# debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
+semas = pdr.StoreInfo(serviceKey, debug=True)
 
 # 4. 데이터프레임으로 자료 조회하기
 
