@@ -64,119 +64,70 @@ class Transaction:
 
         # Open API 서비스 키 초기화
         self.serviceKey = serviceKey
-        # ServiceKey 유효성 검사
-        self.urlAptTrade = (
-            "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?serviceKey="
-            + self.serviceKey
-        )
-        self.urlAptTradeDetail = (
-            "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey="
-            + self.serviceKey
-        )
-        self.urlAptRent = (
-            "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?serviceKey="
-            + self.serviceKey
-        )
-        self.urlAptOwnership = (
-            "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSilvTrade?serviceKey="
-            + self.serviceKey
-        )
-        self.urlOffiTrade = (
-            "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiTrade?serviceKey="
-            + self.serviceKey
-        )
-        self.urlOffiRent = (
-            "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiRent?serviceKey="
-            + self.serviceKey
-        )
-        self.urlRHTrade = (
-            "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHTrade?serviceKey="
-            + self.serviceKey
-        )
-        self.urlRHRent = (
-            "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHRent?serviceKey="
-            + self.serviceKey
-        )
-        self.urlDHTrade = (
-            "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHTrade?serviceKey="
-            + self.serviceKey
-        )
-        self.urlDHRent = (
-            "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHRent?serviceKey="
-            + self.serviceKey
-        )
-        self.urlLandTrade = (
-            "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade?serviceKey="
-            + self.serviceKey
-        )
-        self.urlBizTrade = (
-            "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade?serviceKey="
-            + self.serviceKey
-        )
-
+        
         # URL 및 컬럼 리스트 매핑
         self.metaDict = {
             "아파트": {
                 "매매": {
-                    "url": self.urlAptTradeDetail,
+                    "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '도로명', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '거래금액', '도로명건물본번호코드', '도로명건물부번호코드', '도로명시군구코드', '도로명일련번호코드', '도로명지상지하코드', '도로명코드', '법정동본번코드', '법정동부번코드', '법정동시군구코드', '법정동읍면동코드', '법정동지번코드', '일련번호', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
                 "전월세": {
-                    "url": self.urlAptRent,
+                    "url": f"http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '보증금액', '월세금액']
                 }
             },
             
             "오피스텔": {
                 "매매": {
-                    "url": self.urlOffiTrade,
+                    "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiTrade?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '건축년도', '층', '전용면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
                 "전월세": {
-                    "url": self.urlOffiRent,
+                    "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiRent?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '건축년도', '층', '전용면적', '년', '월', '일', '보증금', '월세']
                 }
             },
             
             "단독다가구": {
                 "매매": {
-                    "url": self.urlDHTrade,
+                    "url": f"http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHTrade?serviceKey={self.serviceKey}",
                     "columns":['지역코드', '법정동', '주택유형', '건축년도', '대지면적', '연면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
                 "전월세": {
-                    "url": self.urlDHRent,
+                    "url": f"http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHRent?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '법정동', '건축년도', '계약면적', '년', '월', '일', '보증금액', '월세금액']
                 }
             },
             
             "연립다세대": {
                 "매매": {
-                    "url": self.urlRHTrade,
+                    "url": f"http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHTrade?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '법정동', '지번', '연립다세대', '건축년도', '층', '대지권면적', '전용면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
                 "전월세": {
-                    "url": self.urlRHRent,
+                    "url": f"http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHRent?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '법정동', '지번', '연립다세대', '건축년도', '층', '전용면적', '년', '월', '일', '보증금액', '월세금액']
                 }
             },
             
             "상업업무용": {
                 "매매": {
-                    "url": self.urlBizTrade,
+                    "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '시군구', '법정동', '유형', '용도지역', '건물주용도', '건축년도', '대지면적', '건물면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
 
             "토지": {
                 "매매": {
-                    "url": self.urlLandTrade,
+                    "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade?serviceKey={self.serviceKey}",
                     "columns":['지역코드', '시군구', '법정동', '용도지역', '지목', '거래면적', '거래금액', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
             
             "분양입주권": {
                 "매매": {
-                    "url": self.urlAptOwnership,
+                    "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSilvTrade?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '층', '전용면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
@@ -195,7 +146,7 @@ class Transaction:
                 if result_code == "00":
                     self.logger.info(f"{prod} {trans} 조회 서비스 정상 - ({result_code}) {result_msg}")
                 else:
-                    self.logger.err(f"{prod} {trans} 조회 서비스 오류 - ({result_code}) {result_msg}")
+                    self.logger.error(f"{prod} {trans} 조회 서비스 오류 - ({result_code}) {result_msg}")
 
 
     def collect_data(self, prod, trans, sigunguCode, startYearMonth, endYearMonth):
