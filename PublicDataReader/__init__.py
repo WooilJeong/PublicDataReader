@@ -1,6 +1,6 @@
 from .data import *
 
-version = "2021.11.16"
+version = "2021.11.17"
 
 __version__ = f"""{version}"""
 
