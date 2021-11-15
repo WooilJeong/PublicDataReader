@@ -16,7 +16,7 @@
   - PublicDataReader 사용 관련 Q&A를 위한 오픈채팅방입니다.
 
 
-**2021년 11월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다.
+**2021년 11월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 본 라이브러리를 정상적으로 이용하기 위해서는 아래 서비스에 대한 OpenAPI 활용신청을 반드시 완료해야합니다.
 
 - [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do)
 - [국토교통부 건축물대장정보 서비스](https://www.data.go.kr/data/15044713/openapi.do)
