@@ -1,5 +1,5 @@
 """
-소상공인 진흥공단 Open API
+소상공인 진흥공단 OpenAPI
 semas(Small Enterprise And Market Service)
 
 1. StoreInfo 클래스: 소상공인 상가업소 정보 조회
@@ -55,7 +55,7 @@ class StoreInfo:
             stream_handler.setFormatter(formatter)
             self.logger.addHandler(stream_handler)
 
-        # Open API 서비스 키 초기화
+        # OpenAPI 서비스 키 초기화
         self.serviceKey = serviceKey
 
         # ServiceKey 등록
@@ -177,7 +177,7 @@ class StoreInfo:
             # URL
             url=f"""{endpoint}{params}&numOfRows=99999"""
 
-            # Open API 호출
+            # OpenAPI 호출
             result = requests.get(url, verify=False)
             xmlsoup = BeautifulSoup(result.text, "lxml-xml")
             header = xmlsoup.find("header")
@@ -186,7 +186,7 @@ class StoreInfo:
             items = xmlsoup.findAll("item")
 
         except:
-            self.logger.error(f"Open API 호출 오류")
+            self.logger.error(f"OpenAPI 호출 오류")
             return
 
         if result_code == "00":

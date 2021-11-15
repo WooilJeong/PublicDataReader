@@ -1,292 +1,165 @@
 """
-서울 열린데이터 광장 Open API
+서울 열린데이터 광장 OpenAPI
 
-1. TransInfo 클래스: 서울시 교통 관련 정보 조회
+1. 교통
+    - 서울시 지하철호선별 역별 승하차 인원 정보
+    - 서울시 버스노선별 정류장별 승하차 인원 정보
 
 """
 
 import pandas as pd
-import numpy as np
 import datetime
+import logging
 import requests
 from bs4 import BeautifulSoup
 
 
-class TransInfo:
-    def __init__(self, serviceKey):
+class Transportation:
+    """
+    서울 열린데이터 광장 교통 관련 정보 조회 클래스
+    """
+
+    def __init__(self, serviceKey, debug=False):
         """
         서울 열린데이터 광장에서 발급받은 Service Key를 입력받아 초기화합니다.
+        - serviceKey: 서비스 인증키 문자열
+        - debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
         """
-        # Open API 서비스 키 초기화
+        # 로거 설정
+        self.logger = logging.getLogger("root")
+        # 로깅 레벨 설정
+        if debug == True:
+            self.logger.setLevel(logging.INFO)
+        else:
+            self.logger.setLevel(logging.ERROR)
+        # 출력 포매팅 설정 - 시간, 로거이름, 로깅레벨, 메세지
+        formatter = logging.Formatter("[%(levelname)s] %(message)s")
+        if len(self.logger.handlers) == 0:
+            # 스트림 핸들러 설정 - 콘솔에 출력
+            stream_handler = logging.StreamHandler()
+            stream_handler.setFormatter(formatter)
+            self.logger.addHandler(stream_handler)
+
+        # OpenAPI 서비스 키 초기화
         self.serviceKey = serviceKey
 
         # ServiceKey 등록
-        self.urlBase = f"http://openapi.seoul.go.kr:8088/"
+        self.endpoint = f"http://openapi.seoul.go.kr:8088/"
 
-        print(">> Open API Services initialized!")
+        # 오퍼레이션별 URL 및 컬럼 매핑 딕셔너리
+        self.metaDict = {
+            
+            "지하철승하차": {
+                "url": f"{self.endpoint}{self.serviceKey}/xml/CardSubwayStatsNew/",
+                "columns": ["USE_DT","LINE_NUM","SUB_STA_NM","RIDE_PASGR_NUM","ALIGHT_PASGR_NUM","WORK_DT"]
+            },
 
-    def CardSubwayStatsNew(self, start_index, end_index, use_dt):
-        """
-        지하철 승하차 정보 조회
-        입력: 시작 인덱스, 끝 인덱스, 조회 일자
-        조건: 1회 1000건 제한        
-        """
+            "버스승하차": {
+                "url": f"{self.endpoint}{self.serviceKey}/xml/CardBusStatisticsServiceNew/",
+                "columns": ['USE_DT','BUS_ROUTE_ID','BUS_ROUTE_NO','BUS_ROUTE_NM','STND_BSST_ID','BSST_ARS_NO','BUS_STA_NM','RIDE_PASGR_NUM','ALIGHT_PASGR_NUM','WORK_DT']
+            },
+            
+        }
 
-        url = f"{self.urlBase}{self.serviceKey}/xml/CardSubwayStatsNew/{start_index}/{end_index}/{use_dt}"
+
+    def read_data(self, category, **kwargs):
+
+        # 엔드포인트, 파라미터 및 컬럼 목록 매핑
+        try:
+            endpoint = self.metaDict[category]['url']
+            columns = self.metaDict[category]['columns']
+        except:
+            self.logger.error(f"{category} 참조 오류")
+            return
 
         try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("row")
+            params = ""
+            for key, value in kwargs.items():
+                params += f"/{value}"
+        except:
+            self.logger.error(f"{category} 파라미터 파싱 오류")
+            return
 
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "USE_DT",
-                "LINE_NUM",
-                "SUB_STA_NM",
-                "RIDE_PASGR_NUM",
-                "ALIGHT_PASGR_NUM",
-                "WORK_DT",
-            ]
+        try:
+            check_code = "INFO-000"
+            startIdx, endIdx = 1, 1000
+            items = []
+            while check_code == "INFO-000":
 
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [[USE_DT, LINE_NUM, SUB_STA_NM, RIDE_PASGR_NUM, ALIGHT_PASGR_NUM, WORK_DT]],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
+                url = f"""{endpoint}{startIdx}/{endIdx}{params}"""
 
-            # Set col names
-            df.columns = variables
-            # Set Index
-            df.index = range(len(df))
+                # OpenAPI 호출
+                result = requests.get(url, verify=False)
+                xmlsoup = BeautifulSoup(result.text, "lxml-xml")
+                header = xmlsoup.find("RESULT")
+                result_code = header.find("CODE").text
+                result_msg = header.find("MESSAGE").text
+                rows = xmlsoup.findAll("row")
+                items = items + rows
 
-            # Datetime 변환
-            df["USE_DT"] = pd.to_datetime(df["USE_DT"], format="%Y%m%d")
-            df["WORK_DT"] = pd.to_datetime(df["WORK_DT"], format="%Y%m%d")
-
-            # 숫자형 변환
-            df["RIDE_PASGR_NUM"] = pd.to_numeric(df["RIDE_PASGR_NUM"])
-            df["ALIGHT_PASGR_NUM"] = pd.to_numeric(df["ALIGHT_PASGR_NUM"])
+                check_code = result_code
+                startIdx += 1000
+                endIdx += 1000
 
         except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("RESULT")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("CODE").text == "INFO-000":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
+            self.logger.error(f"OpenAPI 호출 오류")
+            return
 
-            # Open API 서비스 제공처 오류
+        # 데이터프레임 생성
+        try:
+            df = pd.DataFrame()
+            for item in items:
+                row = {}
+                for col in columns:
+                    try:
+                        tag = item.find(col)
+                        row[col] = tag.text.strip()
+                    except:
+                        row[col] = ""
+                df_ = pd.DataFrame([row])
+                df = df.append(df_)
+
+            if len(df) != 0:
+                df = df[columns]
+                df = self.ChangeCols(df)
+                df.index = range(len(df))
+
             else:
-                print(f">>> {te[0].find('CODE').text} {te[0].find('MESSAGE').text}")
-            pass
+                self.logger.info(f"조회 결과 없음")
+                df = pd.DataFrame(columns=columns)
+                df = self.ChangeCols(df)
+                return df
 
-        # 전체 자료 건 수
-        n_data = xmlsoup.findAll("list_total_count")[0].text
-        print(f">>> 전체 자료 건 수: {n_data}")
+        except:
+            self.logger.error(f"조회 로직 오류")
+            return
 
         return df
 
-    def CardBusTimeNew(self, start_index, end_index, use_mon, bus_no=None):
+
+
+    def ChangeCols(self, df):
         """
-        버스 승하차 정보 조회
-        입력: 시작 인덱스, 끝 인덱스, 조회 년월
-        조건: 1회 1000건 제한        
+        영문 컬럼명을 국문 컬럼명으로 변경
         """
 
-        if bus_no == None:
-            url = f"{self.urlBase}{self.serviceKey}/xml/CardBusTimeNew/{start_index}/{end_index}/{use_mon}"
-        else:
-            url = f"{self.urlBase}{self.serviceKey}/xml/CardBusTimeNew/{start_index}/{end_index}/{use_mon}/{bus_no}"
+        self.colDict = {
+            'USE_DT': '사용일자',
 
-        try:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("row")
+            'LINE_NUM': '호선명',
+            'SUB_STA_NM': '역명',
 
-            # Creating Pandas Data Frame
-            df = pd.DataFrame()
-            variables = [
-                "USE_MON",
-                "BUS_ROUTE_NO",
-                "BUS_ROUTE_NM",
-                "STND_BSST_ID",
-                "BSST_ARS_NO",
-                "BUS_STA_NM",
-                "MIDNIGHT_RIDE_NUM",
-                "MIDNIGHT_ALIGHT_NUM",
-                "ONE_RIDE_NUM",
-                "ONE_ALIGHT_NUM",
-                "TWO_RIDE_NUM",
-                "TWO_ALIGHT_NUM",
-                "THREE_RIDE_NUM",
-                "THREE_ALIGHT_NUM",
-                "FOUR_RIDE_NUM",
-                "FOUR_ALIGHT_NUM",
-                "FIVE_RIDE_NUM",
-                "FIVE_ALIGHT_NUM",
-                "SIX_RIDE_NUM",
-                "SIX_ALIGHT_NUM",
-                "SEVEN_RIDE_NUM",
-                "SEVEN_ALIGHT_NUM",
-                "EIGHT_RIDE_NUM",
-                "EIGHT_ALIGHT_NUM",
-                "NINE_RIDE_NUM",
-                "NINE_ALIGHT_NUM",
-                "TEN_RIDE_NUM",
-                "TEN_ALIGHT_NUM",
-                "ELEVEN_RIDE_NUM",
-                "ELEVEN_ALIGHT_NUM",
-                "TWELVE_RIDE_NUM",
-                "TWELVE_ALIGHT_NUM",
-                "THIRTEEN_RIDE_NUM",
-                "THIRTEEN_ALIGHT_NUM",
-                "FOURTEEN_RIDE_NUM",
-                "FOURTEEN_ALIGHT_NUM",
-                "FIFTEEN_RIDE_NUM",
-                "FIFTEEN_ALIGHT_NUM",
-                "SIXTEEN_RIDE_NUM",
-                "SIXTEEN_ALIGHT_NUM",
-                "SEVENTEEN_RIDE_NUM",
-                "SEVENTEEN_ALIGHT_NUM",
-                "EIGHTEEN_RIDE_NUM",
-                "EIGHTEEN_ALIGHT_NUM",
-                "NINETEEN_RIDE_NUM",
-                "NINETEEN_ALIGHT_NUM",
-                "TWENTY_RIDE_NUM",
-                "TWENTY_ALIGHT_NUM",
-                "TWENTY_ONE_RIDE_NUM",
-                "TWENTY_ONE_ALIGHT_NUM",
-                "TWENTY_TWO_RIDE_NUM",
-                "TWENTY_TWO_ALIGHT_NUM",
-                "TWENTY_THREE_RIDE_NUM",
-                "TWENTY_THREE_ALIGHT_NUM",
-                "WORK_DT",
-            ]
+            'BUS_ROUTE_ID': '노선ID',
+            'BUS_ROUTE_NO': '노선번호',
+            'BUS_ROUTE_NM': '노선명',
+            'STND_BSST_ID': '표준버스정류장ID',
+            'BSST_ARS_NO': '버스정류장ARS번호',
+            'BUS_STA_NM': '역명',
 
-            for t in te:
-                for variable in variables:
-                    try:
-                        globals()[variable] = t.find(variable).text
-                    except:
-                        globals()[variable] = np.nan
-                data = pd.DataFrame(
-                    [
-                        [
-                            USE_MON,
-                            BUS_ROUTE_NO,
-                            BUS_ROUTE_NM,
-                            STND_BSST_ID,
-                            BSST_ARS_NO,
-                            BUS_STA_NM,
-                            MIDNIGHT_RIDE_NUM,
-                            MIDNIGHT_ALIGHT_NUM,
-                            ONE_RIDE_NUM,
-                            ONE_ALIGHT_NUM,
-                            TWO_RIDE_NUM,
-                            TWO_ALIGHT_NUM,
-                            THREE_RIDE_NUM,
-                            THREE_ALIGHT_NUM,
-                            FOUR_RIDE_NUM,
-                            FOUR_ALIGHT_NUM,
-                            FIVE_RIDE_NUM,
-                            FIVE_ALIGHT_NUM,
-                            SIX_RIDE_NUM,
-                            SIX_ALIGHT_NUM,
-                            SEVEN_RIDE_NUM,
-                            SEVEN_ALIGHT_NUM,
-                            EIGHT_RIDE_NUM,
-                            EIGHT_ALIGHT_NUM,
-                            NINE_RIDE_NUM,
-                            NINE_ALIGHT_NUM,
-                            TEN_RIDE_NUM,
-                            TEN_ALIGHT_NUM,
-                            ELEVEN_RIDE_NUM,
-                            ELEVEN_ALIGHT_NUM,
-                            TWELVE_RIDE_NUM,
-                            TWELVE_ALIGHT_NUM,
-                            THIRTEEN_RIDE_NUM,
-                            THIRTEEN_ALIGHT_NUM,
-                            FOURTEEN_RIDE_NUM,
-                            FOURTEEN_ALIGHT_NUM,
-                            FIFTEEN_RIDE_NUM,
-                            FIFTEEN_ALIGHT_NUM,
-                            SIXTEEN_RIDE_NUM,
-                            SIXTEEN_ALIGHT_NUM,
-                            SEVENTEEN_RIDE_NUM,
-                            SEVENTEEN_ALIGHT_NUM,
-                            EIGHTEEN_RIDE_NUM,
-                            EIGHTEEN_ALIGHT_NUM,
-                            NINETEEN_RIDE_NUM,
-                            NINETEEN_ALIGHT_NUM,
-                            TWENTY_RIDE_NUM,
-                            TWENTY_ALIGHT_NUM,
-                            TWENTY_ONE_RIDE_NUM,
-                            TWENTY_ONE_ALIGHT_NUM,
-                            TWENTY_TWO_RIDE_NUM,
-                            TWENTY_TWO_ALIGHT_NUM,
-                            TWENTY_THREE_RIDE_NUM,
-                            TWENTY_THREE_ALIGHT_NUM,
-                            WORK_DT,
-                        ]
-                    ],
-                    columns=variables,
-                )
-                df = pd.concat([df, data])
-
-            # Set col names
-            df.columns = variables
-            # Set Index
-            df.index = range(len(df))
-
-            # 숫자 형 변환
-            cols = df.columns.drop(
-                [
-                    "USE_MON",
-                    "BUS_ROUTE_NO",
-                    "BUS_ROUTE_NM",
-                    "STND_BSST_ID",
-                    "BSST_ARS_NO",
-                    "BUS_STA_NM",
-                    "WORK_DT",
-                ]
-            )
-            df[cols] = df[cols].apply(pd.to_numeric, errors="coerce")
-
-        except:
-            # Get raw data
-            result = requests.get(url, verify=False)
-            # Parsing
-            xmlsoup = BeautifulSoup(result.text, "lxml-xml")
-            # Filtering
-            te = xmlsoup.findAll("RESULT")
-            # 정상 요청시 에러 발생 -> Python 코드 에러
-            if te[0].find("CODE").text == "INFO-000":
-                print(">>> Python Logic Error. e-mail : wooil@kakao.com")
-
-            # Open API 서비스 제공처 오류
-            else:
-                print(f">>> {te[0].find('CODE').text} {te[0].find('MESSAGE').text}")
-            pass
-
-        # 전체 자료 건 수
-        n_data = xmlsoup.findAll("list_total_count")[0].text
-        print(f">>> 전체 자료 건 수: {n_data}")
-
+            'RIDE_PASGR_NUM': '승차총승객수',
+            'ALIGHT_PASGR_NUM': '하차총승객수',
+            'WORK_DT': '등록일자'
+        }
+        
+        df = df.rename(columns=self.colDict)
         return df

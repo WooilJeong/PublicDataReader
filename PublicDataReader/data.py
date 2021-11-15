@@ -9,7 +9,7 @@ from PublicDataReader.PublicDataPortal.molit import Transaction, Building
 from PublicDataReader.PublicDataPortal.semas import StoreInfo
 
 # 서울시 지하철호선별 역별 승하차 인원 정보 Open API
-from PublicDataReader.Seoul.transportation import TransInfo
+from PublicDataReader.Seoul.transportation import Transportation
 
 
 # 코드 테이블
