@@ -197,7 +197,7 @@ serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # 3. 소상공인 상가업소 정보 조회 OpenAPI 인스턴스 생성하기
 # debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
-semas = pdr.StoreInfo(serviceKey, debug=True)
+si = pdr.StoreInfo(serviceKey, debug=True)
 
 # 4. 데이터프레임으로 자료 조회하기
 
@@ -206,7 +206,7 @@ category = "지정상권"
 
 key = "9174"
 
-df = semas.read_data(category=category, key=key)
+df = si.read_data(category=category, key=key)
 
 # 4-2. 반경상권
 category = "반경상권"
@@ -215,7 +215,7 @@ radius = 500
 cx = 127.03641615737838
 cy = 37.50059843782878
 
-df = semas.read_data(category=category, radius=radius, cx=cx, cy=cy)
+df = si.read_data(category=category, radius=radius, cx=cx, cy=cy)
 
 # 4-3. 사각형상권
 category = "사각형상권"
@@ -225,7 +225,7 @@ miny = 37.495967935149146
 maxx = 127.04268179746694
 maxy = 37.502402894207286
 
-df = semas.read_data(category=category, minx=minx, miny=miny, maxx=maxx, maxy=maxy)
+df = si.read_data(category=category, minx=minx, miny=miny, maxx=maxx, maxy=maxy)
 
 # 4-4. 행정구역상권
 category = "행정구역상권"
@@ -233,21 +233,21 @@ category = "행정구역상권"
 divId = 'adongCd'
 key = '1168058000'
 
-df = semas.read_data(category=category,divId=divId, key=key)
+df = si.read_data(category=category,divId=divId, key=key)
 
 # 4-5. 단일상가
 category = "단일상가"
 
 key = '11757465'
 
-df = semas.read_data(category=category, key=key)
+df = si.read_data(category=category, key=key)
 
 # 4-6. 건물상가
 category = "건물상가"
 
 key = '1168011000104940000004966'
 
-df = semas.read_data(category=category, key=key)
+df = si.read_data(category=category, key=key)
 
 # 4-7. 지번상가
 category = "지번상가"
@@ -255,7 +255,7 @@ category = "지번상가"
 key = '1165010100108120002'
 indsLclsCd = 'Q'
 
-df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
+df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
 
 # 4-8. 행정동상가
 category = "행정동상가"
@@ -264,7 +264,7 @@ divId = 'adongCd'
 key = '1168064000'
 indsLclsCd = 'Q'
 
-df = semas.read_data(category=category, divId=divId, key=key, indsLclsCd=indsLclsCd)
+df = si.read_data(category=category, divId=divId, key=key, indsLclsCd=indsLclsCd)
 
 # 4-9. 상권상가
 category = "상권상가"
@@ -272,7 +272,7 @@ category = "상권상가"
 key = '9368'
 indsLclsCd = 'Q'
 
-df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
+df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
 
 # 4-10. 반경상가
 category = "반경상가"
@@ -282,7 +282,7 @@ cx = 127.03641615737838
 cy = 37.50059843782878
 indsLclsCd = 'Q'
 
-df = semas.read_data(category=category, radius=radius, cx=cx, cy=cy, indsLclsCd=indsLclsCd)
+df = si.read_data(category=category, radius=radius, cx=cx, cy=cy, indsLclsCd=indsLclsCd)
 
 # 4-11. 사각형상가
 category = "사각형상가"
@@ -293,7 +293,7 @@ maxx = 127.04268179746694
 maxy = 37.502402894207286
 indsLclsCd = 'Q'
 
-df = semas.read_data(category=category, minx=minx, miny=miny, maxx=maxx, maxy=maxy, indsLclsCd=indsLclsCd)
+df = si.read_data(category=category, minx=minx, miny=miny, maxx=maxx, maxy=maxy, indsLclsCd=indsLclsCd)
 
 # 4-12. 다각형상가
 category = "다각형상가"
@@ -301,7 +301,7 @@ category = "다각형상가"
 key = 'POLYGON((127.02355609555755 37.504264372557095, 127.02496157306963 37.50590702991155, 127.0270858825753 37.50486867039889, 127.02628121988377 37.503489842823114))'
 indsLclsCd = 'Q'
 
-df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
+df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
 
 # 4-13. 업종별상가
 category = "업종별상가"
@@ -309,7 +309,7 @@ category = "업종별상가"
 divId = 'indsLclsCd'
 key = 'Q'
 
-df = semas.read_data(category=category, divId=divId, key=key)
+df = si.read_data(category=category, divId=divId, key=key)
 
 # 4-14. 수정일자상가
 category = "수정일자상가"
@@ -317,19 +317,19 @@ category = "수정일자상가"
 key = '20200101'
 indsLclsCd = 'Q'
 
-df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
+df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
 
 # 4-15. 업종대분류
 category = "업종대분류"
 
-df = semas.read_data(category=category, key=key)
+df = si.read_data(category=category, key=key)
 
 # 4-16. 업종중분류
 category = "업종중분류"
 
 indsLclsCd = 'Q'
 
-df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
+df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
 
 # 4-17. 업종소분류
 category = "업종소분류"
@@ -337,6 +337,6 @@ category = "업종소분류"
 indsLclsCd = 'Q'
 indsMclsCd = 'Q01'
 
-df = semas.read_data(category=category, key=key, indsLclsCd=indsLclsCd, indsMclsCd=indsMclsCd)
+df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd, indsMclsCd=indsMclsCd)
 
 ```
