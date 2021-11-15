@@ -30,8 +30,8 @@
 - [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do)
 - [국토교통부 건축물대장정보 서비스](https://www.data.go.kr/data/15044713/openapi.do)
 - [소상공인 상가업소 정보](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15012005)
-- [서울시 지하철호선별 역별 승하차 인원 정보](https://data.seoul.go.kr/dataList/OA-12914/S/1/datasetView.do)
-- [서울시 버스노선별 정류장별 시간대별 승하차 인원 정보](https://data.seoul.go.kr/dataList/OA-12913/S/1/datasetView.do)
+- [서울시 지하철호선별 역별 승하차 인원 정보](http://data.seoul.go.kr/dataList/OA-12914/S/1/datasetView.do)
+- [서울시 버스노선별 정류장별 승하차 인원 정보](http://data.seoul.go.kr/dataList/OA-12912/S/1/datasetView.do)
 
 
 ## 공공 데이터 포털 서비스 목록
@@ -96,7 +96,7 @@
 
 ### 1) 서울시 교통 관련 정보 조회 서비스
 
-| **서비스 명**                                        | **카테고리명**     |
+| **서비스명**                                        | **카테고리명**     |
 | ---------------------------------------------------- | ------------------ |
 | 서울시 지하철호선별 역별 승하차 인원 정보            | 지하철승하차       |
 | 서울시 버스노선별 정류장별 승하차 인원 정보          | 버스승하차         |
