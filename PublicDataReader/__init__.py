@@ -1,6 +1,6 @@
 from .data import *
 
-version = "2021.11."
+version = "2021.11.16"
 
 __version__ = f"""{version}"""
 
@@ -11,4 +11,4 @@ __info__ = """\
 - Blog : https://wooiljeong.github.io\
 """
 
-__all__ = ["__version__", "__info__", "Transaction", "Building", "StoreInfo", "code_list"]
+__all__ = ["__version__", "__info__", "Transaction", "Building", "StoreInfo", "Transportation", "code_list"]

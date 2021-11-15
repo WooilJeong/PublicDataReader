@@ -2,28 +2,19 @@
 
 ![PNG](./img_logo.png)
 
+![](https://img.shields.io/badge/PublicDataReader-2021.11.16-red.svg) [![Linkedin Badge](https://img.shields.io/badge/-WooilJeong-blue?style=plastic&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/wooil/)](https://www.linkedin.com/in/wooil/) 
 
-## Open Source Project
+**PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 기관에서 제공하고 있는 데이터 관련 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 조회 라이브러리**입니다. 
 
-- **Project Owner: 정우일(Wooil Jeong)**
-- **e-mail: wooil@kakao.com**
-- **사용 설명서**: 
+- **Project Owner: 정우일**  
+- **E-mail: wooil@kakao.com**  
+- **라이브러리 사용 설명서**  
   - [PublicDataReader - 부동산 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [PublicDataReader - 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
   - [PublicDataReader - 상가업소 데이터 수집하기](https://wooiljeong.github.io/python/public_data_reader_02/)
-- **[카카오톡 오픈채팅방 링크](https://open.kakao.com/o/gFYXtP2c)**
+- **[카카오톡 오픈채팅방 링크](https://open.kakao.com/o/gFYXtP2c)**  
   - PublicDataReader 사용 관련 Q&A를 위한 오픈채팅방입니다.
 
-
-## PublicDataReader
-
-- **최신 버전**  
-![](https://img.shields.io/badge/PublicDataReader-2021.11.-blue.svg)
-
-- **의존성**  
-![](https://img.shields.io/badge/Python-3.8.12-yellow.svg) ![](https://img.shields.io/badge/Pandas-1.3.4-red.svg) ![](https://img.shields.io/badge/beautifulsoup4-4.10.0-green.svg)
-
-**PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 기관에서 제공하고 있는 데이터 관련 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 수집 라이브러리**입니다. 
 
 **2021년 11월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다.
 
@@ -133,8 +124,8 @@ code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
          (code['읍면동명'].isna())]
 
 # 5. 지역, 월 별 데이터 프레임 만들기
-prod="아파트"
-trans="매매"
+prod="아파트"                                           # 부동산 상품 종류 (ex. 아파트, 오피스텔, 단독다가구 등)
+trans="매매"                                            # 부동산 거래 유형 (ex. 매매, 전월세)
 sigunguCode="41135"
 yearMonth="202101"
 
@@ -142,8 +133,8 @@ df = ts.read_data(prod, trans, sigunguCode, yearMonth)
 
 
 # 6. 지역, 기간 별 데이터 프레임 만들기
-prod="아파트"
-trans="매매"
+prod="아파트"                                           # 부동산 상품 종류 (ex. 아파트, 오피스텔, 단독다가구 등)
+trans="매매"                                            # 부동산 거래 유형 (ex. 매매, 전월세)
 sigunguCode="41135"
 startYearMonth="202101"
 endYearMonth="202111"
@@ -174,7 +165,7 @@ code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
          (code['읍면동명'].isna())]
 
 # 5. 건축물대장정보 오퍼레이션별 데이터 조회
-category = "기본개요"                                   # 건축물대장 종류
+category = "기본개요"                                   # 건축물대장 종류 (ex. 표제부, 총괄표제부, 전유부 등)
 sigunguCd = "41135"                                     # 시군구코드(5)
 bjdongCd = "11000"                                      # 읍면동코드(5)
 bun = "0541"                                            # 본번(4)
