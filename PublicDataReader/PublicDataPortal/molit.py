@@ -354,6 +354,9 @@ class Building:
 
 
     def read_data(self, category, **kwargs):
+        """
+        category: 오퍼레이션 종류 (ex. 기본개요, 표제부, 총괄표제부, 전유공용면적 등)
+        """
         
         # 엔드포인트, 파라미터 및 컬럼 목록 매핑
         try:
