@@ -357,7 +357,7 @@ print(pdr.__info__)
 # 2. 서울 열린데이터 광장 OpenAPI 서비스 인증키 입력하기
 serviceKey = "서울 열린데이터 광장에서 발급받은 서비스 키"
 
-# 3. 국토교통부 건축물대장정보 서비스 OpenAPI 세션 정의하기
+# 3. 데이터 조회 세션 정의하기
 # debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
 tp = pdr.Transportation(serviceKey, debug=True)
 
