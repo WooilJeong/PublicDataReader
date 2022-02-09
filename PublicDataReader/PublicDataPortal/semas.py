@@ -154,7 +154,7 @@ class StoreInfo:
 
     def read_data(self, category, **kwargs):
         """
-        category: 건축물대장 종류
+        category: 오퍼레이션 종류 (ex. 지정상권, 반경상권, 사각형상권, 행정구역상권 등)
         """
 
         # 엔드포인트, 파라미터 및 컬럼 목록 매핑

@@ -1,8 +1,12 @@
 # PublicDataReader
 
-![PNG](./img_logo.png)
+![](https://img.shields.io/badge/pandas-1.3.4-red.svg)
+![](https://img.shields.io/badge/requests-2.26.0-blue.svg)
+![](https://img.shields.io/badge/beautifulsoup4-4.10.0-yellow.svg)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FWooilJeong%2FPublicDataReader&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23FFFFFF&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![Linkedin Badge](https://img.shields.io/badge/-WooilJeong-blue?style=plastic&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/wooil/)](https://www.linkedin.com/in/wooil/) 
 
-![](https://img.shields.io/badge/PublicDataReader-2021.11.17-red.svg) [![Linkedin Badge](https://img.shields.io/badge/-WooilJeong-blue?style=plastic&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/wooil/)](https://www.linkedin.com/in/wooil/) 
+![PNG](./img_logo.png)
 
 **PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 기관에서 제공하고 있는 데이터 관련 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 조회 라이브러리**입니다. 
 
@@ -97,6 +101,15 @@
 
 ```bash
 pip install --upgrade PublicDataReader
+```
+
+
+## Dependency
+
+```bash
+pip install pandas==1.3.4
+pip install requests==2.26.0
+pip install beautifulsoup4==4.10.0
 ```
 
 
@@ -344,7 +357,7 @@ print(pdr.__info__)
 # 2. 서울 열린데이터 광장 OpenAPI 서비스 인증키 입력하기
 serviceKey = "서울 열린데이터 광장에서 발급받은 서비스 키"
 
-# 3. 국토교통부 건축물대장정보 서비스 OpenAPI 세션 정의하기
+# 3. 데이터 조회 세션 정의하기
 # debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
 tp = pdr.Transportation(serviceKey, debug=True)
 
