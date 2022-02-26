@@ -16,7 +16,7 @@
   - [PublicDataReader - 부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [PublicDataReader - 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
   - [PublicDataReader - 상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
-- **[(Python) PublicDataReader 사용자 모임](https://open.kakao.com/o/gbt2Pl2d)**  
+- **[(Python) PublicDataReader Q&A](https://open.kakao.com/o/gbt2Pl2d)**  
   - (Python) PublicDataReader 사용 관련 Q&A를 위한 카카오톡 오픈 채팅방입니다.
 
 
