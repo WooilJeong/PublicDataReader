@@ -16,8 +16,8 @@
   - [PublicDataReader - 부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [PublicDataReader - 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
   - [PublicDataReader - 상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
-- **[카카오톡 오픈채팅방 링크](https://open.kakao.com/o/gFYXtP2c)**  
-  - PublicDataReader 사용 관련 Q&A를 위한 오픈채팅방입니다.
+- **[(Python) PublicDataReader 사용자 모임](https://open.kakao.com/o/gbt2Pl2d)**  
+  - (Python) PublicDataReader 사용 관련 Q&A를 위한 카카오톡 오픈 채팅방입니다.
 
 
 **2021년 11월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 본 라이브러리를 정상적으로 이용하기 위해서는 아래 서비스에 대한 OpenAPI 활용신청을 반드시 완료해야합니다.
