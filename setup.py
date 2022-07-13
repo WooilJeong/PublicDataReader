@@ -1,18 +1,19 @@
 import setuptools
+from PublicDataReader.config.info import __version__, __author__, __contact__, __github__
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="PublicDataReader",
-    version="2021.11.17",
+    version=__version__,
     license="MIT",
-    author="Wooil Jeong",
-    author_email="wooil@kakao.com",
+    author=__author__,
+    author_email=__contact__,
     description="Open Source Public Data Reader",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/WooilJeong/PublicDataReader",
+    url=__github__,
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

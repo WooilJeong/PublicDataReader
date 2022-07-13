@@ -107,4 +107,5 @@ venv.bak/
 .DS_Store
 .api_key
 config.py
+test.py
 .ipynb
