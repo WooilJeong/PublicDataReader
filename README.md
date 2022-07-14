@@ -133,7 +133,6 @@ pip install beautifulsoup4==4.10.0
 # 1. 라이브러리 임포트하기
 import PublicDataReader as pdr
 print(pdr.__version__)
-print(pdr.__info__)
 
 # 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
@@ -174,7 +173,6 @@ df = ts.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
 # 1. 라이브러리 임포트 및 버전 확인하기
 import PublicDataReader as pdr
 print(pdr.__version__)
-print(pdr.__info__)
 
 # 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
@@ -206,7 +204,6 @@ df = bd.read_data(category=category, sigunguCd=sigunguCd, bjdongCd=bjdongCd, bun
 # 1. 라이브러리 임포트 및 버전 확인하기
 import PublicDataReader as pdr
 print(pdr.__version__)
-print(pdr.__info__)
 
 # 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
@@ -364,7 +361,6 @@ df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd, indsMclsCd=
 # 1. 라이브러리 임포트 및 버전 확인하기
 import PublicDataReader as pdr
 print(pdr.__version__)
-print(pdr.__info__)
 
 # 2. 서울 열린데이터 광장 OpenAPI 서비스 인증키 입력하기
 serviceKey = "서울 열린데이터 광장에서 발급받은 서비스 키"
