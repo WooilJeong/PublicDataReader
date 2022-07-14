@@ -20,7 +20,7 @@
   - (Python) PublicDataReader 사용 관련 Q&A를 위한 카카오톡 오픈 채팅방입니다.
 
 
-**2021년 11월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 본 라이브러리를 정상적으로 이용하기 위해서는 아래 서비스에 대한 OpenAPI 활용신청을 반드시 완료해야합니다.
+**2022년 07월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 본 라이브러리를 정상적으로 이용하기 위해서는 아래 서비스에 대한 OpenAPI 활용신청을 반드시 완료해야합니다.
 
 - [국토교통부_아파트매매 실거래 상세 자료](https://www.data.go.kr/data/15057511/openapi.do)  
 - [국토교통부_아파트 전월세 자료](https://www.data.go.kr/data/15058017/openapi.do)
@@ -109,14 +109,14 @@
 | 서울시 버스노선별 정류장별 승하차 인원 정보          | 버스승하차         |
 
 
-## Installation
+## PublicDataReader 설치
 
 ```bash
 pip install --upgrade PublicDataReader
 ```
 
 
-## Dependency
+## 의존성 설치
 
 ```bash
 pip install pandas==1.3.4
@@ -125,7 +125,7 @@ pip install beautifulsoup4==4.10.0
 ```
 
 
-## Quick Start
+## 사용예시
 
 ### 국토교통부 실거래가 정보 조회 서비스
 
@@ -144,7 +144,7 @@ ts = pdr.Transaction(serviceKey, debug=True)
 
 # 4. 지역코드(시군구코드) 검색하기
 sigunguName = "분당구"                                  # 시군구코드: 41135
-code = pdr.code_list()
+code = pdr.code_bdong()
 code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
          (code['읍면동명'].isna())]
 
@@ -185,7 +185,7 @@ bd = pdr.Building(serviceKey, debug=True)
 
 # 4. 지역코드(시군구코드) 검색하기
 sigunguName = "분당구"                                  # 시군구코드: 41135
-code = pdr.code_list()
+code = pdr.code_bdong()
 code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
          (code['읍면동명'].isna())]
 
