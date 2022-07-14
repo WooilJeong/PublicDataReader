@@ -14,6 +14,7 @@ molit(Ministry of Land, Infrastructure and Transport)
     09.단독/다가구 전월세 자료 조회
     10.토지 매매 신고 조회
     11.상업업무용 부동산 매매 신고 자료 조회
+    12 공장 및 창고 등 부동산 매매 신고 자료 조회
 
 2. Building 클래스: 건축물대장정보 서비스
     01.건축물대장 기본개요 조회
@@ -113,14 +114,14 @@ class Transaction:
             "상업업무용": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade?serviceKey={self.serviceKey}",
-                    "columns": ['지역코드', '시군구', '법정동', '유형', '용도지역', '건물주용도', '건축년도', '대지면적', '건물면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    "columns": ['지역코드', '시군구', '법정동', '유형', '용도지역', '건물주용도', '건축년도', '층', '대지면적', '건물면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
 
             "토지": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade?serviceKey={self.serviceKey}",
-                    "columns":['지역코드', '시군구', '법정동', '용도지역', '지목', '거래면적', '거래금액', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    "columns":['지역코드', '시군구', '법정동', '용도지역', '지목', '거래면적', '거래금액', '구분', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
             
@@ -130,8 +131,18 @@ class Transaction:
                     "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '층', '전용면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
+            
+            "공장창고등": {
+                "매매": {
+                    "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcInduTrade?serviceKey={self.serviceKey}",
+                    "columns": ['지역코드', '시군구', '법정동', '유형', '용도지역', '건물주용도', '건축년도', '층', '대지면적', '건물면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                }
+            }
         }
 
+        self.integerCols = ['년','월','일','층','건축년도','거래금액','보증금액','보증금','월세금액','월세']
+        self.floatCols = ['전용면적','대지권면적','대지면적','연면적','계약면적','건물면적','거래면적']
+        
         # 서비스 정상 작동 여부 확인
         for prod in self.metaDict.keys():
             for trans in self.metaDict[prod].keys():
@@ -150,7 +161,7 @@ class Transaction:
 
     def collect_data(self, prod, trans, sigunguCode, startYearMonth, endYearMonth):
         """
-        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용)
+        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용, 공장창고등)
         trans: 매매, 전월세
         sigunguCode: 시군구코드(5자리)
         startYearMonth: 조회시작 계약년월("YYYYmm")
@@ -168,17 +179,16 @@ class Transaction:
             try:
                 self.logger.info(f"{prod} {trans} {yearMonth} 조회 시작")
                 df_ = self.read_data(prod, trans, sigunguCode, yearMonth)
-                df = df.append(df_)
+                df = pd.concat([df, df_], axis=0).reset_index(drop=True)
             except:
                 self.logger.eeror(f"{prod} {trans} {yearMonth} 조회 오류")
                 return
-        df.index = range(len(df))
         return df
 
 
     def read_data(self, prod, trans, sigunguCode, yearMonth):
         """
-        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용)
+        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용, 공장창고등)
         trans: 매매, 전월세
         sigunguCode: 시군구코드(5자리)
         yearMonth: 계약년월("YYYYmm")
@@ -212,7 +222,7 @@ class Transaction:
             """
             # 데이터프레임 생성
             try:
-                df = pd.DataFrame()
+                df = pd.DataFrame(columns=columns)
                 for item in items:
                     row = {}
                     for col in columns:
@@ -221,15 +231,17 @@ class Transaction:
                             row[col] = tag.text.strip()
                         except:
                             row[col] = ""
-                    df_ = pd.DataFrame([row])
-                    df = df.append(df_)
+                    df_ = pd.DataFrame([row])[columns]
+                    df = pd.concat([df, df_], axis=0).reset_index(drop=True)
+                    
+                for col in self.integerCols:
+                    if col in df.columns:
+                        df[col] = pd.to_numeric(df[col].apply(lambda x: x.strip().replace(",",""))).astype("Int64")
+                for col in self.floatCols:
+                    if col in df.columns:
+                        df[col] = pd.to_numeric(df[col])
                         
-                if len(df) != 0:
-                    df = df[columns]
-                    df.index = range(len(df))
-                else:
-                    self.logger.info(f"조회 결과 없음")
-                    return pd.DataFrame(columns=columns)
+                return df
 
             except:
                 self.logger.error(f"조회 로직 오류")
@@ -240,9 +252,7 @@ class Transaction:
             결과 에러
             """
             self.logger.error(f"({result_code}) {result_msg}")
-            return
-        
-        return df
+            return 
 
 
 class Building:

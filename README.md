@@ -16,13 +16,24 @@
   - [PublicDataReader - 부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [PublicDataReader - 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
   - [PublicDataReader - 상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
-- **[카카오톡 오픈채팅방 링크](https://open.kakao.com/o/gFYXtP2c)**  
-  - PublicDataReader 사용 관련 Q&A를 위한 오픈채팅방입니다.
+- **[(Python) PublicDataReader Q&A](https://open.kakao.com/o/gbt2Pl2d)**  
+  - (Python) PublicDataReader 사용 관련 Q&A를 위한 카카오톡 오픈 채팅방입니다.
 
 
-**2021년 11월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 본 라이브러리를 정상적으로 이용하기 위해서는 아래 서비스에 대한 OpenAPI 활용신청을 반드시 완료해야합니다.
+**2022년 07월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 본 라이브러리를 정상적으로 이용하기 위해서는 아래 서비스에 대한 OpenAPI 활용신청을 반드시 완료해야합니다.
 
-- [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do)
+- [국토교통부_아파트매매 실거래 상세 자료](https://www.data.go.kr/data/15057511/openapi.do)  
+- [국토교통부_아파트 전월세 자료](https://www.data.go.kr/data/15058017/openapi.do)
+- [국토교통부_아파트 분양권전매 신고 자료](https://www.data.go.kr/data/15056782/openapi.do)
+- [국토교통부_오피스텔 매매 신고 조회 서비스](https://www.data.go.kr/data/15058452/openapi.do)
+- [국토교통부_오피스텔 전월세 신고 조회 서비스](https://www.data.go.kr/data/15059249/openapi.do)
+- [국토교통부_연립다세대 매매 실거래자료](https://www.data.go.kr/data/15058038/openapi.do)
+- [국토교통부_연립다세대 전월세 자료](https://www.data.go.kr/data/15058016/openapi.do)
+- [국토교통부_단독/다가구 매매 실거래 자료](https://www.data.go.kr/data/15058022/openapi.do)
+- [국토교통부_단독/다가구 전월세 자료](https://www.data.go.kr/data/15058352/openapi.do)
+- [국토교통부_토지 매매 신고 조회 서비스](https://www.data.go.kr/data/15056649/openapi.do)
+- [국토교통부_상업업무용 부동산 매매 신고 자료](https://www.data.go.kr/data/15057267/openapi.do)
+- [국토교통부_공장 및 창고 등 부동산 매매 신고 자료 조회 서비스](https://www.data.go.kr/data/15100574/openapi.do)
 - [국토교통부 건축물대장정보 서비스](https://www.data.go.kr/data/15044713/openapi.do)
 - [소상공인 상가업소 정보](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15012005)
 - [서울시 지하철호선별 역별 승하차 인원 정보](http://data.seoul.go.kr/dataList/OA-12914/S/1/datasetView.do)
@@ -46,6 +57,7 @@
 | 단독/다가구 전월세 자료 조회          | 단독다가구   | 전월세       |
 | 토지 매매 신고 조회                   | 토지         | 매매         |
 | 상업업무용 부동산 매매 신고 자료 조회 | 상업업무용   | 매매         |
+| 공장 및 창고 등 부동산 매매 신고 자료 조회 | 공장창고등   | 매매         |
 
 
 ### 2) 국토교통부 건축물대장정보 서비스
@@ -97,14 +109,14 @@
 | 서울시 버스노선별 정류장별 승하차 인원 정보          | 버스승하차         |
 
 
-## Installation
+## PublicDataReader 설치
 
 ```bash
 pip install --upgrade PublicDataReader
 ```
 
 
-## Dependency
+## 의존성 설치
 
 ```bash
 pip install pandas==1.3.4
@@ -113,7 +125,7 @@ pip install beautifulsoup4==4.10.0
 ```
 
 
-## Quick Start
+## 사용예시
 
 ### 국토교통부 실거래가 정보 조회 서비스
 
@@ -121,7 +133,6 @@ pip install beautifulsoup4==4.10.0
 # 1. 라이브러리 임포트하기
 import PublicDataReader as pdr
 print(pdr.__version__)
-print(pdr.__info__)
 
 # 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
@@ -132,7 +143,7 @@ ts = pdr.Transaction(serviceKey, debug=True)
 
 # 4. 지역코드(시군구코드) 검색하기
 sigunguName = "분당구"                                  # 시군구코드: 41135
-code = pdr.code_list()
+code = pdr.code_bdong()
 code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
          (code['읍면동명'].isna())]
 
@@ -162,7 +173,6 @@ df = ts.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
 # 1. 라이브러리 임포트 및 버전 확인하기
 import PublicDataReader as pdr
 print(pdr.__version__)
-print(pdr.__info__)
 
 # 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
@@ -173,7 +183,7 @@ bd = pdr.Building(serviceKey, debug=True)
 
 # 4. 지역코드(시군구코드) 검색하기
 sigunguName = "분당구"                                  # 시군구코드: 41135
-code = pdr.code_list()
+code = pdr.code_bdong()
 code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
          (code['읍면동명'].isna())]
 
@@ -194,7 +204,6 @@ df = bd.read_data(category=category, sigunguCd=sigunguCd, bjdongCd=bjdongCd, bun
 # 1. 라이브러리 임포트 및 버전 확인하기
 import PublicDataReader as pdr
 print(pdr.__version__)
-print(pdr.__info__)
 
 # 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
@@ -352,7 +361,6 @@ df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd, indsMclsCd=
 # 1. 라이브러리 임포트 및 버전 확인하기
 import PublicDataReader as pdr
 print(pdr.__version__)
-print(pdr.__info__)
 
 # 2. 서울 열린데이터 광장 OpenAPI 서비스 인증키 입력하기
 serviceKey = "서울 열린데이터 광장에서 발급받은 서비스 키"
