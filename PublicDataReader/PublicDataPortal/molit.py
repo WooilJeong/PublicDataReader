@@ -140,6 +140,9 @@ class Transaction:
             }
         }
 
+        self.integerCols = ['년','월','일','층','건축년도','거래금액','보증금액','보증금','월세금액','월세']
+        self.floatCols = ['전용면적','대지권면적','대지면적','연면적','계약면적','건물면적','거래면적']
+        
         # 서비스 정상 작동 여부 확인
         for prod in self.metaDict.keys():
             for trans in self.metaDict[prod].keys():
@@ -176,11 +179,10 @@ class Transaction:
             try:
                 self.logger.info(f"{prod} {trans} {yearMonth} 조회 시작")
                 df_ = self.read_data(prod, trans, sigunguCode, yearMonth)
-                df = df.append(df_)
+                df = pd.concat([df, df_], axis=0).reset_index(drop=True)
             except:
                 self.logger.eeror(f"{prod} {trans} {yearMonth} 조회 오류")
                 return
-        df.index = range(len(df))
         return df
 
 
@@ -220,7 +222,7 @@ class Transaction:
             """
             # 데이터프레임 생성
             try:
-                df = pd.DataFrame()
+                df = pd.DataFrame(columns=columns)
                 for item in items:
                     row = {}
                     for col in columns:
@@ -229,15 +231,17 @@ class Transaction:
                             row[col] = tag.text.strip()
                         except:
                             row[col] = ""
-                    df_ = pd.DataFrame([row])
-                    df = df.append(df_)
+                    df_ = pd.DataFrame([row])[columns]
+                    df = pd.concat([df, df_], axis=0).reset_index(drop=True)
+                    
+                for col in self.integerCols:
+                    if col in df.columns:
+                        df[col] = pd.to_numeric(df[col].apply(lambda x: x.strip().replace(",",""))).astype("Int64")
+                for col in self.floatCols:
+                    if col in df.columns:
+                        df[col] = pd.to_numeric(df[col])
                         
-                if len(df) != 0:
-                    df = df[columns]
-                    df.index = range(len(df))
-                else:
-                    self.logger.info(f"조회 결과 없음")
-                    return pd.DataFrame(columns=columns)
+                return df
 
             except:
                 self.logger.error(f"조회 로직 오류")
@@ -248,9 +252,7 @@ class Transaction:
             결과 에러
             """
             self.logger.error(f"({result_code}) {result_msg}")
-            return
-        
-        return df
+            return 
 
 
 class Building:
