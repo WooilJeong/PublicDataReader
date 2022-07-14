@@ -22,7 +22,18 @@
 
 **2021년 11월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 본 라이브러리를 정상적으로 이용하기 위해서는 아래 서비스에 대한 OpenAPI 활용신청을 반드시 완료해야합니다.
 
-- [국토교통부 실거래가 정보](https://www.data.go.kr/dataset/3050988/openapi.do)
+- [국토교통부_아파트매매 실거래 상세 자료](https://www.data.go.kr/data/15057511/openapi.do)  
+- [국토교통부_아파트 전월세 자료](https://www.data.go.kr/data/15058017/openapi.do)
+- [국토교통부_아파트 분양권전매 신고 자료](https://www.data.go.kr/data/15056782/openapi.do)
+- [국토교통부_오피스텔 매매 신고 조회 서비스](https://www.data.go.kr/data/15058452/openapi.do)
+- [국토교통부_오피스텔 전월세 신고 조회 서비스](https://www.data.go.kr/data/15059249/openapi.do)
+- [국토교통부_연립다세대 매매 실거래자료](https://www.data.go.kr/data/15058038/openapi.do)
+- [국토교통부_연립다세대 전월세 자료](https://www.data.go.kr/data/15058016/openapi.do)
+- [국토교통부_단독/다가구 매매 실거래 자료](https://www.data.go.kr/data/15058022/openapi.do)
+- [국토교통부_단독/다가구 전월세 자료](https://www.data.go.kr/data/15058352/openapi.do)
+- [국토교통부_토지 매매 신고 조회 서비스](https://www.data.go.kr/data/15056649/openapi.do)
+- [국토교통부_상업업무용 부동산 매매 신고 자료](https://www.data.go.kr/data/15057267/openapi.do)
+- [국토교통부_공장 및 창고 등 부동산 매매 신고 자료 조회 서비스](https://www.data.go.kr/data/15100574/openapi.do)
 - [국토교통부 건축물대장정보 서비스](https://www.data.go.kr/data/15044713/openapi.do)
 - [소상공인 상가업소 정보](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15012005)
 - [서울시 지하철호선별 역별 승하차 인원 정보](http://data.seoul.go.kr/dataList/OA-12914/S/1/datasetView.do)
@@ -46,6 +57,7 @@
 | 단독/다가구 전월세 자료 조회          | 단독다가구   | 전월세       |
 | 토지 매매 신고 조회                   | 토지         | 매매         |
 | 상업업무용 부동산 매매 신고 자료 조회 | 상업업무용   | 매매         |
+| 공장 및 창고 등 부동산 매매 신고 자료 조회 | 공장창고등   | 매매         |
 
 
 ### 2) 국토교통부 건축물대장정보 서비스

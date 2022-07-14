@@ -14,6 +14,7 @@ molit(Ministry of Land, Infrastructure and Transport)
     09.단독/다가구 전월세 자료 조회
     10.토지 매매 신고 조회
     11.상업업무용 부동산 매매 신고 자료 조회
+    12 공장 및 창고 등 부동산 매매 신고 자료 조회
 
 2. Building 클래스: 건축물대장정보 서비스
     01.건축물대장 기본개요 조회
@@ -113,14 +114,14 @@ class Transaction:
             "상업업무용": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade?serviceKey={self.serviceKey}",
-                    "columns": ['지역코드', '시군구', '법정동', '유형', '용도지역', '건물주용도', '건축년도', '대지면적', '건물면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    "columns": ['지역코드', '시군구', '법정동', '유형', '용도지역', '건물주용도', '건축년도', '층', '대지면적', '건물면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
 
             "토지": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade?serviceKey={self.serviceKey}",
-                    "columns":['지역코드', '시군구', '법정동', '용도지역', '지목', '거래면적', '거래금액', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    "columns":['지역코드', '시군구', '법정동', '용도지역', '지목', '거래면적', '거래금액', '구분', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
             
@@ -130,6 +131,13 @@ class Transaction:
                     "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '층', '전용면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
+            
+            "공장창고등": {
+                "매매": {
+                    "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcInduTrade?serviceKey={self.serviceKey}",
+                    "columns": ['지역코드', '시군구', '법정동', '유형', '용도지역', '건물주용도', '건축년도', '층', '대지면적', '건물면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                }
+            }
         }
 
         # 서비스 정상 작동 여부 확인
@@ -150,7 +158,7 @@ class Transaction:
 
     def collect_data(self, prod, trans, sigunguCode, startYearMonth, endYearMonth):
         """
-        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용)
+        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용, 공장창고등)
         trans: 매매, 전월세
         sigunguCode: 시군구코드(5자리)
         startYearMonth: 조회시작 계약년월("YYYYmm")
@@ -178,7 +186,7 @@ class Transaction:
 
     def read_data(self, prod, trans, sigunguCode, yearMonth):
         """
-        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용)
+        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용, 공장창고등)
         trans: 매매, 전월세
         sigunguCode: 시군구코드(5자리)
         yearMonth: 계약년월("YYYYmm")
