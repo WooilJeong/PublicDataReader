@@ -1,5 +1,6 @@
 # PublicDataReader
 
+[![PyPI Latest Release](https://img.shields.io/pypi/v/publicdatareader.svg)](https://pypi.org/project/publicdatareader/)
 ![](https://img.shields.io/badge/pandas-1.3.4-red.svg)
 ![](https://img.shields.io/badge/requests-2.26.0-blue.svg)
 ![](https://img.shields.io/badge/beautifulsoup4-4.10.0-yellow.svg)
