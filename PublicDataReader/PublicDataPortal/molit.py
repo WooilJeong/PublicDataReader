@@ -177,12 +177,14 @@ class Transaction:
         df = pd.DataFrame()
         for yearMonth in date_list:
             try:
-                self.logger.info(f"{prod} {trans} {yearMonth} 조회 시작")
+                _info_message = f"{prod} {trans} {yearMonth} 조회 시작"
+                self.logger.info(_info_message)
                 df_ = self.read_data(prod, trans, sigunguCode, yearMonth)
                 df = pd.concat([df, df_], axis=0).reset_index(drop=True)
             except:
-                self.logger.eeror(f"{prod} {trans} {yearMonth} 조회 오류")
-                return
+                _error_message = f"{prod} {trans} {yearMonth} 조회 오류"
+                self.logger.error(_error_message)
+                return _error_message
         return df
 
 
@@ -198,9 +200,10 @@ class Transaction:
             endpoint = self.metaDict[prod][trans]['url']
             columns = self.metaDict[prod][trans]['columns']
         except:
-            self.logger.error(f"{prod} {trans} 참조 오류")
-            return
-        
+            _error_message = f"{prod} {trans} 참조 오류"
+            self.logger.error(_error_message)
+            return _error_message
+
         try:
             # URL
             url=f"""{endpoint}&LAWD_CD={str(sigunguCode)}&DEAL_YMD={str(yearMonth)}&numOfRows=99999"""
@@ -213,8 +216,9 @@ class Transaction:
             items = xmlsoup.findAll("item")
             
         except:
-            self.logger.error(f"Open API 호출 오류")
-            return
+            _error_message = f"HTTP 요청 혹은 파싱 오류"
+            self.logger.error(_error_message)
+            return _error_message
         
         if result_code == "00":
             """
@@ -244,16 +248,17 @@ class Transaction:
                 return df
 
             except:
-                self.logger.error(f"조회 로직 오류")
-                return
+                _error_message = f"전처리 오류"
+                self.logger.error(_error_message)
+                return _error_message
 
         else:
             """
             결과 에러
             """
-            self.logger.error(f"({result_code}) {result_msg}")
-            return 
-
+            _error_message = f"({result_code}) {result_msg} OPEN API 오류 - 코드: {result_code}"
+            self.logger.error(_error_message)
+            return _error_message
 
 class Building:
     """
@@ -374,16 +379,18 @@ class Building:
             parameters = self.metaDict[category]['parameters']
             columns = self.metaDict[category]['columns']
         except:
-            self.logger.error(f"{category} 참조 오류")
-            return
+            _error_message = f"{category} 참조 오류"
+            self.logger.error(_error_message)
+            return _error_message
 
         try:
             params = ""
             for key, value in kwargs.items():
                 params += f"&{key}={value}"
         except:
-            self.logger.error(f"{category} 파라미터 파싱 오류")
-            return
+            _error_message = f"{category} 파라미터 파싱 오류"
+            self.logger.error(_error_message)
+            return _error_message
         
         try:
             # URL
@@ -398,8 +405,9 @@ class Building:
             items = xmlsoup.findAll("item")
 
         except:
-            self.logger.error(f"Open API 호출 오류")
-            return
+            _error_message = f"HTTP 요청 혹은 파싱 오류"
+            self.logger.error(_error_message)
+            return _error_message
         
         if result_code == "00":
             """
@@ -407,7 +415,7 @@ class Building:
             """
             # 데이터프레임 생성
             try:
-                df = pd.DataFrame()
+                df = pd.DataFrame(columns=columns)
                 for item in items:
                     row = {}
                     for col in columns:
@@ -416,32 +424,23 @@ class Building:
                             row[col] = tag.text.strip()
                         except:
                             row[col] = ""
-                    df_ = pd.DataFrame([row])
-                    df = df.append(df_)
-
-                if len(df) != 0:
-                    df = df[columns]
-                    df = self.ChangeCols(df, category)
-                    df.index = range(len(df))
-
-                else:
-                    self.logger.info(f"조회 결과 없음")
-                    df = pd.DataFrame(columns=columns)
-                    df = self.ChangeCols(df, category)
-                    return df
+                    df_ = pd.DataFrame([row])[columns]
+                    df = pd.concat([df, df_], axis=0).reset_index(drop=True)
+                df = self.ChangeCols(df, category)
+                return df
 
             except:
-                self.logger.error(f"조회 로직 오류")
-                return
+                _error_message = f"전처리 오류"
+                self.logger.error(_error_message)
+                return _error_message
 
         else:
             """
             결과 에러
             """
-            self.logger.error(f"({result_code}) {result_msg}")
-            return
-
-        return df
+            _error_message = f"({result_code}) {result_msg}"
+            self.logger.error(_error_message)
+            return _error_message
 
 
     def ChangeCols(self, df, category):
@@ -876,6 +875,4 @@ class Building:
         df = df.rename(columns=self.colDict)
 
         return df
-
-
 
