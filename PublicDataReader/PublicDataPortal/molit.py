@@ -438,8 +438,9 @@ class Building:
             """
             결과 에러
             """
-            self.logger.error(f"({result_code}) {result_msg}")
-            return
+            _error_message = f"({result_code}) {result_msg}"
+            self.logger.error(_error_message)
+            return _error_message
 
 
     def ChangeCols(self, df, category):

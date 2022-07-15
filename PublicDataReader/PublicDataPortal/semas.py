@@ -162,16 +162,18 @@ class StoreInfo:
             endpoint = self.metaDict[category]['url']
             columns = self.metaDict[category]['columns']
         except:
-            self.logger.error(f"{category} 참조 오류")
-            return
+            _error_message = f"{category} 참조 오류"
+            self.logger.error(_error_message)
+            return _error_message
 
         try:
             params = ""
             for key, value in kwargs.items():
                 params += f"&{key}={value}"
         except:
-            self.logger.error(f"{category} 파라미터 파싱 오류")
-            return
+            _error_message = f"{category} 파라미터 파싱 오류"
+            self.logger.error(_error_message)
+            return _error_message
 
         try:
             # URL
@@ -186,8 +188,9 @@ class StoreInfo:
             items = xmlsoup.findAll("item")
 
         except:
-            self.logger.error(f"OpenAPI 호출 오류")
-            return
+            _error_message = f"HTTP 요청 혹은 파싱 오류"
+            self.logger.error(_error_message)
+            return _error_message
 
         if result_code == "00":
             """
@@ -195,7 +198,7 @@ class StoreInfo:
             """
             # 데이터프레임 생성
             try:
-                df = pd.DataFrame()
+                df = pd.DataFrame(columns=columns)
                 for item in items:
                     row = {}
                     for col in columns:
@@ -204,32 +207,24 @@ class StoreInfo:
                             row[col] = tag.text.strip()
                         except:
                             row[col] = ""
-                    df_ = pd.DataFrame([row])
-                    df = df.append(df_)
-
-                if len(df) != 0:
-                    df = df[columns]
-                    df = self.ChangeCols(df)
-                    df.index = range(len(df))
-
-                else:
-                    self.logger.info(f"조회 결과 없음")
-                    df = pd.DataFrame(columns=columns)
-                    df = self.ChangeCols(df)
-                    return df
+                    df_ = pd.DataFrame([row])[columns]
+                    df = pd.concat([df, df_], axis=0).reset_index(drop=True)
+                df = self.ChangeCols(df)
+                return df
 
             except:
-                self.logger.error(f"조회 로직 오류")
-                return
+                _error_message = f"전처리 오류"
+                self.logger.error(_error_message)
+                return _error_message
 
         else:
             """
             결과 에러
             """
-            self.logger.error(f"({result_code}) {result_msg}")
-            return
+            _error_message = f"({result_code}) {result_msg}"
+            self.logger.error(_error_message)
+            return _error_message
 
-        return df
 
     def ChangeCols(self, df):
         """
