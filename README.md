@@ -4,24 +4,38 @@
 ![](https://img.shields.io/badge/pandas-1.3.4-red.svg)
 ![](https://img.shields.io/badge/requests-2.26.0-blue.svg)
 ![](https://img.shields.io/badge/beautifulsoup4-4.10.0-yellow.svg)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FWooilJeong%2FPublicDataReader&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23FFFFFF&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Linkedin Badge](https://img.shields.io/badge/-WooilJeong-blue?style=plastic&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/wooil/)](https://www.linkedin.com/in/wooil/) 
 
 ![PNG](./img_logo.png)
 
-**PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 기관에서 제공하고 있는 데이터 관련 OpenAPI 서비스를 Python으로 쉽게 이용할 수 있도록 도와주는 **데이터 조회 라이브러리**입니다. 
+<br>
 
-- **Project Owner: 정우일**  
-- **E-mail: wooil@kakao.com**  
-- **라이브러리 사용 설명서**  
-  - [PublicDataReader - 부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
-  - [PublicDataReader - 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
-  - [PublicDataReader - 상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
-- **[(Python) PublicDataReader Q&A](https://open.kakao.com/o/gbt2Pl2d)**  
-  - (Python) PublicDataReader 사용 관련 Q&A를 위한 카카오톡 오픈 채팅방입니다.
+## 기여자
 
+<div align="center">
+    <table>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/wooiljeong">
+            <img src="https://avatars.githubusercontent.com/u/38076110?v=4" width="100px;" alt=""/><br />
+            <sub><b>정우일</b></sub></a><br />
+        </td>
+    </tr>
+    </table>
+</div>
 
-**2022년 07월** 현재 아래 OpenAPI 서비스 각각에 대해 데이터를 Pandas DataFrame 형태로 조회할 수 있습니다. 본 라이브러리를 정상적으로 이용하기 위해서는 아래 서비스에 대한 OpenAPI 활용신청을 반드시 완료해야합니다.
+더 많은 사람들이 더 많은 데이터를 더 쉽게 이용할 수 있도록 만드는 일에 관심이 있으시다면 언제든지 **Pull Requests**를 날려주세요!
+
+<br>
+
+## 소개
+
+**PublicDataReader**는 [공공데이터포털](https://data.go.kr), [서울 열린데이터 광장](https://data.seoul.go.kr/) 등 기관에서 제공하고 있는 데이터 관련 OpenAPI 서비스를 파이썬으로 쉽게 이용할 수 있도록 도와주는 **데이터 조회 라이브러리**입니다. 
+
+**2022년 07월** 현재 아래 데이터들을 판다스 데이터프레임 형식으로 조회할 수 있습니다. 라이브러리를 정상적으로 이용하기 위해서는 먼저 아래 서비스들에 대한 OpenAPI 활용신청을 반드시 완료해야합니다. 서비스키를 발급 받았더라도 서비스 제공 기관의 사정에 의해 OpenAPI 사용이 원활하지 않을 수 있습니다. 이 경우 서비스 제공기관 관리부서에 문의해주시기 바랍니다. 그 밖의 모든 라이브러리 사용 관련 문의는 이메일이나 카카오톡 오픈채팅방을 이용해주시기 바랍니다. ([라이브러리 사용 관련 문의](#참고))
+
+<br>
+
+## OpenAPI 서비스 목록
 
 - [국토교통부_아파트매매 실거래 상세 자료](https://www.data.go.kr/data/15057511/openapi.do)  
 - [국토교통부_아파트 전월세 자료](https://www.data.go.kr/data/15058017/openapi.do)
@@ -40,6 +54,7 @@
 - [서울시 지하철호선별 역별 승하차 인원 정보](http://data.seoul.go.kr/dataList/OA-12914/S/1/datasetView.do)
 - [서울시 버스노선별 정류장별 승하차 인원 정보](http://data.seoul.go.kr/dataList/OA-12912/S/1/datasetView.do)
 
+<br>
 
 ## 공공 데이터 포털 서비스 목록
 
@@ -60,6 +75,7 @@
 | 상업업무용 부동산 매매 신고 자료 조회 | 상업업무용   | 매매         |
 | 공장 및 창고 등 부동산 매매 신고 자료 조회 | 공장창고등   | 매매         |
 
+<br>
 
 ### 2) 국토교통부 건축물대장정보 서비스
 
@@ -76,6 +92,7 @@
 | 건축물대장 전유부 조회       | 전유부         |
 | 건축물대장 지역지구구역 조회 | 지역지구구역   |
 
+<br>
 
 ### 3) 소상공인 상가업소 정보 조회 서비스
 
@@ -99,6 +116,7 @@
 | 상권정보 업종 중분류 조회  | 업종중분류     |
 | 상권정보 업종 소분류 조회  | 업종소분류     |
 
+<br>
 
 ## 서울 열린데이터 광장 서비스 목록
 
@@ -109,13 +127,15 @@
 | 서울시 지하철호선별 역별 승하차 인원 정보            | 지하철승하차       |
 | 서울시 버스노선별 정류장별 승하차 인원 정보          | 버스승하차         |
 
+<br>
 
-## PublicDataReader 설치
+## 설치
 
 ```bash
 pip install --upgrade PublicDataReader
 ```
 
+<br>
 
 ## 의존성 설치
 
@@ -125,8 +145,9 @@ pip install requests==2.26.0
 pip install beautifulsoup4==4.10.0
 ```
 
+<br>
 
-## 사용예시
+## 예시
 
 ### 국토교통부 실거래가 정보 조회 서비스
 
@@ -382,3 +403,27 @@ date = "20211001"
 
 df = tp.read_data(category=category, date=date)
 ```
+
+<br>
+
+## 참고
+
+- **사용설명서**  
+  - [(블로그) 부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
+  - [(블로그) 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
+  - [(블로그) 상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
+
+- **실습**  
+  - [Colab에서 PublicDataReader 실행하기](https://colab.research.google.com/drive/1fgT0D_tP-JyglobtDFfYQ6wQXfWWujIV?usp=sharing)  
+
+- **문의**  
+  - **이메일**: wooil@kakao.com  
+  - **카카오톡 오픈채팅방**: [(Python) PublicDataReader Q&A](https://open.kakao.com/o/gbt2Pl2d)  
+
+<br>
+
+<div align=center>
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FWooilJeong%2FPublicDataReader&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23FFFFFF&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
+</div>
