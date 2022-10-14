@@ -16,14 +16,16 @@ from bs4 import BeautifulSoup
 class Transportation:
     """
     서울 열린데이터 광장 교통 관련 정보 조회 클래스
+
+    서울 열린데이터 광장에서 발급받은 Service Key를 입력받아 초기화합니다.
+
+    parameters
+    ----------
+        serviceKey: 서비스 인증키 문자열
+        debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
     """
 
     def __init__(self, serviceKey, debug=False):
-        """
-        서울 열린데이터 광장에서 발급받은 Service Key를 입력받아 초기화합니다.
-        - serviceKey: 서비스 인증키 문자열
-        - debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
-        """
         # 로거 설정
         self.logger = logging.getLogger("root")
         # 로깅 레벨 설정
@@ -47,21 +49,23 @@ class Transportation:
 
         # 오퍼레이션별 URL 및 컬럼 매핑 딕셔너리
         self.metaDict = {
-            
+
             "지하철승하차": {
                 "url": f"{self.endpoint}{self.serviceKey}/xml/CardSubwayStatsNew/",
-                "columns": ["USE_DT","LINE_NUM","SUB_STA_NM","RIDE_PASGR_NUM","ALIGHT_PASGR_NUM","WORK_DT"]
+                "columns": ["USE_DT", "LINE_NUM", "SUB_STA_NM", "RIDE_PASGR_NUM", "ALIGHT_PASGR_NUM", "WORK_DT"]
             },
 
             "버스승하차": {
                 "url": f"{self.endpoint}{self.serviceKey}/xml/CardBusStatisticsServiceNew/",
-                "columns": ['USE_DT','BUS_ROUTE_ID','BUS_ROUTE_NO','BUS_ROUTE_NM','STND_BSST_ID','BSST_ARS_NO','BUS_STA_NM','RIDE_PASGR_NUM','ALIGHT_PASGR_NUM','WORK_DT']
+                "columns": ['USE_DT', 'BUS_ROUTE_ID', 'BUS_ROUTE_NO', 'BUS_ROUTE_NM', 'STND_BSST_ID', 'BSST_ARS_NO', 'BUS_STA_NM', 'RIDE_PASGR_NUM', 'ALIGHT_PASGR_NUM', 'WORK_DT']
             },
-            
+
         }
 
-
     def read_data(self, category, **kwargs):
+        """
+        데이터 조회
+        """
 
         # 엔드포인트, 파라미터 및 컬럼 목록 매핑
         try:
@@ -129,7 +133,6 @@ class Transportation:
             self.logger.error(_error_message)
             return _error_message
 
-
     def ChangeCols(self, df):
         """
         영문 컬럼명을 국문 컬럼명으로 변경
@@ -152,6 +155,6 @@ class Transportation:
             'ALIGHT_PASGR_NUM': '하차총승객수',
             'WORK_DT': '등록일자'
         }
-        
+
         df = df.rename(columns=self.colDict)
         return df

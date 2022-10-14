@@ -39,14 +39,16 @@ from bs4 import BeautifulSoup
 class Transaction:
     """
     부동산 실거래가 조회 클래스
+
+    공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
+
+    parameters
+    ----------
+        serviceKey: 서비스 인증키 문자열
+        debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
     """
 
     def __init__(self, serviceKey, debug=False):
-        """
-        공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
-        - serviceKey: 서비스 인증키 문자열
-        - debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
-        """
         # 로거 설정
         self.logger = logging.getLogger("root")
         # 로깅 레벨 설정
@@ -64,7 +66,7 @@ class Transaction:
 
         # Open API 서비스 키 초기화
         self.serviceKey = serviceKey
-        
+
         # 메타정보 매핑
         self.metaDict = {
             "아파트": {
@@ -77,7 +79,7 @@ class Transaction:
                     "columns": ['지역코드', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '보증금액', '월세금액']
                 }
             },
-            
+
             "오피스텔": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiTrade?serviceKey={self.serviceKey}",
@@ -88,18 +90,18 @@ class Transaction:
                     "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '건축년도', '층', '전용면적', '년', '월', '일', '보증금', '월세']
                 }
             },
-            
+
             "단독다가구": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHTrade?serviceKey={self.serviceKey}",
-                    "columns":['지역코드', '법정동', '주택유형', '건축년도', '대지면적', '연면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    "columns": ['지역코드', '법정동', '주택유형', '건축년도', '대지면적', '연면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
                 "전월세": {
                     "url": f"http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHRent?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '법정동', '건축년도', '계약면적', '년', '월', '일', '보증금액', '월세금액']
                 }
             },
-            
+
             "연립다세대": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHTrade?serviceKey={self.serviceKey}",
@@ -110,7 +112,7 @@ class Transaction:
                     "columns": ['지역코드', '법정동', '지번', '연립다세대', '건축년도', '층', '전용면적', '년', '월', '일', '보증금액', '월세금액']
                 }
             },
-            
+
             "상업업무용": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade?serviceKey={self.serviceKey}",
@@ -121,17 +123,17 @@ class Transaction:
             "토지": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade?serviceKey={self.serviceKey}",
-                    "columns":['지역코드', '시군구', '법정동', '용도지역', '지목', '거래면적', '거래금액', '구분', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    "columns": ['지역코드', '시군구', '법정동', '용도지역', '지목', '거래면적', '거래금액', '구분', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
-            
+
             "분양입주권": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSilvTrade?serviceKey={self.serviceKey}",
                     "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '층', '전용면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
                 },
             },
-            
+
             "공장창고등": {
                 "매매": {
                     "url": f"http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcInduTrade?serviceKey={self.serviceKey}",
@@ -140,9 +142,11 @@ class Transaction:
             }
         }
 
-        self.integerCols = ['년','월','일','층','건축년도','거래금액','보증금액','보증금','월세금액','월세']
-        self.floatCols = ['전용면적','대지권면적','대지면적','연면적','계약면적','건물면적','거래면적']
-        
+        self.integerCols = ['년', '월', '일', '층', '건축년도',
+                            '거래금액', '보증금액', '보증금', '월세금액', '월세']
+        self.floatCols = ['전용면적', '대지권면적',
+                          '대지면적', '연면적', '계약면적', '건물면적', '거래면적']
+
         # 서비스 정상 작동 여부 확인
         for prod in self.metaDict.keys():
             for trans in self.metaDict[prod].keys():
@@ -154,18 +158,23 @@ class Transaction:
                 result_code = header.find('resultCode').text
                 result_msg = header.find('resultMsg').text
                 if result_code == "00":
-                    self.logger.info(f"{prod} {trans} 조회 서비스 정상 - ({result_code}) {result_msg}")
+                    self.logger.info(
+                        f"{prod} {trans} 조회 서비스 정상 - ({result_code}) {result_msg}")
                 else:
-                    self.logger.error(f"{prod} {trans} 조회 서비스 오류 - ({result_code}) {result_msg}")
-
+                    self.logger.error(
+                        f"{prod} {trans} 조회 서비스 오류 - ({result_code}) {result_msg}")
 
     def collect_data(self, prod, trans, sigunguCode, startYearMonth, endYearMonth):
         """
-        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용, 공장창고등)
-        trans: 매매, 전월세
-        sigunguCode: 시군구코드(5자리)
-        startYearMonth: 조회시작 계약년월("YYYYmm")
-        endYearMonth: 조회종료 계약년월("YYYYmm")
+        기간별 조회
+
+        parameters
+        ----------
+            prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용, 공장창고등)
+            trans: 매매, 전월세
+            sigunguCode: 시군구코드(5자리)
+            startYearMonth: 조회시작 계약년월("YYYYmm")
+            endYearMonth: 조회종료 계약년월("YYYYmm")
         """
         start_date = datetime.datetime.strptime(str(startYearMonth), "%Y%m")
         start_date = datetime.datetime.strftime(start_date, "%Y-%m")
@@ -187,13 +196,16 @@ class Transaction:
                 return _error_message
         return df
 
-
     def read_data(self, prod, trans, sigunguCode, yearMonth):
         """
-        prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용, 공장창고등)
-        trans: 매매, 전월세
-        sigunguCode: 시군구코드(5자리)
-        yearMonth: 계약년월("YYYYmm")
+        월별 조회
+
+        parameters
+        ----------
+            prod: 상품유형 (ex.아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 상업업무용, 공장창고등)
+            trans: 매매, 전월세
+            sigunguCode: 시군구코드(5자리)
+            yearMonth: 계약년월("YYYYmm")
         """
         # 엔드포인트 및 컬럼 목록 매핑
         try:
@@ -206,7 +218,7 @@ class Transaction:
 
         try:
             # URL
-            url=f"""{endpoint}&LAWD_CD={str(sigunguCode)}&DEAL_YMD={str(yearMonth)}&numOfRows=99999"""
+            url = f"""{endpoint}&LAWD_CD={str(sigunguCode)}&DEAL_YMD={str(yearMonth)}&numOfRows=99999"""
             # Open API 호출
             result = requests.get(url, verify=False)
             xmlsoup = BeautifulSoup(result.text, "lxml-xml")
@@ -214,12 +226,12 @@ class Transaction:
             result_code = header.find("resultCode").text
             result_msg = header.find("resultMsg").text
             items = xmlsoup.findAll("item")
-            
+
         except:
             _error_message = f"HTTP 요청 혹은 파싱 오류"
             self.logger.error(_error_message)
             return _error_message
-        
+
         if result_code == "00":
             """
             결과 정상
@@ -237,14 +249,15 @@ class Transaction:
                             row[col] = ""
                     df_ = pd.DataFrame([row])[columns]
                     df = pd.concat([df, df_], axis=0).reset_index(drop=True)
-                    
+
                 for col in self.integerCols:
                     if col in df.columns:
-                        df[col] = pd.to_numeric(df[col].apply(lambda x: x.strip().replace(",",""))).astype("Int64")
+                        df[col] = pd.to_numeric(df[col].apply(
+                            lambda x: x.strip().replace(",", ""))).astype("Int64")
                 for col in self.floatCols:
                     if col in df.columns:
                         df[col] = pd.to_numeric(df[col])
-                        
+
                 return df
 
             except:
@@ -260,17 +273,20 @@ class Transaction:
             self.logger.error(_error_message)
             return _error_message
 
+
 class Building:
     """
     건축물대장정보 서비스
+
+    공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
+
+    parameters
+    ----------
+        serviceKey: 서비스 인증키 문자열
+        debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
     """
 
     def __init__(self, serviceKey, debug=False):
-        """
-        공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
-        - serviceKey: 서비스 인증키 문자열
-        - debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
-        """
         # 로거 설정
         self.logger = logging.getLogger("root")
         # 로깅 레벨 설정
@@ -291,13 +307,13 @@ class Building:
 
         # 메타정보 매핑
         self.metaDict = {
-            
+
             "기본개요": {
                 "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrBasisOulnInfo?serviceKey={self.serviceKey}",
                 "parameters": ['sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'startDate', 'endDate'],
                 "columns": ['bjdongCd', 'bldNm', 'block', 'bun', 'bylotCnt', 'crtnDay', 'guyukCd', 'guyukCdNm', 'ji', 'jiguCd', 'jiguCdNm', 'jiyukCd', 'jiyukCdNm', 'lot', 'mgmBldrgstPk', 'mgmUpBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'platGbCd', 'platPlc', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rnum', 'sigunguCd', 'splotNm']
             },
-            
+
             "총괄표제부": {
                 "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo?serviceKey={self.serviceKey}",
                 "parameters": ['sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'startDate', 'endDate'],
@@ -363,16 +379,21 @@ class Building:
             result_code = header.find('resultCode').text
             result_msg = header.find('resultMsg').text
             if result_code == "00":
-                self.logger.info(f"{category} 조회 서비스 정상 - ({result_code}) {result_msg}")
+                self.logger.info(
+                    f"{category} 조회 서비스 정상 - ({result_code}) {result_msg}")
             else:
-                self.logger.err(f"{category} 조회 서비스 오류 - ({result_code}) {result_msg}")
-
+                self.logger.err(
+                    f"{category} 조회 서비스 오류 - ({result_code}) {result_msg}")
 
     def read_data(self, category, **kwargs):
         """
-        category: 오퍼레이션 종류 (ex. 기본개요, 표제부, 총괄표제부, 전유공용면적 등)
+        데이터 조회
+
+        parameters
+        ----------
+            category: 오퍼레이션 종류 (ex. 기본개요, 표제부, 총괄표제부, 전유공용면적 등)
         """
-        
+
         # 엔드포인트, 파라미터 및 컬럼 목록 매핑
         try:
             endpoint = self.metaDict[category]['url']
@@ -391,11 +412,11 @@ class Building:
             _error_message = f"{category} 파라미터 파싱 오류"
             self.logger.error(_error_message)
             return _error_message
-        
+
         try:
             # URL
-            url=f"""{endpoint}{params}&numOfRows=99999"""
-            
+            url = f"""{endpoint}{params}&numOfRows=99999"""
+
             # Open API 호출
             result = requests.get(url, verify=False)
             xmlsoup = BeautifulSoup(result.text, "lxml-xml")
@@ -408,7 +429,7 @@ class Building:
             _error_message = f"HTTP 요청 혹은 파싱 오류"
             self.logger.error(_error_message)
             return _error_message
-        
+
         if result_code == "00":
             """
             결과 정상
@@ -441,7 +462,6 @@ class Building:
             _error_message = f"({result_code}) {result_msg}"
             self.logger.error(_error_message)
             return _error_message
-
 
     def ChangeCols(self, df, category):
         """
@@ -875,4 +895,3 @@ class Building:
         df = df.rename(columns=self.colDict)
 
         return df
-
