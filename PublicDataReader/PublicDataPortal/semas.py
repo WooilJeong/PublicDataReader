@@ -32,14 +32,16 @@ from bs4 import BeautifulSoup
 class StoreInfo:
     """
     소상공인 상가업소 정보 조회 클래스
+
+    공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
+
+    parameters
+    ----------
+        serviceKey: 서비스 인증키 문자열
+        debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
     """
 
     def __init__(self, serviceKey, debug=False):
-        """
-        공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
-        - serviceKey: 서비스 인증키 문자열
-        - debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
-        """
         # 로거 설정
         self.logger = logging.getLogger("root")
         # 로깅 레벨 설정
@@ -63,12 +65,12 @@ class StoreInfo:
 
         # 오퍼레이션별 URL 및 컬럼 매핑 딕셔너리
         self.metaDict = {
-            
+
             "지정상권": {
                 "url": f"{self.endpoint}storeZoneOne?serviceKey={self.serviceKey}",
                 "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
             },
-            
+
             "반경상권": {
                 "url": f"{self.endpoint}storeZoneInRadius?serviceKey={self.serviceKey}",
                 "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
@@ -148,13 +150,16 @@ class StoreInfo:
                 "url": f"{self.endpoint}smallUpjongList?serviceKey={self.serviceKey}",
                 "columns": ['indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'stdrDt'],
             },
-            
-        }
 
+        }
 
     def read_data(self, category, **kwargs):
         """
-        category: 오퍼레이션 종류 (ex. 지정상권, 반경상권, 사각형상권, 행정구역상권 등)
+        데이터 조회
+
+        parameters
+        ----------
+            category: 오퍼레이션 종류 (ex. 지정상권, 반경상권, 사각형상권, 행정구역상권 등)
         """
 
         # 엔드포인트, 파라미터 및 컬럼 목록 매핑
@@ -177,7 +182,7 @@ class StoreInfo:
 
         try:
             # URL
-            url=f"""{endpoint}{params}&numOfRows=99999"""
+            url = f"""{endpoint}{params}&numOfRows=99999"""
 
             # OpenAPI 호출
             result = requests.get(url, verify=False)
@@ -225,12 +230,11 @@ class StoreInfo:
             self.logger.error(_error_message)
             return _error_message
 
-
     def ChangeCols(self, df):
         """
         영문 컬럼명을 국문 컬럼명으로 변경
         """
-        
+
         self.colDict = {
             'adongCd': '행정동코드',
             'adongNm': '행정동명',
@@ -278,6 +282,6 @@ class StoreInfo:
             'trarArea': '면적',
             'trarNo': '상권번호'
         }
-        
+
         df = df.rename(columns=self.colDict)
         return df

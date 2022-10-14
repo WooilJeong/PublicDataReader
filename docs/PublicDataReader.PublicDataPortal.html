@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ko" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PublicDataReader.PublicDataPortal package &mdash; PublicDataReader  문서</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="PublicDataReader.Seoul package" href="PublicDataReader.Seoul.html" />
+    <link rel="prev" title="PublicDataReader package" href="PublicDataReader.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> PublicDataReader
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">PublicDataReader</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="PublicDataReader.html">PublicDataReader package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="PublicDataReader.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">PublicDataReader.PublicDataPortal package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PublicDataReader.Seoul.html">PublicDataReader.Seoul package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PublicDataReader.config.html">PublicDataReader.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PublicDataReader.utils.html">PublicDataReader.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="PublicDataReader.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PublicDataReader.html#module-PublicDataReader.data">PublicDataReader.data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="PublicDataReader.html#module-PublicDataReader">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PublicDataReader</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">PublicDataReader</a> &raquo;</li>
+          <li><a href="PublicDataReader.html">PublicDataReader package</a> &raquo;</li>
+      <li>PublicDataReader.PublicDataPortal package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/PublicDataReader.PublicDataPortal.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="publicdatareader-publicdataportal-package">
+<h1>PublicDataReader.PublicDataPortal package<a class="headerlink" href="#publicdatareader-publicdataportal-package" title="이 표제에 대한 퍼머링크"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="이 표제에 대한 퍼머링크"></a></h2>
+</section>
+<section id="module-PublicDataReader.PublicDataPortal.molit">
+<span id="publicdatareader-publicdataportal-molit-module"></span><h2>PublicDataReader.PublicDataPortal.molit module<a class="headerlink" href="#module-PublicDataReader.PublicDataPortal.molit" title="이 표제에 대한 퍼머링크"></a></h2>
+<p>국토교통부 Open API
+molit(Ministry of Land, Infrastructure and Transport)</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Transaction 클래스: 부동산 실거래가 조회</dt><dd><p>01.아파트매매 실거래 상세 자료 조회
+02.아파트 전월세 자료 조회
+03.아파트 분양권전매 신고 자료 조회
+04.오피스텔 매매 신고 조회
+05.오피스텔 전월세 신고 조회
+06.연립다세대 매매 실거래자료 조회
+07.연립다세대 전월세 실거래자료 조회
+08.단독/다가구 매매 실거래 조회
+09.단독/다가구 전월세 자료 조회
+10.토지 매매 신고 조회
+11.상업업무용 부동산 매매 신고 자료 조회
+12 공장 및 창고 등 부동산 매매 신고 자료 조회</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Building 클래스: 건축물대장정보 서비스</dt><dd><p>01.건축물대장 기본개요 조회
+02.건축물대장 총괄표제부 조회
+03.건축물대장 표제부 조회
+04.건축물대장 층별개요 조회
+05.건축물대장 부속지번 조회
+06.건축물대장 전유공용면적 조회
+07.건축물대장 오수정화시설 조회
+08.건축물대장 주택가격 조회
+09.건축물대장 전유부 조회
+10.건축물대장 지역지구구역 조회</p>
+</dd>
+</dl>
+</li>
+</ol>
+<dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.molit.Building">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.PublicDataPortal.molit.</span></span><span class="sig-name descname"><span class="pre">Building</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.molit.Building" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>건축물대장정보 서비스</p>
+<p>공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>serviceKey</strong> (<em>서비스 인증키 문자열</em>) – </p></li>
+<li><p><strong>debug</strong> (<em>True이면 모든 로깅 메시지 출력</em><em>, </em><em>False이면 에러 로깅 메시지만 출력</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.molit.Building.ChangeCols">
+<span class="sig-name descname"><span class="pre">ChangeCols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.molit.Building.ChangeCols" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>영문 컬럼명을 국문 컬럼명으로 변경</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.molit.Building.read_data">
+<span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.molit.Building.read_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>데이터 조회</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>category</strong> (<em>오퍼레이션 종류</em><em> (</em><em>ex. 기본개요</em><em>, </em><em>표제부</em><em>, </em><em>총괄표제부</em><em>, </em><em>전유공용면적 등</em><em>)</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.molit.Transaction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.PublicDataPortal.molit.</span></span><span class="sig-name descname"><span class="pre">Transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.molit.Transaction" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>부동산 실거래가 조회 클래스</p>
+<p>공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>serviceKey</strong> (<em>서비스 인증키 문자열</em>) – </p></li>
+<li><p><strong>debug</strong> (<em>True이면 모든 로깅 메시지 출력</em><em>, </em><em>False이면 에러 로깅 메시지만 출력</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.molit.Transaction.collect_data">
+<span class="sig-name descname"><span class="pre">collect_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prod</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigunguCode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startYearMonth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endYearMonth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.molit.Transaction.collect_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기간별 조회</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prod</strong> (<em>상품유형</em><em> (</em><em>ex.아파트</em><em>, </em><em>오피스텔</em><em>, </em><em>단독다가구</em><em>, </em><em>연립다세대</em><em>, </em><em>토지</em><em>, </em><em>상업업무용</em><em>, </em><em>공장창고등</em><em>)</em>) – </p></li>
+<li><p><strong>trans</strong> (<em>매매</em><em>, </em><em>전월세</em>) – </p></li>
+<li><p><strong>sigunguCode</strong> (<em>시군구코드</em><em>(</em><em>5자리</em><em>)</em>) – </p></li>
+<li><p><strong>startYearMonth</strong> (<em>조회시작 계약년월</em><em>(</em><em>&quot;YYYYmm&quot;</em><em>)</em>) – </p></li>
+<li><p><strong>endYearMonth</strong> (<em>조회종료 계약년월</em><em>(</em><em>&quot;YYYYmm&quot;</em><em>)</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.molit.Transaction.read_data">
+<span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prod</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigunguCode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yearMonth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.molit.Transaction.read_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>월별 조회</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prod</strong> (<em>상품유형</em><em> (</em><em>ex.아파트</em><em>, </em><em>오피스텔</em><em>, </em><em>단독다가구</em><em>, </em><em>연립다세대</em><em>, </em><em>토지</em><em>, </em><em>상업업무용</em><em>, </em><em>공장창고등</em><em>)</em>) – </p></li>
+<li><p><strong>trans</strong> (<em>매매</em><em>, </em><em>전월세</em>) – </p></li>
+<li><p><strong>sigunguCode</strong> (<em>시군구코드</em><em>(</em><em>5자리</em><em>)</em>) – </p></li>
+<li><p><strong>yearMonth</strong> (<em>계약년월</em><em>(</em><em>&quot;YYYYmm&quot;</em><em>)</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-PublicDataReader.PublicDataPortal.semas">
+<span id="publicdatareader-publicdataportal-semas-module"></span><h2>PublicDataReader.PublicDataPortal.semas module<a class="headerlink" href="#module-PublicDataReader.PublicDataPortal.semas" title="이 표제에 대한 퍼머링크"></a></h2>
+<p>소상공인 진흥공단 OpenAPI
+semas(Small Enterprise And Market Service)</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>StoreInfo 클래스: 소상공인 상가업소 정보 조회</dt><dd><p>01.지정 상권조회
+02.반경내 상권조회
+03.사각형내 상권조회
+04.행정구역 단위 상권조회
+05.단일 상가업소 조회
+06.건물단위 상가업소 조회
+07.지번단위 상가업소 조회
+08.행정동 단위 상가업소 조회
+09.상권내 상가업소 조회
+10.반경내 상가업소 조회
+11.사각형내 상가업소 조회
+12.다각형내 상가업소 조회
+13.업종별 상가업소 조회
+14.수정일자기준 상가업소 조회
+15.상권정보 업종 대분류 조회
+16.상권정보 업종 중분류 조회
+17.상권정보 업종 소분류 조회</p>
+</dd>
+</dl>
+</li>
+</ol>
+<dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.semas.StoreInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.PublicDataPortal.semas.</span></span><span class="sig-name descname"><span class="pre">StoreInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.semas.StoreInfo" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>소상공인 상가업소 정보 조회 클래스</p>
+<p>공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>serviceKey</strong> (<em>서비스 인증키 문자열</em>) – </p></li>
+<li><p><strong>debug</strong> (<em>True이면 모든 로깅 메시지 출력</em><em>, </em><em>False이면 에러 로깅 메시지만 출력</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.semas.StoreInfo.ChangeCols">
+<span class="sig-name descname"><span class="pre">ChangeCols</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.semas.StoreInfo.ChangeCols" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>영문 컬럼명을 국문 컬럼명으로 변경</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.PublicDataPortal.semas.StoreInfo.read_data">
+<span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.PublicDataPortal.semas.StoreInfo.read_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>데이터 조회</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>category</strong> (<em>오퍼레이션 종류</em><em> (</em><em>ex. 지정상권</em><em>, </em><em>반경상권</em><em>, </em><em>사각형상권</em><em>, </em><em>행정구역상권 등</em><em>)</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-PublicDataReader.PublicDataPortal">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-PublicDataReader.PublicDataPortal" title="이 표제에 대한 퍼머링크"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="PublicDataReader.html" class="btn btn-neutral float-left" title="PublicDataReader package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="PublicDataReader.Seoul.html" class="btn btn-neutral float-right" title="PublicDataReader.Seoul package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 저작권 2022, Wooil Jeong.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
