@@ -45,13 +45,20 @@ class Kosis:
         except:
             print("Incorrect Value!")
             return None
+
         try:
             res = requests.get(self.url, params=kwargs).json()
         except:
             print("Request Failed!")
             return None
+
         try:
-            return pd.DataFrame(res)
+            if type(res) == dict:
+                if res.get("errMsg"):
+                    print(res.get("errMsg"))
+                    return None
+            else:
+                return pd.DataFrame(res)
         except:
-            print("Dataframe Failed!")
+            print("Data Frame Failed!")
             return None
