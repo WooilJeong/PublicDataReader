@@ -7,5 +7,8 @@ from PublicDataReader.PublicDataPortal.semas import StoreInfo
 # 서울시 지하철호선별 역별 승하차 인원 정보 Open API
 from PublicDataReader.Seoul.transportation import Transportation
 
+# KOSIS Open API
+from PublicDataReader.kosis.kosis import Kosis
+
 # 법정동코드 데이터 조회
 from PublicDataReader.utils.code import code_bdong

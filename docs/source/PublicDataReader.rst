@@ -10,6 +10,7 @@ Subpackages
    PublicDataReader.PublicDataPortal
    PublicDataReader.Seoul
    PublicDataReader.config
+   PublicDataReader.kosis
    PublicDataReader.utils
 
 Submodules
