@@ -66,6 +66,7 @@ import PublicDataReader as pdr
 
 - **튜토리얼**  
   - [(블로그) 주민등록인구 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex1/)
+  - [(블로그) 미분양주택현황 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex2/)
   - [(블로그) 부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [(블로그) 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
   - [(블로그) 상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
