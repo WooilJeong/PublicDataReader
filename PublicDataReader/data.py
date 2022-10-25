@@ -10,5 +10,8 @@ from PublicDataReader.Seoul.transportation import Transportation
 # KOSIS Open API
 from PublicDataReader.kosis.kosis import Kosis
 
-# 법정동코드 데이터 조회
-from PublicDataReader.utils.code import code_bdong
+# Vworld Open API
+from PublicDataReader.vworld.data import VworldData
+
+# 코드 데이터 조회
+from PublicDataReader.utils.code import code_bdong, get_vworld_data_api_info_by_dataframe, get_vworld_data_api_info_by_dict
