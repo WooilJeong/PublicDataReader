@@ -202,8 +202,6 @@ folium.LayerControl().add_to(m)
 m
 ```
 
+<div align="center">
 
-<iframe
-  src="/assets/html/sample_vworld.html"
-  style="width:100%; height:500px;"
-></iframe>
+![png](/assets/img/sample_vworld.png)
