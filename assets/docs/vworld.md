@@ -204,4 +204,4 @@ m
 
 <div align="center">
 
-![png](/assets/img/sample_vworld.png)
+![png](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/img/sample_vworld.png?raw=true)

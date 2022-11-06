@@ -1,6 +1,6 @@
 <div align="center">
 
-![PNG](https://github.com/WooilJeong/PublicDataReader/blob/master/assets/img/logo_v1.png?raw=true)
+![PNG](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/img/logo_v1.png?raw=true)
 
 <b>공공 데이터 조회를 위한 오픈소스 로우코드 파이썬 라이브러리</b><br>
 <b>🚀`pip install PublicDataReader --upgrade`</b>
@@ -58,10 +58,10 @@ import PublicDataReader as pdr
 
 ### 데이터 제공처 별 조회 방법
 
-- [KOSIS 국가통계포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/master/assets/docs/kosis.md)
-- [공공데이터포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/master/assets/docs/portal.md)
-- [서울 열린데이터광장 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/master/assets/docs/seoul.md)
-- [Vworld 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/master/assets/docs/vworld.md)
+- [KOSIS 국가통계포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis.md)
+- [공공데이터포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal.md)
+- [서울 열린데이터광장 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul.md)
+- [Vworld 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld.md)
 
 
 <br>
