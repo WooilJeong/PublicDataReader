@@ -8,7 +8,7 @@
 [![Pypi 패키지 버전](https://img.shields.io/pypi/v/publicdatareader.svg)](https://pypi.org/project/publicdatareader/)
 [![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://img.shields.io/pypi/l/ansicolortags.svg)
 [![Python](https://img.shields.io/badge/Official-Docs-tomato)](https://wooiljeong.github.io/PublicDataReader/)  
-[![오픈채팅](https://img.shields.io/badge/오픈채팅-Q&A-yellow?logo=KakaoTalk)](https://open.kakao.com/o/gbt2Pl2d)
+[![오픈채팅](https://img.shields.io/badge/오픈채팅-사용자모임-yellow?logo=KakaoTalk)](https://open.kakao.com/o/gbt2Pl2d)
 
 <br>
 
@@ -84,7 +84,7 @@ pip install PublicDataReader --upgrade
 
 - **문의**  
   - **이메일**: wooil@kakao.com  
-  - **카카오톡 오픈채팅방**: [(Python) PublicDataReader Q&A](https://open.kakao.com/o/gbt2Pl2d)  
+  - **카카오톡 오픈채팅방**: [PublicDataReader 사용자 모임](https://open.kakao.com/o/gbt2Pl2d)  
 
 <br>
 
