@@ -1,5 +1,6 @@
-## Vworld 데이터 API
+# PublicDataReader - Vworld Open API 사용방법
 
+## 라이브러리 임포트하기
 
 ```python
 import PublicDataReader as pdr
@@ -30,19 +31,7 @@ code.head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">

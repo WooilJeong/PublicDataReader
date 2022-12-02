@@ -1,45 +1,80 @@
-## OpenAPI 서비스 목록
+# PublicDataReader - 공공데이터포털 Open API 사용방법
 
-- [국토교통부_아파트매매 실거래 상세 자료](https://www.data.go.kr/data/15057511/openapi.do)  
-- [국토교통부_아파트 전월세 자료](https://www.data.go.kr/data/15058017/openapi.do)
-- [국토교통부_아파트 분양권전매 신고 자료](https://www.data.go.kr/data/15056782/openapi.do)
-- [국토교통부_오피스텔 매매 신고 조회 서비스](https://www.data.go.kr/data/15058452/openapi.do)
-- [국토교통부_오피스텔 전월세 신고 조회 서비스](https://www.data.go.kr/data/15059249/openapi.do)
-- [국토교통부_연립다세대 매매 실거래자료](https://www.data.go.kr/data/15058038/openapi.do)
-- [국토교통부_연립다세대 전월세 자료](https://www.data.go.kr/data/15058016/openapi.do)
-- [국토교통부_단독/다가구 매매 실거래 자료](https://www.data.go.kr/data/15058022/openapi.do)
-- [국토교통부_단독/다가구 전월세 자료](https://www.data.go.kr/data/15058352/openapi.do)
-- [국토교통부_토지 매매 신고 조회 서비스](https://www.data.go.kr/data/15056649/openapi.do)
-- [국토교통부_상업업무용 부동산 매매 신고 자료](https://www.data.go.kr/data/15057267/openapi.do)
-- [국토교통부_공장 및 창고 등 부동산 매매 신고 자료 조회 서비스](https://www.data.go.kr/data/15100574/openapi.do)
-- [국토교통부 건축물대장정보 서비스](https://www.data.go.kr/data/15044713/openapi.do)
-- [소상공인 상가업소 정보](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15012005)
-
-<br>
+PublicDataReader를 통해 공공데이터포털에서 제공하는 Open API 서비스를 정상적으로 이용하려면 먼저 각 서비스 별 사용방법 상단에 있는 서비스 신청 페이지 링크에 접속하여 서비스 신청을 완료해야 합니다. 서비스 신청을 완료하면 Open API를 사용할 수 있는 서비스 키가 발급됩니다. 서비스 제공 기관에 따라 서비스 키 발급 후 약 1~2일이 지난 후 접근 권한이 부여될 수 있습니다. 충분한 시간이 지난 후에도 접근 권한이 부여되지 않는다면 서비스 제공처에 문의하는 것을 권장합니다.
 
 
-## 공공데이터포털 서비스 목록
+## 목차
 
-### 1) 국토교통부 실거래가 정보 조회 서비스
+- [국토교통부 실거래가 정보 조회 서비스](#국토교통부-실거래가-정보-조회-서비스)
+- [국토교통부 건축물대장정보 서비스](#국토교통부-건축물대장정보-서비스)
+- [소상공인 상가업소 정보 조회 서비스](#소상공인-상가업소-정보-조회-서비스)
+- [한국자산관리공사 공매물건 조회 서비스](#한국자산관리공사-공매물건-조회-서비스)
+
+
+## 국토교통부 실거래가 정보 조회 서비스
+
+<div align="center">
 
 | **서비스명**                          | **상품유형** | **거래유형** |
 | ------------------------------------- | ------------ | ------------ |
-| 아파트매매 실거래 상세 자료 조회      | 아파트       | 매매         |
-| 아파트 전월세 자료 조회               | 아파트       | 전월세       |
-| 아파트 분양권전매 신고 자료 조회      | 분양입주권   | 매매         |
-| 오피스텔 매매 신고 조회               | 오피스텔     | 매매         |
-| 오피스텔 전월세 신고 조회             | 오피스텔     | 전월세       |
-| 연립다세대 매매 실거래자료 조회       | 연립다세대   | 매매         |
-| 연립다세대 전월세 실거래자료 조회     | 연립다세대   | 전월세       |
-| 단독/다가구 매매 실거래 조회          | 단독다가구   | 매매         |
-| 단독/다가구 전월세 자료 조회          | 단독다가구   | 전월세       |
-| 토지 매매 신고 조회                   | 토지         | 매매         |
-| 상업업무용 부동산 매매 신고 자료 조회 | 상업업무용   | 매매         |
-| 공장 및 창고 등 부동산 매매 신고 자료 조회 | 공장창고등   | 매매         |
+| [아파트매매 실거래 상세 자료 조회](https://www.data.go.kr/data/15057511/openapi.do)      | 아파트       | 매매         |
+| [아파트 전월세 자료 조회](https://www.data.go.kr/data/15058017/openapi.do)               | 아파트       | 전월세       |
+| [아파트 분양권전매 신고 자료 조회](https://www.data.go.kr/data/15056782/openapi.do)      | 분양입주권   | 매매         |
+| [오피스텔 매매 신고 조회](https://www.data.go.kr/data/15058452/openapi.do)               | 오피스텔     | 매매         |
+| [오피스텔 전월세 신고 조회](https://www.data.go.kr/data/15059249/openapi.do)             | 오피스텔     | 전월세       |
+| [연립다세대 매매 실거래자료 조회](https://www.data.go.kr/data/15058038/openapi.do)       | 연립다세대   | 매매         |
+| [연립다세대 전월세 실거래자료 조회](https://www.data.go.kr/data/15058016/openapi.do)     | 연립다세대   | 전월세       |
+| [단독/다가구 매매 실거래 조회](https://www.data.go.kr/data/15058022/openapi.do)          | 단독다가구   | 매매         |
+| [단독/다가구 전월세 자료 조회](https://www.data.go.kr/data/15058352/openapi.do)          | 단독다가구   | 전월세       |
+| [토지 매매 신고 조회](https://www.data.go.kr/data/15056649/openapi.do)                   | 토지         | 매매         |
+| [상업업무용 부동산 매매 신고 자료 조회](https://www.data.go.kr/data/15057267/openapi.do) | 상업업무용   | 매매         |
+| [공장 및 창고 등 부동산 매매 신고 자료 조회](https://www.data.go.kr/data/15100574/openapi.do) | 공장창고등   | 매매         |
 
-<br>
+</div>
 
-### 2) 국토교통부 건축물대장정보 서비스
+```python
+# 1. 라이브러리 임포트하기
+import PublicDataReader as pdr
+print(pdr.__version__)
+
+# 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
+serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
+
+# 3. 국토교통부 실거래가 정보 조회 OpenAPI 세션 정의하기
+# debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
+API = pdr.Transaction(serviceKey, debug=True)
+
+# 4. 지역코드(시군구코드) 검색하기
+sigunguName = "분당구"                                  # 시군구코드: 41135
+code = pdr.code_bdong()
+code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
+         (code['읍면동명'].isna())]
+
+# 5. 지역, 월 별 데이터 프레임 만들기
+prod = "아파트"                                           # 부동산 상품 종류 (ex. 아파트, 오피스텔, 단독다가구 등)
+trans = "매매"                                            # 부동산 거래 유형 (ex. 매매, 전월세)
+sigunguCode = "41135"
+yearMonth = "202101"
+
+df = API.read_data(prod, trans, sigunguCode, yearMonth)
+
+
+# 6. 지역, 기간 별 데이터 프레임 만들기
+prod = "아파트"                                           # 부동산 상품 종류 (ex. 아파트, 오피스텔, 단독다가구 등)
+trans = "매매"                                            # 부동산 거래 유형 (ex. 매매, 전월세)
+sigunguCode = "41135"
+startYearMonth = "202101"
+endYearMonth = "202111"
+
+df = API.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
+```
+
+
+## 국토교통부 건축물대장정보 서비스
+
+- [건축물대장정보 서비스 신청 페이지](https://www.data.go.kr/data/15044713/openapi.do)
+
+<div align="center">
 
 | **서비스명**                 | **카테고리명** |
 | ---------------------------- | -------------- |
@@ -54,74 +89,7 @@
 | 건축물대장 전유부 조회       | 전유부         |
 | 건축물대장 지역지구구역 조회 | 지역지구구역   |
 
-<br>
-
-### 3) 소상공인 상가업소 정보 조회 서비스
-
-| **서비스명**               | **카테고리명** |
-| -------------------------- | -------------- |
-| 지정 상권조회              | 지정상권       |
-| 반경내 상권조회            | 반경상권       |
-| 사각형내 상권조회          | 사각형상권     |
-| 행정구역 단위 상권조회     | 행정구역상권   |
-| 단일 상가업소 조회         | 단일상가       |
-| 건물단위 상가업소 조회     | 건물상가       |
-| 지번단위 상가업소 조회     | 지번상가       |
-| 행정동 단위 상가업소 조회  | 행정동상가     |
-| 상권내 상가업소 조회       | 상권상가       |
-| 반경내 상가업소 조회       | 반경상가       |
-| 사각형내 상가업소 조회     | 사각형상가     |
-| 다각형내 상가업소 조회     | 다각형상가     |
-| 업종별 상가업소 조회       | 업종별상가     |
-| 수정일자기준 상가업소 조회 | 수정일자상가   |
-| 상권정보 업종 대분류 조회  | 업종대분류     |
-| 상권정보 업종 중분류 조회  | 업종중분류     |
-| 상권정보 업종 소분류 조회  | 업종소분류     |
-
-<br>
-
-
-### 국토교통부 실거래가 정보 조회 서비스
-
-```python
-# 1. 라이브러리 임포트하기
-import PublicDataReader as pdr
-print(pdr.__version__)
-
-# 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
-serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
-
-# 3. 국토교통부 실거래가 정보 조회 OpenAPI 세션 정의하기
-# debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
-ts = pdr.Transaction(serviceKey, debug=True)
-
-# 4. 지역코드(시군구코드) 검색하기
-sigunguName = "분당구"                                  # 시군구코드: 41135
-code = pdr.code_bdong()
-code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
-         (code['읍면동명'].isna())]
-
-# 5. 지역, 월 별 데이터 프레임 만들기
-prod="아파트"                                           # 부동산 상품 종류 (ex. 아파트, 오피스텔, 단독다가구 등)
-trans="매매"                                            # 부동산 거래 유형 (ex. 매매, 전월세)
-sigunguCode="41135"
-yearMonth="202101"
-
-df = ts.read_data(prod, trans, sigunguCode, yearMonth)
-
-
-# 6. 지역, 기간 별 데이터 프레임 만들기
-prod="아파트"                                           # 부동산 상품 종류 (ex. 아파트, 오피스텔, 단독다가구 등)
-trans="매매"                                            # 부동산 거래 유형 (ex. 매매, 전월세)
-sigunguCode="41135"
-startYearMonth="202101"
-endYearMonth="202111"
-
-df = ts.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
-```
-
-
-### 국토교통부 건축물대장정보 서비스
+</div>
 
 ```python
 # 1. 라이브러리 임포트 및 버전 확인하기
@@ -152,7 +120,35 @@ df = bd.read_data(category=category, sigunguCd=sigunguCd, bjdongCd=bjdongCd, bun
 ```
 
 
-### 소상공인 상가업소 정보 조회 서비스
+## 소상공인 상가업소 정보 조회 서비스
+
+- [소상공인 상가업소 정보 조회 서비스 신청 페이지](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15012005)
+
+<div align="center">
+
+| **서비스명**               | **카테고리명** |
+| -------------------------- | -------------- |
+| 지정 상권조회              | 지정상권       |
+| 반경내 상권조회            | 반경상권       |
+| 사각형내 상권조회          | 사각형상권     |
+| 행정구역 단위 상권조회     | 행정구역상권   |
+| 단일 상가업소 조회         | 단일상가       |
+| 건물단위 상가업소 조회     | 건물상가       |
+| 지번단위 상가업소 조회     | 지번상가       |
+| 행정동 단위 상가업소 조회  | 행정동상가     |
+| 상권내 상가업소 조회       | 상권상가       |
+| 반경내 상가업소 조회       | 반경상가       |
+| 사각형내 상가업소 조회     | 사각형상가     |
+| 다각형내 상가업소 조회     | 다각형상가     |
+| 업종별 상가업소 조회       | 업종별상가     |
+| 수정일자기준 상가업소 조회 | 수정일자상가   |
+| 상권정보 업종 대분류 조회  | 업종대분류     |
+| 상권정보 업종 중분류 조회  | 업종중분류     |
+| 상권정보 업종 소분류 조회  | 업종소분류     |
+<br>
+
+
+</div>
 
 ```python
 # 1. 라이브러리 임포트 및 버전 확인하기
@@ -306,4 +302,50 @@ indsMclsCd = 'Q01'
 
 df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd, indsMclsCd=indsMclsCd)
 
+```
+
+## 한국자산관리공사 공매물건 조회 서비스
+
+
+<div align="center">
+
+
+| **서비스명**      | **서비스(파라미터)** | **기능(파라미터)**                                                                                                                                                                                                          |
+| ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [온비드코드조회서비스](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15000920)    | 온비드코드         | 용도상위코드, 용도중간코드, 용도하위코드, 시도, 시군구, 읍면동, 상세주소                                                                                                                                                                            |
+| [캠코공매물건조회서비스](https://www.data.go.kr/data/15000851/openapi.do)   | 캠코공매물건        | 물건목록, 공고목록, 일정, 공고기본정보, 공고공매일정, 공고첨부파일                                                                                                                                                                                |
+| [이용기관공매물건조회서비스](https://www.data.go.kr/data/15000849/openapi.do) | 이용기관공매물건      | 공고목록, 물건목록, 통합공고목록, 매각공고목록, 임대공고목록, 마감임박공고목록                                                                                                                                                                          |
+| [정부재산정보공개조회서비스](https://www.data.go.kr/data/15000907/openapi.do) | 정부재산정보공개      | 정부재산정보공개정보목록, 정부재산정보공개정보상세, 캠코관리재산정보공개목록정보, 캠코관리재산정보공개정보상세                                                                                                                                                            |
+| [물건정보조회서비스](https://www.data.go.kr/data/15000837/openapi.do)     | 물건정보          | 통합용도별물건목록, 통합새로운물건목록, 통합마감임박물건목록, 통합수의계약가능물건목록, 통합50%체감물건목록, 통합클릭탑20물건목록, 통합관심탑20물건목록, 통합용도별물건기본정보상세, 통합용도별물건감정평가서정보상세, 통합용도별물건임대차정보상세, 통합용도별물건권리종류정보상세, 통합용도별물건공매일정상세, 통합용도별물건입찰이력상세, 통합용도별물건주주정보상세, 통합용도별물건법인현황정보상세 |
+
+</div>
+
+```python
+import PublicDataReader as pdr
+print(pdr.__version__)
+
+# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기 (디코딩키로 입력)
+serviceKey = "공공 데이터 포털에서 발급받은 서비스 키(디코딩 키)"
+
+# OpenAPI 인스턴스 생성
+API = pdr.Kamco(serviceKey)
+
+# 사용가능한 서비스의 파라미터 값 확인
+print(API.meta_dict.keys())
+
+# 서비스 별 사용가능한 기능의 파라미터 값 확인
+print(API.meta_dict['이용기관공매물건']['기능'].keys())
+
+# 파라미터 정의
+service = "캠코공매물건"
+function = "물건목록"
+params = {
+    "DPSL_MTD_CD": "0001",
+    "CTGR_HIRK_ID": "10000",
+    "CTGR_HIRK_ID_MID": "10200",
+    "SIDO": "서울특별시",
+}
+
+df = API.get_data(service, function, **params)
+df.head()
 ```

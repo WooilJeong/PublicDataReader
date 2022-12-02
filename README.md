@@ -20,15 +20,6 @@
 
 <br>
 
-## 이용 가능한 Open API 플랫폼
-
-- [KOSIS 국가통계포털](https://kosis.kr/index/index.do)
-- [공공데이터포털](https://www.data.go.kr/)
-- [서울 열린데이터광장](https://data.seoul.go.kr/)
-- [브이월드(Vworld) 공간정보 오픈플랫폼](https://www.vworld.kr/dev/v4api.do)
-
-<br>
-
 ## 설치 방법
 
 - Windows: CMD(명령 프롬프트)를 열어 아래 Shell 명령어를 입력
@@ -38,42 +29,51 @@
 pip install PublicDataReader --upgrade
 ```
 
-PublicDataReader를 정상적으로 실행하기 위해서는 pandas, requests, beautifulsoup4 라이브러리가 설치되어 있어야 합니다. 설치되어 있지 않은 경우 아래와 같이 설치합니다.
-
-```bash
-pip install pandas requests beautifulsoup4
-```
-
 <br>
 
 ## 사용 방법
 
-### 라이브러리 임포트
+### 플랫폼 별 상세 사용 방법
 
-```python
-import PublicDataReader as pdr
-```
-
-<br>
-
-### 데이터 제공처 별 조회 방법
-
-- [KOSIS 국가통계포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis.md)
 - [공공데이터포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal.md)
+  - 국토교통부 실거래가 정보 조회 서비스
+  - 국토교통부 건축물대장정보 서비스
+  - 소상공인 상가업소 정보 조회 서비스
+  - 한국자산관리공사 공매물건 조회 서비스
+- [KOSIS 국가통계포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis.md)
+  - KOSIS 통계 자료 조회 방법
 - [서울 열린데이터광장 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul.md)
+  - 서울시 지하철호선별 역별 승하차 인원 정보
+  - 서울시 버스노선별 정류장별 승하차 인원 정보
 - [Vworld 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld.md)
+  - Vworld Data API를 이용한 공간정보 조회 방법
 
 
 <br>
+
+
+## 튜토리얼
+
+- 공공데이터포털
+  - [부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
+  - [건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
+  - [상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
+
+- KOSIS
+  - [Python으로 KOSIS 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis/)
+  - [주민등록인구 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex1/)
+  - [미분양주택현황 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex2/)
+
 
 ## 참고
 
-- **튜토리얼**  
-  - [(블로그) 주민등록인구 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex1/)
-  - [(블로그) 미분양주택현황 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex2/)
-  - [(블로그) 부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
-  - [(블로그) 건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
-  - [(블로그) 상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
+
+- 이용 가능한 Open API 플랫폼 웹 사이트
+  - [KOSIS 국가통계포털](https://kosis.kr/index/index.do)
+  - [공공데이터포털](https://www.data.go.kr/)
+  - [서울 열린데이터광장](https://data.seoul.go.kr/)
+  - [브이월드(Vworld) 공간정보 오픈플랫폼](https://www.vworld.kr/dev/v4api.do)
+
 
 - **실습코드**  
   - [Colab에서 PublicDataReader 실행하기](https://colab.research.google.com/drive/1fgT0D_tP-JyglobtDFfYQ6wQXfWWujIV?usp=sharing)  
