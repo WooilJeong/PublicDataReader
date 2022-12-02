@@ -13,5 +13,8 @@ from PublicDataReader.kosis.kosis import Kosis
 # Vworld Open API
 from PublicDataReader.vworld.data import VworldData
 
+# 한국자산관리공사 Open API 통합
+from PublicDataReader.PublicDataPortal.kamco import Kamco
+
 # 코드 데이터 조회
 from PublicDataReader.utils.code import code_bdong, get_vworld_data_api_info_by_dataframe, get_vworld_data_api_info_by_dict

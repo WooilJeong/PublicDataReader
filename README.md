@@ -38,12 +38,6 @@
 pip install PublicDataReader --upgrade
 ```
 
-PublicDataReader를 정상적으로 실행하기 위해서는 pandas, requests, beautifulsoup4 라이브러리가 설치되어 있어야 합니다. 설치되어 있지 않은 경우 아래와 같이 설치합니다.
-
-```bash
-pip install pandas requests beautifulsoup4
-```
-
 <br>
 
 ## 사용 방법
