@@ -58,6 +58,7 @@ pip install PublicDataReader --upgrade
   - [부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
   - [상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
+  - [한국자산관리공사 캠코 공매물건 조회하기](https://wooiljeong.github.io/python/pdr-kamco/)
 
 - KOSIS
   - [Python으로 KOSIS 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis/)
