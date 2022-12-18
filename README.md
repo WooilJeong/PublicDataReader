@@ -16,14 +16,18 @@
 
 ## PublicDataReader
 
-**PublicDataReader**는 **Open API를 통해 공공 데이터를 조회하는 과정을 자동화하는 오픈소스 로우코드 파이썬 라이브러리**입니다. 즉시 분석에 활용할 수 있는 형태로 데이터를 조회할 수 있어 생산성 향상에 도움을 주는 도구입니다. 공공 데이터 제공처 마다 서로 다른 API 명세를 확인하는 작업, 명세에 따라 적합한 형식으로 데이터를 요청하는 코드를 작성하는 작업 그리고 반환된 데이터를 분석 가능한 형태로 가공하는 작업 등의 번거로운 작업들을 단 몇 줄의 코드로 자동화할 수 있습니다. 발급받은 **Open API 서비스 인증키**와 **PublicDataReader** 라이브러리만으로 원하는 데이터를 쉽게 조회할 수 있습니다.
+PublicDataReader는 Open API를 사용하여 공공 데이터를 자동으로 조회할 수 있는 파이썬 라이브러리입니다. 이 도구를 사용하면 생산성을 높일 수 있게 됩니다. PublicDataReader는 Open API 서비스 인증키와 함께 사용하면 간편하게 공공 데이터를 조회할 수 있습니다. 일반적인 공공 데이터 조회 과정에서는 API 명세를 찾고, 적절한 형식으로 요청을 작성하고, 반환된 데이터를 정리하는 과정이 필요합니다. PublicDataReader는 이러한 과정을 자동화해주기 때문에 코드 작성이 간결해집니다.
 
 <br>
 
 ## 설치 방법
 
-- Windows: CMD(명령 프롬프트)를 열어 아래 Shell 명령어를 입력
-- Mac: Terminal(터미널)을 열어 아래 Shell 명령어를 입력
+1. 운영체제(OS)에 따라 아래 중 하나를 선택합니다.
+
+- Windows: CMD(명령 프롬프트) 실행
+- Mac: Terminal(터미널) 실행
+
+2. 아래 Shell 명령어를 입력 후 실행합니다.
 
 ```bash
 pip install PublicDataReader --upgrade
@@ -40,6 +44,7 @@ pip install PublicDataReader --upgrade
   - 국토교통부 건축물대장정보 서비스
   - 소상공인 상가업소 정보 조회 서비스
   - 한국자산관리공사 공매물건 조회 서비스
+  - 국세청 사업자등록정보 진위확인 및 상태조회 서비스
 - [KOSIS 국가통계포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis.md)
   - KOSIS 통계 자료 조회 방법
 - [서울 열린데이터광장 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul.md)
