@@ -2,7 +2,7 @@
 
 ![PNG](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/img/logo_v1.png?raw=true)
 
-<b>공공 데이터 조회를 위한 오픈소스 로우코드 파이썬 라이브러리</b><br>
+<b>공공 데이터 조회를 위한 오픈소스 파이썬 라이브러리</b><br>
 <b>🚀`pip install PublicDataReader --upgrade`</b>
 
 [![Pypi 패키지 버전](https://img.shields.io/pypi/v/publicdatareader.svg)](https://pypi.org/project/publicdatareader/)
