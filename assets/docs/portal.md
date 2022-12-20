@@ -364,6 +364,9 @@ print(pdr.__version__)
 # 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기 (디코딩키로 입력)
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키(디코딩 키)"
 
+# OpenAPI 인스턴스 생성
+API = pdr.Nts(serviceKey)
+
 # 조회 대상 목록
 businesses = [{
   'b_no': '0000000000',
@@ -404,6 +407,9 @@ print(pdr.__version__)
 
 # 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기 (디코딩키로 입력)
 serviceKey = "공공 데이터 포털에서 발급받은 서비스 키(디코딩 키)"
+
+# OpenAPI 인스턴스 생성
+API = pdr.Nts(serviceKey)
 
 # 조회 대상 목록 (사업자등록번호 리스트)
 b_no = ['0000000000', '1111111111']
