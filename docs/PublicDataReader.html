@@ -166,6 +166,18 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.Kamco">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Kamco</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kamco" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>KAMCO Open API 클래스</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kamco.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kamco.get_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="PublicDataReader.Kosis">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Kosis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apiKey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serviceName</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kosis" title="이 정의에 대한 퍼머링크"></a></dt>
 <dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -217,6 +229,47 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">kosis</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">orgId</span><span class="o">=</span><span class="n">orgId</span><span class="p">,</span> <span class="n">tblId</span><span class="o">=</span><span class="n">tblId</span><span class="p">,</span> <span class="n">metaItm</span><span class="o">=</span><span class="n">metaItm</span><span class="p">)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.Nts">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Nts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Nts" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>NTS Open API 클래스</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Nts.status">
+<span class="sig-name descname"><span class="pre">status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b_no</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Nts.status" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>사업자등록정보 상태조회 API</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>b_no</strong> (<em>list</em>) – 사업자등록번호 (1회 호출 시 최대 100개까지 조회 가능)</p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p>상태조회 결과</p>
+</dd>
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Nts.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">businesses</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Nts.validate" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>사업자등록정보 진위확인 API</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>businesses</strong> (<em>list</em><em>, </em><em>DataFrame</em>) – 사업자등록정보 리스트 (1회 호출 시 최대 100개까지 조회 가능)</p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p>진위확인 결과</p>
+</dd>
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -331,10 +384,54 @@
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.VworldData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">VworldData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apiKey</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.VworldData" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Vworld 데이터 API 클래스</p>
+<p>Vworld에서 발급받은 API 서비스 인증키를 입력받아 초기화합니다.</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>apiKey</strong> (<em>str</em>) – Vworld Open API 서비스 인증키</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.VworldData.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.VworldData.get_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>API 호출</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – API 호출에 필요한 파라미터를 입력합니다.
+API 호출에 필요한 파라미터는 Vworld Open API 문서를 참고하세요.
+<a class="reference external" href="https://www.vworld.kr/dev/v4dv_2ddataguide2_s001.do">https://www.vworld.kr/dev/v4dv_2ddataguide2_s001.do</a></p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p>API 호출 결과를 반환합니다.</p>
+</dd>
+<dt class="field-odd">반환 형식</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="PublicDataReader.code_bdong">
 <span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">code_bdong</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.code_bdong" title="이 정의에 대한 퍼머링크"></a></dt>
 <dd><p>법정동코드 테이블 반환</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PublicDataReader.get_vworld_data_api_info_by_dataframe">
+<span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">get_vworld_data_api_info_by_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.get_vworld_data_api_info_by_dataframe" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>vworld 코드 테이블 반환</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PublicDataReader.get_vworld_data_api_info_by_dict">
+<span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">get_vworld_data_api_info_by_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.get_vworld_data_api_info_by_dict" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>vworld 코드 테이블 반환</p>
 </dd></dl>
 
 </section>
