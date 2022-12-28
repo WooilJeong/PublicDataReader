@@ -52,6 +52,8 @@ pip install PublicDataReader --upgrade
   - 서울시 버스노선별 정류장별 승하차 인원 정보
 - [Vworld 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld.md)
   - Vworld Data API를 이용한 공간정보 조회 방법
+- [KB부동산 데이터허브 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland.md) - **인증키 필요 없음**
+  - 주택가격동향조사 데이터 조회 방법
 
 
 <br>
