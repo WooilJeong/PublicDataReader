@@ -72,9 +72,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="modules.html">PublicDataReader</a> &raquo;</li>
-      <li>PublicDataReader package</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">PublicDataReader</a></li>
+      <li class="breadcrumb-item active">PublicDataReader package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/PublicDataReader.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -174,6 +174,328 @@
 <dt class="sig sig-object py" id="PublicDataReader.Kamco.get_data">
 <span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kamco.get_data" title="이 정의에 대한 퍼머링크"></a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Kbland</span></span><a class="headerlink" href="#PublicDataReader.Kbland" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_apartment_mortgage_loan_pir">
+<span class="sig-name descname"><span class="pre">get_apartment_mortgage_loan_pir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_apartment_mortgage_loan_pir" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 소득연계 - KB아파트주택담보대출 PIR</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+기간 : str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_average_price">
+<span class="sig-name descname"><span class="pre">get_average_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">매물종별구분</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매매전세코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_average_price" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 평균가격</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>매물종별구분</strong> (<em>str</em>) – 매물종별구분
+01: 아파트
+08: 연립
+09: 단독
+98: 주택종합</p></li>
+<li><p><strong>매매전세코드</strong> (<em>str</em>) – 매매전세코드
+01: 매매
+02: 전세</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_average_price_by_area">
+<span class="sig-name descname"><span class="pre">get_average_price_by_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">매매전세코드</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">면적별코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_average_price_by_area" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 면적별 평균가격</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>매매전세코드</strong> (<em>str</em>) – 매매전세코드
+01: 매매
+02: 전세</p></li>
+<li><p><strong>면적별코드</strong> (<em>str</em>) – 면적별코드
+01: 전용면적별(구)
+02: 전용면적별</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_average_price_by_quintile">
+<span class="sig-name descname"><span class="pre">get_average_price_by_quintile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">메뉴코드</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매매전세코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_average_price_by_quintile" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 5분위 평균가격</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>메뉴코드</strong> (<em>str</em>) – 메뉴코드
+01: 아파트 평균가격
+02: 주택종합 평균가격
+08: 아파트 ㎡당 평균가격</p></li>
+<li><p><strong>매매전세코드</strong> (<em>str</em>) – 매매전세코드
+01: 매매
+02: 전세</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_average_price_per_squaremeter">
+<span class="sig-name descname"><span class="pre">get_average_price_per_squaremeter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">매물종별구분</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매매전세코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_average_price_per_squaremeter" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - ㎡당 평균가격</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>매물종별구분</strong> (<em>str</em>) – 매물종별구분
+01: 아파트
+08: 연립
+09: 단독
+98: 주택종합</p></li>
+<li><p><strong>매매전세코드</strong> (<em>str</em>) – 매매전세코드
+01: 매매
+02: 전세</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_hai">
+<span class="sig-name descname"><span class="pre">get_hai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_hai" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 소득연계 - 주택구매력지수</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+기간 : str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_jeonse_price_ratio">
+<span class="sig-name descname"><span class="pre">get_jeonse_price_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">매물종별구분</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_jeonse_price_ratio" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>KB통계 - 주택가격동향조사 - 전세가격비율</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>매물종별구분</strong> (<em>str</em>) – 매물종별구분
+01: 아파트
+08: 연립
+09: 단독
+98: 주택종합</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+지역코드 : str</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_jeonwolse_conversion_rate">
+<span class="sig-name descname"><span class="pre">get_jeonwolse_conversion_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_jeonwolse_conversion_rate" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>KB통계 - 주택가격동향조사 - 전월세전환율</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – 선택 파라미터</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_kb_housing_purchase_potential_index">
+<span class="sig-name descname"><span class="pre">get_kb_housing_purchase_potential_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_kb_housing_purchase_potential_index" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 소득연계 - KB주택구입잠재력지수</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+기간 : str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_lead_apartment_50_index">
+<span class="sig-name descname"><span class="pre">get_lead_apartment_50_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_lead_apartment_50_index" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>KB통계 - 주택가격동향조사 - KB선도아파트 50 지수</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – 선택 파라미터</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_market_trend">
+<span class="sig-name descname"><span class="pre">get_market_trend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">메뉴코드</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">월간주간구분코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_market_trend" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>KB통계 - 주택가격동향조사 - 시장동향/설문조사</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>메뉴코드</strong> (<em>str</em>) – 메뉴코드
+01: 매수우위지수
+02: 매매거래활발지수
+03: 전세수급지수
+04: 전세거래활발지수
+05: 매매가격전망지수
+06: 전세가격전망지수</p></li>
+<li><p><strong>월간주간구분코드</strong> (<em>str</em>) – 월간주간구분코드
+01: 월간
+02: 주간</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 선택 파라미터
+기간: str</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_median_household_monthly_income">
+<span class="sig-name descname"><span class="pre">get_median_household_monthly_income</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_median_household_monthly_income" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>(비노출) 주택가격동향조사 - 소득연계 - 중위가구월소득금액</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+기간 : str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_median_price">
+<span class="sig-name descname"><span class="pre">get_median_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">매물종별구분</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매매전세코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_median_price" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 중위가격</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>매물종별구분</strong> (<em>str</em>) – 매물종별구분
+01: 아파트
+08: 연립
+09: 단독
+98: 주택종합</p></li>
+<li><p><strong>매매전세코드</strong> (<em>str</em>) – 매매전세코드
+01: 매매
+02: 전세</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_monthly_apartment_wolse_index">
+<span class="sig-name descname"><span class="pre">get_monthly_apartment_wolse_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_monthly_apartment_wolse_index" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>KB통계 - 주택가격동향조사 - 월간 아파트 월세가격지수</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> (<em>dict</em>) – 선택 파라미터</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_pir">
+<span class="sig-name descname"><span class="pre">get_pir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">메뉴코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_pir" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 소득연계 - PIR 및 J-PIR</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>메뉴코드</strong> (<em>str</em>) – 메뉴코드
+01: PIR
+02: J-PIR</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+기간 : str</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_price_index">
+<span class="sig-name descname"><span class="pre">get_price_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">월간주간구분코드</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매물종별구분</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매매전세코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_price_index" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>KB통계 - 주택가격동향조사 - 가격지수</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>월간주간구분코드</strong> (<em>str</em>) – 월간주간구분코드
+01: 월간
+02: 주간</p></li>
+<li><p><strong>매물종별구분</strong> (<em>str</em>) – 매물종별구분
+01: 아파트
+08: 연립
+09: 단독
+98: 주택종합</p></li>
+<li><p><strong>매매전세코드</strong> (<em>str</em>) – 매매전세코드
+01: 매매
+02: 전세</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+지역코드 : str</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_price_index_by_area">
+<span class="sig-name descname"><span class="pre">get_price_index_by_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">월간주간구분코드</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매물종별구분</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">면적별코드</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매매전세코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_price_index_by_area" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>주택가격동향조사 - 면적별 가격지수</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>월간주간구분코드</strong> (<em>str</em>) – 월간주간구분코드
+01: 월간
+02: 주간</p></li>
+<li><p><strong>매물종별구분</strong> (<em>str</em>) – 매물종별구분
+01: 아파트
+08: 연립
+09: 단독
+98: 주택종합</p></li>
+<li><p><strong>면적별코드</strong> (<em>str</em>) – 면적별코드
+01: 전용면적별(구)
+02: 전용면적별</p></li>
+<li><p><strong>매매전세코드</strong> (<em>str</em>) – 매매전세코드
+01: 매매
+02: 전세</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+기간 : str</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.Kbland.get_price_index_change_rate">
+<span class="sig-name descname"><span class="pre">get_price_index_change_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">월간주간구분코드</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매물종별구분</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">매매전세코드</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kbland.get_price_index_change_rate" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>KB통계 - 주택가격동향조사 - 가격지수증감률</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>월간주간구분코드</strong> (<em>str</em>) – 월간주간구분코드
+01: 월간
+02: 주간</p></li>
+<li><p><strong>매물종별구분</strong> (<em>str</em>) – 매물종별구분
+01: 아파트
+08: 연립
+09: 단독
+98: 주택종합</p></li>
+<li><p><strong>매매전세코드</strong> (<em>str</em>) – 매매전세코드
+01: 매매
+02: 전세</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – 그 외 필요한 파라미터
+지역코드 : str</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
