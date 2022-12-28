@@ -19,5 +19,8 @@ from PublicDataReader.PublicDataPortal.kamco import Kamco
 # 국세청 Open API
 from PublicDataReader.PublicDataPortal.nts import Nts
 
+# KB부동산 API
+from PublicDataReader.kbland.kbland import Kbland
+
 # 코드 데이터 조회
 from PublicDataReader.utils.code import code_bdong, get_vworld_data_api_info_by_dataframe, get_vworld_data_api_info_by_dict
