@@ -37,7 +37,7 @@ pip install PublicDataReader --upgrade
 
 ## 사용 방법
 
-### 플랫폼 별 상세 사용 방법
+### Open API 서비스로 제공하는 데이터 조회 방법 (인증키 필요)
 
 - [공공데이터포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal.md)
   - 국토교통부 실거래가 정보 조회 서비스
@@ -52,7 +52,11 @@ pip install PublicDataReader --upgrade
   - 서울시 버스노선별 정류장별 승하차 인원 정보
 - [Vworld 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld.md)
   - Vworld Data API를 이용한 공간정보 조회 방법
-- [KB부동산 데이터허브 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland.md) - **인증키 필요 없음**
+
+
+### 웹에 공개되는 데이터 조회 방법 (인증키 불필요)
+
+- [KB부동산 데이터허브 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland.md)
   - 주택가격동향조사 데이터 조회 방법
 
 
