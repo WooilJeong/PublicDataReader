@@ -897,6 +897,10 @@ class Kbland:
         tmp.columns = columns
         df8 = pd.concat([df7.drop('dataList', axis=1), tmp], axis=1)
         tot = pd.melt(df8, id_vars=['지역코드','지역명','주택분위','소득분위']).rename(columns={'variable':'날짜','value':'PIR'})
+        if n_date_str == 6:
+            tot['날짜'] = pd.to_datetime(tot['날짜'], format='%Y%m')
+        elif n_date_str == 8:
+            tot['날짜'] = pd.to_datetime(tot['날짜'], format='%Y%m%d')
         # 코드 정보 부여
         code_df = pd.DataFrame({
             "구분": [self.PIR메뉴코드[메뉴코드]],
