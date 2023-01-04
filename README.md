@@ -82,6 +82,9 @@ pip install PublicDataReader --upgrade
 - KB부동산
   - [KB부동산 주택가격동향조사 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kbland/)
 
+- 기타
+  - [법정동코드와 행정동코드 조회하기](https://wooiljeong.github.io/python/pdr-code/)
+
 
 ## 참고
 
