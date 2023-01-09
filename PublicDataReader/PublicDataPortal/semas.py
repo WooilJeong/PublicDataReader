@@ -26,6 +26,7 @@ import pandas as pd
 import datetime
 import logging
 import requests
+import urllib.parse
 from bs4 import BeautifulSoup
 
 
