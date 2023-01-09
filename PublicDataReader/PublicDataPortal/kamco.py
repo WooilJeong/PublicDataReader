@@ -115,7 +115,7 @@ class Kamco:
 
         # 요청
         try:
-            response = requests.get(url, params=params)
+            response = requests.get(url, params=params, verify=False)
         except:
             print("API 요청 오류")
             return None

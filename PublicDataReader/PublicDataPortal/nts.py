@@ -39,7 +39,7 @@ class Nts:
             "businesses": businesses,
         }
         try:
-            response = requests.post(url, params=params, json=json_data)
+            response = requests.post(url, params=params, json=json_data, verify=False)
             df = pd.json_normalize(response.json()['data'])
         except Exception as e:
             print("Error")
@@ -69,7 +69,7 @@ class Nts:
             "b_no": b_no,
         }
         try:
-            response = requests.post(url, params=params, json=data)
+            response = requests.post(url, params=params, json=data, verify=False)
             df = pd.DataFrame(response.json()['data'])
         except Exception as e:
             print("Error")
