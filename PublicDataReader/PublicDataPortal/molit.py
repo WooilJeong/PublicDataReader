@@ -33,12 +33,117 @@ import pandas as pd
 import datetime
 import logging
 import requests
+import xmltodict
+import urllib.parse
 from bs4 import BeautifulSoup
 
 
+class TransactionPrice:
+    """
+    부동산 실거래가
+    """
+
+    def __init__(self, serviceKey=None):
+        self.serviceKey = serviceKey
+        self.meta_dict = {
+            "아파트": {
+                "매매": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev",
+                "전월세": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent",
+            },
+            "오피스텔": {
+                "매매": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiTrade",
+                "전월세": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiRent",
+            },
+            "단독다가구": {
+                "매매": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHTrade",
+                "전월세": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHRent",
+            },
+            "연립다세대": {
+                "매매": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHTrade",
+                "전월세": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHRent",
+            },
+            "상업업무용": {
+                "매매": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade",
+            },
+            "토지": {
+                "매매": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade",
+            },
+            "분양입주권": {
+                "매매": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSilvTrade",
+            },
+            "공장창고등": {
+                "매매": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcInduTrade",
+            },
+        }
+
+    def get_data(self, product_name, trade_type, sigungu_code, year_month=None, start_year_month=None, end_year_month=None, **kwargs):
+
+        # 부동산 이름과 거래 유형으로 API URL 선택 (ex. 아파트, 매매)
+        url = self.meta_dict.get(product_name).get(trade_type)
+
+        # 서비스키, 행수, 시군구코드 설정
+        params = {
+            "serviceKey": urllib.parse.unquote(self.serviceKey),
+            "numOfRows": "99999",
+            "LAWD_CD": sigungu_code,
+        }
+
+        # 선택 파라미터 추가 설정
+        params.update(kwargs)
+
+        # 기간으로 조회
+        if start_year_month and end_year_month:
+            start_date = datetime.datetime.strptime(
+                str(start_year_month), "%Y%m")
+            start_date = datetime.datetime.strftime(start_date, "%Y-%m")
+            end_date = datetime.datetime.strptime(str(end_year_month), "%Y%m")
+            end_date = end_date + datetime.timedelta(days=31)
+            end_date = datetime.datetime.strftime(end_date, "%Y-%m")
+            ts = pd.date_range(start=start_date, end=end_date, freq="m")
+            date_list = list(ts.strftime("%Y%m"))
+            df_list = []
+            for year_month in date_list:
+                params['DEAL_YMD'] = year_month
+                res = requests.get(url, params=params, verify=False)
+                data = xmltodict.parse(res.text)[
+                    'response']['body']['items']['item']
+                if type(data) == list:
+                    df = pd.DataFrame(data)
+                elif type(data) == dict:
+                    df = pd.DataFrame([data])
+                df_list.append(df)
+            df = pd.concat(df_list, ignore_index=True)
+
+        # 특정 년월로 조회
+        else:
+            params['DEAL_YMD'] = year_month
+            res = requests.get(url, params=params, verify=False)
+            data = xmltodict.parse(res.text)[
+                'response']['body']['items']['item']
+            if type(data) == list:
+                df = pd.DataFrame(data)
+            elif type(data) == dict:
+                df = pd.DataFrame([data])
+        return df
+
+
+class BuildingLedger:
+    """
+    건축물대장 정보
+    """
+
+    def __init__(self, serviceKey=None):
+        self.serviceKey = serviceKey
+
+    def get_data(self, **params):
+        return
+
+
+# (Deprecated Class)
+
 class Transaction:
     """
-    부동산 실거래가 조회 클래스
+    (Deprecated) 부동산 실거래가 조회 클래스
 
     공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
 
@@ -276,7 +381,7 @@ class Transaction:
 
 class Building:
     """
-    건축물대장정보 서비스
+    (Deprecated) 건축물대장정보 서비스
 
     공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.
 

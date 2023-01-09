@@ -10,7 +10,7 @@ class Kamco:
     """
 
     def __init__(self, serviceKey):
-        
+
         # 전역 변수
         self.serviceKey = serviceKey
         self.numOfRows = 99999
@@ -19,7 +19,7 @@ class Kamco:
 
         # 서비스, 기능 딕셔너리
         self.meta_dict = {
-            
+
             "온비드코드": {
                 "서비스": "OnbidCodeInfoInquireSvc",
                 "기능": {
@@ -32,7 +32,7 @@ class Kamco:
                     "상세주소": "getOnbidDtlAddrInfo",
                 }
             },
-            
+
             "캠코공매물건": {
                 "서비스": "KamcoPblsalThingInquireSvc",
                 "기능": {
@@ -57,7 +57,7 @@ class Kamco:
                 }
             },
 
-            
+
             "정부재산정보공개": {
                 "서비스": "GovernmentPropertyInfoSvc",
                 "기능": {
@@ -67,8 +67,8 @@ class Kamco:
                     "캠코관리재산정보공개정보상세": "getKamcoPropertyDetail",
                 }
             },
-            
-            
+
+
             "물건정보": {
                 "서비스": "ThingInfoInquireSvc",
                 "기능": {
@@ -93,10 +93,10 @@ class Kamco:
         }
 
     def get_data(self, service, function, **kwargs):
-        
+
         try:
-            service = service.replace(" ","")
-            function = function.replace(" ","")
+            service = service.replace(" ", "")
+            function = function.replace(" ", "")
             _service = self.meta_dict[service]['서비스']
             _function = self.meta_dict[service]['기능'][function]
             url = f"{self.endpoint}/{_service}/{_function}"
@@ -118,13 +118,13 @@ class Kamco:
         except:
             print("API 요청 오류")
             return None
-        
+
         try:
             data = xmltodict.parse(response.text)
         except:
             print("XML-Dictionary 변환 오류")
             return None
-        
+
         try:
             body = data['response']['body']
         except:
@@ -133,34 +133,34 @@ class Kamco:
 
         # 데이터프레임으로 변환
         try:
-            
+
             # 바디에 items 키 값이 존재하는 경우
             if body.get("items") is not None:
-                
+
                 if body['items'].get("bidDateInfoItem"):
                     if type(body['items'].get("bidDateInfoItem")) == dict:
                         df = pd.DataFrame([body['items']['bidDateInfoItem']])
                     else:
                         df = pd.DataFrame(body['items']['bidDateInfoItem'])
-                
+
                 elif body['items'].get("estimationInfo"):
                     if type(body['items'].get("estimationInfo")) == dict:
                         df = pd.DataFrame([body['items']['estimationInfo']])
                     else:
                         df = pd.DataFrame(body['items']['estimationInfo'])
-     
+
                 elif body['items'].get("registered"):
                     if type(body['items'].get("registered")) == dict:
                         df = pd.DataFrame([body['items']['registered']])
                     else:
                         df = pd.DataFrame(body['items']['registered'])
-                
+
                 elif body['items'].get("bidInfo"):
                     if type(body['items'].get("bidInfo")) == dict:
                         df = pd.DataFrame([body['items']['bidInfo']])
                     else:
                         df = pd.DataFrame(body['items']['bidInfo'])
-                
+
                 elif body['items'].get("bidHistoryInfo"):
                     if type(body['items'].get("bidHistoryInfo")) == dict:
                         df = pd.DataFrame([body['items']['bidHistoryInfo']])
@@ -178,26 +178,26 @@ class Kamco:
                         df = pd.DataFrame([body['items']['corporatebodyInfo']])
                     else:
                         df = pd.DataFrame(body['items']['corporatebodyInfo'])
-            
+
                 elif body['items'].get("rentalInfo"):
                     if type(body['items'].get("rentalInfo")) == dict:
                         df = pd.DataFrame([body['items']['rentalInfo']])
                     else:
                         df = pd.DataFrame(body['items']['rentalInfo'])
-            
+
                 else:
-                    if type(body['items']['item'])==dict:
+                    if type(body['items']['item']) == dict:
                         df = pd.DataFrame([body['items']['item']])
                     else:
                         df = pd.DataFrame(body['items']['item'])
-            
+
             # 바디에 items 키 값이 존재하지 않는 경우
             else:
-                
+
                 # items 대신 item 키 값이 존재하는 경우
                 if body.get("item"):
                     df = pd.DataFrame([body['item']])
-                
+
                 # items와 item 모두 키 값이 존재하지 않는 경우
                 else:
                     print("데이터가 없습니다.")
