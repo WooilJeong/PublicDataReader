@@ -26,6 +26,7 @@ import pandas as pd
 import datetime
 import logging
 import requests
+import urllib.parse
 from bs4 import BeautifulSoup
 
 
@@ -41,7 +42,7 @@ class StoreInfo:
         debug: True이면 모든 로깅 메시지 출력, False이면 에러 로깅 메시지만 출력
     """
 
-    def __init__(self, serviceKey, debug=False):
+    def __init__(self, serviceKey=None, debug=False):
         # 로거 설정
         self.logger = logging.getLogger("root")
         # 로깅 레벨 설정

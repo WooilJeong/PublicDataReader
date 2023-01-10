@@ -4,9 +4,10 @@ Vworld 데이터 API Python Module
 import requests
 from ..utils.code import get_vworld_data_api_info_by_dict
 
+
 class VworldData:
     """Vworld 데이터 API 클래스
-    
+
     Vworld에서 발급받은 API 서비스 인증키를 입력받아 초기화합니다.
 
     Parameters
@@ -41,16 +42,19 @@ class VworldData:
             kwargs["page"] = 1
             kwargs["size"] = 1000
             if kwargs.get("serviceName"):
-                kwargs["data"] = get_vworld_data_api_info_by_dict()[kwargs["serviceName"]]
+                kwargs["data"] = get_vworld_data_api_info_by_dict()[
+                    kwargs["serviceName"]]
         except:
             print("Incorrect Value!")
             return None
         featureCollection = {"type": "FeatureCollection", "features": []}
         try:
             while True:
-                res = requests.get(self.url, params=kwargs).json()
+                res = requests.get(self.url, params=kwargs,
+                                   verify=False).json()
                 kwargs["page"] = int(kwargs["page"]) + 1
-                featureCollection["features"].extend(res["response"]["result"]["featureCollection"]["features"])
+                featureCollection["features"].extend(
+                    res["response"]["result"]["featureCollection"]["features"])
                 if res['response']['page']['current'] == res['response']['page']['total']:
                     break
         except:

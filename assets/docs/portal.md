@@ -33,40 +33,31 @@ PublicDataReader를 통해 공공데이터포털에서 제공하는 Open API 서
 </div>
 
 ```python
-# 1. 라이브러리 임포트하기
-import PublicDataReader as pdr
-print(pdr.__version__)
+# 부동산 실거래가 조회 클래스 임포트하기
+from PublicDataReader import TransactionPrice
 
-# 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
-serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
+# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
+service_key = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 국토교통부 실거래가 정보 조회 OpenAPI 세션 정의하기
-# debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
-API = pdr.Transaction(serviceKey, debug=True)
+# 국토교통부 실거래가 정보 조회 API 인스턴스 정의하기
+api = TransactionPrice(service_key)
 
-# 4. 지역코드(시군구코드) 검색하기
-sigunguName = "분당구"                                  # 시군구코드: 41135
-code = pdr.code_bdong()
-code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
-         (code['읍면동명'].isna())]
+# 특정 년월 자료만 조회하기
+df = api.get_data(
+    property_type="아파트",
+    trade_type="매매",
+    sigungu_code="41135",
+    year_month="202212",
+    )
 
-# 5. 지역, 월 별 데이터 프레임 만들기
-prod = "아파트"                                           # 부동산 상품 종류 (ex. 아파트, 오피스텔, 단독다가구 등)
-trans = "매매"                                            # 부동산 거래 유형 (ex. 매매, 전월세)
-sigunguCode = "41135"
-yearMonth = "202101"
-
-df = API.read_data(prod, trans, sigunguCode, yearMonth)
-
-
-# 6. 지역, 기간 별 데이터 프레임 만들기
-prod = "아파트"                                           # 부동산 상품 종류 (ex. 아파트, 오피스텔, 단독다가구 등)
-trans = "매매"                                            # 부동산 거래 유형 (ex. 매매, 전월세)
-sigunguCode = "41135"
-startYearMonth = "202101"
-endYearMonth = "202111"
-
-df = API.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
+# 특정 기간 자료 조회하기
+df = api.get_data(
+    property_type="아파트",
+    trade_type="매매",
+    sigungu_code="41135",
+    start_year_month="202212",
+    end_year_month="202301",
+    )
 ```
 
 
@@ -92,31 +83,23 @@ df = API.collect_data(prod, trans, sigunguCode, startYearMonth, endYearMonth)
 </div>
 
 ```python
-# 1. 라이브러리 임포트 및 버전 확인하기
-import PublicDataReader as pdr
-print(pdr.__version__)
+# 건축물대장정보 조회 클래스 임포트하기
+from PublicDataReader import BuildingLedger
 
-# 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
-serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
+# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
+service_key = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 국토교통부 건축물대장정보 서비스 OpenAPI 세션 정의하기
-# debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
-bd = pdr.Building(serviceKey, debug=True)
+# 국토교통부 건축물대장정보 조회 API 인스턴스 만들기
+api = BuildingLedger(service_key)
 
-# 4. 지역코드(시군구코드) 검색하기
-sigunguName = "분당구"                                  # 시군구코드: 41135
-code = pdr.code_bdong()
-code.loc[(code['시군구명'].str.contains(sigunguName, na=False)) &
-         (code['읍면동명'].isna())]
-
-# 5. 건축물대장정보 오퍼레이션별 데이터 조회
-category = "기본개요"                                   # 건축물대장 종류 (ex. 표제부, 총괄표제부, 전유부 등)
-sigunguCd = "41135"                                     # 시군구코드(5)
-bjdongCd = "11000"                                      # 읍면동코드(5)
-bun = "0541"                                            # 본번(4)
-ji = "0000"                                             # 부번(4)
-
-df = bd.read_data(category=category, sigunguCd=sigunguCd, bjdongCd=bjdongCd, bun=bun, ji=ji)
+# 건축물대장정보 조회하기
+df = api.get_data(
+    ledger_type="표제부", 
+    sigungu_code="41135", 
+    bdong_code="11000", 
+    bun="540", 
+    ji="",
+    )
 ```
 
 
@@ -324,8 +307,8 @@ df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd, indsMclsCd=
 import PublicDataReader as pdr
 print(pdr.__version__)
 
-# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기 (디코딩키로 입력)
-serviceKey = "공공 데이터 포털에서 발급받은 서비스 키(디코딩 키)"
+# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
+serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # OpenAPI 인스턴스 생성
 API = pdr.Kamco(serviceKey)
@@ -361,8 +344,8 @@ df.head()
 import PublicDataReader as pdr
 print(pdr.__version__)
 
-# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기 (디코딩키로 입력)
-serviceKey = "공공 데이터 포털에서 발급받은 서비스 키(디코딩 키)"
+# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
+serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # OpenAPI 인스턴스 생성
 API = pdr.Nts(serviceKey)
@@ -405,8 +388,8 @@ df = API.validate(businesses)
 import PublicDataReader as pdr
 print(pdr.__version__)
 
-# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기 (디코딩키로 입력)
-serviceKey = "공공 데이터 포털에서 발급받은 서비스 키(디코딩 키)"
+# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
+serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # OpenAPI 인스턴스 생성
 API = pdr.Nts(serviceKey)

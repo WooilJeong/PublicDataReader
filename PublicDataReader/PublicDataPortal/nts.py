@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import urllib.parse
 
 
 class Nts:
@@ -7,8 +8,8 @@ class Nts:
     NTS Open API 클래스
     """
 
-    def __init__(self, serviceKey=None):
-        self.serviceKey = serviceKey
+    def __init__(self, service_key=None):
+        self.serviceKey = service_key
         self.url_dict = {
             "진위확인": "https://api.odcloud.kr/api/nts-businessman/v1/validate",
             "상태조회": "https://api.odcloud.kr/api/nts-businessman/v1/status",
@@ -30,7 +31,7 @@ class Nts:
         """
         url = self.url_dict["진위확인"]
         params = {
-            "serviceKey": self.serviceKey,
+            "serviceKey": urllib.parse.unquote(self.serviceKey),
         }
         if type(businesses) == pd.DataFrame:
             businesses = businesses.to_dict("records")
@@ -38,7 +39,7 @@ class Nts:
             "businesses": businesses,
         }
         try:
-            response = requests.post(url, params=params, json=json_data)
+            response = requests.post(url, params=params, json=json_data, verify=False)
             df = pd.json_normalize(response.json()['data'])
         except Exception as e:
             print("Error")
@@ -62,13 +63,13 @@ class Nts:
         """
         url = self.url_dict["상태조회"]
         params = {
-            "serviceKey": self.serviceKey,
+            "serviceKey": urllib.parse.unquote(self.serviceKey),
         }
         data = {
             "b_no": b_no,
         }
         try:
-            response = requests.post(url, params=params, json=data)
+            response = requests.post(url, params=params, json=data, verify=False)
             df = pd.DataFrame(response.json()['data'])
         except Exception as e:
             print("Error")
