@@ -2,7 +2,7 @@
 소상공인 진흥공단 OpenAPI
 semas(Small Enterprise And Market Service)
 
-1. StoreInfo 클래스: 소상공인 상가업소 정보 조회
+1. StoreInfo 클래스: 소상공인시장진흥공단_상가(상권)정보_API
     01.지정 상권조회
     02.반경내 상권조회
     03.사각형내 상권조회
@@ -21,13 +21,220 @@ semas(Small Enterprise And Market Service)
     16.상권정보 업종 중분류 조회
     17.상권정보 업종 소분류 조회
 """
-
 import pandas as pd
-import datetime
 import logging
 import requests
+import xmltodict
 import urllib.parse
 from bs4 import BeautifulSoup
+
+
+class SmallShop:
+
+    def __init__(self, service_key=None):
+
+        self.serviceKey = service_key
+        self.meta_dict = {
+            "지정상권": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneOne",
+                "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
+            },
+            "반경상권": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneInRadius",
+                "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
+            },
+            "사각형상권": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneInRectangle",
+                "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
+            },
+            "행정구역상권": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneInAdmi",
+                "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
+            },
+            "단일상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeOne",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "건물상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInBuilding",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "지번상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInPnu",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "행정동상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInDong",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "상권상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInArea",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "반경상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInRadius",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "사각형상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInRectangle",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "다각형상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInPolygon",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "업종별상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInUpjong",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "수정일자상가": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListByDate",
+                "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
+            },
+            "업종대분류": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/largeUpjongList",
+                "columns": ["indsLclsCd", "indsLclsNm", "stdrDt"],
+            },
+            "업종중분류": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/middleUpjongList",
+                "columns": ["indsLclsCd", "indsLclsNm", "indsMclsCd", "indsMclsNm", "stdrDt"],
+            },
+            "업종소분류": {
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/smallUpjongList",
+                "columns": ['indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'stdrDt'],
+            },
+        }
+
+    def get_data(self,
+                 service_name,
+                 key=None,
+                 divId=None,
+                 radius=None,
+                 cx=None,
+                 cy=None,
+                 minx=None,
+                 miny=None,
+                 maxx=None,
+                 maxy=None,
+                 translate=True,
+                 verbose=False,
+                 **kwargs
+                 ):
+        try:
+            # 서비스명으로 API URL 선택 (ex. 지정상권, 반경상권, 사각형상권 등)
+            url = self.meta_dict.get(service_name).get("url")
+            # 서비스명으로 API 컬럼 선택 (ex. 지정상권, 반경상권, 사각형상권 등)
+            columns = self.meta_dict.get(service_name).get("columns")
+        except AttributeError:
+            raise AttributeError("서비스명을 확인해주세요.")
+        # 서비스키, 행수, 시군구코드, 법정동코드 설정
+        params = {
+            "serviceKey": urllib.parse.unquote(self.serviceKey),
+            "pageNo": 1,
+            "numOfRows": 99999,
+            "key": key,
+            "divId": divId,
+            "radius": radius,
+            "cx": cx,
+            "cy": cy,
+            "minx": minx,
+            "miny": miny,
+            "maxx": maxx,
+            "maxy": maxy,
+        }
+        # 선택 파라미터 추가 설정
+        params.update(kwargs)
+        # 빈 데이터 프레임 생성
+        df = pd.DataFrame(columns=columns)
+        # API 요청
+        res = requests.get(url, params=params, verify=False)
+        # 요청 결과 JSON 변환
+        res_json = xmltodict.parse(res.text)
+        # 응답 키 존재 확인
+        if not res_json.get("response"):
+            if verbose:
+                print(res_json)
+            raise Exception("API 요청이 실패했습니다.")
+        # 결과코드가 정상이 아닌 경우
+        if res_json['response']['header']['resultCode'] != '00':
+            if res_json['response']['header']['resultCode'] == '03':
+                if verbose:
+                    print("조회 결과가 없습니다.")
+                return pd.DataFrame(columns=columns)
+            else:
+                error_message = res_json['response']['header']['resultMsg']
+                raise Exception(error_message)
+        items = res_json['response']['body']['items']
+        if not items:
+            return pd.DataFrame(columns=columns)
+        data = items['item']
+        if isinstance(data, list):
+            sub = pd.DataFrame(data)
+        elif isinstance(data, dict):
+            sub = pd.DataFrame([data])
+        df = pd.concat([df, sub], axis=0, ignore_index=True)
+        if len(df) >= 99999:
+            print("행수가 99999개를 초과했습니다. 다음 페이지를 조회하세요.")
+        # 컬럼명 한글로 변경
+        if translate:
+            df = self.translate_columns(df)
+        return df
+
+    def translate_columns(self, df):
+        """
+        영문 컬럼명을 한글로 변경
+        """
+        rename_columns = {
+            'adongCd': '행정동코드',
+            'adongNm': '행정동명',
+            'bizesId': '상가업소번호',
+            'bizesNm': '상호명',
+            'bldMngNo': '건물관리번호',
+            'bldMnno': '건물본번지',
+            'bldNm': '건물명',
+            'bldSlno': '건물부번지',
+            'brchNm': '지점명',
+            'coordNum': '좌표개수',
+            'coords': '좌표값',
+            'ctprvnCd': '시도코드',
+            'ctprvnNm': '시도명',
+            'dongNo': '동정보',
+            'flrNo': '층정보',
+            'hoNo': '호정보',
+            'indsLclsCd': '상권업종대분류코드',
+            'indsLclsNm': '상권업종대분류명',
+            'indsMclsCd': '상권업종중분류코드',
+            'indsMclsNm': '상권업종중분류명',
+            'indsSclsCd': '상권업종소분류코드',
+            'indsSclsNm': '상권업종소분류명',
+            'ksicCd': '표준산업분류코드',
+            'ksicNm': '표준산업분류명',
+            'lat': '위도',
+            'ldongCd': '법정동코드',
+            'ldongNm': '법정동명',
+            'lnoAdr': '지번주소',
+            'lnoCd': 'PNU코드',
+            'lnoMnno': '지번본번지',
+            'lnoSlno': '지번부번지',
+            'lon': '경도',
+            'mainTrarNm': '상권명',
+            'newZipcd': '신우편번호',
+            'oldZipcd': '구우편번호',
+            'plotSctCd': '대지구분코드',
+            'plotSctNm': '대지구분명',
+            'rdnm': '도로명',
+            'rdnmAdr': '도로명주소',
+            'rdnmCd': '도로명코드',
+            'signguCd': '시군구코드',
+            'signguNm': '시군구명',
+            'stdrDt': '데이터기준일자',
+            'trarArea': '면적',
+            'trarNo': '상권번호'
+        }
+        return df.rename(columns=rename_columns)
+
+
+# (Deprecated Class)
 
 
 class StoreInfo:
