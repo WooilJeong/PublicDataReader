@@ -137,7 +137,7 @@ class TransactionPrice:
         Parameters
         ----------
         property_type : str
-            부동산 이름 (ex. 아파트, 오피스텔, 단독/다가구, 연립다세대, 토지, 분양입주권, 공장창고등)
+            부동산 이름 (ex. 아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 분양입주권, 공장창고등)
         trade_type : str
             거래 유형 (ex. 매매, 전월세)
         sigungu_code : str
