@@ -122,7 +122,15 @@ class TransactionPrice:
         self.float_columns = ['전용면적', '대지권면적',
                               '대지면적', '연면적', '계약면적', '건물면적', '거래면적']
 
-    def get_data(self, property_type, trade_type, sigungu_code, year_month=None, start_year_month=None, end_year_month=None, verbose=False, **kwargs):
+    def get_data(self,
+                 property_type,
+                 trade_type,
+                 sigungu_code,
+                 year_month=None,
+                 start_year_month=None,
+                 end_year_month=None,
+                 verbose=False,
+                 **kwargs):
         """
         부동산 실거래가 조회
 
@@ -287,7 +295,16 @@ class BuildingLedger:
             },
         }
 
-    def get_data(self, ledger_type, sigungu_code, bdong_code, bun=None, ji=None, translate=True, verbose=False, wait_time=30, **kwargs):
+    def get_data(self,
+                 ledger_type,
+                 sigungu_code,
+                 bdong_code,
+                 bun=None,
+                 ji=None,
+                 translate=True,
+                 verbose=False,
+                 wait_time=30,
+                 **kwargs):
         """
         건축물대장 정보 조회
 

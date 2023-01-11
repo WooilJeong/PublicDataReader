@@ -36,7 +36,7 @@ PublicDataReader를 통해 공공데이터포털에서 제공하는 Open API 서
 # 부동산 실거래가 조회 클래스 임포트하기
 from PublicDataReader import TransactionPrice
 
-# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
+# 공공 데이터 포털 오픈 API 서비스 인증키 입력하기
 service_key = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # 국토교통부 실거래가 조회 API 인스턴스 정의하기
@@ -86,7 +86,7 @@ df = api.get_data(
 # 건축물대장정보 조회 클래스 임포트하기
 from PublicDataReader import BuildingLedger
 
-# 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
+# 공공 데이터 포털 오픈 API 서비스 인증키 입력하기
 service_key = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # 국토교통부 건축물대장정보 조회 API 인스턴스 만들기
@@ -134,157 +134,138 @@ df = api.get_data(
 </div>
 
 ```python
-# 1. 라이브러리 임포트 및 버전 확인하기
-import PublicDataReader as pdr
-print(pdr.__version__)
+# 상가업소 정보 조회 클래스 임포트하기
+from PublicDataReader import SmallShop
 
-# 2. 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
-serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
+# 공공 데이터 포털 오픈 API 서비스 인증키 입력하기
+service_key = "공공 데이터 포털에서 발급받은 서비스 키"
 
-# 3. 소상공인 상가업소 정보 조회 OpenAPI 인스턴스 생성하기
-# debug: True이면 모든 메시지 출력, False이면 오류 메시지만 출력 (기본값: False)
-si = pdr.StoreInfo(serviceKey, debug=True)
+# 데이터 조회 API 인스턴스 만들기
+api = SmallShop(service_key)
 
-# 4. 데이터프레임으로 자료 조회하기
+# 서비스 별 데이터 조회하기
 
-# 4-1. 지정상권
-category = "지정상권"
+## 지정 상권조회
+df = api.get_data(
+    service_name = "지정상권",
+    key = "9301",
+)
 
-key = "9174"
+## 반경내 상권조회
+df = api.get_data(
+    service_name = "반경상권",
+    cx = 127.042325940821,
+    cy = 37.5272105674053,
+    radius = 500,
+)
 
-df = si.read_data(category=category, key=key)
+## 사각형내 상권조회
+df = api.get_data(
+    service_name = "사각형상권",
+    minx = 127.0327683531071,
+    miny = 37.495967935149146,
+    maxx = 127.04268179746694,
+    maxy = 37.502402894207286
+)
 
-# 4-2. 반경상권
-category = "반경상권"
+## 행정구역 단위 상권조회
+df = api.get_data(
+    service_name = "행정구역상권",
+    divId = 'adongCd',
+    key = '1168058000'
+)
 
-radius = 500
-cx = 127.03641615737838
-cy = 37.50059843782878
+## 단일 상가업소 조회
+df = api.get_data(
+    service_name = "단일상가",
+    divId = 'adongCd',
+    key = '11757465'
+)
 
-df = si.read_data(category=category, radius=radius, cx=cx, cy=cy)
+## 건물단위 상가업소 조회
+df = api.get_data(
+    service_name = "건물상가",
+    key = '1168011000104940000004966'
+)
 
-# 4-3. 사각형상권
-category = "사각형상권"
+## 지번단위 상가업소 조회
+df = api.get_data(
+    service_name = "지번상가",
+    key = '1165010100108120002'
+)
 
-minx = 127.0327683531071
-miny = 37.495967935149146
-maxx = 127.04268179746694
-maxy = 37.502402894207286
+## 행정동 단위 상가업소 조회
+df = api.get_data(
+    service_name = "행정동상가",
+    divId = 'adongCd',
+    key = '1168064000',
+    indsLclsCd = 'Q'
+)
 
-df = si.read_data(category=category, minx=minx, miny=miny, maxx=maxx, maxy=maxy)
+## 상권내 상가업소 조회
+df = api.get_data(
+    service_name = "상권상가",
+    key = '9368',
+    indsLclsCd = 'Q'
+)
 
-# 4-4. 행정구역상권
-category = "행정구역상권"
+## 반경내 상가업소 조회
+df = api.get_data(
+    service_name = "반경상가",
+    radius = '500',
+    cx = 127.03641615737838,
+    cy = 37.50059843782878,
+    indsLclsCd = 'Q'
+)
 
-divId = 'adongCd'
-key = '1168058000'
+## 사각형내 상가업소 조회
+df = api.get_data(
+    service_name = "사각형상가",
+    minx = 127.0327683531071,
+    miny = 37.495967935149146,
+    maxx = 127.04268179746694,
+    maxy = 37.502402894207286,
+    indsLclsCd = 'Q'
+)
 
-df = si.read_data(category=category,divId=divId, key=key)
+## 다각형내 상가업소 조회
+df = api.get_data(
+    service_name = "다각형상가",
+    key = 'POLYGON((127.02355609555755 37.504264372557095, 127.02496157306963 37.50590702991155, 127.0270858825753 37.50486867039889, 127.02628121988377 37.503489842823114))',
+    indsLclsCd = 'Q'
+)
 
-# 4-5. 단일상가
-category = "단일상가"
+## 업종별 상가업소 조회
+df = api.get_data(
+    service_name = "업종별상가",
+    divId = 'indsLclsCd',
+    key = 'Q'
+)
 
-key = '11757465'
+## 수정일자기준 상가업소 조회
+df = api.get_data(
+    service_name = "수정일자상가",
+    key = '20200101',
+    indsLclsCd = 'Q'
+)
 
-df = si.read_data(category=category, key=key)
+## 상권정보업종 대분류 조회
+df = api.get_data(
+    service_name = "업종대분류",
+)
 
-# 4-6. 건물상가
-category = "건물상가"
+## 상권정보업종 중분류 조회
+df = api.get_data(
+    service_name = "업종중분류",
+    indsLclsCd = 'Q'
+)
 
-key = '1168011000104940000004966'
-
-df = si.read_data(category=category, key=key)
-
-# 4-7. 지번상가
-category = "지번상가"
-
-key = '1165010100108120002'
-indsLclsCd = 'Q'
-
-df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
-
-# 4-8. 행정동상가
-category = "행정동상가"
-
-divId = 'adongCd'
-key = '1168064000'
-indsLclsCd = 'Q'
-
-df = si.read_data(category=category, divId=divId, key=key, indsLclsCd=indsLclsCd)
-
-# 4-9. 상권상가
-category = "상권상가"
-
-key = '9368'
-indsLclsCd = 'Q'
-
-df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
-
-# 4-10. 반경상가
-category = "반경상가"
-
-radius = '500'
-cx = 127.03641615737838
-cy = 37.50059843782878
-indsLclsCd = 'Q'
-
-df = si.read_data(category=category, radius=radius, cx=cx, cy=cy, indsLclsCd=indsLclsCd)
-
-# 4-11. 사각형상가
-category = "사각형상가"
-
-minx = 127.0327683531071
-miny = 37.495967935149146
-maxx = 127.04268179746694
-maxy = 37.502402894207286
-indsLclsCd = 'Q'
-
-df = si.read_data(category=category, minx=minx, miny=miny, maxx=maxx, maxy=maxy, indsLclsCd=indsLclsCd)
-
-# 4-12. 다각형상가
-category = "다각형상가"
-
-key = 'POLYGON((127.02355609555755 37.504264372557095, 127.02496157306963 37.50590702991155, 127.0270858825753 37.50486867039889, 127.02628121988377 37.503489842823114))'
-indsLclsCd = 'Q'
-
-df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
-
-# 4-13. 업종별상가
-category = "업종별상가"
-
-divId = 'indsLclsCd'
-key = 'Q'
-
-df = si.read_data(category=category, divId=divId, key=key)
-
-# 4-14. 수정일자상가
-category = "수정일자상가"
-
-key = '20200101'
-indsLclsCd = 'Q'
-
-df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
-
-# 4-15. 업종대분류
-category = "업종대분류"
-
-df = si.read_data(category=category, key=key)
-
-# 4-16. 업종중분류
-category = "업종중분류"
-
-indsLclsCd = 'Q'
-
-df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd)
-
-# 4-17. 업종소분류
-category = "업종소분류"
-
-indsLclsCd = 'Q'
-indsMclsCd = 'Q01'
-
-df = si.read_data(category=category, key=key, indsLclsCd=indsLclsCd, indsMclsCd=indsMclsCd)
-
+## 상권정보업종 소분류 조회
+df = api.get_data(
+    service_name = "업종소분류",
+    indsLclsCd = 'Q',
+    indsMclsCd = 'Q01'
+)
 ```
 
 ## 한국자산관리공사 공매물건 조회 서비스
