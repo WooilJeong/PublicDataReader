@@ -72,9 +72,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">PublicDataReader</a></li>
-      <li class="breadcrumb-item active">PublicDataReader package</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">PublicDataReader</a> &raquo;</li>
+      <li>PublicDataReader package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/PublicDataReader.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -134,9 +134,9 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-PublicDataReader" title="이 표제에 대한 퍼머링크"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="PublicDataReader.Building">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Building</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Building" title="이 정의에 대한 퍼머링크"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Building</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Building" title="이 정의에 대한 퍼머링크"></a></dt>
 <dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>건축물대장정보 서비스</p>
+<p>(Deprecated) 건축물대장정보 서비스</p>
 <p>공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.</p>
 <dl class="field-list simple">
 <dt class="field-odd">매개변수</dt>
@@ -158,7 +158,7 @@
 <dd><p>데이터 조회</p>
 <dl class="field-list simple">
 <dt class="field-odd">매개변수</dt>
-<dd class="field-odd"><p><strong>category</strong> (<em>오퍼레이션 종류</em><em> (</em><em>ex. 기본개요</em><em>, </em><em>표제부</em><em>, </em><em>총괄표제부</em><em>, </em><em>전유공용면적 등</em><em>)</em>) – </p>
+<dd class="field-odd"><p><strong>category</strong> (<em>오퍼레이션 종류</em><em> (</em><em>ex. 기본개요</em><em>, </em><em>총괄표제부</em><em>, </em><em>표제부</em><em>, </em><em>층별개요</em><em>, </em><em>부속지번</em><em>, </em><em>전유공용면적</em><em>, </em><em>오수정화시설</em><em>, </em><em>주택가격</em><em>, </em><em>전유부</em><em>, </em><em>지역지구구역</em><em>)</em>) – </p>
 </dd>
 </dl>
 </dd></dl>
@@ -166,8 +166,47 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.BuildingLedger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">BuildingLedger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.BuildingLedger" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>국토교통부 건축물대장 정보 조회 클래스</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>service_key</strong> (<em>str</em>) – 국토교통부 API 서비스키</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.BuildingLedger.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ledger_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigungu_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bdong_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bun</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ji</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.BuildingLedger.get_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>건축물대장 정보 조회</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ledger_type</strong> (<em>str</em>) – 건축물대장 유형 (ex. 기본개요, 총괄표제부, 표제부, 층별개요, 부속지번, 전유공용면적, 오수정화시설, 주택가격, 전유부, 지역지구구역)</p></li>
+<li><p><strong>sigungu_code</strong> (<em>str</em>) – 시군구 코드 (ex. 11110)</p></li>
+<li><p><strong>bdong_code</strong> (<em>str</em>) – 법정동 코드 (ex. 1111051500)</p></li>
+<li><p><strong>bun</strong> (<em>str</em>) – 번 (ex. 200)</p></li>
+<li><p><strong>ji</strong> (<em>str</em>) – 지 (ex. 5)</p></li>
+<li><p><strong>translate</strong> (<em>bool</em>) – 한글 컬럼명으로 변환 여부 (기본값: True)</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – 진행 상황 출력 여부 (기본값: False)</p></li>
+<li><p><strong>wait_time</strong> (<em>int</em>) – API 요청 간의 대기 시간 (초) (기본값: 30초)</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – API 요청에 필요한 추가 인자</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.BuildingLedger.translate_columns">
+<span class="sig-name descname"><span class="pre">translate_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.BuildingLedger.translate_columns" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>영문 컬럼명을 한글로 변경</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="PublicDataReader.Kamco">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Kamco</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kamco" title="이 정의에 대한 퍼머링크"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Kamco</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Kamco" title="이 정의에 대한 퍼머링크"></a></dt>
 <dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>KAMCO Open API 클래스</p>
 <dl class="py method">
@@ -557,7 +596,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="PublicDataReader.Nts">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Nts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Nts" title="이 정의에 대한 퍼머링크"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Nts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Nts" title="이 정의에 대한 퍼머링크"></a></dt>
 <dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>NTS Open API 클래스</p>
 <dl class="py method">
@@ -597,8 +636,25 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.SmallShop">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">SmallShop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.SmallShop" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.SmallShop.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">divId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">miny</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.SmallShop.get_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.SmallShop.translate_columns">
+<span class="sig-name descname"><span class="pre">translate_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.SmallShop.translate_columns" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>영문 컬럼명을 한글로 변경</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="PublicDataReader.StoreInfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">StoreInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.StoreInfo" title="이 정의에 대한 퍼머링크"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">StoreInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.StoreInfo" title="이 정의에 대한 퍼머링크"></a></dt>
 <dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>소상공인 상가업소 정보 조회 클래스</p>
 <p>공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.</p>
@@ -631,9 +687,9 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="PublicDataReader.Transaction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Transaction" title="이 정의에 대한 퍼머링크"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">Transaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serviceKey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.Transaction" title="이 정의에 대한 퍼머링크"></a></dt>
 <dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>부동산 실거래가 조회 클래스</p>
+<p>(Deprecated) 부동산 실거래가 조회 클래스</p>
 <p>공공 데이터 포털에서 발급받은 Service Key를 입력받아 초기화합니다.</p>
 <dl class="field-list simple">
 <dt class="field-odd">매개변수</dt>
@@ -671,6 +727,38 @@
 <li><p><strong>trans</strong> (<em>매매</em><em>, </em><em>전월세</em>) – </p></li>
 <li><p><strong>sigunguCode</strong> (<em>시군구코드</em><em>(</em><em>5자리</em><em>)</em>) – </p></li>
 <li><p><strong>yearMonth</strong> (<em>계약년월</em><em>(</em><em>&quot;YYYYmm&quot;</em><em>)</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="PublicDataReader.TransactionPrice">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">TransactionPrice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.TransactionPrice" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>기반 클래스: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>국토교통부 부동산 실거래가 조회 클래스</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><p><strong>service_key</strong> (<em>str</em>) – 국토교통부 Open API 서비스키</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="PublicDataReader.TransactionPrice.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">property_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trade_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigungu_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">year_month</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_year_month</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_year_month</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.TransactionPrice.get_data" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>부동산 실거래가 조회</p>
+<dl class="field-list simple">
+<dt class="field-odd">매개변수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>property_type</strong> (<em>str</em>) – 부동산 이름 (ex. 아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 분양입주권, 공장창고등)</p></li>
+<li><p><strong>trade_type</strong> (<em>str</em>) – 거래 유형 (ex. 매매, 전월세)</p></li>
+<li><p><strong>sigungu_code</strong> (<em>str</em>) – 시군구코드 (ex. 11110)</p></li>
+<li><p><strong>year_month</strong> (<em>str</em><em>, </em><em>optional</em>) – 조회할 연월 (ex. 201901), by default None</p></li>
+<li><p><strong>start_year_month</strong> (<em>str</em><em>, </em><em>optional</em>) – 조회할 시작 연월 (ex. 201901), by default None</p></li>
+<li><p><strong>end_year_month</strong> (<em>str</em><em>, </em><em>optional</em>) – 조회할 종료 연월 (ex. 201901), by default None</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – 진행 상황 출력 여부, by default False</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – API 요청에 필요한 추가 인자</p></li>
 </ul>
 </dd>
 </dl>
@@ -741,13 +829,25 @@ API 호출에 필요한 파라미터는 Vworld Open API 문서를 참고하세�
 <dl class="py function">
 <dt class="sig sig-object py" id="PublicDataReader.code_bdong">
 <span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">code_bdong</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.code_bdong" title="이 정의에 대한 퍼머링크"></a></dt>
-<dd><p>법정동코드 테이블 반환</p>
+<dd><p>법정동코드(실제주소) 데이터 반환</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PublicDataReader.code_hdong">
+<span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">code_hdong</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.code_hdong" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>행정기관코드(행정동) 데이터 반환</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="PublicDataReader.code_hdong_bdong">
+<span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">code_hdong_bdong</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.code_hdong_bdong" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>행정기관코드 + 관할 법정동코드 데이터 반환</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="PublicDataReader.get_vworld_data_api_info_by_dataframe">
 <span class="sig-prename descclassname"><span class="pre">PublicDataReader.</span></span><span class="sig-name descname"><span class="pre">get_vworld_data_api_info_by_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PublicDataReader.get_vworld_data_api_info_by_dataframe" title="이 정의에 대한 퍼머링크"></a></dt>
-<dd><p>vworld 코드 테이블 반환</p>
+<dd><p>vworld 코드 데이터 반환</p>
 </dd></dl>
 
 <dl class="py function">
