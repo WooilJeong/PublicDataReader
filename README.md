@@ -98,7 +98,8 @@ pip install PublicDataReader --upgrade
 
 - **Google Colab 실습**  
   - [Colab 부동산 실거래가 조회 실습](https://colab.research.google.com/drive/12SGCX4dwQfOwK-nIlG8jUOGSG80xE_o1?pli=1)
-  - [Colab 건축물대장정보 조회 실습](https://colab.research.google.com/drive/1g_vwaqrhyZ_HAifxrKd_AFR_8U29elGW)
+  - [Colab 건축물대장 정보 조회 실습](https://colab.research.google.com/drive/1g_vwaqrhyZ_HAifxrKd_AFR_8U29elGW)
+  - [Colab 소상공인 상가업소 정보 조회 실습](https://colab.research.google.com/drive/1wQZcJZfwfl_5y_NK5vbz__95gRt0xwrb)
 
 - **공식문서**
   - [Docs](https://wooiljeong.github.io/PublicDataReader/)
