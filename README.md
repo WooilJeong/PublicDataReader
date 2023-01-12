@@ -96,8 +96,9 @@ pip install PublicDataReader --upgrade
   - [브이월드(Vworld) 공간정보 오픈플랫폼](https://www.vworld.kr/dev/v4api.do)
 
 
-- **실습코드**  
-  - [Colab에서 PublicDataReader 실행하기](https://colab.research.google.com/drive/1fgT0D_tP-JyglobtDFfYQ6wQXfWWujIV?usp=sharing)  
+- **Google Colab 실습**  
+  - [Colab 부동산 실거래가 조회 실습](https://colab.research.google.com/drive/12SGCX4dwQfOwK-nIlG8jUOGSG80xE_o1?pli=1)
+  - [Colab 건축물대장정보 조회 실습](https://colab.research.google.com/drive/1g_vwaqrhyZ_HAifxrKd_AFR_8U29elGW)
 
 - **공식문서**
   - [Docs](https://wooiljeong.github.io/PublicDataReader/)
