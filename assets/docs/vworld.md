@@ -3,17 +3,10 @@
 ## 라이브러리 임포트하기
 
 ```python
-import PublicDataReader as pdr
-print(pdr.__version__)
-
-# Vworld API 인증키
-apiKey = "사용자 인증키"
-
-# Vworld Data API 인스턴스 생성
-api = pdr.VworldData(apiKey)
+from PublicDataReader import VworldData
+service_key = "서비스 인증키"
+api = VworldData(service_key)
 ```
-
-    1.0.3
     
 <br>
 
@@ -22,12 +15,10 @@ api = pdr.VworldData(apiKey)
 
 
 ```python
-# 서비스 목록
+import PublicDataReader as pdr
 code = pdr.get_vworld_data_api_info_by_dataframe()
 code.head()
 ```
-
-
 
 
 <div>
@@ -80,15 +71,8 @@ code.head()
 
 
 ```python
-# 파라미터
-params = {
-    "serviceName": "연속지적도",
-    "attrFilter": "pnu:like:41135110001",
-}
-
-# 데이터 요청
-geo = api.get_data(**params)
-
+geo = api.get_data("연속지적도", 
+                   attrFilter="pnu:like:41135110001")
 print(f"""
 - 결과 타입: {type(geo)}
 - 키 종류: {geo.keys()}
@@ -109,15 +93,8 @@ print(f"""
 
 
 ```python
-# 파라미터
-params = {
-    "serviceName": "시군구",
-    "attrFilter": "sig_cd:=:41135",
-}
-
-# 데이터 요청
-geo2 = api.get_data(**params)
-
+geo2 = api.get_data("시군구", 
+                   attrFilter="sig_cd:=:41135")
 print(f"""
 - 결과 타입: {type(geo2)}
 - 키 종류: {geo2.keys()}
@@ -137,7 +114,6 @@ print(f"""
 
 ```python
 import folium
-
 lat, lon = 37.3925, 127.112
 
 # Map

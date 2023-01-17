@@ -38,6 +38,8 @@ import xmltodict
 import urllib.parse
 from bs4 import BeautifulSoup
 
+requests.packages.urllib3.disable_warnings()
+
 
 class TransactionPrice:
     """
@@ -50,7 +52,7 @@ class TransactionPrice:
     """
 
     def __init__(self, service_key=None):
-        self.serviceKey = service_key
+        self.service_key = service_key
         self.meta_dict = {
             "아파트": {
                 "매매": {
@@ -165,7 +167,7 @@ class TransactionPrice:
 
         # 서비스키, 행수, 시군구코드 설정
         params = {
-            "serviceKey": urllib.parse.unquote(self.serviceKey),
+            "serviceKey": urllib.parse.unquote(self.service_key),
             "numOfRows": "99999",
             "LAWD_CD": sigungu_code,
         }
@@ -251,7 +253,7 @@ class BuildingLedger:
     """
 
     def __init__(self, service_key=None):
-        self.serviceKey = service_key
+        self.service_key = service_key
         self.meta_dict = {
             "기본개요": {
                 "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrBasisOulnInfo",
@@ -338,7 +340,7 @@ class BuildingLedger:
             raise AttributeError("건축물대장 유형을 확인해주세요.")
         # 서비스키, 행수, 시군구코드, 법정동코드 설정
         params = {
-            "serviceKey": urllib.parse.unquote(self.serviceKey),
+            "serviceKey": urllib.parse.unquote(self.service_key),
             "numOfRows": 99999,
             "sigunguCd": sigungu_code,
             "bjdongCd": bdong_code,

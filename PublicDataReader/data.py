@@ -13,6 +13,8 @@ from PublicDataReader.Seoul.transportation import Transportation
 
 # KOSIS Open API
 from PublicDataReader.kosis.kosis import Kosis
+# (Deprecated)
+from PublicDataReader.kosis.kosis import _Kosis
 
 # Vworld Open API
 from PublicDataReader.vworld.data import VworldData

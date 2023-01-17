@@ -14,6 +14,7 @@ __all__ = [
     "StoreInfo",
     "Transportation",
     "Kosis",
+    "_Kosis",
     "VworldData",
     "Kamco",
     "Nts",

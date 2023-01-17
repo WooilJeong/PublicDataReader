@@ -1,8 +1,9 @@
 import pandas as pd
-import datetime
 import requests
 import xmltodict
 import urllib.parse
+
+requests.packages.urllib3.disable_warnings()
 
 
 class Kamco:
@@ -13,7 +14,7 @@ class Kamco:
     def __init__(self, service_key=None):
 
         # 전역 변수
-        self.serviceKey = service_key
+        self.service_key = service_key
         self.numOfRows = 99999
         self.page = 1
         self.endpoint = "http://openapi.onbid.co.kr/openapi/services"
@@ -107,7 +108,7 @@ class Kamco:
 
         # 기본 파라미터
         params = {
-            "serviceKey": urllib.parse.unquote(self.serviceKey),
+            "serviceKey": urllib.parse.unquote(self.service_key),
             "numOfRows": self.numOfRows,
             "page": self.page,
         }

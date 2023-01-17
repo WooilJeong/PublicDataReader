@@ -1,23 +1,22 @@
 # PublicDataReader - KOSIS 국가통계포털 Open API 사용방법
 
-**PublicDataReader**를 임포트한 후 발급받은 KOSIS 공유서비스 Open API 사용자 인증키를 `apiKey`의 값으로 할당합니다. KOSIS 공유서비스 Open API 신청 방법과 PublicDataReader에서 제공하는 KOSIS 공유서비스 Open API의 모든 기능을 살펴보려면 [Python으로 KOSIS 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis/)를 참고하면 됩니다.
+**PublicDataReader**를 임포트한 후 발급받은 KOSIS 공유서비스 Open API 사용자 인증키를 `service_key`의 값으로 할당합니다. KOSIS 공유서비스 Open API 신청 방법과 PublicDataReader에서 제공하는 KOSIS 공유서비스 Open API의 모든 기능을 살펴보려면 [Python으로 KOSIS 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis/)를 참고하면 됩니다.
 
+<br>
 
 ## 라이브러리 임포트하기
 
 ```python
-import PublicDataReader as pdr
-print(pdr.__version__)
+from PublicDataReader import Kosis
 
 # KOSIS 공유서비스 Open API 사용자 인증키
-apiKey = "사용자 인증키"
+service_key = "사용자 인증키"
+
+# 인스턴스 생성하기
+api = Kosis(service_key)
 ```
 
-    1.0.2
-
-
 <br>
-
 
 ## KOSIS 통합검색
 
@@ -56,16 +55,11 @@ apiKey = "사용자 인증키"
 
 
 ```python
-# KOSIS 공유서비스 Open API 인스턴스 생성
-serviceName = "KOSIS통합검색"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-searchNm = "행정구역(시군구)별, 성별 인구수"
-
-# 데이터 조회
-df = kosis.get_data(searchNm=searchNm)
-df.head(1)
+df1 = api.get_data(
+    "KOSIS통합검색",
+    searchNm="미분양 현황",
+    )
+df1.head(1)
 ```
 
 
@@ -77,47 +71,47 @@ df.head(1)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>ORG_ID</th>
-      <th>ORG_NM</th>
-      <th>TBL_ID</th>
-      <th>TBL_NM</th>
-      <th>STAT_ID</th>
-      <th>STAT_NM</th>
-      <th>VW_CD</th>
-      <th>MT_ATITLE</th>
-      <th>FULL_PATH_ID</th>
-      <th>CONTENTS</th>
-      <th>STRT_PRD_DE</th>
-      <th>END_PRD_DE</th>
-      <th>ITEM03</th>
-      <th>REC_TBL_SE</th>
-      <th>TBL_VIEW_URL</th>
-      <th>LINK_URL</th>
-      <th>STAT_DB_CNT</th>
-      <th>QUERY</th>
+      <th>기관ID</th>
+      <th>기관명</th>
+      <th>통계표ID</th>
+      <th>통계표명</th>
+      <th>조사ID</th>
+      <th>조사명</th>
+      <th>KOSIS목록구분</th>
+      <th>KOSIS통계표위치</th>
+      <th>통계표위치</th>
+      <th>통계표주요내용</th>
+      <th>수록기간시작일</th>
+      <th>수록기간종료일</th>
+      <th>통계표주석</th>
+      <th>추천통계표여부</th>
+      <th>KOSIS목록URL</th>
+      <th>KOSIS통계표URL</th>
+      <th>검색결과건수</th>
+      <th>검색어명</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>101</td>
-      <td>행정안전부</td>
-      <td>DT_1B040A3</td>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>2008001</td>
-      <td>주민등록인구현황</td>
+      <td>116</td>
+      <td>국토교통부</td>
+      <td>DT_MLTM_2086</td>
+      <td>미분양현황_종합</td>
+      <td>1998033</td>
+      <td>미분양주택현황보고</td>
       <td>MT_ZTITLE</td>
-      <td>인구 &gt; 주민등록인구현황</td>
-      <td>A &gt; A_7</td>
-      <td>행정구역(시군구)별 여자인구수 총인구수 남자인구수 전라남도 담양군 여천군 함평군 경...</td>
-      <td>1992</td>
-      <td>2022</td>
-      <td>- 연말기준, 주민등록에 의한 집계, 외국인 제외 - 주민등록법 개정(＇09.10....</td>
-      <td>Y</td>
+      <td>주거 &gt; 미분양주택현황보고</td>
+      <td>I1 &gt; I1_2</td>
+      <td>대분류 구분 부문별미분양현황 시도별미분양현황 규모별미분양현황 세종특별자치시 지방 계...</td>
+      <td>2001</td>
+      <td>2021</td>
+      <td>해당연도 12월말 기준 자료 : 국토교통부 주택토지실 주택정책관 주택정책과</td>
+      <td>N</td>
       <td>https://kosis.kr/statisticsList/statisticsList...</td>
-      <td>http://kosis.kr/statHtml/statHtml.do?orgId=101...</td>
-      <td>176</td>
-      <td>행정구역(시군구)별, 성별 인구수</td>
+      <td>http://kosis.kr/statHtml/statHtml.do?orgId=116...</td>
+      <td>210</td>
+      <td>미분양 현황</td>
     </tr>
   </tbody>
 </table>
@@ -169,19 +163,15 @@ df.head(1)
 | statsEnd | 통계종료 |
 
 
+
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-orgId = "101"
-tblId = "DT_1B040A3"
-metaItm = "ALL"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, metaItm=metaItm)
-df.head(1)
+df2 = api.get_data(
+    "통계설명",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    metaItm = "ALL",
+    )
+df2.head(1)
 ```
 
 
@@ -193,57 +183,57 @@ df.head(1)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>writingTel</th>
-      <th>statsEnd</th>
-      <th>examinObjArea</th>
-      <th>statsPeriod</th>
-      <th>statsField</th>
-      <th>statsNm</th>
-      <th>publictMth</th>
-      <th>statsKind</th>
-      <th>examinHistory</th>
-      <th>josaItm</th>
+      <th>조사명</th>
+      <th>통계종류</th>
+      <th>계속여부</th>
+      <th>법적근거</th>
+      <th>조사목적</th>
+      <th>조사주기</th>
+      <th>조사체계</th>
+      <th>공표범위</th>
+      <th>공표주기</th>
+      <th>연락처</th>
       <th>...</th>
-      <th>josaUnit</th>
-      <th>confmDt</th>
-      <th>writingPurps</th>
-      <th>mainTermExpl</th>
-      <th>applyGroup</th>
-      <th>examinObjrange</th>
-      <th>dataUserNote</th>
-      <th>writingSystem</th>
-      <th>examinTrgetPd</th>
-      <th>dataCollectMth</th>
+      <th>조사단위및조사대상규모</th>
+      <th>적용분류</th>
+      <th>조사항목</th>
+      <th>공표방법및URL</th>
+      <th>조사대상기간및조사기준시점</th>
+      <th>조사기간</th>
+      <th>자료수집방법</th>
+      <th>승인번호</th>
+      <th>승인일자</th>
+      <th>통계종료</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>행정안전부민과 (☎ 044-205-3158)</td>
-      <td>일반통계</td>
-      <td>전국</td>
-      <td>월</td>
-      <td>인구</td>
-      <td>주민등록인구현황</td>
-      <td>전산망(인터넷)미 발 간주민등록 인구통계 홈페이지(https://jumin.mois...</td>
+      <td>미분양주택현황보고</td>
       <td>일반통계 / 보고통계</td>
-      <td>ㅇ 최초작성년도 : 2008년 ㅇ 주요연혁 - 2008년 1월 8일 통계작성 승인-...</td>
-      <td>ㅇ전국 지방자치단체별 주민등록인구 현황 행정기관별, 연령별, 성별, 세대수, 세대원...</td>
+      <td>계속통계</td>
+      <td>주택법</td>
+      <td>매월 전국 및 지역별 미분양 주택현황을 파악하여 주택공급정책의 기초자료로 활용</td>
+      <td>월</td>
+      <td>구·시·군→시·도→국토교통부</td>
+      <td>시군구</td>
+      <td>월</td>
+      <td>국토교통부 주택토지실 주택정책관 주택정책과 (☎ 044-201-3336)</td>
       <td>...</td>
-      <td>ㅇ17개 시도, 시군구, 읍면동별 성별, 연령별 인구 및 세대 현황 주민등록기준 읍...</td>
-      <td>20080108</td>
-      <td>ㅇ“주민등록법”에 의한 주민등록인구 및 세대현황에 대하여 전국단위의 행정기관별(시도...</td>
-      <td>주민등록 세대 : 주거 및 생계를 같이하는 사람의 집단인구증감 : 전월인구 대비 금...</td>
+      <td>기타전국의 미분양 주택 현황</td>
       <td>(주) 해당없음</td>
-      <td>ㅇ 주민등록 인구 : 주민등록법에 의거 주민등록표에 기재된 인구로 거주자, 거주불명...</td>
-      <td>1. 자료내용 : 주민등록(거주자, 거주불명자, 재외국민)이 되어 있는 자의 인구,...</td>
-      <td>시·군·구 주민등록시스템(자치행정과, 정보통신담당관실) → 행정안전부 주민등록전산정...</td>
-      <td>매월 말일</td>
+      <td>∎ 작성항목(2개 부문 6개항목) - 전체 미분양 현황: 지역별(광역시/시군구) 세...</td>
+      <td>전산망(인터넷), 간행물http://stat.molit.go.kr)국토교통통계연보(...</td>
+      <td>1월1일~12월31일(매월말)</td>
+      <td>매월 1일~15일</td>
       <td>행정집계</td>
+      <td>116025</td>
+      <td>19981013</td>
+      <td>일반통계</td>
     </tr>
   </tbody>
 </table>
-<p>1 rows × 25 columns</p>
+<p>1 rows × 22 columns</p>
 </div>
 
 
@@ -270,18 +260,13 @@ df.head(1)
 
 
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "통계표명칭"
-orgId = "101"
-tblId = "DT_1B040A3"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, detailServiceName=detailServiceName)
-df.head()
+df3_1 = api.get_data(
+    "통계표설명",
+    "통계표명칭",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    )
+df3_1.head(1)
 ```
 
 
@@ -293,15 +278,15 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>TBL_NM</th>
-      <th>TBL_NM_ENG</th>
+      <th>통계표명</th>
+      <th>통계표영문명</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>Resident Population by City, County, and District</td>
+      <td>미분양현황_종합</td>
+      <td>Unsold Housings (Total)</td>
     </tr>
   </tbody>
 </table>
@@ -325,18 +310,15 @@ df.head()
 | ORG_NM_ENG | 기관 영문명 |
 
 
+
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "기관명칭"
-orgId = "101"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, detailServiceName=detailServiceName)
-df.head()
+df3_2 = api.get_data(
+    "통계표설명",
+    "기관명칭",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    )
+df3_2.head(1)
 ```
 
 
@@ -348,15 +330,15 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>ORG_NM</th>
-      <th>ORG_NM_ENG</th>
+      <th>기관명</th>
+      <th>기관영문명</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>통계청</td>
-      <td>Statistics Korea</td>
+      <td>국토교통부</td>
+      <td>Ministry of Land, Infrastructure and Transport</td>
     </tr>
   </tbody>
 </table>
@@ -382,19 +364,16 @@ df.head()
 | PRD_DE | 수록시점 |
 
 
+
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "통계표명칭"
-orgId = "101"
-tblId = "DT_1B040A3"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, detailServiceName=detailServiceName)
-df.head()
+df3_3 = api.get_data(
+    "통계표설명",
+    "수록정보",
+    orgId = "101",
+    tblId = "DT_1IN0001",
+    # detail = "Y",
+    )
+df3_3.head(1)
 ```
 
 
@@ -406,20 +385,21 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>TBL_NM</th>
-      <th>TBL_NM_ENG</th>
+      <th>수록주기</th>
+      <th>수록기간시작일</th>
+      <th>수록기간종료일</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>Resident Population by City, County, and District</td>
+      <td>5년</td>
+      <td>1925</td>
+      <td>2010</td>
     </tr>
   </tbody>
 </table>
 </div>
-
 
 
 ### 분류/항목
@@ -448,18 +428,13 @@ df.head()
 
 
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "분류항목"
-orgId = "101"
-tblId = "DT_1B040A3"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, detailServiceName=detailServiceName)
-df
+df3_4 = api.get_data(
+    "통계표설명",
+    "분류항목",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    )
+df3_4.head(1)
 ```
 
 
@@ -471,165 +446,36 @@ df
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>ITM_NM</th>
-      <th>TBL_ID</th>
-      <th>ITM_NM_ENG</th>
-      <th>ITM_ID</th>
-      <th>OBJ_NM</th>
-      <th>OBJ_NM_ENG</th>
-      <th>ORG_ID</th>
-      <th>OBJ_ID</th>
-      <th>OBJ_ID_SN</th>
-      <th>UP_ITM_ID</th>
+      <th>기관ID</th>
+      <th>통계표ID</th>
+      <th>코드ID</th>
+      <th>코드명</th>
+      <th>분류ID</th>
+      <th>분류명</th>
+      <th>분류영문명</th>
+      <th>분류값ID</th>
+      <th>분류값명</th>
+      <th>분류값영문명</th>
+      <th>분류값순번</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>총인구수</td>
-      <td>DT_1B040A3</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
+      <td>116</td>
+      <td>DT_MLTM_2086</td>
+      <td>14999116.12월기준</td>
+      <td>12월기준</td>
+      <td>ITEM</td>
       <td>항목</td>
       <td>Item code list</td>
-      <td>101</td>
-      <td>ITEM</td>
+      <td>13103871014T1</td>
+      <td>미분양(12월기준)</td>
+      <td>Unsold Housings</td>
       <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>남자인구수</td>
-      <td>DT_1B040A3</td>
-      <td>Koreans (Male)</td>
-      <td>T21</td>
-      <td>항목</td>
-      <td>Item code list</td>
-      <td>101</td>
-      <td>ITEM</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>여자인구수</td>
-      <td>DT_1B040A3</td>
-      <td>Koreans (Female)</td>
-      <td>T22</td>
-      <td>항목</td>
-      <td>Item code list</td>
-      <td>101</td>
-      <td>ITEM</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>전국</td>
-      <td>DT_1B040A3</td>
-      <td>Whole country</td>
-      <td>00</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>101</td>
-      <td>A</td>
-      <td>1</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>서울특별시</td>
-      <td>DT_1B040A3</td>
-      <td>Seoul</td>
-      <td>11</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>101</td>
-      <td>A</td>
-      <td>1</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>376</th>
-      <td>제주특별자치도</td>
-      <td>DT_1B040A3</td>
-      <td>Jeju-do</td>
-      <td>50</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>101</td>
-      <td>A</td>
-      <td>1</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>377</th>
-      <td>제주시</td>
-      <td>DT_1B040A3</td>
-      <td>Jeju-si</td>
-      <td>50110</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>101</td>
-      <td>A</td>
-      <td>1</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <th>378</th>
-      <td>서귀포시</td>
-      <td>DT_1B040A3</td>
-      <td>Seogwipo-si</td>
-      <td>50130</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>101</td>
-      <td>A</td>
-      <td>1</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <th>379</th>
-      <td>북제주군</td>
-      <td>DT_1B040A3</td>
-      <td>Bukjeju-gun</td>
-      <td>50910</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>101</td>
-      <td>A</td>
-      <td>1</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <th>380</th>
-      <td>남제주군</td>
-      <td>DT_1B040A3</td>
-      <td>Namjeju-gun</td>
-      <td>50920</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>101</td>
-      <td>A</td>
-      <td>1</td>
-      <td>50</td>
     </tr>
   </tbody>
 </table>
-<p>381 rows × 10 columns</p>
 </div>
 
 
@@ -656,18 +502,13 @@ df
 
 
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "주석"
-orgId = "101"
-tblId = "DT_1B04006"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, detailServiceName=detailServiceName)
-df.head()
+df3_5 = api.get_data(
+    "통계표설명",
+    "주석",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    )
+df3_5.head(1)
 ```
 
 
@@ -679,59 +520,15 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>CMMT_DC</th>
-      <th>CMMT_NM</th>
-      <th>ITM_NM</th>
-      <th>ITM_ID</th>
-      <th>OBJ_NM</th>
-      <th>OBJ_ID</th>
+      <th>주석유형</th>
+      <th>주석</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>* 등록구분의 "전체"는 "거주자", "거주불명자", "재외국민"이 포함된 자료입니다.</td>
       <td>통계표</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>\n  - 거주자: 거주지가 분명한 사람(재외국민 제외)</td>
-      <td>통계표</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>\n  - 거주불명자: 거주사실이 불분명하여 거주불명으로 등록된 사람(2010년 1...</td>
-      <td>통계표</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>\n  - 재외국민: 외국의 영주권을 취득한(영주목적으로 외국거주 포함) 대한민국 ...</td>
-      <td>통계표</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>\n* 주민등록 연령별 인구통계는 주민등록 신고에 따른 것으로 실제 연령과는 차이가...</td>
-      <td>통계표</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>해당연도 12월말 기준</td>
     </tr>
   </tbody>
 </table>
@@ -757,21 +554,38 @@ df.head()
 
 
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "단위"
-orgId = "101"
-tblId = "DT_1B040A3"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, detailServiceName=detailServiceName)
-df
+df3_6 = api.get_data(
+    "통계표설명",
+    "단위",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    )
+df3_6.head(1)
 ```
 
-    데이터가 존재하지 않습니다.
+
+
+
+<div>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>단위명</th>
+      <th>단위영문명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>호</td>
+      <td>Apartment Unit</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
     
 
 ### 출처
@@ -793,18 +607,13 @@ df
 
 
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "출처"
-orgId = "101"
-tblId = "DT_1B040A3"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, detailServiceName=detailServiceName)
-df.head(1)
+df3_7 = api.get_data(
+    "통계표설명",
+    "출처",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    )
+df3_7.head(1)
 ```
 
 
@@ -816,17 +625,17 @@ df.head(1)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>JOSA_NM</th>
-      <th>DEPT_NM</th>
-      <th>DEPT_PHONE</th>
+      <th>조사명</th>
+      <th>통계표담당부서</th>
+      <th>통계표담당부서전화번호</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>「주민등록인구현황」</td>
-      <td>주민과</td>
-      <td>044-205-3158</td>
+      <td>「미분양주택현황보고」</td>
+      <td>국토교통부 주택토지실 주택정책관 주택정책과</td>
+      <td>044-201-3336</td>
     </tr>
   </tbody>
 </table>
@@ -857,18 +666,13 @@ df.head(1)
 
 
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "가중치"
-orgId = "101"
-tblId = "DT_1B040A3"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, detailServiceName=detailServiceName)
-df
+df3_8 = api.get_data(
+    "통계표설명",
+    "가중치",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    )
+df3_8
 ```
 
     데이터가 존재하지 않습니다.
@@ -895,19 +699,15 @@ df
 | SEND_DE | 자료갱신일 |
 
 
+
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계표설명"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-detailServiceName = "자료갱신일"
-orgId = "101"
-tblId = "DT_1B040A3"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, detailServiceName=detailServiceName)
-df.head()
+df3_9 = api.get_data(
+    "통계표설명",
+    "자료갱신일",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    )
+df3_9.head(1)
 ```
 
 
@@ -919,59 +719,25 @@ df.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>ORG_NM</th>
-      <th>TBL_NM</th>
-      <th>PRD_SE</th>
-      <th>PRD_DE</th>
-      <th>SEND_DE</th>
+      <th>기관명</th>
+      <th>통계표명</th>
+      <th>수록주기</th>
+      <th>수록시점</th>
+      <th>자료갱신일</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>통계청</td>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>월</td>
-      <td>201101</td>
-      <td>2022-10-05</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>통계청</td>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>월</td>
-      <td>201102</td>
-      <td>2022-10-05</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>통계청</td>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>월</td>
-      <td>201103</td>
-      <td>2022-10-05</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>통계청</td>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>월</td>
-      <td>201104</td>
-      <td>2022-10-05</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>통계청</td>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>월</td>
-      <td>201105</td>
-      <td>2022-10-05</td>
+      <td>국토교통부</td>
+      <td>미분양현황_종합</td>
+      <td>년</td>
+      <td>2001</td>
+      <td>2022-03-16</td>
     </tr>
   </tbody>
 </table>
 </div>
-
-
 
 <br>
 
@@ -999,17 +765,12 @@ df.head()
 
 
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계목록"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-vwCd = "MT_OTITLE"
-parentListId = "110_20103"
-
-# 데이터 조회
-df = kosis.get_data(vwCd=vwCd, parentListId=parentListId)
-df
+df4 = api.get_data(
+    "통계목록",
+    vwCd = "MT_OTITLE",
+    parentListId = "110_20103",
+    )
+df4.head(1)
 ```
 
 
@@ -1021,77 +782,23 @@ df
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>TBL_NM</th>
-      <th>TBL_ID</th>
-      <th>VW_CD</th>
-      <th>VW_NM</th>
-      <th>ORG_ID</th>
-      <th>REC_TBL_SE</th>
+      <th>서비스뷰ID</th>
+      <th>서비스뷰명</th>
+      <th>기관ID</th>
+      <th>통계표ID</th>
+      <th>통계표명</th>
+      <th>추천통계표여부</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>행정구역(시군구)별 주민등록세대수</td>
+      <td>MT_OTITLE</td>
+      <td>국내통계 기관별</td>
+      <td>101</td>
       <td>DT_1B040B3</td>
-      <td>MT_OTITLE</td>
-      <td>국내통계 기관별</td>
-      <td>101</td>
+      <td>행정구역(시군구)별 주민등록세대수</td>
       <td>Y</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>행정구역(시군구)별, 성별 인구수</td>
-      <td>DT_1B040A3</td>
-      <td>MT_OTITLE</td>
-      <td>국내통계 기관별</td>
-      <td>101</td>
-      <td>Y</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>행정구역(시군구)별/1세별 주민등록인구</td>
-      <td>DT_1B04006</td>
-      <td>MT_OTITLE</td>
-      <td>국내통계 기관별</td>
-      <td>101</td>
-      <td>N</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>행정구역(읍면동)별/5세별 주민등록인구(2011년~)</td>
-      <td>DT_1B04005N</td>
-      <td>MT_OTITLE</td>
-      <td>국내통계 기관별</td>
-      <td>101</td>
-      <td>N</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>행정구역(읍면동)별/5세별 주민등록인구</td>
-      <td>DT_1B04005</td>
-      <td>MT_OTITLE</td>
-      <td>국내통계 기관별</td>
-      <td>101</td>
-      <td>N</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>시군구/성/연령(1세)별 주민등록연앙인구</td>
-      <td>DT_1B040M1</td>
-      <td>MT_OTITLE</td>
-      <td>국내통계 기관별</td>
-      <td>101</td>
-      <td>N</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>시군구/성/연령(5세)별 주민등록연앙인구</td>
-      <td>DT_1B040M5</td>
-      <td>MT_OTITLE</td>
-      <td>국내통계 기관별</td>
-      <td>101</td>
-      <td>N</td>
     </tr>
   </tbody>
 </table>
@@ -1142,24 +849,19 @@ df
 
 
 ```python
-# KOSIS OPEN API 인스턴스 생성
-serviceName = "통계자료"
-kosis = pdr.Kosis(apiKey, serviceName)
-
-# 파라미터
-orgId = "101"
-tblId = "DT_1B040A3"
-itmId = "T20"
-objL1 = "11 41"
-prdSe = "Y"
-startPrdDe = "1990"
-endPrdDe = "2022"
-
-# 데이터 조회
-df = kosis.get_data(orgId=orgId, tblId=tblId, objL1=objL1, itmId=itmId, prdSe=prdSe, startPrdDe=startPrdDe, endPrdDe=endPrdDe)
-df
+df5 = api.get_data(
+    "통계자료",
+    orgId = "116",
+    tblId = "DT_MLTM_2086",
+    itmId = "ALL",
+    objL1 = "ALL",
+    objL2 = "ALL",
+    prdSe = "Y",
+    startPrdeDe = "2021",
+    endPrdDe = "2021",
+    )
+df5.head(1)
 ```
-
 
 
 
@@ -1169,1165 +871,55 @@ df
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>TBL_NM</th>
-      <th>PRD_DE</th>
-      <th>TBL_ID</th>
-      <th>ITM_NM</th>
-      <th>ITM_NM_ENG</th>
-      <th>ITM_ID</th>
-      <th>UNIT_NM</th>
-      <th>ORG_ID</th>
-      <th>UNIT_NM_ENG</th>
-      <th>C1_OBJ_NM</th>
-      <th>C1_OBJ_NM_ENG</th>
-      <th>DT</th>
-      <th>PRD_SE</th>
-      <th>C1</th>
-      <th>C1_NM</th>
-      <th>C1_NM_ENG</th>
+      <th>기관ID</th>
+      <th>통계표ID</th>
+      <th>통계표명</th>
+      <th>분류명1</th>
+      <th>분류영문명1</th>
+      <th>분류값명1</th>
+      <th>분류값영문명1</th>
+      <th>분류값ID1</th>
+      <th>분류명2</th>
+      <th>분류영문명2</th>
+      <th>...</th>
+      <th>분류값영문명2</th>
+      <th>분류값ID2</th>
+      <th>항목ID</th>
+      <th>항목명</th>
+      <th>항목영문명</th>
+      <th>단위명</th>
+      <th>단위영문명</th>
+      <th>수록주기</th>
+      <th>수록시점</th>
+      <th>수치값</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1992</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10935230</td>
+      <td>116</td>
+      <td>DT_MLTM_2086</td>
+      <td>미분양현황_종합</td>
+      <td>대분류</td>
+      <td>Classification</td>
+      <td>부문별미분양현황</td>
+      <td>unsold By sector</td>
+      <td>13102871014A.0001</td>
+      <td>구분</td>
+      <td>Classification</td>
+      <td>...</td>
+      <td>Total</td>
+      <td>13102871014B.0001</td>
+      <td>13103871014T1</td>
+      <td>미분양(12월기준)</td>
+      <td>Unsold Housings</td>
+      <td>12월기준</td>
+      <td>Apartment Unit</td>
       <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1993</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10889499</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1994</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10759454</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1995</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10550871</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1996</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10418076</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1997</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10336134</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1998</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10270506</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1999</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10264260</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2000</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10311314</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2001</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10263336</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2002</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10207295</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2003</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10174086</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2004</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10173162</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2005</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10167344</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2006</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10181166</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2007</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10192710</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2008</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10200827</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2009</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10208302</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2010</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10312545</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2011</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10249679</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2012</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10195318</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2013</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10143645</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2014</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10103233</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2015</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10022181</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2016</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9930616</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2017</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9857426</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2018</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9765623</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2019</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9729107</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2020</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9668465</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
       <td>2021</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9509458</td>
-      <td>A</td>
-      <td>11</td>
-      <td>서울특별시</td>
-      <td>Seoul</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1992</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>6613094</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1993</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>7005232</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1994</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>7421823</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1995</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>7789424</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1996</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>8155794</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1997</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>8470594</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1998</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>8672632</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>1999</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>8934332</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2000</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9219343</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2001</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9544496</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2002</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>9927473</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2003</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10206851</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2004</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10462920</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2005</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10697215</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2006</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>10906033</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2007</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>11106211</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2008</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>11292264</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2009</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>11460610</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2010</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>11786622</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2011</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>11937415</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>50</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2012</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>12093299</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2013</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>12234630</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2014</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>12357830</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>53</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2015</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>12522606</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>54</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2016</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>12716780</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>55</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2017</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>12873895</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>56</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2018</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>13077153</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>57</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2019</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>13239666</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>58</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2020</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>13427014</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
-    </tr>
-    <tr>
-      <th>59</th>
-      <td>행정구역(시군구)별 성별 인구수</td>
-      <td>2021</td>
-      <td>DT_1B040A3</td>
-      <td>총인구수</td>
-      <td>Koreans (Total)</td>
-      <td>T20</td>
-      <td>명</td>
-      <td>101</td>
-      <td>Person</td>
-      <td>행정구역(시군구)별</td>
-      <td>By Administrative District</td>
-      <td>13565450</td>
-      <td>A</td>
-      <td>41</td>
-      <td>경기도</td>
-      <td>Gyeonggi-do</td>
+      <td>17710</td>
     </tr>
   </tbody>
 </table>
+<p>1 rows × 21 columns</p>
 </div>

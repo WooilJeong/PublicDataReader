@@ -28,12 +28,14 @@ import xmltodict
 import urllib.parse
 from bs4 import BeautifulSoup
 
+requests.packages.urllib3.disable_warnings()
+
 
 class SmallShop:
 
     def __init__(self, service_key=None):
 
-        self.serviceKey = service_key
+        self.service_key = service_key
         self.meta_dict = {
             "지정상권": {
                 "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneOne",
@@ -129,7 +131,7 @@ class SmallShop:
             raise AttributeError("서비스명을 확인해주세요.")
         # 서비스키, 행수, 시군구코드, 법정동코드 설정
         params = {
-            "serviceKey": urllib.parse.unquote(self.serviceKey),
+            "serviceKey": urllib.parse.unquote(self.service_key),
             "pageNo": 1,
             "numOfRows": 99999,
             "key": key,

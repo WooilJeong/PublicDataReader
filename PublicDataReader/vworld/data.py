@@ -2,7 +2,10 @@
 Vworld 데이터 API Python Module
 """
 import requests
+import urllib.parse
 from ..utils.code import get_vworld_data_api_info_by_dict
+
+requests.packages.urllib3.disable_warnings()
 
 
 class VworldData:
@@ -12,19 +15,23 @@ class VworldData:
 
     Parameters
     ----------
-    apiKey : str
+    service_key : str
         Vworld Open API 서비스 인증키
     """
 
-    def __init__(self, apiKey):
-        self.apiKey = apiKey
+    def __init__(self, service_key=None):
+        self.service_key = service_key
         self.url = "http://api.vworld.kr/req/data"
 
-    def get_data(self, **kwargs):
-        """API 호출
+    def get_data(self, service_name, **kwargs):
+        """
+        API 호출
 
         Parameters
         ----------
+        service_name : str
+            API 호출에 필요한 서비스 이름을 입력합니다.
+
         **kwargs : dict
             API 호출에 필요한 파라미터를 입력합니다.
             API 호출에 필요한 파라미터는 Vworld Open API 문서를 참고하세요.
@@ -35,29 +42,27 @@ class VworldData:
         dict
             API 호출 결과를 반환합니다.
         """
-        try:
-            kwargs["key"] = self.apiKey
-            kwargs["service"] = "data"
-            kwargs["request"] = "GetFeature"
-            kwargs["page"] = 1
-            kwargs["size"] = 1000
-            if kwargs.get("serviceName"):
-                kwargs["data"] = get_vworld_data_api_info_by_dict()[
-                    kwargs["serviceName"]]
-        except:
-            print("Incorrect Value!")
-            return None
+        params = {
+            "key": urllib.parse.unquote(self.service_key),
+            "service": "data",
+            "request": "GetFeature",
+            "page": 1,
+            "size": 1000,
+            "data": get_vworld_data_api_info_by_dict()[service_name]
+        }
+        params.update(kwargs)
         featureCollection = {"type": "FeatureCollection", "features": []}
-        try:
-            while True:
-                res = requests.get(self.url, params=kwargs,
-                                   verify=False).json()
-                kwargs["page"] = int(kwargs["page"]) + 1
-                featureCollection["features"].extend(
-                    res["response"]["result"]["featureCollection"]["features"])
-                if res['response']['page']['current'] == res['response']['page']['total']:
-                    break
-        except:
-            print("Error!")
-            pass
+        while True:
+            try:
+                res = requests.get(self.url, params=params, verify=False)
+                res_json = res.json()
+            except Exception as e:
+                print("API 요청이 실패했습니다.")
+                print(e)
+                return None
+            params["page"] = int(params["page"]) + 1
+            featureCollection["features"].extend(
+                res_json["response"]["result"]["featureCollection"]["features"])
+            if res_json['response']['page']['current'] == res_json['response']['page']['total']:
+                break
         return featureCollection
