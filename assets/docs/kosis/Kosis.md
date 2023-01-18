@@ -18,6 +18,8 @@ api = Kosis(service_key)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | searchNm | String | 검색명 | 필수 |
@@ -26,7 +28,11 @@ api = Kosis(service_key)
 | startCount | String | 페이지 번호 | 선택 |
 | resultCount | String | 데이터 출력 개수<br>비고 : <br>resultCount=20, startCount=1 : 1 ~ 20번 결과 리턴<br> resultCount=20, startCount=2 : 21 ~ 40번 결과 리턴 | 선택 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
@@ -49,6 +55,7 @@ api = Kosis(service_key)
 | STAT_DB_CNT | 검색결과 건수 |
 | QUERY | 검색어명 |
 
+</div>
 
 ```python
 df1 = api.get_data(
@@ -121,12 +128,18 @@ df1.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | statId<br>* orgId(기관ID)+tblId(통계표ID)로도 가능 | String | 통계조사 ID | 필수<br>예) &statId=통계조사ID 또는 &orgId=기관ID&tblId=통계표ID |
 | metaItm | String | 요청 항목 | 필수<br>전체 - All<br>조사명-statsNm<br>통계종류-statsKind<br>계속여부-statsContinue<br>법적근거-basisLaw<br>조사목적-writingPurps<br>조사주기-statsPeriod<br>조사체계-writingSystem<br>공표범위-pubExtent<br>공표주기-pubPeriod<br>연락처-writingTel<br>통계(활용)분야·실태-statsField<br>조사 대상범위-examinObjrange<br>조사 대상지역-examinObjArea<br>조사단위 및 조사대상규모-josaUnit<br>적용분류-applyGroup<br>조사항목-josaItm<br>공표주기-pubPeriod<br>공표범위-pubExtent<br>공표방법 및 URL-publictMth<br>조사대상기간 및 조사기준시점-examinTrgetPd<br>자료이용자 유의사항 -dataUserNote<br>주요 용어해설-mainTermExpl<br>자료 수집방법-dataCollectMth<br>조사연혁-examinHistory<br>승인번호-confmNo<br>승인일자-confmDt<br>통계종료-statsEnd |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
@@ -158,7 +171,7 @@ df1.head(1)
 | confmDt | 승인일자 |
 | statsEnd | 통계종료 |
 
-
+</div>
 
 ```python
 df2 = api.get_data(
@@ -242,18 +255,25 @@ df2.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
 | tblId | String | 통계표ID | 필수 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
 | TBL_NM | 통계표 국문명 |
 | TBL_NM_ENG | 통계표 영문명 |
 
+</div>
 
 ```python
 df3_1 = api.get_data(
@@ -294,17 +314,24 @@ df3_1.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
 | ORG_NM | 기관 국문명 |
 | ORG_NM_ENG | 기관 영문명 |
 
+</div>
 
 
 ```python
@@ -346,18 +373,26 @@ df3_2.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
 | tblId | String | 통계표ID | 필수 |
 | detail | String | 전체시점 정보 제공 | 선택 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
 | PRD_SE | 수록주기 |
 | PRD_DE | 수록시점 |
+
+</div>
 
 
 
@@ -402,6 +437,8 @@ df3_3.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
@@ -409,7 +446,11 @@ df3_3.head(1)
 | objId | String | 분류코드 | 선택 |
 | itmId | String | 분류값코드 | 선택 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
@@ -421,6 +462,8 @@ df3_3.head(1)
 | ITM_NM_ENG | 분류값 영문명 |
 | UP_ITM_ID | 상위 분류값 ID |
 | OBJ_ID_SN | 분류값 순번 |
+
+</div>
 
 
 ```python
@@ -480,12 +523,18 @@ df3_4.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
 | tblId | String | 통계표ID | 필수 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
@@ -495,6 +544,8 @@ df3_4.head(1)
 | OBJ_NM | 분류 명 |
 | ITM_ID | 분류값 ID |
 | ITM_NM | 분류값 국문명 |
+
+</div>
 
 
 ```python
@@ -536,17 +587,25 @@ df3_5.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
 | tblId | String | 통계표ID | 필수 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
 | UNIT_NM | 단위 국문명 |
 | UNIT_NM_ENG | 단위 영문명 |
+
+</div>
 
 
 ```python
@@ -588,18 +647,26 @@ df3_6.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
 | tblId | String | 통계표ID | 필수 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
 | JOSA_NM | 조사명 |
 | DEPT_NM | 통계표 담당부서 |
 | DEPT_PHONE | 통계표 담당부서 전화번호 |
+
+</div>
 
 
 ```python
@@ -643,6 +710,8 @@ df3_7.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
@@ -650,7 +719,11 @@ df3_7.head(1)
 | 분류코드1~분류코드8 | String | 분류코드1~분류코드8 | 선택 |
 | ITEM | String | 항목 | 선택 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
@@ -659,6 +732,8 @@ df3_7.head(1)
 | ITM_ID | 항목 ID |
 | ITM_NM | 항목명 |
 | WGT_CO | 가중치 |
+
+</div>
 
 
 ```python
@@ -678,13 +753,19 @@ df3_8
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | orgId | String | 기관코드 | 필수 |
 | tblId | String | 통계표ID | 필수 |
 | prdSe | String | 수록주기 | 선택 [추가정보](https://kosis.kr/openapi/devGuide/devGuide_0601Pop.jsp?type=JSON&gubun=input)<br>(미입력 시 전체주기에 대한 데이터 출력) |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
@@ -693,6 +774,8 @@ df3_8
 | PRD_SE | 수록주기 |
 | PRD_DE | 수록시점 |
 | SEND_DE | 자료갱신일 |
+
+</div>
 
 
 
@@ -741,12 +824,18 @@ df3_9.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | vwCd | String | 서비스뷰 코드<br>· MT_ZTITLE : 국내통계 주제별<br>· MT_OTITLE : 국내통계 기관별<br>· MT_GTITLE01 : e-지방지표(주제별)<br>· MT_GTITLE02 : e-지방지표(지역별)<br>· MT_CHOSUN_TITLE : 광복이전통계(1908~1943)<br>· MT_HANKUK_TITLE : 대한민국통계연감<br>· MT_STOP_TITLE : 작성중지통계<br>· MT_RTITLE : 국제통계<br>· MT_BUKHAN : 북한통계<br>· MT_TM1_TITLE : 대상별통계<br>· MT_TM2_TITLE : 이슈별통계<br>· MT_ETITLE : 영문 KOSIS | 필수 |
 | parentListId | String | 시작목록 ID | 필수 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 결과변수 | 설명 |
 | --- | --- |
@@ -758,6 +847,8 @@ df3_9.head(1)
 | TBL_ID | 통계표ID |
 | TBL_NM | 통계표명 |
 | REC_TBL_SE | 추천 통계표 여부 |
+
+</div>
 
 
 ```python
@@ -807,6 +898,8 @@ df4.head(1)
 
 - 요청변수
 
+<div align="center">
+
 | 요청변수 | 변수타입 | 설명 | 비고 |
 | --- | --- | --- | --- |
 | apiKey | String | 발급된 인증 key | 필수 |
@@ -821,7 +914,11 @@ df4.head(1)
 | newEstPrdCnt | String | (최신자료기준) 최근수록시점 개수 | 선택 [시점정보](https://kosis.kr/openapi/devGuide/devGuide_0202Pop.jsp?gubun=json)<br>(시점기준 또는 최신자료기준 택1)<br>※설정이 없을경우 최근시점1개 조회 |
 | prdInterval | String | (최신자료기준) 수록시점 간격<br>ex) 2019, 2017, 2015 등 2개 시점 간격으로 추출시 [2] 입력 | 선택 [시점정보](https://kosis.kr/openapi/devGuide/devGuide_0202Pop.jsp?gubun=json)<br>(시점기준 또는 최신자료기준 택1)<br>※설정이 없을경우 최근시점1개 조회 |
 
+</div>
+
 - 출력결과
+
+<div align="center">
 
 | 출력변수 | 설명 | 비고 |
 | --- | --- | --- |
@@ -842,6 +939,8 @@ df4.head(1)
 | PRD_SE | 수록주기 | 추가정보 |
 | PRD_DE | 수록시점 |  |
 | DT | 수치값 |  |
+
+</div>
 
 
 ```python
