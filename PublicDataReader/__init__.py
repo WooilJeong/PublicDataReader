@@ -12,6 +12,7 @@ __all__ = [
     "Building",
     "SmallShop",
     "StoreInfo",
+    "Reb",
     "Transportation",
     "Kosis",
     "_Kosis",

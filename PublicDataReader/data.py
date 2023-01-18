@@ -8,13 +8,14 @@ from PublicDataReader.PublicDataPortal.semas import SmallShop
 # (Deprecated)
 from PublicDataReader.PublicDataPortal.semas import StoreInfo
 
+# 한국부동산원(REB) Open API 통합
+from PublicDataReader.PublicDataPortal.reb import Reb
+
 # 서울시 지하철호선별 역별 승하차 인원 정보 Open API
 from PublicDataReader.Seoul.transportation import Transportation
 
 # KOSIS Open API
 from PublicDataReader.kosis.kosis import Kosis
-# (Deprecated)
-from PublicDataReader.kosis.kosis import _Kosis
 
 # Vworld Open API
 from PublicDataReader.vworld.data import VworldData
