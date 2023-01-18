@@ -1,4 +1,4 @@
-# PublicDataReader - KB부동산 데이터허브 API 사용방법
+# KB통계 주택가격동향조사 사용 가이드
 
 - [KB부동산 데이터허브](https://data.kbland.kr/)
 

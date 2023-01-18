@@ -1,4 +1,4 @@
-# PublicDataReader - 서울 열린데이터 광장 서비스 Open API 사용방법
+# 서울시 교통 관련 데이터 사용 가이드
 
 <div align="center">
 

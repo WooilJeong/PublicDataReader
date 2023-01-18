@@ -1,4 +1,6 @@
-# PublicDataReader - Vworld Open API 사용방법
+# 국가공간정보 사용 가이드
+
+[공간정보 오픈플랫폼 오픈API](https://www.vworld.kr/dev/v4api.do)에서 제공하는 오픈 API 서비스를 이용하려면 인증키가 필요합니다. 인증키를 얻기 위해서는 [공간정보 오픈플랫폼 오픈API](https://www.vworld.kr/dev/v4api.do)에 회원가입을 하고 오픈 API 서비스를 신청해야 합니다.
 
 ## 라이브러리 임포트하기
 
@@ -7,8 +9,6 @@ from PublicDataReader import VworldData
 service_key = "서비스 인증키"
 api = VworldData(service_key)
 ```
-    
-<br>
 
 ## 데이터 API 서비스 목록 확인
 - [데이터 API 레퍼런스](https://www.vworld.kr/dev/v4dv_2ddataguide2_s001.do)
@@ -111,6 +111,11 @@ print(f"""
 
 ## (활용) 연속지적도 시각화
 
+조회한 공간정보를 지도에 시각화하기 위해 folium 라이브러리를 추가적으로 설치합니다.
+
+```bash
+pip install folium --upgrade
+```
 
 ```python
 import folium

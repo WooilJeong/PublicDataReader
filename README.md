@@ -21,7 +21,7 @@ PublicDataReader는 공공 데이터를 자동으로 조회할 수 있는 파이
 
 <br>
 
-## 설치 방법
+## 설치방법
 
 1. 운영체제(OS)에 따라 아래 중 하나를 선택합니다.
 
@@ -36,30 +36,28 @@ pip install PublicDataReader --upgrade
 
 <br>
 
-## 사용 방법
+## 사용 가이드
 
-### 인증키가 필요한 데이터 조회 방법
+### 인증키가 필요한 데이터
 
-- [공공데이터포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal.md)
-  - 국토교통부 실거래가 정보 조회 서비스
-  - 국토교통부 건축물대장정보 서비스
-  - 소상공인 상가업소 정보 조회 서비스
-  - 한국자산관리공사 공매물건 조회 서비스
-  - 국세청 사업자등록정보 진위확인 및 상태조회 서비스
-- [KOSIS 국가통계포털 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis.md)
-  - KOSIS 통계 자료 조회 방법
-- [서울 열린데이터광장 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul.md)
-  - 서울시 지하철호선별 역별 승하차 인원 정보
-  - 서울시 버스노선별 정류장별 승하차 인원 정보
-- [Vworld 데이터 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld.md)
-  - Vworld Data API를 이용한 공간정보 조회 방법
+- 공공데이터포털
+  - [국토교통부 부동산 실거래가 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/TransactionPrice.md)
+  - [국토교통부 건축물대장정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/BuildingLedger.md)
+  - [소상공인시장진흥공단 상가(상권)정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/SmallShop.md)
+  - [한국자산관리공사 공매물건 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Kamco.md)
+  - [국세청 사업자등록정보 진위확인 및 상태조회 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Nts.md)
+- 국가통계포털(KOSIS)
+  - [KOSIS 통계정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis/Kosis.md)
+- 서울 열린데이터 광장
+  - [서울시 교통 관련 데이터 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul/Transportation.md)
+- 공간정보 오픈플랫폼(V-Word)
+  - [국가공간정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld/VworldData.md)
 
 
-### 인증키가 필요하지 않은 데이터 조회 방법
+### 인증키가 필요하지 않은 데이터
 
-- [KB부동산 데이터허브 조회 방법 예시](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland.md)
-  - 주택가격동향조사 데이터 조회 방법
-
+- KB부동산
+  - [KB통계 주택가격동향조사 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland/Kbland.md)
 
 <br>
 
@@ -73,7 +71,7 @@ pip install PublicDataReader --upgrade
   - [한국자산관리공사 캠코 공매물건 조회하기](https://wooiljeong.github.io/python/pdr-kamco/)
   - [사업자등록정보 진위확인 및 상태조회하기](https://wooiljeong.github.io/python/pdr-nts/)
 
-- KOSIS
+- 국가통계포털(KOSIS)
   - [Python으로 KOSIS 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis/)
   - [주민등록인구 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex1/)
   - [미분양주택현황 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex2/)
@@ -87,21 +85,13 @@ pip install PublicDataReader --upgrade
 
 ## 참고
 
-
-- 이용 가능한 Open API 플랫폼 웹 사이트
-  - [KOSIS 국가통계포털](https://kosis.kr/index/index.do)
-  - [공공데이터포털](https://www.data.go.kr/)
-  - [서울 열린데이터광장](https://data.seoul.go.kr/)
-  - [브이월드(Vworld) 공간정보 오픈플랫폼](https://www.vworld.kr/dev/v4api.do)
-
-
 - **Google Colab 실습**  
   - [Colab 부동산 실거래가 조회 실습](https://colab.research.google.com/drive/12SGCX4dwQfOwK-nIlG8jUOGSG80xE_o1?pli=1)
   - [Colab 건축물대장 정보 조회 실습](https://colab.research.google.com/drive/1g_vwaqrhyZ_HAifxrKd_AFR_8U29elGW)
   - [Colab 소상공인 상가업소 정보 조회 실습](https://colab.research.google.com/drive/1wQZcJZfwfl_5y_NK5vbz__95gRt0xwrb)
 
 - **공식문서**
-  - [Docs](https://wooiljeong.github.io/PublicDataReader/)
+  - [Documents](https://wooiljeong.github.io/PublicDataReader/)
 
 - **문의**  
   - **이메일**: wooil@kakao.com  
