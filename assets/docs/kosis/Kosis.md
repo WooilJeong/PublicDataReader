@@ -24,7 +24,7 @@ api = Kosis(service_key)
 | orgId | String | 기관코드 | 선택 |
 | sort | String | 정렬<br>비고 : 정확도 RANK, 최신순DATE<br>※ 호출 파라미터에 sort 없을 경우에는 자동으로 RANK 로 정렬 | 선택 |
 | startCount | String | 페이지 번호 | 선택 |
-| resultCount | String | 데이터 출력 개수<br>비고 : <br>resultCount=20, startCount=1 : 1~20번 결과 리턴<br> resultCount=20, startCount=2 : 21~40번 결과 리턴 | 선택 |
+| resultCount | String | 데이터 출력 개수<br>비고 : <br>resultCount=20, startCount=1 : 1 ~ 20번 결과 리턴<br> resultCount=20, startCount=2 : 21 ~ 40번 결과 리턴 | 선택 |
 
 - 출력결과
 
