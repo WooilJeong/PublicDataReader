@@ -46,6 +46,7 @@ pip install PublicDataReader --upgrade
   - [소상공인시장진흥공단 상가(상권)정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/SmallShop.md)
   - [한국자산관리공사 공매물건 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Kamco.md)
   - [국세청 사업자등록정보 진위확인 및 상태조회 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Nts.md)
+  - [한국부동산원 부동산 종합 정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/reb/Reb.md)
 - 국가통계포털(KOSIS)
   - [KOSIS 통계정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis/Kosis.md)
 - 서울 열린데이터 광장
