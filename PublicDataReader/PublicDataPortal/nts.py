@@ -1,6 +1,5 @@
 import requests
 import pandas as pd
-import urllib.parse
 
 requests.packages.urllib3.disable_warnings()
 
@@ -33,7 +32,7 @@ class Nts:
         """
         url = self.url_dict["진위확인"]
         params = {
-            "serviceKey": urllib.parse.unquote(self.service_key),
+            "serviceKey": requests.utils.unquote(self.service_key),
         }
         if type(businesses) == pd.DataFrame:
             businesses = businesses.to_dict("records")
@@ -66,7 +65,7 @@ class Nts:
         """
         url = self.url_dict["상태조회"]
         params = {
-            "serviceKey": urllib.parse.unquote(self.service_key),
+            "serviceKey": requests.utils.unquote(self.service_key),
         }
         data = {
             "b_no": b_no,

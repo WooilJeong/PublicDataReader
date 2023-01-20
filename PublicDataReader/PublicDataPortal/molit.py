@@ -35,7 +35,6 @@ import datetime
 import logging
 import requests
 import xmltodict
-import urllib.parse
 from bs4 import BeautifulSoup
 
 requests.packages.urllib3.disable_warnings()
@@ -167,7 +166,7 @@ class TransactionPrice:
 
         # 서비스키, 행수, 시군구코드 설정
         params = {
-            "serviceKey": urllib.parse.unquote(self.service_key),
+            "serviceKey": requests.utils.unquote(self.service_key),
             "numOfRows": "99999",
             "LAWD_CD": sigungu_code,
         }
@@ -340,7 +339,7 @@ class BuildingLedger:
             raise AttributeError("건축물대장 유형을 확인해주세요.")
         # 서비스키, 행수, 시군구코드, 법정동코드 설정
         params = {
-            "serviceKey": urllib.parse.unquote(self.service_key),
+            "serviceKey": requests.utils.unquote(self.service_key),
             "numOfRows": 99999,
             "sigunguCd": sigungu_code,
             "bjdongCd": bdong_code,

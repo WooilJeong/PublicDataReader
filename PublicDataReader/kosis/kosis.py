@@ -2,7 +2,6 @@
 KOSIS Open API Python Module
 """
 
-import urllib.parse
 import requests
 import pandas as pd
 
@@ -107,7 +106,7 @@ class Kosis:
                 "서비스명을 확인해주세요. (ex. KOSIS통합검색, 통계설명, 통계표설명, 통계목록, 통계자료)")
 
         params = {
-            "apiKey": urllib.parse.unquote(self.service_key),
+            "apiKey": requests.utils.unquote(self.service_key),
             "format": "json",
             "jsonVD": "Y",
             "jsonMVD": "Y",

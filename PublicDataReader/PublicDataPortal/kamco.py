@@ -1,7 +1,6 @@
 import pandas as pd
 import requests
 import xmltodict
-import urllib.parse
 
 requests.packages.urllib3.disable_warnings()
 
@@ -108,7 +107,7 @@ class Kamco:
 
         # 기본 파라미터
         params = {
-            "serviceKey": urllib.parse.unquote(self.service_key),
+            "serviceKey": requests.utils.unquote(self.service_key),
             "numOfRows": self.numOfRows,
             "page": self.page,
         }

@@ -6,7 +6,6 @@ https://www.data.go.kr/tcs/dss/selectDataSetList.do?dType=API&keyword=&detailKey
 import time
 import requests
 import pandas as pd
-import urllib.parse
 
 requests.packages.urllib3.disable_warnings()
 
@@ -63,7 +62,7 @@ class Reb:
             return None
 
         params = {
-            "serviceKey": urllib.parse.unquote(self.service_key),
+            "serviceKey": requests.utils.unquote(self.service_key),
             "page": 1,
             "perPage": 10000,
             "returnType": "json",

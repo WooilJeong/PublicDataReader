@@ -2,7 +2,6 @@
 Vworld 데이터 API Python Module
 """
 import requests
-import urllib.parse
 from ..utils.code import get_vworld_data_api_info_by_dict
 
 requests.packages.urllib3.disable_warnings()
@@ -43,7 +42,7 @@ class VworldData:
             API 호출 결과를 반환합니다.
         """
         params = {
-            "key": urllib.parse.unquote(self.service_key),
+            "key": requests.utils.unquote(self.service_key),
             "service": "data",
             "request": "GetFeature",
             "page": 1,

@@ -25,7 +25,6 @@ import pandas as pd
 import logging
 import requests
 import xmltodict
-import urllib.parse
 from bs4 import BeautifulSoup
 
 requests.packages.urllib3.disable_warnings()
@@ -131,7 +130,7 @@ class SmallShop:
             raise AttributeError("서비스명을 확인해주세요.")
         # 서비스키, 행수, 시군구코드, 법정동코드 설정
         params = {
-            "serviceKey": urllib.parse.unquote(self.service_key),
+            "serviceKey": requests.utils.unquote(self.service_key),
             "pageNo": 1,
             "numOfRows": 99999,
             "key": key,
