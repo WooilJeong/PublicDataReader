@@ -65,39 +65,39 @@
 
 <div align="center">
 
-| 항목명(국문)         | 항목명(영문)   | 항목크기      | 항목구분   | 샘플데이터                      |
-|:---------------------|:---------------|:--------------|:-----------|:--------------------------------|
-| 도로명대지위치       | newPlatPlc     | VARCHAR2(200) | 옵         | nan                             |
-| 건물명               | bldNm          | VARCHAR2(100) | 옵         | 대치아파트 제217동              |
-| 특수지명             | splotNm        | VARCHAR2(200) | 옵         | nan                             |
-| 블록                 | block          | VARCHAR2(20)  | 옵         | nan                             |
-| 로트                 | lot            | VARCHAR2(20)  | 옵         | nan                             |
-| 외필지수             | bylotCnt       | NUMBER(5)     | 옵         | 0                               |
-| 새주소도로코드       | naRoadCd       | VARCHAR2(12)  | 옵         | nan                             |
-| 새주소법정동코드     | naBjdongCd     | VARCHAR2(5)   | 옵         | nan                             |
-| 새주소지상지하코드   | naUgrndCd      | VARCHAR2(1)   | 옵         | 0                               |
-| 새주소본번           | naMainBun      | NUMBER(5)     | 옵         | nan                             |
-| 새주소부번           | naSubBun       | NUMBER(5)     | 옵         | nan                             |
-| 지역코드             | jiyukCd        | VARCHAR2(6)   | 옵         | nan                             |
-| 지구코드             | jiguCd         | VARCHAR2(6)   | 옵         | nan                             |
-| 구역코드             | guyukCd        | VARCHAR2(6)   | 옵         | nan                             |
-| 지역코드명           | jiyukCdNm      | VARCHAR2(100) | 옵         | nan                             |
-| 지구코드명           | jiguCdNm       | VARCHAR2(100) | 옵         | nan                             |
-| 구역코드명           | guyukCdNm      | VARCHAR2(100) | 옵         | nan                             |
-| 생성일자             | crtnDay        | VARCHAR2(8)   | 필         | 20090320                        |
-| nan                  | Items          | nan           | 필         | nan                             |
-| 순번                 | rnum           | NUMBER(8)     | 옵         | 1                               |
-| 대지위치             | platPlc        | VARCHAR2(200) | 필         | 서울특별시 강남구 개포동 12번지 |
-| 시군구코드           | sigunguCd      | VARCHAR2(5)   | 필         | 11680                           |
-| 법정동코드           | bjdongCd       | VARCHAR2(5)   | 필         | 10300                           |
-| 대지구분코드         | platGbCd       | CHAR(1)       | 옵         | 0                               |
-| 번                   | bun            | VARCHAR2(4)   | 옵         | 12                              |
-| 지                   | ji             | VARCHAR2(4)   | 옵         | 0                               |
-| 관리건축물대장PK     | mgmBldrgstPk   | VARCHAR2(33)  | 필         | 11680-8520602                   |
-| 관리상위건축물대장PK | mgmUpBldrgstPk | VARCHAR2(33)  | 필         | 11680-91502                     |
-| 대장구분코드         | regstrGbCd     | VARCHAR2(1)   | 옵         | 2                               |
-| 대장구분코드명       | regstrGbCdNm   | VARCHAR2(100) | 옵         | 집합                            |
-| 대장종류코드         | regstrKindCd   | VARCHAR2(1)   | 옵         | 4                               |
+| 항목명(국문)         | 항목명(영문)   | 샘플데이터                      |
+|:---------------------|:---------------|:--------------------------------|
+| 도로명대지위치       | newPlatPlc     | nan                             |
+| 건물명               | bldNm          | 대치아파트 제217동              |
+| 특수지명             | splotNm        | nan                             |
+| 블록                 | block          | nan                             |
+| 로트                 | lot            | nan                             |
+| 외필지수             | bylotCnt       | 0                               |
+| 새주소도로코드       | naRoadCd       | nan                             |
+| 새주소법정동코드     | naBjdongCd     | nan                             |
+| 새주소지상지하코드   | naUgrndCd      | 0                               |
+| 새주소본번           | naMainBun      | nan                             |
+| 새주소부번           | naSubBun       | nan                             |
+| 지역코드             | jiyukCd        | nan                             |
+| 지구코드             | jiguCd         | nan                             |
+| 구역코드             | guyukCd        | nan                             |
+| 지역코드명           | jiyukCdNm      | nan                             |
+| 지구코드명           | jiguCdNm       | nan                             |
+| 구역코드명           | guyukCdNm      | nan                             |
+| 생성일자             | crtnDay        | 20090320                        |
+| nan                  | Items          | nan                             |
+| 순번                 | rnum           | 1                               |
+| 대지위치             | platPlc        | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드           | sigunguCd      | 11680                           |
+| 법정동코드           | bjdongCd       | 10300                           |
+| 대지구분코드         | platGbCd       | 0                               |
+| 번                   | bun            | 12                              |
+| 지                   | ji             | 0                               |
+| 관리건축물대장PK     | mgmBldrgstPk   | 11680-8520602                   |
+| 관리상위건축물대장PK | mgmUpBldrgstPk | 11680-91502                     |
+| 대장구분코드         | regstrGbCd     | 2                               |
+| 대장구분코드명       | regstrGbCdNm   | 집합                            |
+| 대장종류코드         | regstrKindCd   | 4                               |
 
 </div>
 
@@ -284,74 +284,74 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)         | 항목명(영문)       | 항목크기      | 항목구분   | 샘플데이터                      | 항목설명             |
-|:---------------------|:-------------------|:--------------|:-----------|:--------------------------------|:---------------------|
-| 지능형건축물등급     | itgBldGrade        | CHAR(1)       | 옵         | nan                             | 지능형건축물등급     |
-| 지능형건축물인증점수 | itgBldCert         | NUMBER(5)     | 옵         | 0                               | 지능형건축물인증점수 |
-| 생성일자             | crtnDay            | VARCHAR2(8)   | 필         | 20120822                        | 생성일자             |
-| 새주소법정동코드     | naBjdongCd         | VARCHAR2(5)   | 옵         | 10301                           | 새주소법정동코드     |
-| 새주소지상지하코드   | naUgrndCd          | VARCHAR2(1)   | 옵         | 0                               | 새주소지상지하코드   |
-| 새주소본번           | naMainBun          | NUMBER(5)     | 옵         | 5                               | 새주소본번           |
-| 새주소부번           | naSubBun           | NUMBER(5)     | 옵         | 0                               | 새주소부번           |
-| 대지면적(㎡)         | platArea           | NUMBER(19,9)  | 옵         | 0                               | 대지면적(㎡)         |
-| 건축면적(㎡)         | archArea           | NUMBER(19,9)  | 옵         | 15324.37                        | 건축면적(㎡)         |
-| 건폐율(%)            | bcRat              | NUMBER(19,9)  | 옵         | 0                               | 건폐율(%)            |
-| 연면적(㎡)           | totArea            | NUMBER(19,9)  | 옵         | 223939                          | 연면적(㎡)           |
-| 용적률산정연면적(㎡) | vlRatEstmTotArea   | NUMBER(19,9)  | 옵         | 211555.54                       | 용적률산정연면적(㎡) |
-| 용적률(%)            | vlRat              | NUMBER(19,9)  | 옵         | 0                               | 용적률(%)            |
-| 주용도코드           | mainPurpsCd        | VARCHAR2(5)   | 옵         | 2000                            | 주용도코드           |
-| 주용도코드명         | mainPurpsCdNm      | VARCHAR2(100) | 옵         | 공동주택                        | 주용도코드명         |
-| 기타용도             | etcPurps           | VARCHAR2(500) | 옵         | 주거시설 근린생활시설           | 기타용도             |
-| 세대수(세대)         | hhldCnt            | NUMBER(5)     | 옵         | 4199                            | 세대수(세대)         |
-| 가구수(가구)         | fmlyCnt            | NUMBER(5)     | 옵         | 0                               | 가구수(가구)         |
-| 주건축물수           | mainBldCnt         | NUMBER(5)     | 옵         | 27                              | 주건축물수           |
-| 부속건축물수         | atchBldCnt         | NUMBER(5)     | 옵         | 3                               | 부속건축물수         |
-| 부속건축물면적(㎡)   | atchBldArea        | NUMBER(19,9)  | 옵         | 64.26                           | 부속건축물면적(㎡)   |
-| 총주차수             | totPkngCnt         | NUMBER(7)     | 옵         | 0                               | 총주차수             |
-| 옥내기계식대수(대)   | indrMechUtcnt      | NUMBER(6)     | 옵         | 0                               | 옥내기계식대수(대)   |
-| 옥내기계식면적(㎡)   | indrMechArea       | NUMBER(19,9)  | 옵         | 0                               | 옥내기계식면적(㎡)   |
-| 옥외기계식대수(대)   | oudrMechUtcnt      | NUMBER(6)     | 옵         | 0                               | 옥외기계식대수(대)   |
-| 옥외기계식면적(㎡)   | oudrMechArea       | NUMBER(19,9)  | 옵         | 0                               | 옥외기계식면적(㎡)   |
-| 옥내자주식대수(대)   | indrAutoUtcnt      | NUMBER(6)     | 옵         | 0                               | 옥내자주식대수(대)   |
-| 옥내자주식면적(㎡)   | indrAutoArea       | NUMBER(19,9)  | 옵         | 0                               | 옥내자주식면적(㎡)   |
-| 옥외자주식대수(대)   | oudrAutoUtcnt      | NUMBER(6)     | 옵         | 0                               | 옥외자주식대수(대)   |
-| 옥외자주식면적(㎡)   | oudrAutoArea       | NUMBER(19,9)  | 옵         | 0                               | 옥외자주식면적(㎡)   |
-| 허가일               | pmsDay             | VARCHAR2(8)   | 옵         | nan                             | 허가일               |
-| 착공일               | stcnsDay           | VARCHAR2(8)   | 옵         | nan                             | 착공일               |
-| 사용승인일           | useAprDay          | VARCHAR2(8)   | 옵         | nan                             | 사용승인일           |
-| 허가번호년           | pmsnoYear          | VARCHAR2(4)   | 옵         | nan                             | 허가번호년           |
-| 허가번호기관코드     | pmsnoKikCd         | CHAR(7)       | 옵         | nan                             | 허가번호기관코드     |
-| 허가번호기관코드명   | pmsnoKikCdNm       | VARCHAR2(100) | 옵         | nan                             | 허가번호기관코드명   |
-| 허가번호구분코드     | pmsnoGbCd          | VARCHAR2(4)   | 옵         | nan                             | 허가번호구분코드     |
-| 허가번호구분코드명   | pmsnoGbCdNm        | VARCHAR2(100) | 옵         | nan                             | 허가번호구분코드명   |
-| 호수(호)             | hoCnt              | NUMBER(5)     | 옵         | 0                               | 호수(호)             |
-| 에너지효율등급       | engrGrade          | VARCHAR2(4)   | 옵         | nan                             | 에너지효율등급       |
-| 에너지절감율         | engrRat            | NUMBER(19,9)  | 옵         | 0                               | 에너지절감율         |
-| EPI점수              | engrEpi            | NUMBER(5)     | 옵         | 0                               | EPI점수              |
-| 친환경건축물등급     | gnBldGrade         | CHAR(1)       | 옵         | nan                             | 친환경건축물등급     |
-| 친환경건축물인증점수 | gnBldCert          | NUMBER(5)     | 옵         | 0                               | 친환경건축물인증점수 |
-| nan                  | Items              | nan           | 필         | nan                             | nan                  |
-| 순번                 | rnum               | NUMBER(8)     | 옵         | 1                               | 순번                 |
-| 대지위치             | platPlc            | VARCHAR2(200) | 필         | 서울특별시 강남구 개포동 12번지 | 대지위치             |
-| 시군구코드           | sigunguCd          | VARCHAR2(5)   | 필         | 11680                           | 행정표준코드         |
-| 법정동코드           | bjdongCd           | VARCHAR2(5)   | 필         | 10300                           | 행정표준코드         |
-| 대지구분코드         | platGbCd           | CHAR(1)       | 옵         | 0                               | 0:대지 1:산 2:블록   |
-| 번                   | bun                | VARCHAR2(4)   | 옵         | 12                              | 번                   |
-| 지                   | ji                 | VARCHAR2(4)   | 옵         | 0                               | 지                   |
-| 관리건축물대장PK     | mgmBldrgstPk       | VARCHAR2(33)  | 필         | 11680-10302                     | 관리건축물대장PK     |
-| 대장구분코드         | regstrGbCd         | VARCHAR2(1)   | 옵         | 2                               | 대장구분코드         |
-| 대장구분코드명       | regstrGbCdNm       | VARCHAR2(100) | 옵         | 집합                            | 대장구분코드명       |
-| 대장종류코드         | regstrKindCd       | VARCHAR2(1)   | 옵         | 1                               | 대장종류코드         |
-| 대장종류코드명       | regstrKindCdNm     | VARCHAR2(100) | 옵         | 총괄표제부                      | 대장종류코드명       |
-| 신구대장구분코드     | newOldRegstrGbCd   | CHAR(1)       | 옵         | 0                               | 신구대장구분코드     |
-| 신구대장구분코드명   | newOldRegstrGbCdNm | VARCHAR2(100) | 옵         | 구대장                          | 신구대장구분코드명   |
-| 도로명대지위치       | newPlatPlc         | VARCHAR2(200) | 옵         | 서울특별시강남구개포로109길5    | 도로명대지위치       |
-| 건물명               | bldNm              | VARCHAR2(100) | 옵         | 대치,대청 아파트                | 건물명               |
-| 특수지명             | splotNm            | VARCHAR2(200) | 옵         | nan                             | 특수지명             |
-| 블록                 | block              | VARCHAR2(20)  | 옵         | nan                             | 블록                 |
-| 로트                 | lot                | VARCHAR2(20)  | 옵         | nan                             | 로트                 |
-| 외필지수             | bylotCnt           | NUMBER(5)     | 옵         | 0                               | 외필지수             |
-| 새주소도로코드       | naRoadCd           | VARCHAR2(12)  | 옵         | 116804166040                    | 새주소도로코드       |
+| 항목명(국문)         | 항목명(영문)       | 항목설명             | 샘플데이터                      |
+|:---------------------|:-------------------|:---------------------|:--------------------------------|
+| 지능형건축물등급     | itgBldGrade        | 지능형건축물등급     | nan                             |
+| 지능형건축물인증점수 | itgBldCert         | 지능형건축물인증점수 | 0                               |
+| 생성일자             | crtnDay            | 생성일자             | 20120822                        |
+| 새주소법정동코드     | naBjdongCd         | 새주소법정동코드     | 10301                           |
+| 새주소지상지하코드   | naUgrndCd          | 새주소지상지하코드   | 0                               |
+| 새주소본번           | naMainBun          | 새주소본번           | 5                               |
+| 새주소부번           | naSubBun           | 새주소부번           | 0                               |
+| 대지면적(㎡)         | platArea           | 대지면적(㎡)         | 0                               |
+| 건축면적(㎡)         | archArea           | 건축면적(㎡)         | 15324.37                        |
+| 건폐율(%)            | bcRat              | 건폐율(%)            | 0                               |
+| 연면적(㎡)           | totArea            | 연면적(㎡)           | 223939                          |
+| 용적률산정연면적(㎡) | vlRatEstmTotArea   | 용적률산정연면적(㎡) | 211555.54                       |
+| 용적률(%)            | vlRat              | 용적률(%)            | 0                               |
+| 주용도코드           | mainPurpsCd        | 주용도코드           | 2000                            |
+| 주용도코드명         | mainPurpsCdNm      | 주용도코드명         | 공동주택                        |
+| 기타용도             | etcPurps           | 기타용도             | 주거시설 근린생활시설           |
+| 세대수(세대)         | hhldCnt            | 세대수(세대)         | 4199                            |
+| 가구수(가구)         | fmlyCnt            | 가구수(가구)         | 0                               |
+| 주건축물수           | mainBldCnt         | 주건축물수           | 27                              |
+| 부속건축물수         | atchBldCnt         | 부속건축물수         | 3                               |
+| 부속건축물면적(㎡)   | atchBldArea        | 부속건축물면적(㎡)   | 64.26                           |
+| 총주차수             | totPkngCnt         | 총주차수             | 0                               |
+| 옥내기계식대수(대)   | indrMechUtcnt      | 옥내기계식대수(대)   | 0                               |
+| 옥내기계식면적(㎡)   | indrMechArea       | 옥내기계식면적(㎡)   | 0                               |
+| 옥외기계식대수(대)   | oudrMechUtcnt      | 옥외기계식대수(대)   | 0                               |
+| 옥외기계식면적(㎡)   | oudrMechArea       | 옥외기계식면적(㎡)   | 0                               |
+| 옥내자주식대수(대)   | indrAutoUtcnt      | 옥내자주식대수(대)   | 0                               |
+| 옥내자주식면적(㎡)   | indrAutoArea       | 옥내자주식면적(㎡)   | 0                               |
+| 옥외자주식대수(대)   | oudrAutoUtcnt      | 옥외자주식대수(대)   | 0                               |
+| 옥외자주식면적(㎡)   | oudrAutoArea       | 옥외자주식면적(㎡)   | 0                               |
+| 허가일               | pmsDay             | 허가일               | nan                             |
+| 착공일               | stcnsDay           | 착공일               | nan                             |
+| 사용승인일           | useAprDay          | 사용승인일           | nan                             |
+| 허가번호년           | pmsnoYear          | 허가번호년           | nan                             |
+| 허가번호기관코드     | pmsnoKikCd         | 허가번호기관코드     | nan                             |
+| 허가번호기관코드명   | pmsnoKikCdNm       | 허가번호기관코드명   | nan                             |
+| 허가번호구분코드     | pmsnoGbCd          | 허가번호구분코드     | nan                             |
+| 허가번호구분코드명   | pmsnoGbCdNm        | 허가번호구분코드명   | nan                             |
+| 호수(호)             | hoCnt              | 호수(호)             | 0                               |
+| 에너지효율등급       | engrGrade          | 에너지효율등급       | nan                             |
+| 에너지절감율         | engrRat            | 에너지절감율         | 0                               |
+| EPI점수              | engrEpi            | EPI점수              | 0                               |
+| 친환경건축물등급     | gnBldGrade         | 친환경건축물등급     | nan                             |
+| 친환경건축물인증점수 | gnBldCert          | 친환경건축물인증점수 | 0                               |
+| nan                  | Items              | nan                  | nan                             |
+| 순번                 | rnum               | 순번                 | 1                               |
+| 대지위치             | platPlc            | 대지위치             | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드           | sigunguCd          | 행정표준코드         | 11680                           |
+| 법정동코드           | bjdongCd           | 행정표준코드         | 10300                           |
+| 대지구분코드         | platGbCd           | 0:대지 1:산 2:블록   | 0                               |
+| 번                   | bun                | 번                   | 12                              |
+| 지                   | ji                 | 지                   | 0                               |
+| 관리건축물대장PK     | mgmBldrgstPk       | 관리건축물대장PK     | 11680-10302                     |
+| 대장구분코드         | regstrGbCd         | 대장구분코드         | 2                               |
+| 대장구분코드명       | regstrGbCdNm       | 대장구분코드명       | 집합                            |
+| 대장종류코드         | regstrKindCd       | 대장종류코드         | 1                               |
+| 대장종류코드명       | regstrKindCdNm     | 대장종류코드명       | 총괄표제부                      |
+| 신구대장구분코드     | newOldRegstrGbCd   | 신구대장구분코드     | 0                               |
+| 신구대장구분코드명   | newOldRegstrGbCdNm | 신구대장구분코드명   | 구대장                          |
+| 도로명대지위치       | newPlatPlc         | 도로명대지위치       | 서울특별시강남구개포로109길5    |
+| 건물명               | bldNm              | 건물명               | 대치,대청 아파트                |
+| 특수지명             | splotNm            | 특수지명             | nan                             |
+| 블록                 | block              | 블록                 | nan                             |
+| 로트                 | lot                | 로트                 | nan                             |
+| 외필지수             | bylotCnt           | 외필지수             | 0                               |
+| 새주소도로코드       | naRoadCd           | 새주소도로코드       | 116804166040                    |
 
 </div>
 
@@ -445,87 +445,87 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)         | 항목명(영문)        | 항목크기      | 항목구분   | 샘플데이터                      | 항목설명                         |
-|:---------------------|:--------------------|:--------------|:-----------|:--------------------------------|:---------------------------------|
-| 주용도코드명         | mainPurpsCdNm       | VARCHAR2(100) | 옵션       | 교육연구시설                    | 주용도코드명                     |
-| 기타용도             | etcPurps            | VARCHAR2(500) | 옵션       | 교육연구시설                    | 용도정보(건축물대장 주용도 정보) |
-| 지붕코드             | roofCd              | VARCHAR2(2)   | 옵션       | 90                              | 지붕코드                         |
-| 지붕코드명           | roofCdNm            | VARCHAR2(100) | 옵션       | 기타지붕                        | 지붕코드명                       |
-| 기타지붕             | etcRoof             | VARCHAR2(500) | 옵션       | 아스팔트슁글                    | 지붕정보(건축물대장 지붕 정보)   |
-| 세대수(세대)         | hhldCnt             | NUMBER(5)     | 옵션       | 0                               | 세대수(세대)                     |
-| 가구수(가구)         | fmlyCnt             | NUMBER(5)     | 옵션       | 0                               | 가구수(가구)                     |
-| 높이(m)              | heit                | NUMBER(19,9)  | 옵션       | 0                               | 높이(m)                          |
-| 지상층수             | grndFlrCnt          | NUMBER(5)     | 옵션       | 2                               | 지상층수                         |
-| 지하층수             | ugrndFlrCnt         | NUMBER(5)     | 옵션       | 0                               | 지하층수                         |
-| 승용승강기수         | rideUseElvtCnt      | NUMBER(5)     | 옵션       | 0                               | 승용승강기수                     |
-| 비상용승강기수       | emgenUseElvtCnt     | NUMBER(5)     | 옵션       | 0                               | 비상용승강기수                   |
-| 부속건축물수         | atchBldCnt          | NUMBER(5)     | 옵션       | 0                               | 부속건축물수                     |
-| 부속건축물면적(㎡)   | atchBldArea         | NUMBER(19,9)  | 옵션       | 0                               | 부속건축물면적(㎡)               |
-| 총동연면적(㎡)       | totDongTotArea      | NUMBER(19,9)  | 옵션       | 536.06                          | 총동연면적(㎡)                   |
-| 옥내기계식대수(대)   | indrMechUtcnt       | NUMBER(6)     | 옵션       | 0                               | 옥내기계식대수(대)               |
-| 옥내기계식면적(㎡)   | indrMechArea        | NUMBER(19,9)  | 옵션       | 0                               | 옥내기계식면적(㎡)               |
-| 옥외기계식대수(대)   | oudrMechUtcnt       | NUMBER(6)     | 옵션       | 0                               | 옥외기계식대수(대)               |
-| 옥외기계식면적(㎡)   | oudrMechArea        | NUMBER(19,9)  | 옵션       | 0                               | 옥외기계식면적(㎡)               |
-| 옥내자주식대수(대)   | indrAutoUtcnt       | NUMBER(6)     | 옵션       | 0                               | 옥내자주식대수(대)               |
-| 옥내자주식면적(㎡)   | indrAutoArea        | NUMBER(19,9)  | 옵션       | 0                               | 옥내자주식면적(㎡)               |
-| 옥외자주식대수(대)   | oudrAutoUtcnt       | NUMBER(6)     | 옵션       | 0                               | 옥외자주식대수(대)               |
-| 옥외자주식면적(㎡)   | oudrAutoArea        | NUMBER(19,9)  | 옵션       | 0                               | 옥외자주식면적(㎡)               |
-| 허가일               | pmsDay              | VARCHAR2(8)   | 옵션       | 19891226                        | 허가일                           |
-| 착공일               | stcnsDay            | VARCHAR2(8)   | 옵션       | nan                             | 착공일                           |
-| 사용승인일           | useAprDay           | VARCHAR2(8)   | 옵션       | 19911120                        | 사용승인일                       |
-| 허가번호년           | pmsnoYear           | VARCHAR2(4)   | 옵션       | nan                             | 허가번호년                       |
-| 허가번호기관코드     | pmsnoKikCd          | CHAR(7)       | 옵션       | nan                             | 허가번호기관코드                 |
-| 허가번호기관코드명   | pmsnoKikCdNm        | VARCHAR2(100) | 옵션       | nan                             | 허가번호기관코드명               |
-| 허가번호구분코드     | pmsnoGbCd           | VARCHAR2(4)   | 옵션       | nan                             | 허가번호구분코드                 |
-| 허가번호구분코드명   | pmsnoGbCdNm         | VARCHAR2(100) | 옵션       | nan                             | 허가번호구분코드명               |
-| 호수(호)             | hoCnt               | NUMBER(5)     | 옵션       | 0                               | 호수(호)                         |
-| 에너지효율등급       | engrGrade           | VARCHAR2(4)   | 옵션       | nan                             | 에너지효율등급                   |
-| 에너지절감율         | engrRat             | NUMBER(19,9)  | 옵션       | 0                               | 에너지절감율                     |
-| EPI점수              | engrEpi             | NUMBER(5)     | 옵션       | 0                               | EPI점수                          |
-| 친환경건축물등급     | gnBldGrade          | CHAR(1)       | 옵션       | nan                             | 친환경건축물등급                 |
-| 친환경건축물인증점수 | gnBldCert           | NUMBER(5)     | 옵션       | 0                               | 친환경건축물인증점수             |
-| 지능형건축물등급     | itgBldGrade         | CHAR(1)       | 옵션       | nan                             | 지능형건축물등급                 |
-| 지능형건축물인증점수 | itgBldCert          | NUMBER(5)     | 옵션       | 0                               | 지능형건축물인증점수             |
-| 생성일자             | crtnDay             | VARCHAR2(8)   | 필수       | 20131207                        | 생성일자                         |
-| nan                  | Items               | nan           | 필수       | nan                             | nan                              |
-| 순번                 | rnum                | NUMBER(8)     | 옵션       | 1                               | 순번                             |
-| 대지위치             | platPlc             | VARCHAR2(200) | 필수       | 서울특별시 강남구 개포동 12번지 | 대지위치                         |
-| 시군구코드           | sigunguCd           | VARCHAR2(5)   | 필수       | 11680                           | 행정표준코드                     |
-| 법정동코드           | bjdongCd            | VARCHAR2(5)   | 필수       | 10300                           | 행정표준코드                     |
-| 대지구분코드         | platGbCd            | CHAR(1)       | 옵션       | 0                               | 0:대지 1:산 2:블록               |
-| 번                   | bun                 | VARCHAR2(4)   | 옵션       | 12                              | 번                               |
-| 지                   | ji                  | VARCHAR2(4)   | 옵션       | 0                               | 지                               |
-| 관리건축물대장PK     | mgmBldrgstPk        | VARCHAR2(33)  | 필수       | 11680-700402                    | 관리건축물대장PK                 |
-| 대장구분코드         | regstrGbCd          | VARCHAR2(1)   | 옵션       | 1                               | 대장구분코드                     |
-| 대장구분코드명       | regstrGbCdNm        | VARCHAR2(100) | 옵션       | 일반                            | 대장구분코드명                   |
-| 대장종류코드         | regstrKindCd        | VARCHAR2(1)   | 옵션       | 2                               | 대장종류코드                     |
-| 대장종류코드명       | regstrKindCdNm      | VARCHAR2(100) | 옵션       | 일반건축물                      | 대장종류코드명                   |
-| 도로명대지위치       | newPlatPlc          | VARCHAR2(200) | 옵션       | nan                             | 도로명대지위치                   |
-| 건물명               | bldNm               | VARCHAR2(100) | 옵션       | nan                             | 건물명                           |
-| 특수지명             | splotNm             | VARCHAR2(200) | 옵션       | nan                             | 특수지명                         |
-| 블록                 | block               | VARCHAR2(20)  | 옵션       | nan                             | 블록                             |
-| 로트                 | lot                 | VARCHAR2(20)  | 옵션       | nan                             | 로트                             |
-| 외필지수             | bylotCnt            | NUMBER(5)     | 옵션       | 0                               | 외필지수                         |
-| 새주소도로코드       | naRoadCd            | VARCHAR2(12)  | 옵션       | nan                             | 새주소도로코드                   |
-| 새주소법정동코드     | naBjdongCd          | VARCHAR2(5)   | 옵션       | nan                             | 새주소법정동코드                 |
-| 새주소지상지하코드   | naUgrndCd           | VARCHAR2(1)   | 옵션       | 0                               | 새주소지상지하코드               |
-| 새주소본번           | naMainBun           | NUMBER(5)     | 옵션       | nan                             | 새주소본번                       |
-| 새주소부번           | naSubBun            | NUMBER(5)     | 옵션       | nan                             | 새주소부번                       |
-| 동명칭               | dongNm              | VARCHAR2(100) | 옵션       | nan                             | 동명칭                           |
-| 주부속구분코드       | mainAtchGbCd        | CHAR(1)       | 옵션       | 0                               | 주부속구분코드                   |
-| 주부속구분코드명     | mainAtchGbCdNm      | VARCHAR2(100) | 옵션       | 주건축물                        | 주부속구분코드명                 |
-| 대지면적(㎡)         | platArea            | NUMBER(19,9)  | 옵션       | 0                               | 대지면적(㎡)                     |
-| 건축면적(㎡)         | archArea            | NUMBER(19,9)  | 옵션       | 271.63                          | 건축면적(㎡)                     |
-| 건폐율(%)            | bcRat               | NUMBER(19,9)  | 옵션       | 0                               | 건폐율(%)                        |
-| 연면적(㎡)           | totArea             | NUMBER(19,9)  | 옵션       | 536.06                          | 연면적(㎡)                       |
-| 용적률산정연면적(㎡) | vlRatEstmTotArea    | NUMBER(19,9)  | 옵션       | 536.06                          | 용적률산정연면적(㎡)             |
-| 용적률(%)            | vlRat               | NUMBER(19,9)  | 옵션       | 0                               | 용적률(%)                        |
-| 구조코드             | strctCd             | CHAR(1)       | 옵션       | 11                              | 구조코드                         |
-| 구조코드명           | strctCdNm           | VARCHAR2(100) | 옵션       | 벽돌구조                        | 구조코드명                       |
-| 기타구조             | etcStrct            | VARCHAR2(500) | 옵션       | 연와조                          | 구조정보(건축물대장 주구조 정보) |
-| 주용도코드           | mainPurpsCd         | 25            | 옵션       | 10000                           | 주용도코드                       |
-| 내진설계적용여부     | rserthqkDsgnApplyYn | 1             | 옵션       | 1                               | 내진 설계 적용 여부              |
-| 내진능력             | rserthqkAblty       | 200           | 옵션       | VII-0.169g                      | 내진 능력                        |
+| 항목명(국문)         | 항목명(영문)        | 항목설명                         | 샘플데이터                      |
+|:---------------------|:--------------------|:---------------------------------|:--------------------------------|
+| 주용도코드명         | mainPurpsCdNm       | 주용도코드명                     | 교육연구시설                    |
+| 기타용도             | etcPurps            | 용도정보(건축물대장 주용도 정보) | 교육연구시설                    |
+| 지붕코드             | roofCd              | 지붕코드                         | 90                              |
+| 지붕코드명           | roofCdNm            | 지붕코드명                       | 기타지붕                        |
+| 기타지붕             | etcRoof             | 지붕정보(건축물대장 지붕 정보)   | 아스팔트슁글                    |
+| 세대수(세대)         | hhldCnt             | 세대수(세대)                     | 0                               |
+| 가구수(가구)         | fmlyCnt             | 가구수(가구)                     | 0                               |
+| 높이(m)              | heit                | 높이(m)                          | 0                               |
+| 지상층수             | grndFlrCnt          | 지상층수                         | 2                               |
+| 지하층수             | ugrndFlrCnt         | 지하층수                         | 0                               |
+| 승용승강기수         | rideUseElvtCnt      | 승용승강기수                     | 0                               |
+| 비상용승강기수       | emgenUseElvtCnt     | 비상용승강기수                   | 0                               |
+| 부속건축물수         | atchBldCnt          | 부속건축물수                     | 0                               |
+| 부속건축물면적(㎡)   | atchBldArea         | 부속건축물면적(㎡)               | 0                               |
+| 총동연면적(㎡)       | totDongTotArea      | 총동연면적(㎡)                   | 536.06                          |
+| 옥내기계식대수(대)   | indrMechUtcnt       | 옥내기계식대수(대)               | 0                               |
+| 옥내기계식면적(㎡)   | indrMechArea        | 옥내기계식면적(㎡)               | 0                               |
+| 옥외기계식대수(대)   | oudrMechUtcnt       | 옥외기계식대수(대)               | 0                               |
+| 옥외기계식면적(㎡)   | oudrMechArea        | 옥외기계식면적(㎡)               | 0                               |
+| 옥내자주식대수(대)   | indrAutoUtcnt       | 옥내자주식대수(대)               | 0                               |
+| 옥내자주식면적(㎡)   | indrAutoArea        | 옥내자주식면적(㎡)               | 0                               |
+| 옥외자주식대수(대)   | oudrAutoUtcnt       | 옥외자주식대수(대)               | 0                               |
+| 옥외자주식면적(㎡)   | oudrAutoArea        | 옥외자주식면적(㎡)               | 0                               |
+| 허가일               | pmsDay              | 허가일                           | 19891226                        |
+| 착공일               | stcnsDay            | 착공일                           | nan                             |
+| 사용승인일           | useAprDay           | 사용승인일                       | 19911120                        |
+| 허가번호년           | pmsnoYear           | 허가번호년                       | nan                             |
+| 허가번호기관코드     | pmsnoKikCd          | 허가번호기관코드                 | nan                             |
+| 허가번호기관코드명   | pmsnoKikCdNm        | 허가번호기관코드명               | nan                             |
+| 허가번호구분코드     | pmsnoGbCd           | 허가번호구분코드                 | nan                             |
+| 허가번호구분코드명   | pmsnoGbCdNm         | 허가번호구분코드명               | nan                             |
+| 호수(호)             | hoCnt               | 호수(호)                         | 0                               |
+| 에너지효율등급       | engrGrade           | 에너지효율등급                   | nan                             |
+| 에너지절감율         | engrRat             | 에너지절감율                     | 0                               |
+| EPI점수              | engrEpi             | EPI점수                          | 0                               |
+| 친환경건축물등급     | gnBldGrade          | 친환경건축물등급                 | nan                             |
+| 친환경건축물인증점수 | gnBldCert           | 친환경건축물인증점수             | 0                               |
+| 지능형건축물등급     | itgBldGrade         | 지능형건축물등급                 | nan                             |
+| 지능형건축물인증점수 | itgBldCert          | 지능형건축물인증점수             | 0                               |
+| 생성일자             | crtnDay             | 생성일자                         | 20131207                        |
+| nan                  | Items               | nan                              | nan                             |
+| 순번                 | rnum                | 순번                             | 1                               |
+| 대지위치             | platPlc             | 대지위치                         | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드           | sigunguCd           | 행정표준코드                     | 11680                           |
+| 법정동코드           | bjdongCd            | 행정표준코드                     | 10300                           |
+| 대지구분코드         | platGbCd            | 0:대지 1:산 2:블록               | 0                               |
+| 번                   | bun                 | 번                               | 12                              |
+| 지                   | ji                  | 지                               | 0                               |
+| 관리건축물대장PK     | mgmBldrgstPk        | 관리건축물대장PK                 | 11680-700402                    |
+| 대장구분코드         | regstrGbCd          | 대장구분코드                     | 1                               |
+| 대장구분코드명       | regstrGbCdNm        | 대장구분코드명                   | 일반                            |
+| 대장종류코드         | regstrKindCd        | 대장종류코드                     | 2                               |
+| 대장종류코드명       | regstrKindCdNm      | 대장종류코드명                   | 일반건축물                      |
+| 도로명대지위치       | newPlatPlc          | 도로명대지위치                   | nan                             |
+| 건물명               | bldNm               | 건물명                           | nan                             |
+| 특수지명             | splotNm             | 특수지명                         | nan                             |
+| 블록                 | block               | 블록                             | nan                             |
+| 로트                 | lot                 | 로트                             | nan                             |
+| 외필지수             | bylotCnt            | 외필지수                         | 0                               |
+| 새주소도로코드       | naRoadCd            | 새주소도로코드                   | nan                             |
+| 새주소법정동코드     | naBjdongCd          | 새주소법정동코드                 | nan                             |
+| 새주소지상지하코드   | naUgrndCd           | 새주소지상지하코드               | 0                               |
+| 새주소본번           | naMainBun           | 새주소본번                       | nan                             |
+| 새주소부번           | naSubBun            | 새주소부번                       | nan                             |
+| 동명칭               | dongNm              | 동명칭                           | nan                             |
+| 주부속구분코드       | mainAtchGbCd        | 주부속구분코드                   | 0                               |
+| 주부속구분코드명     | mainAtchGbCdNm      | 주부속구분코드명                 | 주건축물                        |
+| 대지면적(㎡)         | platArea            | 대지면적(㎡)                     | 0                               |
+| 건축면적(㎡)         | archArea            | 건축면적(㎡)                     | 271.63                          |
+| 건폐율(%)            | bcRat               | 건폐율(%)                        | 0                               |
+| 연면적(㎡)           | totArea             | 연면적(㎡)                       | 536.06                          |
+| 용적률산정연면적(㎡) | vlRatEstmTotArea    | 용적률산정연면적(㎡)             | 536.06                          |
+| 용적률(%)            | vlRat               | 용적률(%)                        | 0                               |
+| 구조코드             | strctCd             | 구조코드                         | 11                              |
+| 구조코드명           | strctCdNm           | 구조코드명                       | 벽돌구조                        |
+| 기타구조             | etcStrct            | 구조정보(건축물대장 주구조 정보) | 연와조                          |
+| 주용도코드           | mainPurpsCd         | 주용도코드                       | 10000                           |
+| 내진설계적용여부     | rserthqkDsgnApplyYn | 내진 설계 적용 여부              | 1                               |
+| 내진능력             | rserthqkAblty       | 내진 능력                        | VII-0.169g                      |
 
 </div>
 
@@ -715,44 +715,43 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)       | 항목명(영문)   | 항목크기      | 항목구분   | 샘플데이터                      | 항목설명                  |
-|:-------------------|:---------------|:--------------|:-----------|:--------------------------------|:--------------------------|
-| 순번               | rnum           | NUMBER(8)     | 옵션       | 1                               | 순번                      |
-| 대지위치           | platPlc        | VARCHAR2(200) | 필수       | 서울특별시 강남구 개포동 12번지 | 대지위치                  |
-| 시군구코드         | sigunguCd      | VARCHAR2(5)   | 필수       | 11680                           | 행정표준코드              |
-| 법정동코드         | bjdongCd       | VARCHAR2(5)   | 필수       | 10300                           | 행정표준코드              |
-| 대지구분코드       | platGbCd       | CHAR(1)       | 옵션       | 0                               | 0:대지 1:산 2:블록        |
-| 번                 | bun            | VARCHAR2(4)   | 옵션       | 12                              | 번                        |
-| 지                 | ji             | VARCHAR2(4)   | 옵션       | 0                               | 지                        |
-| 관리건축물대장PK   | mgmBldrgstPk   | VARCHAR2(33)  | 필수       | 11680-700402                    | 관리건축물대장PK          |
-| 도로명대지위치     | newPlatPlc     | VARCHAR2(200) | 옵션       | nan                             | 도로명대지위치            |
-| 건물명             | bldNm          | VARCHAR2(100) | 옵션       | nan                             | 건물명                    |
-| 특수지명           | splotNm        | VARCHAR2(200) | 옵션       | nan                             | 특수지명                  |
-| 블록               | block          | VARCHAR2(20)  | 옵션       | nan                             | 블록                      |
-| 로트               | lot            | VARCHAR2(20)  | 옵션       | nan                             | 로트                      |
-| 새주소도로코드     | naRoadCd       | VARCHAR2(12)  | 옵션       | nan                             | 새주소도로코드            |
-| 새주소법정동코드   | naBjdongCd     | VARCHAR2(5)   | 옵션       | nan                             | 새주소법정동코드          |
-| 새주소지상지하코드 | naUgrndCd      | VARCHAR2(1)   | 옵션       | 0                               | 새주소지상지하코드        |
-| 새주소본번         | naMainBun      | NUMBER(5)     | 옵션       | nan                             | 새주소본번                |
-| 새주소부번         | naSubBun       | NUMBER(5)     | 옵션       | nan                             | 새주소부번                |
-| 동명칭             | dongNm         | VARCHAR2(100) | 옵션       | nan                             | 동명칭                    |
-| 층구분코드         | flrGbCd        | VARCHAR2(2)   | 옵션       | 20                              | 층구분코드                |
-| 층구분코드명       | flrGbCdNm      | VARCHAR2(100) | 옵션       | 지상                            | 층구분코드명              |
-| 층번호             | flrNo          | NUMBER(4)     | 옵션       | 1                               | 층번호                    |
-| 층번호명           | flrNoNm        | VARCHAR2(100) | 옵션       | 1층                             | 층번호명                  |
-| 구조코드           | strctCd        | CHAR(1)       | 옵션       | 11                              | 구조코드                  |
-| 구조코드명         | strctCdNm      | VARCHAR2(100) | 옵션       | 벽돌구조                        | 구조코드명                |
-| 기타구조           | etcStrct       | VARCHAR2(500) | 옵션       | 연와조                          | 구조정보(건축물대장 구조) |
-| 주용도코드         | mainPurpsCd    | VARCHAR2(5)   | 옵션       | 10999                           | 주용도코드                |
-| 주용도코드명       | mainPurpsCdNm  | VARCHAR2(100) | 옵션       | 기타교육연구시설                | 주용도코드명              |
-| 기타용도           | etcPurps       | VARCHAR2(500) | 옵션       | 교육연구및복지시설              | 용도정보(건축물대장 용도) |
-| 주부속구분코드     | mainAtchGbCd   | CHAR(1)       | 옵션       | 0                               | 주부속구분코드            |
-| 주부속구분코드명   | mainAtchGbCdNm | VARCHAR2(100) | 옵션       | 주건축물                        | 주부속구분코드명          |
-| 면적(㎡)           | area           | NUMBER(19,9)  | 옵션       | 271.63                          | 면적(㎡)                  |
-| 면적제외여부       | areaExctYn     | VARCHAR2(1)   | 옵션       | nan                             | 0: N 1: Y                 |
-| 생성일자           | crtnDay        | VARCHAR2(8)   | 필수       | 20131207                        | 생성일자                  |
-| nan                | Items          | nan           | 필수       | nan                             | nan                       |
-​
+| 항목명(국문)       | 항목명(영문)   | 항목설명                  | 샘플데이터                      |
+|:-------------------|:---------------|:--------------------------|:--------------------------------|
+| 순번               | rnum           | 순번                      | 1                               |
+| 대지위치           | platPlc        | 대지위치                  | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드         | sigunguCd      | 행정표준코드              | 11680                           |
+| 법정동코드         | bjdongCd       | 행정표준코드              | 10300                           |
+| 대지구분코드       | platGbCd       | 0:대지 1:산 2:블록        | 0                               |
+| 번                 | bun            | 번                        | 12                              |
+| 지                 | ji             | 지                        | 0                               |
+| 관리건축물대장PK   | mgmBldrgstPk   | 관리건축물대장PK          | 11680-700402                    |
+| 도로명대지위치     | newPlatPlc     | 도로명대지위치            | nan                             |
+| 건물명             | bldNm          | 건물명                    | nan                             |
+| 특수지명           | splotNm        | 특수지명                  | nan                             |
+| 블록               | block          | 블록                      | nan                             |
+| 로트               | lot            | 로트                      | nan                             |
+| 새주소도로코드     | naRoadCd       | 새주소도로코드            | nan                             |
+| 새주소법정동코드   | naBjdongCd     | 새주소법정동코드          | nan                             |
+| 새주소지상지하코드 | naUgrndCd      | 새주소지상지하코드        | 0                               |
+| 새주소본번         | naMainBun      | 새주소본번                | nan                             |
+| 새주소부번         | naSubBun       | 새주소부번                | nan                             |
+| 동명칭             | dongNm         | 동명칭                    | nan                             |
+| 층구분코드         | flrGbCd        | 층구분코드                | 20                              |
+| 층구분코드명       | flrGbCdNm      | 층구분코드명              | 지상                            |
+| 층번호             | flrNo          | 층번호                    | 1                               |
+| 층번호명           | flrNoNm        | 층번호명                  | 1층                             |
+| 구조코드           | strctCd        | 구조코드                  | 11                              |
+| 구조코드명         | strctCdNm      | 구조코드명                | 벽돌구조                        |
+| 기타구조           | etcStrct       | 구조정보(건축물대장 구조) | 연와조                          |
+| 주용도코드         | mainPurpsCd    | 주용도코드                | 10999                           |
+| 주용도코드명       | mainPurpsCdNm  | 주용도코드명              | 기타교육연구시설                |
+| 기타용도           | etcPurps       | 용도정보(건축물대장 용도) | 교육연구및복지시설              |
+| 주부속구분코드     | mainAtchGbCd   | 주부속구분코드            | 0                               |
+| 주부속구분코드명   | mainAtchGbCdNm | 주부속구분코드명          | 주건축물                        |
+| 면적(㎡)           | area           | 면적(㎡)                  | 271.63                          |
+| 면적제외여부       | areaExctYn     | 0: N 1: Y                 | nan                             |
+| 생성일자           | crtnDay        | 생성일자                  | 20131207                        |
+| nan                | Items          | nan                       | nan                             |
 
 </div>
 
@@ -941,43 +940,43 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)       | 항목명(영문)     | 항목크기      | 항목구분   | 샘플데이터                        | 항목설명           |
-|:-------------------|:-----------------|:--------------|:-----------|:----------------------------------|:-------------------|
-| 대지구분코드       | platGbCd         | CHAR(1)       | 옵         | 0                                 | 0:대지 1:산 2:블록 |
-| 번                 | bun              | VARCHAR2(4)   | 옵         | 12                                | 번                 |
-| 지                 | ji               | VARCHAR2(4)   | 옵         | 5                                 | 지                 |
-| 관리건축물대장PK   | mgmBldrgstPk     | VARCHAR2(33)  | 필         | 11680-1920002                     | 관리건축물대장PK   |
-| 대장구분코드       | regstrGbCd       | VARCHAR2(1)   | 옵         | 1                                 | 대장구분코드       |
-| 대장구분코드명     | regstrGbCdNm     | VARCHAR2(100) | 옵         | 일반                              | 대장구분코드명     |
-| 대장종류코드       | regstrKindCd     | VARCHAR2(1)   | 옵         | 2                                 | 대장종류코드       |
-| 대장종류코드명     | regstrKindCdNm   | VARCHAR2(100) | 옵         | 일반건축물                        | 대장종류코드명     |
-| 도로명대지위치     | newPlatPlc       | VARCHAR2(200) | 옵         | 서울특별시강남구개포로613         | 도로명대지위치     |
-| 건물명             | bldNm            | VARCHAR2(100) | 옵         | nan                               | 건물명             |
-| 특수지명           | splotNm          | VARCHAR2(200) | 옵         | nan                               | 특수지명           |
-| 블록               | block            | VARCHAR2(20)  | 옵         | nan                               | 블록               |
-| 로트               | lot              | VARCHAR2(20)  | 옵         | nan                               | 로트               |
-| 새주소도로코드     | naRoadCd         | VARCHAR2(12)  | 옵         | 116803122001                      | 새주소도로코드     |
-| 새주소법정동코드   | naBjdongCd       | VARCHAR2(5)   | 옵         | 10301                             | 새주소법정동코드   |
-| 새주소지상지하코드 | naUgrndCd        | VARCHAR2(1)   | 옵         | 0                                 | 새주소지상지하코드 |
-| 새주소본번         | naMainBun        | NUMBER(5)     | 옵         | 613                               | 새주소본번         |
-| 새주소부번         | naSubBun         | NUMBER(5)     | 옵         | 0                                 | 새주소부번         |
-| 부속대장구분코드   | atchRegstrGbCd   | CHAR(1)       | 옵         | 1                                 | 부속대장구분코드   |
-| 부속대장구분코드명 | atchRegstrGbCdNm | VARCHAR2(100) | 옵         | 일반                              | 부속대장구분코드명 |
-| 부속시군구코드     | atchSigunguCd    | VARCHAR2(5)   | 옵         | 11680                             | 부속시군구코드     |
-| 부속법정동코드     | atchBjdongCd     | VARCHAR2(5)   | 옵         | 10300                             | 부속법정동코드     |
-| 부속대지구분코드   | atchPlatGbCd     | CHAR(1)       | 옵         | 0                                 | 부속대지구분코드   |
-| 부속번             | atchBun          | VARCHAR2(4)   | 옵         | 12                                | 부속번             |
-| 부속지             | atchJi           | VARCHAR2(4)   | 옵         | 48                                | 부속지             |
-| 부속특수지명       | atchSplotNm      | VARCHAR2(200) | 옵         | nan                               | 부속특수지명       |
-| 부속블록           | atchBlock        | VARCHAR2(20)  | 옵         | nan                               | 부속블록           |
-| 부속로트           | atchLot          | VARCHAR2(20)  | 옵         | nan                               | 부속로트           |
-| 부속기타지번명     | atchEtcJibunNm   | VARCHAR2(300) | 옵         | nan                               | 부속기타지번명     |
-| 생성일자           | crtnDay          | VARCHAR2(8)   | 필         | 20140325                          | 생성일자           |
-| nan                | Items            | nan           | 필         | nan                               | nan                |
-| 순번               | rnum             | NUMBER(8)     | 옵         | 1                                 | 순번               |
-| 대지위치           | platPlc          | VARCHAR2(200) | 필         | 서울특별시 강남구 개포동 12-5번지 | 대지위치           |
-| 시군구코드         | sigunguCd        | VARCHAR2(5)   | 필         | 11680                             | 행정표준코드       |
-| 법정동코드         | bjdongCd         | VARCHAR2(5)   | 필         | 10300                             | 행정표준코드       |
+| 항목명(국문)       | 항목명(영문)     | 항목설명           | 샘플데이터                        |
+|:-------------------|:-----------------|:-------------------|:----------------------------------|
+| 대지구분코드       | platGbCd         | 0:대지 1:산 2:블록 | 0                                 |
+| 번                 | bun              | 번                 | 12                                |
+| 지                 | ji               | 지                 | 5                                 |
+| 관리건축물대장PK   | mgmBldrgstPk     | 관리건축물대장PK   | 11680-1920002                     |
+| 대장구분코드       | regstrGbCd       | 대장구분코드       | 1                                 |
+| 대장구분코드명     | regstrGbCdNm     | 대장구분코드명     | 일반                              |
+| 대장종류코드       | regstrKindCd     | 대장종류코드       | 2                                 |
+| 대장종류코드명     | regstrKindCdNm   | 대장종류코드명     | 일반건축물                        |
+| 도로명대지위치     | newPlatPlc       | 도로명대지위치     | 서울특별시강남구개포로613         |
+| 건물명             | bldNm            | 건물명             | nan                               |
+| 특수지명           | splotNm          | 특수지명           | nan                               |
+| 블록               | block            | 블록               | nan                               |
+| 로트               | lot              | 로트               | nan                               |
+| 새주소도로코드     | naRoadCd         | 새주소도로코드     | 116803122001                      |
+| 새주소법정동코드   | naBjdongCd       | 새주소법정동코드   | 10301                             |
+| 새주소지상지하코드 | naUgrndCd        | 새주소지상지하코드 | 0                                 |
+| 새주소본번         | naMainBun        | 새주소본번         | 613                               |
+| 새주소부번         | naSubBun         | 새주소부번         | 0                                 |
+| 부속대장구분코드   | atchRegstrGbCd   | 부속대장구분코드   | 1                                 |
+| 부속대장구분코드명 | atchRegstrGbCdNm | 부속대장구분코드명 | 일반                              |
+| 부속시군구코드     | atchSigunguCd    | 부속시군구코드     | 11680                             |
+| 부속법정동코드     | atchBjdongCd     | 부속법정동코드     | 10300                             |
+| 부속대지구분코드   | atchPlatGbCd     | 부속대지구분코드   | 0                                 |
+| 부속번             | atchBun          | 부속번             | 12                                |
+| 부속지             | atchJi           | 부속지             | 48                                |
+| 부속특수지명       | atchSplotNm      | 부속특수지명       | nan                               |
+| 부속블록           | atchBlock        | 부속블록           | nan                               |
+| 부속로트           | atchLot          | 부속로트           | nan                               |
+| 부속기타지번명     | atchEtcJibunNm   | 부속기타지번명     | nan                               |
+| 생성일자           | crtnDay          | 생성일자           | 20140325                          |
+| nan                | Items            | nan                | nan                               |
+| 순번               | rnum             | 순번               | 1                                 |
+| 대지위치           | platPlc          | 대지위치           | 서울특별시 강남구 개포동 12-5번지 |
+| 시군구코드         | sigunguCd        | 행정표준코드       | 11680                             |
+| 법정동코드         | bjdongCd         | 행정표준코드       | 10300                             |
 
 </div>
 
@@ -1046,49 +1045,49 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)       | 항목명(영문)      | 항목크기      | 항목구분   | 샘플데이터                      | 항목설명           |
-|:-------------------|:------------------|:--------------|:-----------|:--------------------------------|:-------------------|
-| 대장구분코드       | regstrGbCd        | VARCHAR2(1)   | 옵         | 2                               | 대장구분코드       |
-| 대장구분코드명     | regstrGbCdNm      | VARCHAR2(100) | 옵         | 집합                            | 대장구분코드명     |
-| 대장종류코드       | regstrKindCd      | VARCHAR2(1)   | 옵         | 4                               | 대장종류코드       |
-| 대장종류코드명     | regstrKindCdNm    | VARCHAR2(100) | 옵         | 전유부                          | 대장종류코드명     |
-| 도로명대지위치     | newPlatPlc        | VARCHAR2(200) | 옵         | nan                             | 도로명대지위치     |
-| 건물명             | bldNm             | VARCHAR2(100) | 옵         | 대치아파트 제219동              | 건물명             |
-| 특수지명           | splotNm           | VARCHAR2(200) | 옵         | nan                             | 특수지명           |
-| 블록               | block             | VARCHAR2(20)  | 옵         | nan                             | 블록               |
-| 로트               | lot               | VARCHAR2(20)  | 옵         | nan                             | 로트               |
-| 새주소도로코드     | naRoadCd          | VARCHAR2(12)  | 옵         | nan                             | 새주소도로코드     |
-| 새주소법정동코드   | naBjdongCd        | VARCHAR2(5)   | 옵         | nan                             | 새주소법정동코드   |
-| 새주소지상지하코드 | naUgrndCd         | VARCHAR2(1)   | 옵         | 0                               | 새주소지상지하코드 |
-| 새주소본번         | naMainBun         | NUMBER(5)     | 옵         | nan                             | 새주소본번         |
-| 새주소부번         | naSubBun          | NUMBER(5)     | 옵         | nan                             | 새주소부번         |
-| 동명칭             | dongNm            | VARCHAR2(100) | 옵         | 219                             | 동명칭             |
-| 호명칭             | hoNm              | VARCHAR2(100) | 옵         | 1502호                          | 호명칭             |
-| 층구분코드         | flrGbCd           | VARCHAR2(2)   | 옵         | 20                              | 층구분코드         |
-| 층구분코드명       | flrGbCdNm         | VARCHAR2(100) | 옵         | 지상                            | 층구분코드명       |
-| 층번호             | flrNo             | NUMBER(4)     | 옵         | 15                              | 층번호             |
-| 층번호명           | flrNoNm           | VARCHAR2(100) | 옵         | 15층                            | 층번호명           |
-| 전유공용구분코드   | exposPubuseGbCd   | CHAR(1)       | 옵         | 1                               | 전유공용구분코드   |
-| 전유공용구분코드명 | exposPubuseGbCdNm | VARCHAR2(100) | 옵         | 전유                            | 전유공용구분코드명 |
-| 주부속구분코드     | mainAtchGbCd      | CHAR(1)       | 옵         | 0                               | 주부속구분코드     |
-| 주부속구분코드명   | mainAtchGbCdNm    | VARCHAR2(100) | 옵         | 주건축물                        | 주부속구분코드명   |
-| 구조코드           | strctCd           | CHAR(1)       | 옵         | 21                              | 구조코드           |
-| 구조코드명         | strctCdNm         | VARCHAR2(100) | 옵         | 철근콘크리트구조                | 구조코드명         |
-| 기타구조           | etcStrct          | VARCHAR2(500) | 옵         | 철근콘크리트구조                | 기타구조           |
-| 주용도코드         | mainPurpsCd       | VARCHAR2(5)   | 옵         | 2001                            | 주용도코드         |
-| 주용도코드명       | mainPurpsCdNm     | VARCHAR2(100) | 옵         | 아파트                          | 주용도코드명       |
-| 기타용도           | etcPurps          | VARCHAR2(500) | 옵         | 아파트(일부공유면적포함)        | 기타용도           |
-| 면적(㎡)           | area              | NUMBER(19,9)  | 옵         | 49.86                           | 면적(㎡)           |
-| 생성일자           | crtnDay           | VARCHAR2(8)   | 필         | 20090320                        | 생성일자           |
-| nan                | Items             | nan           | 필         | nan                             | nan                |
-| 순번               | rnum              | NUMBER(8)     | 옵         | 1                               | 순번               |
-| 대지위치           | platPlc           | VARCHAR2(200) | 필         | 서울특별시 강남구 개포동 12번지 | 대지위치           |
-| 시군구코드         | sigunguCd         | VARCHAR2(5)   | 필         | 11680                           | 행정표준코드       |
-| 법정동코드         | bjdongCd          | VARCHAR2(5)   | 필         | 10300                           | 행정표준코드       |
-| 대지구분코드       | platGbCd          | CHAR(1)       | 옵         | 0                               | 0:대지 1:산 2:블록 |
-| 번                 | bun               | VARCHAR2(4)   | 옵         | 12                              | 번                 |
-| 지                 | ji                | VARCHAR2(4)   | 옵         | 0                               | 지                 |
-| 관리건축물대장PK   | mgmBldrgstPk      | VARCHAR2(33)  | 필         | 11680-3609902                   | 관리건축물대장PK   |
+| 항목명(국문)       | 항목명(영문)      | 항목설명           | 샘플데이터                      |
+|:-------------------|:------------------|:-------------------|:--------------------------------|
+| 대장구분코드       | regstrGbCd        | 대장구분코드       | 2                               |
+| 대장구분코드명     | regstrGbCdNm      | 대장구분코드명     | 집합                            |
+| 대장종류코드       | regstrKindCd      | 대장종류코드       | 4                               |
+| 대장종류코드명     | regstrKindCdNm    | 대장종류코드명     | 전유부                          |
+| 도로명대지위치     | newPlatPlc        | 도로명대지위치     | nan                             |
+| 건물명             | bldNm             | 건물명             | 대치아파트 제219동              |
+| 특수지명           | splotNm           | 특수지명           | nan                             |
+| 블록               | block             | 블록               | nan                             |
+| 로트               | lot               | 로트               | nan                             |
+| 새주소도로코드     | naRoadCd          | 새주소도로코드     | nan                             |
+| 새주소법정동코드   | naBjdongCd        | 새주소법정동코드   | nan                             |
+| 새주소지상지하코드 | naUgrndCd         | 새주소지상지하코드 | 0                               |
+| 새주소본번         | naMainBun         | 새주소본번         | nan                             |
+| 새주소부번         | naSubBun          | 새주소부번         | nan                             |
+| 동명칭             | dongNm            | 동명칭             | 219                             |
+| 호명칭             | hoNm              | 호명칭             | 1502호                          |
+| 층구분코드         | flrGbCd           | 층구분코드         | 20                              |
+| 층구분코드명       | flrGbCdNm         | 층구분코드명       | 지상                            |
+| 층번호             | flrNo             | 층번호             | 15                              |
+| 층번호명           | flrNoNm           | 층번호명           | 15층                            |
+| 전유공용구분코드   | exposPubuseGbCd   | 전유공용구분코드   | 1                               |
+| 전유공용구분코드명 | exposPubuseGbCdNm | 전유공용구분코드명 | 전유                            |
+| 주부속구분코드     | mainAtchGbCd      | 주부속구분코드     | 0                               |
+| 주부속구분코드명   | mainAtchGbCdNm    | 주부속구분코드명   | 주건축물                        |
+| 구조코드           | strctCd           | 구조코드           | 21                              |
+| 구조코드명         | strctCdNm         | 구조코드명         | 철근콘크리트구조                |
+| 기타구조           | etcStrct          | 기타구조           | 철근콘크리트구조                |
+| 주용도코드         | mainPurpsCd       | 주용도코드         | 2001                            |
+| 주용도코드명       | mainPurpsCdNm     | 주용도코드명       | 아파트                          |
+| 기타용도           | etcPurps          | 기타용도           | 아파트(일부공유면적포함)        |
+| 면적(㎡)           | area              | 면적(㎡)           | 49.86                           |
+| 생성일자           | crtnDay           | 생성일자           | 20090320                        |
+| nan                | Items             | nan                | nan                             |
+| 순번               | rnum              | 순번               | 1                               |
+| 대지위치           | platPlc           | 대지위치           | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드         | sigunguCd         | 행정표준코드       | 11680                           |
+| 법정동코드         | bjdongCd          | 행정표준코드       | 10300                           |
+| 대지구분코드       | platGbCd          | 0:대지 1:산 2:블록 | 0                               |
+| 번                 | bun               | 번                 | 12                              |
+| 지                 | ji                | 지                 | 0                               |
+| 관리건축물대장PK   | mgmBldrgstPk      | 관리건축물대장PK   | 11680-3609902                   |
 
 </div>
 
@@ -1277,39 +1276,39 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)       | 항목명(영문)   | 항목크기      | 항목구분   | 샘플데이터                      | 항목설명           |
-|:-------------------|:---------------|:--------------|:-----------|:--------------------------------|:-------------------|
-| 지                 | ji             | VARCHAR2(4)   | 옵         | 0                               | 지                 |
-| 관리건축물대장PK   | mgmBldrgstPk   | VARCHAR2(33)  | 필         | 11680-10302                     | 관리건축물대장PK   |
-| 대장구분코드       | regstrGbCd     | VARCHAR2(1)   | 옵         | 2                               | 대장구분코드       |
-| 대장구분코드명     | regstrGbCdNm   | VARCHAR2(100) | 옵         | 집합                            | 대장구분코드명     |
-| 대장종류코드       | regstrKindCd   | VARCHAR2(1)   | 옵         | 1                               | 대장종류코드       |
-| 대장종류코드명     | regstrKindCdNm | VARCHAR2(100) | 옵         | 집합                            | 대장종류코드명     |
-| 도로명대지위치     | newPlatPlc     | VARCHAR2(200) | 옵         | 서울특별시강남구개포로109길5    | 도로명대지위치     |
-| 건물명             | bldNm          | VARCHAR2(100) | 옵         | 대치,대청 아파트                | 건물명             |
-| 특수지명           | splotNm        | VARCHAR2(200) | 옵         | nan                             | 특수지명           |
-| 블록               | block          | VARCHAR2(20)  | 옵         | nan                             | 블록               |
-| 로트               | lot            | VARCHAR2(20)  | 옵         | nan                             | 로트               |
-| 새주소도로코드     | naRoadCd       | VARCHAR2(12)  | 옵         | 116804166040                    | 새주소도로코드     |
-| 새주소법정동코드   | naBjdongCd     | VARCHAR2(5)   | 옵         | 10301                           | 새주소법정동코드   |
-| 새주소지상지하코드 | naUgrndCd      | VARCHAR2(1)   | 옵         | 0                               | 새주소지상지하코드 |
-| 새주소본번         | naMainBun      | NUMBER(5)     | 옵         | 5                               | 새주소본번         |
-| 새주소부번         | naSubBun       | NUMBER(5)     | 옵         | 0                               | 새주소부번         |
-| 형식코드           | modeCd         | VARCHAR2(3)   | 옵         | 299                             | 형식코드           |
-| 형식코드명         | modeCdNm       | VARCHAR2(100) | 옵         | 기타단독정화조                  | 형식코드명         |
-| 기타형식           | etcMode        | VARCHAR2(200) | 옵         | nan                             | 기타형식           |
-| 단위구분코드       | unitGbCd       | CHAR(1)       | 옵         | nan                             | 단위구분코드       |
-| 단위구분코드명     | unitGbCdNm     | VARCHAR2(100) | 옵         | nan                             | 단위구분코드명     |
-| 용량(인용)         | capaPsper      | NUMBER(19,9)  | 옵         | 300                             | 용량(인용)         |
-| 용량(루베)         | capaLube       | NUMBER(19,9)  | 옵         | 0                               | 용량(루베)         |
-| 생성일자           | crtnDay        | VARCHAR2(8)   | 필         | 20120822                        | 생성일자           |
-| nan                | Items          | nan           | 필         | nan                             | nan                |
-| 순번               | rnum           | NUMBER(8)     | 옵         | 1                               | 순번               |
-| 대지위치           | platPlc        | VARCHAR2(200) | 필         | 서울특별시 강남구 개포동 12번지 | 대지위치           |
-| 시군구코드         | sigunguCd      | VARCHAR2(5)   | 필         | 11680                           | 행정표준코드       |
-| 법정동코드         | bjdongCd       | VARCHAR2(5)   | 필         | 10300                           | 행정표준코드       |
-| 대지구분코드       | platGbCd       | CHAR(1)       | 옵         | 0                               | 0:대지 1:산 2:블록 |
-| 번                 | bun            | VARCHAR2(4)   | 옵         | 12                              | 번                 |
+| 항목명(국문)       | 항목명(영문)   | 항목설명           | 샘플데이터                      |
+|:-------------------|:---------------|:-------------------|:--------------------------------|
+| 지                 | ji             | 지                 | 0                               |
+| 관리건축물대장PK   | mgmBldrgstPk   | 관리건축물대장PK   | 11680-10302                     |
+| 대장구분코드       | regstrGbCd     | 대장구분코드       | 2                               |
+| 대장구분코드명     | regstrGbCdNm   | 대장구분코드명     | 집합                            |
+| 대장종류코드       | regstrKindCd   | 대장종류코드       | 1                               |
+| 대장종류코드명     | regstrKindCdNm | 대장종류코드명     | 집합                            |
+| 도로명대지위치     | newPlatPlc     | 도로명대지위치     | 서울특별시강남구개포로109길5    |
+| 건물명             | bldNm          | 건물명             | 대치,대청 아파트                |
+| 특수지명           | splotNm        | 특수지명           | nan                             |
+| 블록               | block          | 블록               | nan                             |
+| 로트               | lot            | 로트               | nan                             |
+| 새주소도로코드     | naRoadCd       | 새주소도로코드     | 116804166040                    |
+| 새주소법정동코드   | naBjdongCd     | 새주소법정동코드   | 10301                           |
+| 새주소지상지하코드 | naUgrndCd      | 새주소지상지하코드 | 0                               |
+| 새주소본번         | naMainBun      | 새주소본번         | 5                               |
+| 새주소부번         | naSubBun       | 새주소부번         | 0                               |
+| 형식코드           | modeCd         | 형식코드           | 299                             |
+| 형식코드명         | modeCdNm       | 형식코드명         | 기타단독정화조                  |
+| 기타형식           | etcMode        | 기타형식           | nan                             |
+| 단위구분코드       | unitGbCd       | 단위구분코드       | nan                             |
+| 단위구분코드명     | unitGbCdNm     | 단위구분코드명     | nan                             |
+| 용량(인용)         | capaPsper      | 용량(인용)         | 300                             |
+| 용량(루베)         | capaLube       | 용량(루베)         | 0                               |
+| 생성일자           | crtnDay        | 생성일자           | 20120822                        |
+| nan                | Items          | nan                | nan                             |
+| 순번               | rnum           | 순번               | 1                               |
+| 대지위치           | platPlc        | 대지위치           | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드         | sigunguCd      | 행정표준코드       | 11680                           |
+| 법정동코드         | bjdongCd       | 행정표준코드       | 10300                           |
+| 대지구분코드       | platGbCd       | 0:대지 1:산 2:블록 | 0                               |
+| 번                 | bun            | 번                 | 12                              |
 
 </div>
 
@@ -1402,34 +1401,34 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)       | 항목명(영문)   | 항목크기      | 항목구분   | 샘플데이터                      | 항목설명           |
-|:-------------------|:---------------|:--------------|:-----------|:--------------------------------|:-------------------|
-| 특수지명           | splotNm        | VARCHAR2(200) | 옵션       | nan                             | 특수지명           |
-| 블록               | block          | VARCHAR2(20)  | 옵션       | nan                             | 블록               |
-| 로트               | lot            | VARCHAR2(20)  | 옵션       | nan                             | 로트               |
-| 외필지수           | bylotCnt       | NUMBER(5)     | 옵션       | 0                               | 외필지수           |
-| 새주소도로코드     | naRoadCd       | VARCHAR2(12)  | 옵션       | nan                             | 새주소도로코드     |
-| 새주소법정동코드   | naBjdongCd     | VARCHAR2(5)   | 옵션       | nan                             | 새주소법정동코드   |
-| 새주소지상지하코드 | naUgrndCd      | VARCHAR2(1)   | 옵션       | 0                               | 새주소지상지하코드 |
-| 새주소본번         | naMainBun      | NUMBER(5)     | 옵션       | 0                               | 새주소본번         |
-| 새주소부번         | naSubBun       | NUMBER(5)     | 옵션       | 0                               | 새주소부번         |
-| 주택가격           | hsprc          | NUMBER(15)    | 옵션       | 381000000                       | 주택가격           |
-| 생성일자           | crtnDay        | VARCHAR2(8)   | 필수       | 20090320                        | 생성일자           |
-| nan                | Items          | nan           | 필수       | nan                             | nan                |
-| 순번               | rnum           | NUMBER(8)     | 옵션       | 1                               | 순번               |
-| 대지위치           | platPlc        | VARCHAR2(200) | 필수       | 서울특별시 강남구 개포동 12번지 | 대지위치           |
-| 시군구코드         | sigunguCd      | VARCHAR2(5)   | 필수       | 11680                           | 행정표준코드       |
-| 법정동코드         | bjdongCd       | VARCHAR2(5)   | 필수       | 10300                           | 행정표준코드       |
-| 대지구분코드       | platGbCd       | CHAR(1)       | 옵션       | 0                               | 0:대지 1:산 2:블록 |
-| 번                 | bun            | VARCHAR2(4)   | 옵션       | 12                              | 번                 |
-| 지                 | ji             | VARCHAR2(4)   | 옵션       | 0                               | 지                 |
-| 관리건축물대장PK   | mgmBldrgstPk   | VARCHAR2(33)  | 필수       | 11680-36099                     | 관리건축물대장PK   |
-| 대장구분코드       | regstrGbCd     | VARCHAR2(1)   | 옵션       | 2                               | 대장구분코드       |
-| 대장구분코드명     | regstrGbCdNm   | VARCHAR2(100) | 옵션       | 집합                            | 대장구분코드명     |
-| 대장종류코드       | regstrKindCd   | VARCHAR2(1)   | 옵션       | 4                               | 대장종류코드       |
-| 대장종류코드명     | regstrKindCdNm | VARCHAR2(100) | 옵션       | 전유부                          | 대장종류코드명     |
-| 도로명대지위치     | newPlatPlc     | VARCHAR2(200) | 옵션       | nan                             | 도로명대지위치     |
-| 건물명             | bldNm          | VARCHAR2(100) | 옵션       | 대치아파트 제219동              | 건물명             |
+| 항목명(국문)       | 항목명(영문)   | 항목설명           | 샘플데이터                      |
+|:-------------------|:---------------|:-------------------|:--------------------------------|
+| 특수지명           | splotNm        | 특수지명           | nan                             |
+| 블록               | block          | 블록               | nan                             |
+| 로트               | lot            | 로트               | nan                             |
+| 외필지수           | bylotCnt       | 외필지수           | 0                               |
+| 새주소도로코드     | naRoadCd       | 새주소도로코드     | nan                             |
+| 새주소법정동코드   | naBjdongCd     | 새주소법정동코드   | nan                             |
+| 새주소지상지하코드 | naUgrndCd      | 새주소지상지하코드 | 0                               |
+| 새주소본번         | naMainBun      | 새주소본번         | 0                               |
+| 새주소부번         | naSubBun       | 새주소부번         | 0                               |
+| 주택가격           | hsprc          | 주택가격           | 381000000                       |
+| 생성일자           | crtnDay        | 생성일자           | 20090320                        |
+| nan                | Items          | nan                | nan                             |
+| 순번               | rnum           | 순번               | 1                               |
+| 대지위치           | platPlc        | 대지위치           | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드         | sigunguCd      | 행정표준코드       | 11680                           |
+| 법정동코드         | bjdongCd       | 행정표준코드       | 10300                           |
+| 대지구분코드       | platGbCd       | 0:대지 1:산 2:블록 | 0                               |
+| 번                 | bun            | 번                 | 12                              |
+| 지                 | ji             | 지                 | 0                               |
+| 관리건축물대장PK   | mgmBldrgstPk   | 관리건축물대장PK   | 11680-36099                     |
+| 대장구분코드       | regstrGbCd     | 대장구분코드       | 2                               |
+| 대장구분코드명     | regstrGbCdNm   | 대장구분코드명     | 집합                            |
+| 대장종류코드       | regstrKindCd   | 대장종류코드       | 4                               |
+| 대장종류코드명     | regstrKindCdNm | 대장종류코드명     | 전유부                          |
+| 도로명대지위치     | newPlatPlc     | 도로명대지위치     | nan                             |
+| 건물명             | bldNm          | 건물명             | 대치아파트 제219동              |
 
 </div>
 
@@ -1618,37 +1617,37 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)       | 항목명(영문)   | 항목크기      | 항목구분   | 샘플데이터                      | 항목설명           |
-|:-------------------|:---------------|:--------------|:-----------|:--------------------------------|:-------------------|
-| nan                | Items          | nan           | 필         | nan                             | nan                |
-| 순번               | rnum           | NUMBER(8)     | 옵         | 1                               | 순번               |
-| 대지위치           | platPlc        | VARCHAR2(200) | 필         | 서울특별시 강남구 개포동 12번지 | 대지위치           |
-| 시군구코드         | sigunguCd      | VARCHAR2(5)   | 필         | 11680                           | 행정표준코드       |
-| 법정동코드         | bjdongCd       | VARCHAR2(5)   | 필         | 10300                           | 행정표준코드       |
-| 대지구분코드       | platGbCd       | CHAR(1)       | 옵         | 0                               | 0:대지 1:산 2:블록 |
-| 번                 | bun            | VARCHAR2(4)   | 옵         | 12                              | 번                 |
-| 지                 | ji             | VARCHAR2(4)   | 옵         | 0                               | 지                 |
-| 관리건축물대장PK   | mgmBldrgstPk   | VARCHAR2(33)  | 필         | 11680-3633202                   | 관리건축물대장PK   |
-| 대장구분코드       | regstrGbCd     | VARCHAR2(1)   | 옵         | 2                               | 대장구분코드       |
-| 대장구분코드명     | regstrGbCdNm   | VARCHAR2(100) | 옵         | 집합                            | 대장구분코드명     |
-| 대장종류코드       | regstrKindCd   | VARCHAR2(1)   | 옵         | 4                               | 대장종류코드       |
-| 대장종류코드명     | regstrKindCdNm | VARCHAR2(100) | 옵         | 전유부                          | 대장종류코드명     |
-| 도로명대지위치     | newPlatPlc     | VARCHAR2(200) | 옵         | nan                             | 도로명대지위치     |
-| 건물명             | bldNm          | VARCHAR2(100) | 옵         | 대치아파트 제216동              | 건물명             |
-| 특수지명           | splotNm        | VARCHAR2(200) | 옵         | nan                             | 특수지명           |
-| 블록               | block          | VARCHAR2(20)  | 옵         | nan                             | 블록               |
-| 로트               | lot            | VARCHAR2(20)  | 옵         | nan                             | 로트               |
-| 새주소도로코드     | naRoadCd       | VARCHAR2(12)  | 옵         | nan                             | 새주소도로코드     |
-| 새주소법정동코드   | naBjdongCd     | VARCHAR2(5)   | 옵         | nan                             | 새주소법정동코드   |
-| 새주소지상지하코드 | naUgrndCd      | VARCHAR2(1)   | 옵         | 0                               | 새주소지상지하코드 |
-| 새주소본번         | naMainBun      | NUMBER(5)     | 옵         | nan                             | 새주소본번         |
-| 새주소부번         | naSubBun       | NUMBER(5)     | 옵         | nan                             | 새주소부번         |
-| 동명칭             | dongNm         | VARCHAR2(100) | 옵         | 216                             | 동명칭             |
-| 호명칭             | hoNm           | VARCHAR2(100) | 옵         | 303호                           | 호명칭             |
-| 층구분코드         | flrGbCd        | VARCHAR2(2)   | 옵         | 20                              | 층구분코드         |
-| 층구분코드명       | flrGbCdNm      | VARCHAR2(100) | 옵         | 지상                            | 층구분코드명       |
-| 층번호             | flrNo          | NUMBER(4)     | 옵         | 3                               | 층번호             |
-| 생성일자           | crtnDay        | VARCHAR2(8)   | 필         | 20090320                        | 생성일자           |
+| 항목명(국문)       | 항목명(영문)   | 항목설명           | 샘플데이터                      |
+|:-------------------|:---------------|:-------------------|:--------------------------------|
+| nan                | Items          | nan                | nan                             |
+| 순번               | rnum           | 순번               | 1                               |
+| 대지위치           | platPlc        | 대지위치           | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드         | sigunguCd      | 행정표준코드       | 11680                           |
+| 법정동코드         | bjdongCd       | 행정표준코드       | 10300                           |
+| 대지구분코드       | platGbCd       | 0:대지 1:산 2:블록 | 0                               |
+| 번                 | bun            | 번                 | 12                              |
+| 지                 | ji             | 지                 | 0                               |
+| 관리건축물대장PK   | mgmBldrgstPk   | 관리건축물대장PK   | 11680-3633202                   |
+| 대장구분코드       | regstrGbCd     | 대장구분코드       | 2                               |
+| 대장구분코드명     | regstrGbCdNm   | 대장구분코드명     | 집합                            |
+| 대장종류코드       | regstrKindCd   | 대장종류코드       | 4                               |
+| 대장종류코드명     | regstrKindCdNm | 대장종류코드명     | 전유부                          |
+| 도로명대지위치     | newPlatPlc     | 도로명대지위치     | nan                             |
+| 건물명             | bldNm          | 건물명             | 대치아파트 제216동              |
+| 특수지명           | splotNm        | 특수지명           | nan                             |
+| 블록               | block          | 블록               | nan                             |
+| 로트               | lot            | 로트               | nan                             |
+| 새주소도로코드     | naRoadCd       | 새주소도로코드     | nan                             |
+| 새주소법정동코드   | naBjdongCd     | 새주소법정동코드   | nan                             |
+| 새주소지상지하코드 | naUgrndCd      | 새주소지상지하코드 | 0                               |
+| 새주소본번         | naMainBun      | 새주소본번         | nan                             |
+| 새주소부번         | naSubBun       | 새주소부번         | nan                             |
+| 동명칭             | dongNm         | 동명칭             | 216                             |
+| 호명칭             | hoNm           | 호명칭             | 303호                           |
+| 층구분코드         | flrGbCd        | 층구분코드         | 20                              |
+| 층구분코드명       | flrGbCdNm      | 층구분코드명       | 지상                            |
+| 층번호             | flrNo          | 층번호             | 3                               |
+| 생성일자           | crtnDay        | 생성일자           | 20090320                        |
 
 </div>
 
@@ -1837,28 +1836,27 @@ df.head()
 
 <div align="center">
 
-| 항목명(국문)           | 항목명(영문)   | 항목크기      | 항목구분   | 샘플데이터                      | 항목설명               |
-|:-----------------------|:---------------|:--------------|:-----------|:--------------------------------|:-----------------------|
-| 순번                   | rnum           | NUMBER(8)     | 옵         | 1                               | 순번                   |
-| 대지위치               | platPlc        | VARCHAR2(200) | 필         | 서울특별시 강남구 개포동 12번지 | 대지위치               |
-| 시군구코드             | sigunguCd      | VARCHAR2(5)   | 필         | 11680                           | 행정표준코드           |
-| 법정동코드             | bjdongCd       | VARCHAR2(5)   | 필         | 10300                           | 행정표준코드           |
-| 대지구분코드           | platGbCd       | CHAR(1)       | 옵         | 0                               | 0:대지 1:산 2:블록     |
-| 번                     | bun            | VARCHAR2(4)   | 옵         | 12                              | 번                     |
-| 지                     | ji             | VARCHAR2(4)   | 옵         | 0                               | 지                     |
-| 관리건축물대장PK       | mgmBldrgstPk   | VARCHAR2(33)  | 필         | 11680-10302                     | 관리건축물대장PK       |
-| 도로명대지위치         | newPlatPlc     | VARCHAR2(200) | 옵         | 서울특별시강남구개포로109길5    | 도로명대지위치         |
-| 특수지명               | splotNm        | VARCHAR2(200) | 옵         | nan                             | 특수지명               |
-| 블록                   | block          | VARCHAR2(20)  | 옵         | nan                             | 블록                   |
-| 로트                   | lot            | VARCHAR2(20)  | 옵         | nan                             | 로트                   |
-| 지역지구구역구분코드   | jijiguGbCd     | VARCHAR2(1)   | 옵         | 3                               | 지역지구구역구분코드   |
-| 지역지구구역구분코드명 | jijiguGbCdNm   | VARCHAR2(100) | 옵         | 용도구역코드                    | 지역지구구역구분코드명 |
-| 지역지구구역코드       | jijiguCd       | VARCHAR2(6)   | 옵         | 300                             | 지역지구구역코드       |
-| 지역지구구역코드명     | jijiguCdNm     | VARCHAR2(100) | 옵         | 지구단위계획구역                | 지역지구구역코드명     |
-| 대표여부               | reprYn         | VARCHAR2(1)   | 옵         | 1                               | 0: 일반 1: 대표        |
-| 기타지역지구구역       | etcJijigu      | VARCHAR2(300) | 옵         | 지구단위계획구역                | 기타지역지구구역       |
-| 생성일자               | crtnDay        | VARCHAR2(8)   | 필         | 20120822                        | 생성일자               |
-| nan                    | Items          | nan           | 필         | nan                             | nan                    |
+| 항목명(국문)           | 항목명(영문)   | 항목설명               | 샘플데이터                      |
+|:-----------------------|:---------------|:-----------------------|:--------------------------------|
+| 순번                   | rnum           | 순번                   | 1                               |
+| 대지위치               | platPlc        | 대지위치               | 서울특별시 강남구 개포동 12번지 |
+| 시군구코드             | sigunguCd      | 행정표준코드           | 11680                           |
+| 법정동코드             | bjdongCd       | 행정표준코드           | 10300                           |
+| 대지구분코드           | platGbCd       | 0:대지 1:산 2:블록     | 0                               |
+| 번                     | bun            | 번                     | 12                              |
+| 지                     | ji             | 지                     | 0                               |
+| 관리건축물대장PK       | mgmBldrgstPk   | 관리건축물대장PK       | 11680-10302                     |
+| 도로명대지위치         | newPlatPlc     | 도로명대지위치         | 서울특별시강남구개포로109길5    |
+| 특수지명               | splotNm        | 특수지명               | nan                             |
+| 블록                   | block          | 블록                   | nan                             |
+| 로트                   | lot            | 로트                   | nan                             |
+| 지역지구구역구분코드   | jijiguGbCd     | 지역지구구역구분코드   | 3                               |
+| 지역지구구역구분코드명 | jijiguGbCdNm   | 지역지구구역구분코드명 | 용도구역코드                    |
+| 지역지구구역코드       | jijiguCd       | 지역지구구역코드       | 300                             |
+| 지역지구구역코드명     | jijiguCdNm     | 지역지구구역코드명     | 지구단위계획구역                |
+| 대표여부               | reprYn         | 0: 일반 1: 대표        | 1                               |
+| 기타지역지구구역       | etcJijigu      | 기타지역지구구역       | 지구단위계획구역                |
+| 생성일자               | crtnDay        | 생성일자               | 20120822                        |
 
 </div>
 
