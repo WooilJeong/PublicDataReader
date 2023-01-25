@@ -976,6 +976,129 @@ class HousingLicense:
         }
         return df.rename(columns=rename_columns)
 
+class LandForestLedger:
+    """
+    국토교통부 토지임야 정보 조회 클래스
+
+    parameters
+    ----------
+    service_key: str
+        국토교통부 API 인증키
+    """
+
+    def __init__(self, service_key):
+
+        self.service_key = service_key
+        self.url = "http://apis.data.go.kr/1611000/nsdi/eios/LadfrlService/ladfrlList.xml"
+        self.columns = ["pnu", "ldCodeNm", "ldCode", "mnnmSlno", "regstrSeCode", "regstrSeCodeNm", "lndcgrCode", "lndcgrCodeNm", "lndpclAr", "posesnSeCode", "posesnSeCodeNm", "cnrsPsnCo", "ladFrtlSc", "ladFrtlScNm", "lastUpdtDt",]
+
+    def get_data(self, 
+                 pnu_code, 
+                 translate=True,
+                 verbose=False,
+                 wait_time=30,
+                 **kwargs):
+        """
+        토지임야 정보 조회
+
+        parameters
+        ----------
+        pnu_code: str
+            각 필지를 서로 구별하기 위하여 필지마다 붙이는 고유한 번호
+        kwargs: dict
+            API 요청에 필요한 추가 인자
+        """
+        # 서비스키, 행수, PNU코드 설정
+        params = {
+            "serviceKey": requests.utils.unquote(self.service_key),
+            "numOfRows": 100,
+            "pnu": pnu_code,
+        }
+        # 선택 파라미터 추가 설정
+        params.update(kwargs)
+        # 빈 데이터 프레임 생성
+        df = pd.DataFrame(columns=self.columns)
+        # API 요청
+        res = requests.get(self.url, params=params, verify=False)
+        # 요청 결과 JSON 변환
+        res_json = xmltodict.parse(res.text)
+
+        # 요청 행 수
+        _numOfRows = res_json['fields']['numOfRows']
+        # 페이지 번호
+        _pageNo = res_json['fields']['pageNo']
+        # 총 데이터 크기
+        _totalCount = res_json['fields']['totalCount']
+        # 순회해야 하는 페이지 수
+        _pageNoCount = int(_totalCount) // int(_numOfRows) + 1
+        if verbose:
+            print(
+                f"""- 요청 행 수: {_numOfRows}\n- 현재 페이지 번호: {_pageNo}\n- 총 행 수: {_totalCount}\n- 총 페이지 수: {_pageNoCount}\n- API 요청 대기시간: {wait_time}초""")
+        data = res_json['fields']['ladfrlVOList']
+        if not data:
+            if translate:
+                return self.translate_columns(pd.DataFrame(columns=columns))
+            else:
+                return pd.DataFrame(columns=columns)
+        if isinstance(data, list):
+            sub = pd.DataFrame(data)
+        elif isinstance(data, dict):
+            sub = pd.DataFrame([data])
+        df = pd.concat([df, sub], axis=0, ignore_index=True)
+        if _pageNoCount > 1:
+            if verbose:
+                print(f"페이지가 {_pageNoCount}개 있습니다.")
+            # 페이지 순회
+            for i in range(2, _pageNoCount + 1):
+                # 다음 페이지 조회 전 대기
+                time.sleep(wait_time)
+                if verbose:
+                    print(f"page {i} / {_pageNoCount} 요청")
+                params['pageNo'] = i
+                # API 요청
+                res = requests.get(url, params=params, verify=False)
+                # 요청 결과 JSON 변환
+                res_json = xmltodict.parse(res.text)
+                data = res_json['fields']['ladfrlVOList']
+                if not data:
+                    if translate:
+                        return self.translate_columns(pd.DataFrame(columns=columns))
+                    else:
+                        return pd.DataFrame(columns=columns)
+                if isinstance(data, list):
+                    sub = pd.DataFrame(data)
+                elif isinstance(data, dict):
+                    sub = pd.DataFrame([data])
+                df = pd.concat([df, sub], axis=0, ignore_index=True)
+        # 컬럼명 한글로 변경
+        if translate:
+            df = self.translate_columns(df)
+        return df
+
+    def translate_columns(self, df):
+        """
+        영문 컬럼명을 한글로 변경
+        """
+        rename_columns = {
+            'pnu': '고유번호',
+            'ldCodeNm': '법정동명',
+            'ldCode': '법정동코드',
+            'mnnmSlno': '지번',
+            'regstrSeCode': '대장구분코드',
+            'regstrSeCodeNm': '대장구분명',
+            'lndcgrCode': '지목코드',
+            'lndcgrCodeNm': '지목명',
+            'lndpclAr': '면적(㎡)',
+            'posesnSeCode': '소유구분코드',
+            'posesnSeCodeNm': '소유구분명',
+            'cnrsPsnCo': '소유(공유)인수(명)',
+            'ladFrtlSc': '축척구분코드',
+            'ladFrtlScNm': '축척구분명',
+            'lastUpdtDt': '데이터기준일자',
+        }
+        return df.rename(columns=rename_columns)
+
+
 # (Deprecated Class)
 
 
