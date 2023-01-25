@@ -2,31 +2,9 @@
 국토교통부 Open API
 molit(Ministry of Land, Infrastructure and Transport)
 
-1. TransactionPrice 클래스: 부동산 실거래가 조회
-    01.아파트매매 실거래 상세 자료 조회
-    02.아파트 전월세 자료 조회
-    03.아파트 분양권전매 신고 자료 조회
-    04.오피스텔 매매 신고 조회
-    05.오피스텔 전월세 신고 조회
-    06.연립다세대 매매 실거래자료 조회
-    07.연립다세대 전월세 실거래자료 조회
-    08.단독/다가구 매매 실거래 조회
-    09.단독/다가구 전월세 자료 조회
-    10.토지 매매 신고 조회
-    11.상업업무용 부동산 매매 신고 자료 조회
-    12 공장 및 창고 등 부동산 매매 신고 자료 조회
-
-2. BuildingLedger 클래스: 건축물대장정보 서비스
-    01.건축물대장 기본개요 조회
-    02.건축물대장 총괄표제부 조회
-    03.건축물대장 표제부 조회
-    04.건축물대장 층별개요 조회
-    05.건축물대장 부속지번 조회
-    06.건축물대장 전유공용면적 조회
-    07.건축물대장 오수정화시설 조회
-    08.건축물대장 주택가격 조회
-    09.건축물대장 전유부 조회
-    10.건축물대장 지역지구구역 조회
+- TransactionPrice 클래스: 부동산 실거래가
+- BuildingLedger 클래스: 건축물대장
+- HousingLicense 클래스: 주택인허가
 """
 
 import pandas as pd
@@ -300,6 +278,7 @@ class BuildingLedger:
                  ledger_type,
                  sigungu_code,
                  bdong_code,
+                 plat_code=None,
                  bun=None,
                  ji=None,
                  translate=True,
@@ -317,6 +296,8 @@ class BuildingLedger:
             시군구 코드 (ex. 11110)
         bdong_code : str
             법정동 코드 (ex. 1111051500)
+        plat_code : str
+            대지구분 코드 (대지: 0, 산: 1, 블록: 2)
         bun : str
             번 (ex. 200)
         ji : str
@@ -349,6 +330,9 @@ class BuildingLedger:
             params.update({"bun": str(bun).zfill(4)})
         if ji:
             params.update({"ji": str(ji).zfill(4)})
+        # 플랫코드 설정 시 platGbCd 파라미터 추가
+        if plat_code:
+            params.update({"platGbCd": plat_code})
         # 선택 파라미터 추가 설정
         params.update(kwargs)
         # 빈 데이터 프레임 생성
@@ -379,7 +363,10 @@ class BuildingLedger:
                 f"""- 요청 행 수: {_numOfRows}\n- 현재 페이지 번호: {_pageNo}\n- 총 행 수: {_totalCount}\n- 총 페이지 수: {_pageNoCount}\n- API 요청 대기시간: {wait_time}초""")
         items = res_json['response']['body']['items']
         if not items:
-            return pd.DataFrame(columns=columns)
+            if translate:
+                return self.translate_columns(pd.DataFrame(columns=columns))
+            else:
+                return pd.DataFrame(columns=columns)
         data = items['item']
         if isinstance(data, list):
             sub = pd.DataFrame(data)
@@ -411,7 +398,10 @@ class BuildingLedger:
                     raise Exception(error_message)
                 items = res_json['response']['body']['items']
                 if not items:
-                    return pd.DataFrame(columns=columns)
+                    if translate:
+                        return self.translate_columns(pd.DataFrame(columns=columns))
+                    else:
+                        return pd.DataFrame(columns=columns)
                 data = items['item']
                 if isinstance(data, list):
                     sub = pd.DataFrame(data)
@@ -554,6 +544,437 @@ class BuildingLedger:
         }
         return df.rename(columns=rename_columns)
 
+
+class HousingLicense:
+    """
+    국토교통부 주택인허가 정보 조회 클래스
+
+    parameters
+    ----------
+    service_key: str
+        국토교통부 API 인증키
+    """
+
+    def __init__(self, service_key: str):
+        self.service_key = service_key
+        self.meta_dict = {
+            "기본개요": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpBasisOulnInfo",
+                "columns": ['bldNm', 'splotNm', 'block', 'lot', 'purpsCd', 'purpsCdNm', 'strctCd', 'strctCdNm', 'mainBldCnt', 'totArea', 'totHhldCnt', 'demolExtngGbCd', 'demolExtngGbCdNm', 'demolStrtDay', 'demolEndDay', 'demolExtngDay', 'apprvDay', 'stcnsSchedDay', 'stcnsDay', 'useInsptDay', 'useInsptSchedDay', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk'],
+            },
+            "동별개요": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpDongOulnInfo",
+                "columns": ['mainPurpsCdNm', 'hhldCntPeplRent', 'hhldCntPubRent_5', 'hhldCntPubRent_10', 'hhldCntPubRentEtc', 'hhldCntPubRentTot', 'hhldCntPubLotou', 'hhldCntEmplRent', 'hhldCntLaborWlfar', 'hhldCntCvlRent', 'hhldCntCvlLotou', 'strctCd', 'strctCdNm', 'roofCd', 'roofCdNm', 'archArea', 'totArea', 'ugrndArea', 'vlRatEstmTotArea', 'ugrndFlrCnt', 'grndFlrCnt', 'heit', 'rideUseElvtCnt', 'emgenUseElvtCnt', 'flrhFrom', 'ceilHeit', 'stairValidWidth', 'hwayWidth', 'ouwlThick', 'adjHhldWallThick', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmDongOulnPk', 'mgmHsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'mainAtchGbCd', 'mainAtchGbCdNm', 'dongNm', 'mainPurpsCd'],
+            },
+            "층별개요": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpFlrOulnInfo",
+                "columns": ['mgmFlrOulnPk', 'mgmDongOulnPk', 'bldNm', 'splotNm', 'block', 'lot', 'dongNm', 'flrNo', 'flrGbCd', 'flrGbCdNm', 'flrArea', 'purpsCd', 'purpsCdNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji'],
+            },
+            "호별개요": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpHoOulnInfo",
+                "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHoDetlPk', 'mgmDongOulnPk', 'bldNm', 'splotNm', 'block', 'lot', 'dongNm', 'flrNo', 'flrGbCd', 'flrGbCdNm', 'hoNo', 'hoNm', 'pngtypGbNm', 'changGbCd', 'changGbCdNm', 'crtnDay'],
+            },
+            "부대시설": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpSbsdFcInfo",
+                "columns": ['platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'sbsdfcKindCd', 'sbsdfcKindCdNm', 'etcFcKind', 'instalCurst', 'cmplxinCurst', 'cmplxbyndCurst', 'changbefInstalCurst', 'changbefCmplxinCurst', 'changbefCmplxbyndCurst', 'befSbsdKindCd', 'befSbsdKindCdNm', 'befEtcFcKind', 'crtnDay', 'rnum'],
+            },
+            "오수정화시설": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpWclfInfo",
+                "columns": ['wclfModeCd', 'wclfModeCdNm', 'etcWclf', 'capaPsper', 'capaLube', 'dongRelGb', 'dongRelGbNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'hjdongCd', 'splotNm', 'block', 'lot', 'reprYn'],
+            },
+            "주차장": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpPklotInfo",
+                "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'splotNm', 'block', 'lot', 'indrAutoUtcnt', 'indrAutoArea', 'oudrAutoUtcnt', 'oudrAutoArea', 'indrMechUtcnt', 'indrMechArea', 'oudrMechUtcnt', 'oudrMechArea', 'neigAutoUtcnt', 'neigAutoArea', 'neigMechUtcnt', 'neigMechArea', 'exmptUtcnt', 'crtnDay'],
+            },
+            "부설주차장": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpAtchPklotInfo",
+                "columns": ['platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'hjdongCd', 'splotNm', 'block', 'lot', 'jimokCd', 'jimokCdNm', 'relJibunNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd'],
+            },
+            "전유공용면적": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpExposPubuseAreaInfo",
+                "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmExposPubusePk', 'mgmTypeOulnPk', 'exposPubuseGbCd', 'exposPubuseGbCdNm', 'mainAtchGbCd', 'mainAtchGbCdNm', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'flrNoNm', 'strctCd', 'strctCdNm', 'etcStrct', 'purpsCd', 'purpsCdNm', 'etcPurps', 'area', 'crtnDay'],
+            },
+            "행위호전유공용면적": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpHoExposPubuseAreaInfo",
+                "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmActHoExposPubusePk', 'mgmHoDetlPk', 'splotNm', 'block', 'lot', 'pngtypGbNm', 'exposPubuseGbCd', 'exposPubuseGbCdNm', 'mainAtchGbCd', 'mainAtchGbCdNm', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'strctCd', 'strctCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'etcPurps', 'area', 'crtnDay'],
+            },
+            "행위개요": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpActOulnInfo",
+                "columns": ['splotNm', 'block', 'lot', 'actGb', 'actGbCd', 'actGbCdNm', 'cmplxNm', 'bldYn', 'fcKind', 'archArea', 'totArea', 'btmArea', 'mainPurpsCd', 'mainPurpsCdNm', 'etcPurps', 'constArea', 'ugrndFlrCnt', 'grndFlrCnt', 'totWkp', 'stcnsSchedDay', 'useInsptSchedDay', 'hhldCnt', 'cmplxFlrCntDongCnt', 'regstrGbCd', 'regstrGbCdNm', 'actBefPurpsCd', 'actBefPurpsCdNm', 'actBefArea', 'actAftPurpsCd', 'actAftPurpsCdNm', 'actAftArea', 'fcNm', 'actBefEtcPurps', 'actAftEtcPurps', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk'],
+            },
+            "관리공동형별개요": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpMgmCoopTpOulnInfo",
+                "columns": ['mgmSigunguCd', 'crtnDay', 'platGbCd', 'bun', 'ji', 'mgmCoophsrgstPk', 'splotNm', 'block', 'lot', 'typeGb', 'etcType', 'exuseArea', 'cmplxNm', 'bizBodyNm', 'bizApprvDay', 'useInsptDay', 'mainBldCnt', 'maxFlrCnt', 'hhldCnt', 'strctCd', 'strctCdNm', 'elvtRideUse', 'elvtEmgen', 'platArea', 'totArea', 'archArea', 'hwayModeCd', 'hwayModeCdNm', 'wtspCd', 'wtspCdNm', 'mgmMthdCd', 'mgmMthdCdNm', 'sfgvMgmStrtDay', 'heatMthdCd', 'heatMthdCdNm', 'useFuel', 'hsStyleGbCd', 'hsStyleGbCdNm', 'hsTypeGbCd', 'hsTypeGbCdNm', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd'],
+            },
+            "관리공동부대복리시설": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpMgmCoopSbsdWlfarFcInfo",
+                "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmCoophsrgstPk', 'splotNm', 'block', 'lot', 'grndPklotUtcnt', 'ugrndPklotUtcnt', 'totPklotUtcnt', 'pkngCctvCnt', 'reprMtrmArea', 'mgmOffcArea', 'plgndCctvCnt', 'wttnkCapa', 'lndscArea', 'guardrmCnt', 'hsoldArea', 'lifeConvFcArea', 'nturFcArea', 'jmExcsFcCnt', 'kgtFlrCnt', 'kgtLotArea', 'kgtPurps', 'mediFcArea', 'plgndCnt', 'crtnDay'],
+            },
+            "지역지구구역": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpJijiguInfo",
+                "columns": ['sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'splotNm', 'block', 'lot', 'jijiguGbCd', 'jijiguGbCdNm', 'jijiguCd', 'jijiguCdNm', 'reprYn', 'jijiguNm', 'dongRelGb', 'dongRelGbNm', 'crtnDay', 'rnum', 'platPlc'],
+            },
+            "복리분양시설": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpWlfarLotouFcInfo",
+                "columns": ['changbefPurpsCd', 'changbefPurpsCdNm', 'changbefEtcPurps', 'changbefArea', 'changbefCnt', 'changbefEtcCurst', 'befWlfarFcKindCd', 'befWlfarFcKindCdNm', 'befEtcFc', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'wlfarLotouFcKindCd', 'wlfarLotouFcKindCdNm', 'etcFc', 'purpsCd', 'purpsCdNm', 'etcPurps', 'area', 'openCnt'],
+            },
+            "대지위치": {
+                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpPlatPlcInfo",
+                "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'reprYn', 'hjdongCd', 'splotNm', 'block', 'lot', 'jimokCd', 'jimokCdNm', 'relJibunNm', 'platArea', 'minPlatWidth', 'maxPlatWidth', 'dongRelGb', 'dongRelGbNm', 'crtnDay'],
+            },
+        }
+
+    def get_data(self,
+                 service_type,
+                 sigungu_code,
+                 bdong_code,
+                 plat_code=None,
+                 bun=None,
+                 ji=None,
+                 translate=True,
+                 verbose=False,
+                 wait_time=30,
+                 **kwargs):
+        """
+        주택인허가 정보 조회
+
+        Parameters
+        ----------
+        service_type : str
+            서비스 유형 (ex. 기본개요, 동별개요, 층별개요, 호별개요, 부대시설, 오수정화시설, 주차장, 부설주차장, 전유공용면적, 행위호전유공용면적, 행위개요, 관리공동형별개요, 관리공동부대복리시설, 지역지구구역, 복리분양시설, 대지위치)
+        sigungu_code : str
+            시군구 코드 (ex. 11110)
+        bdong_code : str
+            법정동 코드 (ex. 1111051500)
+        plat_code : str
+            대지구분 코드 (대지: 0, 산: 1, 블록: 2)
+        bun : str
+            번 (ex. 200)
+        ji : str
+            지 (ex. 5)
+        translate : bool
+            한글 컬럼명으로 변환 여부 (기본값: True)
+        verbose : bool
+            진행 상황 출력 여부 (기본값: False)
+        wait_time : int
+            API 요청 간의 대기 시간 (초) (기본값: 30초)
+        **kwargs : dict
+            API 요청에 필요한 추가 인자
+        """
+        try:
+            # 주택인허가 유형으로 API URL 선택 (ex. 기본개요, 표제부, 총괄표제부 등)
+            url = self.meta_dict.get(service_type).get("url")
+            # 주택인허가 유형으로 API 컬럼 선택 (ex. 기본개요, 표제부, 총괄표제부 등)
+            columns = self.meta_dict.get(service_type).get("columns")
+        except AttributeError:
+            raise AttributeError("주택인허가 서비스 유형을 확인해주세요.")
+        # 서비스키, 행수, 시군구코드, 법정동코드 설정
+        params = {
+            "serviceKey": requests.utils.unquote(self.service_key),
+            "numOfRows": 99999,
+            "sigunguCd": sigungu_code,
+            "bjdongCd": bdong_code,
+        }
+        # 본번, 부번 설정 시 Zero Fill 적용
+        if bun:
+            params.update({"bun": str(bun).zfill(4)})
+        if ji:
+            params.update({"ji": str(ji).zfill(4)})
+        # 플랫코드 설정 시 platGbCd 파라미터 추가
+        if plat_code:
+            params.update({"platGbCd": plat_code})
+        # 선택 파라미터 추가 설정
+        params.update(kwargs)
+        # 빈 데이터 프레임 생성
+        df = pd.DataFrame(columns=columns)
+        # API 요청
+        res = requests.get(url, params=params, verify=False)
+        # 요청 결과 JSON 변환
+        res_json = xmltodict.parse(res.text)
+        # 응답 키 존재 확인
+        if not res_json.get("response"):
+            if verbose:
+                print(res_json)
+            raise Exception("API 요청이 실패했습니다.")
+        # 결과코드가 정상이 아닌 경우
+        if res_json['response']['header']['resultCode'] != '00':
+            error_message = res_json['response']['header']['resultMsg']
+            raise Exception(error_message)
+        # 요청 행 수
+        _numOfRows = res_json['response']['body']['numOfRows']
+        # 페이지 번호
+        _pageNo = res_json['response']['body']['pageNo']
+        # 총 데이터 크기
+        _totalCount = res_json['response']['body']['totalCount']
+        # 순회해야 하는 페이지 수
+        _pageNoCount = int(_totalCount) // int(_numOfRows) + 1
+        if verbose:
+            print(
+                f"""- 요청 행 수: {_numOfRows}\n- 현재 페이지 번호: {_pageNo}\n- 총 행 수: {_totalCount}\n- 총 페이지 수: {_pageNoCount}\n- API 요청 대기시간: {wait_time}초""")
+        items = res_json['response']['body']['items']
+        if not items:
+            if translate:
+                return self.translate_columns(pd.DataFrame(columns=columns))
+            else:
+                return pd.DataFrame(columns=columns)
+        data = items['item']
+        if isinstance(data, list):
+            sub = pd.DataFrame(data)
+        elif isinstance(data, dict):
+            sub = pd.DataFrame([data])
+        df = pd.concat([df, sub], axis=0, ignore_index=True)
+        if _pageNoCount > 1:
+            if verbose:
+                print(f"페이지가 {_pageNoCount}개 있습니다.")
+            # 페이지 순회
+            for i in range(2, _pageNoCount + 1):
+                # 다음 페이지 조회 전 대기
+                time.sleep(wait_time)
+                if verbose:
+                    print(f"page {i} / {_pageNoCount} 요청")
+                params['pageNo'] = i
+                # API 요청
+                res = requests.get(url, params=params, verify=False)
+                # 요청 결과 JSON 변환
+                res_json = xmltodict.parse(res.text)
+                # 응답 키 존재 확인
+                if not res_json.get("response"):
+                    if verbose:
+                        print(res_json)
+                    raise Exception("API 요청이 실패했습니다.")
+                # 결과코드가 정상이 아닌 경우
+                if res_json['response']['header']['resultCode'] != '00':
+                    error_message = res_json['response']['header']['resultMsg']
+                    raise Exception(error_message)
+                items = res_json['response']['body']['items']
+                if not items:
+                    if translate:
+                        return self.translate_columns(pd.DataFrame(columns=columns))
+                    else:
+                        return pd.DataFrame(columns=columns)
+                data = items['item']
+                if isinstance(data, list):
+                    sub = pd.DataFrame(data)
+                elif isinstance(data, dict):
+                    sub = pd.DataFrame([data])
+                df = pd.concat([df, sub], axis=0, ignore_index=True)
+        # 컬럼명 한글로 변경
+        if translate:
+            df = self.translate_columns(df)
+        return df
+
+    def translate_columns(self, df):
+        """
+        영문 컬럼명을 한글로 변경
+        """
+        rename_columns = {
+            'bldNm': '건물명',
+            'splotNm': '특수지명',
+            'block': '블록',
+            'lot': '로트',
+            'purpsCd': '용도코드',
+            'purpsCdNm': '용도코드명',
+            'strctCd': '구조코드',
+            'strctCdNm': '구조코드명',
+            'mainBldCnt': '주건축물수',
+            'totArea': '연면적(㎡)',
+            'totHhldCnt': '총세대수(세대)',
+            'demolExtngGbCd': '철거멸실구분코드',
+            'demolExtngGbCdNm': '철거멸실구분코드명',
+            'demolStrtDay': '철거시작일',
+            'demolEndDay': '철거종료일',
+            'demolExtngDay': '철거멸실일',
+            'apprvDay': '건축허가일',
+            'stcnsSchedDay': '착공예정일',
+            'stcnsDay': '착공일',
+            'useInsptDay': '사용검사일',
+            'useInsptSchedDay': '사용검사예정일',
+            'crtnDay': '생성일자',
+            'rnum': '순번',
+            'platPlc': '대지위치',
+            'sigunguCd': '시군구코드',
+            'bjdongCd': '법정동코드',
+            'platGbCd': '대지구분코드',
+            'bun': '번',
+            'ji': '지',
+            'mgmHsrgstPk': '관리주택대장PK',
+            'mainPurpsCdNm': '주용도코드명',
+            'hhldCntPeplRent': '세대수국민임대(세대)',
+            'hhldCntPubRent_5': '세대수공공임대5(세대)',
+            'hhldCntPubRent_10': '세대수공공임대10(세대)',
+            'hhldCntPubRentEtc': '세대수공공임대기타(세대)',
+            'hhldCntPubRentTot': '세대수공공임대계(세대)',
+            'hhldCntPubLotou': '세대수공공분양(세대)',
+            'hhldCntEmplRent': '세대수사원임대(세대)',
+            'hhldCntLaborWlfar': '세대수근로복지(세대)',
+            'hhldCntCvlRent': '세대수민간임대(세대)',
+            'hhldCntCvlLotou': '세대수민간분양(세대)',
+            'roofCd': '지붕코드',
+            'roofCdNm': '지붕코드명',
+            'archArea': '건축면적(㎡)',
+            'ugrndArea': '지하면적(㎡)',
+            'vlRatEstmTotArea': '용적률산정연면적(㎡)',
+            'ugrndFlrCnt': '지하층수',
+            'grndFlrCnt': '지상층수',
+            'heit': '높이(m)',
+            'rideUseElvtCnt': '승용승강기수',
+            'emgenUseElvtCnt': '비상용승강기수',
+            'flrhFrom': '층고FROM',
+            'ceilHeit': '반자높이(m)',
+            'stairValidWidth': '계단유효폭',
+            'hwayWidth': '복도너비',
+            'ouwlThick': '외벽두께',
+            'adjHhldWallThick': '인접세대벽두께',
+            'mgmDongOulnPk': '관리동별개요PK',
+            'mainAtchGbCd': '주부속구분코드',
+            'mainAtchGbCdNm': '주부속구분코드명',
+            'dongNm': '동명칭',
+            'mainPurpsCd': '주용도코드',
+            'mgmFlrOulnPk': '관리층별개요PK',
+            'flrNo': '층번호',
+            'flrGbCd': '층구분코드',
+            'flrGbCdNm': '층구분코드명',
+            'flrArea': '층면적(㎡)',
+            'mgmHoDetlPk': '관리호별명세PK',
+            'hoNo': '호번호',
+            'hoNm': '호명칭',
+            'pngtypGbNm': '평형구분명',
+            'changGbCd': '변경구분코드',
+            'changGbCdNm': '변경구분코드명',
+            'sbsdfcKindCd': '부대시설종류코드',
+            'sbsdfcKindCdNm': '부대시설종류코드명',
+            'etcFcKind': '기타시설종류',
+            'instalCurst': '설치현황',
+            'cmplxinCurst': '단지내현황',
+            'cmplxbyndCurst': '단지외현황',
+            'changbefInstalCurst': '변경전설치현황',
+            'changbefCmplxinCurst': '변경전단지내현황',
+            'changbefCmplxbyndCurst': '변경전단지외현황',
+            'befSbsdKindCd': '전부대종류코드',
+            'befSbsdKindCdNm': '전부대종류코드명',
+            'befEtcFcKind': '전기타시설종류',
+            'wclfModeCd': '오수정화시설형식코드',
+            'wclfModeCdNm': '오수정화시설형식코드명',
+            'etcWclf': '기타오수정화시설',
+            'capaPsper': '용량(인용)',
+            'capaLube': '용량(루베)',
+            'dongRelGb': '동별관계구분',
+            'dongRelGbNm': '동별관계구분명',
+            'hjdongCd': '행정동코드',
+            'reprYn': '대표여부',
+            'indrAutoUtcnt': '옥내자주식대수(대)',
+            'indrAutoArea': '옥내자주식면적(㎡)',
+            'oudrAutoUtcnt': '옥외자주식대수(대)',
+            'oudrAutoArea': '옥외자주식면적(㎡)',
+            'indrMechUtcnt': '옥내기계식대수(대)',
+            'indrMechArea': '옥내기계식면적(㎡)',
+            'oudrMechUtcnt': '옥외기계식대수(대)',
+            'oudrMechArea': '옥외기계식면적(㎡)',
+            'neigAutoUtcnt': '인근자주식대수(대)',
+            'neigAutoArea': '인근자주식면적(㎡)',
+            'neigMechUtcnt': '인근기계식대수(대)',
+            'neigMechArea': '인근기계식면적(㎡)',
+            'exmptUtcnt': '면제대수(대)',
+            'jimokCd': '지목코드',
+            'jimokCdNm': '지목코드명',
+            'relJibunNm': '관련지번명',
+            'mgmExposPubusePk': '관리전유공용PK',
+            'mgmTypeOulnPk': '관리형별개요PK',
+            'exposPubuseGbCd': '전유공용구분코드',
+            'exposPubuseGbCdNm': '전유공용구분코드명',
+            'flrNoNm': '층번호명',
+            'etcStrct': '기타구조',
+            'etcPurps': '기타용도',
+            'area': '면적(㎡)',
+            'mgmActHoExposPubusePk': '관리행위호전유공용PK',
+            'actGb': '행위구분',
+            'actGbCd': '행위구분코드',
+            'actGbCdNm': '행위구분코드명',
+            'cmplxNm': '단지명',
+            'bldYn': '건축물여부',
+            'fcKind': '시설종류',
+            'btmArea': '바닥면적(㎡)',
+            'constArea': '공사면적(㎡)',
+            'totWkp': '총사업비',
+            'hhldCnt': '세대수(세대)',
+            'cmplxFlrCntDongCnt': '단지층수동수',
+            'regstrGbCd': '대장구분코드',
+            'regstrGbCdNm': '대장구분코드명',
+            'actBefPurpsCd': '행위전용도코드',
+            'actBefPurpsCdNm': '행위전용도코드명',
+            'actBefArea': '행위전면적(㎡)',
+            'actAftPurpsCd': '행위후용도코드',
+            'actAftPurpsCdNm': '행위후용도코드명',
+            'actAftArea': '행위후면적(㎡)',
+            'fcNm': '시설명',
+            'actBefEtcPurps': '행위이전기타용도',
+            'actAftEtcPurps': '행위이후기타용도',
+            'mgmSigunguCd': '관리시군구코드',
+            'mgmCoophsrgstPk': '관리공동주택대장PK',
+            'typeGb': '형별구분',
+            'etcType': '기타형별',
+            'exuseArea': '전용면적(㎡)',
+            'bizBodyNm': '사업주체명',
+            'bizApprvDay': '사업승인일',
+            'maxFlrCnt': '최고층수',
+            'elvtRideUse': '승강기승용',
+            'elvtEmgen': '승강기비상',
+            'platArea': '대지면적(㎡)',
+            'hwayModeCd': '복도형식코드',
+            'hwayModeCdNm': '복도형식코드명',
+            'wtspCd': '수도코드',
+            'wtspCdNm': '수도코드명',
+            'mgmMthdCd': '관리방식코드',
+            'mgmMthdCdNm': '관리방식코드명',
+            'sfgvMgmStrtDay': '자치관리개시일',
+            'heatMthdCd': '난방방식코드',
+            'heatMthdCdNm': '난방방식코드명',
+            'useFuel': '사용연료',
+            'hsStyleGbCd': '주택유형구분코드',
+            'hsStyleGbCdNm': '주택유형구분코드명',
+            'hsTypeGbCd': '주택형별구분코드',
+            'hsTypeGbCdNm': '주택형별구분코드명',
+            'grndPklotUtcnt': '지상주차장대수(대)',
+            'ugrndPklotUtcnt': '지하주차장대수(대)',
+            'totPklotUtcnt': '총주차장대수(대)',
+            'pkngCctvCnt': '주차CCTV수',
+            'reprMtrmArea': '대표회의실면적(㎡)',
+            'mgmOffcArea': '관리소면적(㎡)',
+            'plgndCctvCnt': '놀이터CCTV수',
+            'wttnkCapa': '저수조용량',
+            'lndscArea': '조경면적(㎡)',
+            'guardrmCnt': '경비실개소',
+            'hsoldArea': '노인정면적(㎡)',
+            'lifeConvFcArea': '생활편익시설면적(㎡)',
+            'nturFcArea': '보육시설면적(㎡)',
+            'jmExcsFcCnt': '주민운동시설개소',
+            'kgtFlrCnt': '유치원층수',
+            'kgtLotArea': '유치원부지면적(㎡)',
+            'kgtPurps': '유치원용도',
+            'mediFcArea': '의료시설면적(㎡)',
+            'plgndCnt': '놀이터개소',
+            'jijiguGbCd': '지역지구구역구분코드',
+            'jijiguGbCdNm': '지역지구구역구분코드명',
+            'jijiguCd': '지역지구구역코드',
+            'jijiguCdNm': '지역지구구역코드명',
+            'jijiguNm': '지역지구구역명',
+            'changbefPurpsCd': '변경전용도코드',
+            'changbefPurpsCdNm': '변경전용도코드명',
+            'changbefEtcPurps': '변경전기타용도',
+            'changbefArea': '변경전면적(㎡)',
+            'changbefCnt': '변경전개소',
+            'changbefEtcCurst': '변경전기타현황',
+            'befWlfarFcKindCd': '전복리시설종류코드',
+            'befWlfarFcKindCdNm': '전복리시설종류코드명',
+            'befEtcFc': '전기타시설',
+            'wlfarLotouFcKindCd': '복리분양시설종류코드',
+            'wlfarLotouFcKindCdNm': '복리분양시설종류코드명',
+            'etcFc': '기타시설',
+            'openCnt': '개소',
+            'minPlatWidth': '최저대지폭',
+            'maxPlatWidth': '최고대지폭'
+        }
+        return df.rename(columns=rename_columns)
 
 # (Deprecated Class)
 
