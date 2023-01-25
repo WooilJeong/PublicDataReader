@@ -818,7 +818,7 @@ df.tail()
       <th>지역코드</th>
       <th>지역명</th>
       <th>날짜</th>
-      <th>전세가격비율</th>
+      <th>전월세전환율</th>
     </tr>
   </thead>
   <tbody>
