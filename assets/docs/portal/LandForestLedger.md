@@ -58,3 +58,311 @@ df = api.get_data(
 )
 df.head()
 ```
+
+
+<div>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>고유번호</th>
+      <th>법정동명</th>
+      <th>법정동코드</th>
+      <th>지번</th>
+      <th>대장구분코드</th>
+      <th>대장구분명</th>
+      <th>지목코드</th>
+      <th>지목명</th>
+      <th>면적(㎡)</th>
+      <th>소유구분코드</th>
+      <th>소유구분명</th>
+      <th>소유(공유)인수(명)</th>
+      <th>축척구분코드</th>
+      <th>축척구분명</th>
+      <th>데이터기준일자</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>4113511000105420000</td>
+      <td>경기도 성남시 분당구 백현동</td>
+      <td>4113511000</td>
+      <td>542-0</td>
+      <td>1</td>
+      <td>토지대장</td>
+      <td>08</td>
+      <td>대</td>
+      <td>65893.5</td>
+      <td>01</td>
+      <td>개인</td>
+      <td>0</td>
+      <td>00</td>
+      <td>수치</td>
+      <td>2022-06-07</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+## (참고) 건축물대장에서 PNU코드 목록 조회
+
+- 법정동코드 목록 확인
+
+```python
+import PublicDataReader as pdr
+code_bdong = pdr.code_bdong()
+code_bdong.loc[
+    (code_bdong['시도명']=='서울특별시') &
+    (code_bdong['말소일자'].isna()) &
+    (code_bdong['시군구명']=='서초구')
+]
+```
+
+
+<div>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>시도코드</th>
+      <th>시도명</th>
+      <th>시군구코드</th>
+      <th>시군구명</th>
+      <th>법정동코드</th>
+      <th>읍면동명</th>
+      <th>동리명</th>
+      <th>생성일자</th>
+      <th>말소일자</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>975</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>19880423</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>977</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165010100</td>
+      <td>방배동</td>
+      <td>NaN</td>
+      <td>19890427</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>978</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165010200</td>
+      <td>양재동</td>
+      <td>NaN</td>
+      <td>19920701</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>979</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165010300</td>
+      <td>우면동</td>
+      <td>NaN</td>
+      <td>19920701</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>980</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165010400</td>
+      <td>원지동</td>
+      <td>NaN</td>
+      <td>19920701</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>982</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165010600</td>
+      <td>잠원동</td>
+      <td>NaN</td>
+      <td>19880423</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>983</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165010700</td>
+      <td>반포동</td>
+      <td>NaN</td>
+      <td>19880423</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>984</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165010800</td>
+      <td>서초동</td>
+      <td>NaN</td>
+      <td>19880423</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165010900</td>
+      <td>내곡동</td>
+      <td>NaN</td>
+      <td>19880423</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165011000</td>
+      <td>염곡동</td>
+      <td>NaN</td>
+      <td>19880423</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>987</th>
+      <td>11</td>
+      <td>서울특별시</td>
+      <td>11650</td>
+      <td>서초구</td>
+      <td>1165011100</td>
+      <td>신원동</td>
+      <td>NaN</td>
+      <td>19880423</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+- 건축물대장 조회 후 PNU코드 생성
+
+```python
+from PublicDataReader import BuildingLedger
+bl = BuildingLedger(service_key)
+buildings = bl.get_data("총괄표제부", sigungu_code="11650", bdong_code="10300")
+transform_dict = {
+    "0": "1",
+    "1": "2",
+    "2": "3",
+}
+buildings['필지구분코드'] = buildings['대지구분코드'].replace(transform_dict)
+buildings['PNU'] = buildings['시군구코드'] + buildings['법정동코드'] + buildings['필지구분코드'] + buildings['번'].str.zfill(4) + buildings['지'].str.zfill(4)
+buildings['필지구분코드'].value_counts()
+```
+
+    1    27
+    2     1
+    Name: 필지구분코드, dtype: int64
+
+
+- 필지구분코드로 PNU코드 list_iterator 객체 생성
+
+```python
+it = iter(list(buildings.loc[buildings['필지구분코드']=='2']['PNU']))
+```
+
+- 토지임야정보 조회
+
+```python
+pnu_code = next(it)
+print(pnu_code)
+api.get_data(pnu_code=pnu_code)
+```
+
+
+    1165010300200360000
+    
+
+
+
+
+<div>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>고유번호</th>
+      <th>법정동명</th>
+      <th>법정동코드</th>
+      <th>지번</th>
+      <th>대장구분코드</th>
+      <th>대장구분명</th>
+      <th>지목코드</th>
+      <th>지목명</th>
+      <th>면적(㎡)</th>
+      <th>소유구분코드</th>
+      <th>소유구분명</th>
+      <th>소유(공유)인수(명)</th>
+      <th>축척구분코드</th>
+      <th>축척구분명</th>
+      <th>데이터기준일자</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1165010300200360000</td>
+      <td>서울특별시 서초구 우면동</td>
+      <td>1165010300</td>
+      <td>36-0</td>
+      <td>2</td>
+      <td>임야대장</td>
+      <td>05</td>
+      <td>임야</td>
+      <td>14777</td>
+      <td>02</td>
+      <td>국유지</td>
+      <td>0</td>
+      <td>30</td>
+      <td>1:3000</td>
+      <td>2022-06-07</td>
+    </tr>
+  </tbody>
+</table>
+</div>

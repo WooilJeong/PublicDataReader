@@ -976,6 +976,7 @@ class HousingLicense:
         }
         return df.rename(columns=rename_columns)
 
+
 class LandForestLedger:
     """
     국토교통부 토지임야 정보 조회 클래스
@@ -990,10 +991,11 @@ class LandForestLedger:
 
         self.service_key = service_key
         self.url = "http://apis.data.go.kr/1611000/nsdi/eios/LadfrlService/ladfrlList.xml"
-        self.columns = ["pnu", "ldCodeNm", "ldCode", "mnnmSlno", "regstrSeCode", "regstrSeCodeNm", "lndcgrCode", "lndcgrCodeNm", "lndpclAr", "posesnSeCode", "posesnSeCodeNm", "cnrsPsnCo", "ladFrtlSc", "ladFrtlScNm", "lastUpdtDt",]
+        self.columns = ["pnu", "ldCodeNm", "ldCode", "mnnmSlno", "regstrSeCode", "regstrSeCodeNm", "lndcgrCode",
+                        "lndcgrCodeNm", "lndpclAr", "posesnSeCode", "posesnSeCodeNm", "cnrsPsnCo", "ladFrtlSc", "ladFrtlScNm", "lastUpdtDt",]
 
-    def get_data(self, 
-                 pnu_code, 
+    def get_data(self,
+                 pnu_code,
                  translate=True,
                  verbose=False,
                  wait_time=30,
