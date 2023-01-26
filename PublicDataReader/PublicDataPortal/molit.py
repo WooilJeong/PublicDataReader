@@ -1039,9 +1039,9 @@ class LandForestLedger:
         data = res_json['fields']['ladfrlVOList']
         if not data:
             if translate:
-                return self.translate_columns(pd.DataFrame(columns=columns))
+                return self.translate_columns(pd.DataFrame(columns=self.columns))
             else:
-                return pd.DataFrame(columns=columns)
+                return pd.DataFrame(columns=self.columns)
         if isinstance(data, list):
             sub = pd.DataFrame(data)
         elif isinstance(data, dict):
@@ -1058,15 +1058,15 @@ class LandForestLedger:
                     print(f"page {i} / {_pageNoCount} 요청")
                 params['pageNo'] = i
                 # API 요청
-                res = requests.get(url, params=params, verify=False)
+                res = requests.get(self.url, params=params, verify=False)
                 # 요청 결과 JSON 변환
                 res_json = xmltodict.parse(res.text)
                 data = res_json['fields']['ladfrlVOList']
                 if not data:
                     if translate:
-                        return self.translate_columns(pd.DataFrame(columns=columns))
+                        return self.translate_columns(pd.DataFrame(columns=self.columns))
                     else:
-                        return pd.DataFrame(columns=columns)
+                        return pd.DataFrame(columns=self.columns)
                 if isinstance(data, list):
                     sub = pd.DataFrame(data)
                 elif isinstance(data, dict):
