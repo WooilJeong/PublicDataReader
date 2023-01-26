@@ -10,7 +10,7 @@
 <div align="center">
 
 | **서비스명**                 | **대장 유형** |
-| ---------------------------- | -------------- |
+| :---------------------------- | :-------------- |
 | 건축물대장 기본개요 조회     | 기본개요       |
 | 건축물대장 총괄표제부 조회   | 총괄표제부     |
 | 건축물대장 표제부 조회       | 표제부         |
@@ -21,6 +21,18 @@
 | 건축물대장 주택가격 조회     | 주택가격       |
 | 건축물대장 전유부 조회       | 전유부         |
 | 건축물대장 지역지구구역 조회 | 지역지구구역   |
+
+</div>
+
+## 국토교통부 건축소유자정보 서비스
+
+- [건축소유자정보 서비스 신청 페이지](https://www.data.go.kr/data/15021136/openapi.do)
+
+<div align="center">
+
+| **서비스명**                 | **대장 유형** |
+| :---------------------------- | :-------------- |
+| 건축물소유정보 조회           | 소유자       |
 
 </div>
 
@@ -37,6 +49,7 @@
 * [건축물대장 주택가격 조회 서비스](#건축물대장-주택가격-조회-서비스)
 * [건축물대장 전유부 조회 서비스](#건축물대장-전유부-조회-서비스)
 * [건축물대장 지역지구구역 조회 서비스](#건축물대장-지역지구구역-조회-서비스)
+* [건축물소유정보 조회 서비스](#건축물소유정보-조회-서비스)
 
 <div align="center">
 
@@ -1954,4 +1967,242 @@ df.head()
     </tr>
   </tbody>
 </table>
+</div>
+
+
+## 건축물소유정보 조회 서비스
+
+### 입력 명세
+
+* [입력 명세](#입력-명세)
+
+### 출력 명세
+
+<div align="center">
+
+| 항목명(국문)      | 항목명(영문)          | 항목설명         | 샘플데이터              |
+| :------------ | :---------------- | :------------ | :------------------ |
+| 관리건축물대장PK    | mgm_bldrgst_pk   | 관리건축물대장PK    | 11680-145318       |
+| 시군구코드        | sigungu_cd       | 시군구코드        | 11680              |
+| 시군구명         | sigungu_nm       | 시군구          | 강남구                |
+| 법정동코드        | bjdong_cd        | 법정동          | 10100              |
+| 법정동명         | bjdong_nm        | 법정동          | 역삼동                |
+| 대지구분코드       | plat_gb_cd       | 대지구분         | 0                  |
+| 대지구분명        | plat_gb_nm       | 대지구분         | 대지                 |
+| 번            | bun              | 번            | 601                |
+| 지            | ji               | 지            | 1                  |
+| 특수지명         | splot_nm         | 특수지명         |                    |
+| 블록           | block            | 블록           |                    |
+| 로트           | lot              | 로트           |                    |
+| 새주소대지위치      | na_plat_plc      | 새주소대지위치      | 서울특별시 강남구 봉은사로 110 |
+| 새주소도로코드      | na_road_cd       | 새주소도로코드      | 1.16803E+11        |
+| 새주소법정동코드     | na_bjdong_cd     | 새주소법정동코드     | 10101              |
+| 새주소지상지하코드    | na_ugrnd_cd      | 새주소지상지하코드    | 0                  |
+| 새주소지상지하명     | na_ugrnd_nm      | 새주소지상지하      | 지상                 |
+| 새주소본번        | na_main_bun      | 새주소본번        | 110                |
+| 새주소부번        | na_sub_bun       | 새주소부번        | 0                  |
+| 대장구분코드       | regstr_gb_cd     | 대장구분         | 2                  |
+| 대장구분명        | regstr_gb_nm     | 대장구분         | 집합                 |
+| 대장종류코드       | regstr_kind_cd   | 대장종류         | 4                  |
+| 대장종류명        | regstr_kind_nm   | 대장종류         | 전유부                |
+| 건물명          | bld_nm           | 건물명          | 연우빌딩               |
+| 동명칭          | dong_nm          | 동            | 연우빌딩               |
+| 호명칭          | ho_nm            | 호            | 101                |
+| 면적           | area             | 면적           | 106.98             |
+| 소유구분코드       | own_gb_cd        | 소유구분         | 1                  |
+| 소유구분명        | own_gb_nm        | 소유구분         | 개인                 |
+| 주민구분코드       | jm_gb_cd         | 주민구분         | 1                  |
+| 주민구분명        | jm_gb_nm         | 주민구분         | 내국인                |
+| 성명           | nm               | 성명           | 유\*\*              |
+| 지분1          | quota1           | 지분1          | 100                |
+| 지분2          | quota2           | 지분2          | 100                |
+| 소유권지분        | ownsh_quota      | 소유권지분        | 100/100            |
+| 변동원인일        | chang_caus_day   | 변동원인일        | 20040823           |
+| 소재지시군구코드     | loc_sigungu_cd   | 소재지시군구       |                    |
+| 소재지시군구명      | loc_sigungu_nm   | 소재지시군구       |                    |
+| 소재지법정동코드     | loc_bjdong_cd    | 소재지법정동       |                    |
+| 소재지법정동명      | loc_bjdong_nm    | 소재지법정동       |                    |
+| 소재지상세주소      | loc_detl_addr    | 소재지상세주소      |                    |
+| 새주소소재지대지위치   | na_loc_plat_plc  | 새주소소재지대지위치   |                    |
+| 새주소소재지도로코드   | na_loc_road_cd   | 새주소소재지도로     |                    |
+| 새주소소재지법정동코드  | na_loc_bjdong_cd | 새주소소재지법정동    |                    |
+| 새주소소재지상세주소   | na_loc_detl_addr | 새주소소재지상세주소   |                    |
+| 새주소소재지지상지하코드 | na_loc_ugrnd_cd  | 새주소소재지지상지하코드 |                    |
+| 새주소소재지지상지하명  | na_loc_ugrnd_nm  | 새주소소재지지상지하명  |                    |
+| 새주소소재지본번     | na_loc_main_bun  | 새주소소재지본번     |                    |
+| 주민번호         | jmno             | 사용하지 않음      |                    |
+| 새주소소재지부번     | na_loc_sub_bun   | 새주소소재지부번     |                    |
+
+</div>
+
+```python
+from PublicDataReader import BuildingLedger
+
+service_key = "공공 데이터 포털에서 발급받은 서비스 키"
+api = BuildingLedger(service_key)
+
+df = api.get_data(
+    ledger_type="소유자", 
+    sigungu_code="41135", 
+    bdong_code="11000", 
+    bun="542", 
+    ji="",
+)
+df.head()
+```
+
+
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>관리건축물대장PK</th>
+      <th>시군구코드</th>
+      <th>시군구명</th>
+      <th>법정동코드</th>
+      <th>법정동명</th>
+      <th>대지구분코드</th>
+      <th>대지구분명</th>
+      <th>번</th>
+      <th>지</th>
+      <th>특수지명</th>
+      <th>...</th>
+      <th>소재지상세주소</th>
+      <th>새주소소재지대지위치</th>
+      <th>새주소소재지도로코드</th>
+      <th>새주소소재지법정동코드</th>
+      <th>새주소소재지상세주소</th>
+      <th>새주소소재지지상지하코드</th>
+      <th>새주소소재지지상지하명</th>
+      <th>새주소소재지본번</th>
+      <th>주민번호</th>
+      <th>새주소소재지부번</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>41135-100225802</td>
+      <td>41135</td>
+      <td>성남시 분당구</td>
+      <td>11000</td>
+      <td>백현동</td>
+      <td>0</td>
+      <td>대지</td>
+      <td>0542</td>
+      <td>0000</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>0</td>
+      <td>지상</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>41135-100225928</td>
+      <td>41135</td>
+      <td>성남시 분당구</td>
+      <td>11000</td>
+      <td>백현동</td>
+      <td>0</td>
+      <td>대지</td>
+      <td>0542</td>
+      <td>0000</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>0</td>
+      <td>지상</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>41135-100225928</td>
+      <td>41135</td>
+      <td>성남시 분당구</td>
+      <td>11000</td>
+      <td>백현동</td>
+      <td>0</td>
+      <td>대지</td>
+      <td>0542</td>
+      <td>0000</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>0</td>
+      <td>지상</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>41135-100225976</td>
+      <td>41135</td>
+      <td>성남시 분당구</td>
+      <td>11000</td>
+      <td>백현동</td>
+      <td>0</td>
+      <td>대지</td>
+      <td>0542</td>
+      <td>0000</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>0</td>
+      <td>지상</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>41135-100225980</td>
+      <td>41135</td>
+      <td>성남시 분당구</td>
+      <td>11000</td>
+      <td>백현동</td>
+      <td>0</td>
+      <td>대지</td>
+      <td>0542</td>
+      <td>0000</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>0</td>
+      <td>지상</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 50 columns</p>
 </div>

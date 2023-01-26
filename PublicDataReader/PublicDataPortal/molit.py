@@ -272,6 +272,10 @@ class BuildingLedger:
                 "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrJijiguInfo",
                 "columns": ['bjdongCd', 'block', 'bun', 'crtnDay', 'etcJijigu', 'ji', 'jijiguCd', 'jijiguCdNm', 'jijiguGbCd', 'jijiguGbCdNm', 'lot', 'mgmBldrgstPk', 'newPlatPlc', 'platGbCd', 'platPlc', 'reprYn', 'rnum', 'sigunguCd', 'splotNm']
             },
+            "소유자": {
+                "url": f"http://apis.data.go.kr/1611000/OwnerInfoService/getArchitecturePossessionInfo",
+                "columns": ['mgm_bldrgst_pk', 'sigungu_cd', 'sigungu_nm', 'bjdong_cd', 'bjdong_nm', 'plat_gb_cd', 'plat_gb_nm', 'bun', 'ji', 'splot_nm', 'block', 'lot', 'na_plat_plc', 'na_road_cd', 'na_bjdong_cd', 'na_ugrnd_cd', 'na_ugrnd_nm', 'na_main_bun', 'na_sub_bun', 'regstr_gb_cd', 'regstr_gb_nm', 'regstr_kind_cd', 'regstr_kind_nm', 'bld_nm', 'dong_nm', 'ho_nm', 'area', 'own_gb_cd', 'own_gb_nm', 'jm_gb_cd', 'jm_gb_nm', 'nm', 'quota1', 'quota2', 'ownsh_quota', 'chang_caus_day', 'loc_sigungu_cd', 'loc_sigungu_nm', 'loc_bjdong_cd', 'loc_bjdong_nm', 'loc_detl_addr', 'na_loc_plat_plc', 'na_loc_road_cd', 'na_loc_bjdong_cd', 'na_loc_detl_addr', 'na_loc_ugrnd_cd', 'na_loc_ugrnd_nm', 'na_loc_main_bun', 'jmno', 'na_loc_sub_bun',],
+            }
         }
 
     def get_data(self,
@@ -291,7 +295,7 @@ class BuildingLedger:
         Parameters
         ----------
         ledger_type : str
-            건축물대장 유형 (ex. 기본개요, 총괄표제부, 표제부, 층별개요, 부속지번, 전유공용면적, 오수정화시설, 주택가격, 전유부, 지역지구구역)
+            건축물대장 유형 (ex. 기본개요, 총괄표제부, 표제부, 층별개요, 부속지번, 전유공용면적, 오수정화시설, 주택가격, 전유부, 지역지구구역, 소유자)
         sigungu_code : str
             시군구 코드 (ex. 11110)
         bdong_code : str
@@ -318,21 +322,39 @@ class BuildingLedger:
             columns = self.meta_dict.get(ledger_type).get("columns")
         except AttributeError:
             raise AttributeError("건축물대장 유형을 확인해주세요.")
-        # 서비스키, 행수, 시군구코드, 법정동코드 설정
-        params = {
-            "serviceKey": requests.utils.unquote(self.service_key),
-            "numOfRows": 99999,
-            "sigunguCd": sigungu_code,
-            "bjdongCd": bdong_code,
-        }
-        # 본번, 부번 설정 시 Zero Fill 적용
-        if bun:
-            params.update({"bun": str(bun).zfill(4)})
-        if ji:
-            params.update({"ji": str(ji).zfill(4)})
-        # 플랫코드 설정 시 platGbCd 파라미터 추가
-        if plat_code:
-            params.update({"platGbCd": plat_code})
+
+        if ledger_type != '소유자':
+            # 서비스키, 행수, 시군구코드, 법정동코드 설정
+            params = {
+                "serviceKey": requests.utils.unquote(self.service_key),
+                "numOfRows": 99999,
+                "sigunguCd": sigungu_code,
+                "bjdongCd": bdong_code,
+            }
+            # 본번, 부번 설정 시 Zero Fill 적용
+            if bun:
+                params.update({"bun": str(bun).zfill(4)})
+            if ji:
+                params.update({"ji": str(ji).zfill(4)})
+            # 플랫코드 설정 시 platGbCd 파라미터 추가
+            if plat_code:
+                params.update({"platGbCd": plat_code})
+        else:
+            # 서비스키, 행수, 시군구코드, 법정동코드 설정
+            params = {
+                "serviceKey": requests.utils.unquote(self.service_key),
+                "numOfRows": 99999,
+                "sigungu_cd": sigungu_code,
+                "bjdong_cd": bdong_code,
+            }
+            # 본번, 부번 설정 시 Zero Fill 적용
+            if bun:
+                params.update({"bun": str(bun).zfill(4)})
+            if ji:
+                params.update({"ji": str(ji).zfill(4)})
+            # 플랫코드 설정 시 plat_gb_cd 파라미터 추가
+            if plat_code:
+                params.update({"plat_gb_cd": plat_code})
         # 선택 파라미터 추가 설정
         params.update(kwargs)
         # 빈 데이터 프레임 생성
@@ -541,6 +563,57 @@ class BuildingLedger:
             'jijiguGbCd': '지역지구구역구분코드',
             'jijiguGbCdNm': '지역지구구역구분코드명',
             'reprYn': '대표여부',
+            # 건축소유자정보
+            'mgm_bldrgst_pk': '관리건축물대장PK',
+            'sigungu_cd': '시군구코드',
+            'sigungu_nm': '시군구명',
+            'bjdong_cd': '법정동코드',
+            'bjdong_nm': '법정동명',
+            'plat_gb_cd': '대지구분코드',
+            'plat_gb_nm': '대지구분명',
+            'bun': '번',
+            'ji': '지',
+            'splot_nm': '특수지명',
+            'block': '블록',
+            'lot': '로트',
+            'na_plat_plc': '새주소대지위치',
+            'na_road_cd': '새주소도로코드',
+            'na_bjdong_cd': '새주소법정동코드',
+            'na_ugrnd_cd': '새주소지상지하코드',
+            'na_ugrnd_nm': '새주소지상지하명',
+            'na_main_bun': '새주소본번',
+            'na_sub_bun': '새주소부번',
+            'regstr_gb_cd': '대장구분코드',
+            'regstr_gb_nm': '대장구분명',
+            'regstr_kind_cd': '대장종류코드',
+            'regstr_kind_nm': '대장종류명',
+            'bld_nm': '건물명',
+            'dong_nm': '동명칭',
+            'ho_nm': '호명칭',
+            'area': '면적',
+            'own_gb_cd': '소유구분코드',
+            'own_gb_nm': '소유구분명',
+            'jm_gb_cd': '주민구분코드',
+            'jm_gb_nm': '주민구분명',
+            'nm': '성명',
+            'quota1': '지분1',
+            'quota2': '지분2',
+            'ownsh_quota': '소유권지분',
+            'chang_caus_day': '변동원인일',
+            'loc_sigungu_cd': '소재지시군구코드',
+            'loc_sigungu_nm': '소재지시군구명',
+            'loc_bjdong_cd': '소재지법정동코드',
+            'loc_bjdong_nm': '소재지법정동명',
+            'loc_detl_addr': '소재지상세주소',
+            'na_loc_plat_plc': '새주소소재지대지위치',
+            'na_loc_road_cd': '새주소소재지도로코드',
+            'na_loc_bjdong_cd': '새주소소재지법정동코드',
+            'na_loc_detl_addr': '새주소소재지상세주소',
+            'na_loc_ugrnd_cd': '새주소소재지지상지하코드',
+            'na_loc_ugrnd_nm': '새주소소재지지상지하명',
+            'na_loc_main_bun': '새주소소재지본번',
+            'jmno': '주민번호',
+            'na_loc_sub_bun': '새주소소재지부번'
         }
         return df.rename(columns=rename_columns)
 
