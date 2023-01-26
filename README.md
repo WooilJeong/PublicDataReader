@@ -38,29 +38,21 @@ pip install PublicDataReader --upgrade
 
 ## 사용 가이드
 
-### 인증키가 필요한 데이터
+| 사용 가이드 목록                                                                                                                | 플랫폼명                                                      | 인증키 필요 |
+| :------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------: | :---------: |
+| [국토교통부 부동산 실거래가 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/TransactionPrice.md) | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [국토교통부 건축물대장정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/BuildingLedger.md)    | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [국토교통부 주택인허가정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/HousingLicense.md)    | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [국토교통부 토지임야정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/LandForestLedger.md)   | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [소상공인시장진흥공단 상가(상권)정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/SmallShop.md)   | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [한국자산관리공사 공매물건 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Kamco.md)             | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [국세청 사업자등록정보 진위확인 및 상태조회 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Nts.md)     | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [한국부동산원 부동산 종합 정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Reb.md)            | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [KOSIS 통계정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis/Kosis.md)                 | [국가통계포털(KOSIS)](https://kosis.kr/openapi/index/index.jsp) | ✔️         |
+| [서울시 교통 관련 데이터 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul/Transportation.md)     | [서울 열린데이터 광장](https://data.seoul.go.kr/)                  | ✔️         |
+| [국가공간정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld/VworldData.md)               | [공간정보 오픈플랫폼(V-Word)](https://www.vworld.kr/v4po_main.do)  | ✔️         |
+| [KB통계 주택가격동향조사 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland/Kbland.md)            | [KB부동산](https://data.kbland.kr/)                          | ➖         |
 
-- 공공데이터포털
-  - [국토교통부 부동산 실거래가 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/TransactionPrice.md)
-  - [국토교통부 건축물대장정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/BuildingLedger.md)
-  - [국토교통부 주택인허가정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/HousingLicense.md)
-  - [국토교통부 토지임야정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/LandForestLedger.md)
-  - [소상공인시장진흥공단 상가(상권)정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/SmallShop.md)
-  - [한국자산관리공사 공매물건 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Kamco.md)
-  - [국세청 사업자등록정보 진위확인 및 상태조회 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Nts.md)
-  - [한국부동산원 부동산 종합 정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Reb.md)
-- 국가통계포털(KOSIS)
-  - [KOSIS 통계정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis/Kosis.md)
-- 서울 열린데이터 광장
-  - [서울시 교통 관련 데이터 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul/Transportation.md)
-- 공간정보 오픈플랫폼(V-Word)
-  - [국가공간정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld/VworldData.md)
-
-
-### 인증키가 필요하지 않은 데이터
-
-- KB부동산
-  - [KB통계 주택가격동향조사 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland/Kbland.md)
 
 <br>
 
