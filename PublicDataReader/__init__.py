@@ -11,6 +11,7 @@ __all__ = [
     "BuildingLedger",
     "HousingLicense",
     "LandForestLedger",
+    "LandOwnership",
     "Building",
     "SmallShop",
     "StoreInfo",

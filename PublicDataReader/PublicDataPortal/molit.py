@@ -1080,6 +1080,12 @@ class LandForestLedger:
         ----------
         pnu_code: str
             각 필지를 서로 구별하기 위하여 필지마다 붙이는 고유한 번호
+        translate: bool
+            영문으로 된 컬럼명을 한글로 변환 여부
+        verbose: bool
+            진행상황 출력 여부
+        wait_time: int
+            API 요청 간격
         kwargs: dict
             API 요청에 필요한 추가 인자
         """
@@ -1170,6 +1176,149 @@ class LandForestLedger:
             'ladFrtlSc': '축척구분코드',
             'ladFrtlScNm': '축척구분명',
             'lastUpdtDt': '데이터기준일자',
+        }
+        return df.rename(columns=rename_columns)
+
+
+class LandOwnership:
+    """
+    국토교통부 토지소유정보 조회 클래스
+
+    parameters
+    ----------
+    service_key : str
+        국토교통부 API 인증키
+    """
+
+    def __init__(self, service_key):
+
+        self.service_key = service_key
+        self.url = "http://apis.data.go.kr/1611000/nsdi/PossessionService/attr/getPossessionAttr"
+        self.columns = ['pnu', 'ldCode', 'ldCodeNm', 'regstrSeCode', 'regstrSeCodeNm', 'mnnmSlno', 'agbldgSn', 'buldDongNm', 'buldFloorNm', 'buldHoNm', 'buldRoomNm', 'cnrsPsnSn', 'stdrYm', 'lndcgrCode', 'lndcgrCodeNm', 'ndpclAr',
+                        'pblntfPclnd', 'posesnSeCode', 'posesnSeCodeNm', 'resdncSeCode', 'resdncSeCodeNm', 'nationInsttSeCode', 'nationInsttSeCodeNm', 'ownshipChgCauseCode', 'ownshipChgCauseCodeNm', 'ownshipChgDe', 'cnrsPsnCo', 'lastUpdtDt',]
+
+    def get_data(self,
+                 pnu_code,
+                 translate=True,
+                 verbose=False,
+                 wait_time=30,
+                 **kwargs):
+        """
+        토지소유정보 조회
+
+        parameters
+        ----------
+        pnu_code : str
+            행정동 코드
+        translate: bool
+            영문으로 된 컬럼명을 한글로 변환 여부
+        verbose: bool
+            진행상황 출력 여부
+        wait_time: int
+            API 요청 간격
+        kwargs: dict
+            API 요청에 필요한 추가 인자
+        """
+        # 서비스키, 행수, 데이터타입, PNU코드
+        params = {
+            "serviceKey": requests.utils.unquote(self.service_key),
+            "numOfRows": 99999,
+            "format": "json",
+            "pnu": pnu_code,
+        }
+        # 선택 파라미터 추가 설정
+        params.update(kwargs)
+        # 빈 데이터 프레임 생성
+        df = pd.DataFrame(columns=self.columns)
+        # API 요청
+        res = requests.get(self.url, params=params, verify=False)
+        # 요청 결과 JSON 변환
+        res_json = res.json()
+        # 요청 행 수
+        _numOfRows = res_json['possessions']['numOfRows']
+        # 페이지 번호
+        _pageNo = res_json['possessions']['pageNo']
+        # 총 데이터 크기
+        _totalCount = res_json['possessions']['totalCount']
+        # 순회해야 하는 페이지 수
+        _pageNoCount = int(_totalCount) // int(_numOfRows) + 1
+        if verbose:
+            print(
+                f"""- 요청 행 수: {_numOfRows}\n- 현재 페이지 번호: {_pageNo}\n- 총 행 수: {_totalCount}\n- 총 페이지 수: {_pageNoCount}\n- API 요청 대기시간: {wait_time}초""")
+        data = res_json['possessions']['field']
+        if not data:
+            if translate:
+                return self.translate_columns(pd.DataFrame(columns=self.columns))
+            else:
+                return pd.DataFrame(columns=self.columns)
+        if isinstance(data, list):
+            sub = pd.DataFrame(data)
+        elif isinstance(data, dict):
+            sub = pd.DataFrame([data])
+        df = pd.concat([df, sub], axis=0, ignore_index=True)
+        if _pageNoCount > 1:
+            if verbose:
+                print(f"페이지가 {_pageNoCount}개 있습니다.")
+            # 페이지 순회
+            for i in range(2, _pageNoCount + 1):
+                # 다음 페이지 조회 전 대기
+                time.sleep(wait_time)
+                if verbose:
+                    print(f"page {i} / {_pageNoCount} 요청")
+                params['pageNo'] = i
+                # API 요청
+                res = requests.get(self.url, params=params, verify=False)
+                # 요청 결과 JSON 변환
+                res_json = res.json()
+                data = res_json['possessions']['field']
+                if not data:
+                    if translate:
+                        return self.translate_columns(pd.DataFrame(columns=self.columns))
+                    else:
+                        return pd.DataFrame(columns=self.columns)
+                if isinstance(data, list):
+                    sub = pd.DataFrame(data)
+                elif isinstance(data, dict):
+                    sub = pd.DataFrame([data])
+                df = pd.concat([df, sub], axis=0, ignore_index=True)
+        # 컬럼명 한글로 변경
+        if translate:
+            df = self.translate_columns(df)
+        return df
+
+    def translate_columns(self, df):
+        """
+        영문 컬럼명을 한글로 변경
+        """
+        rename_columns = {
+            'pnu': '고유번호',
+            'ldCode': '법정동코드',
+            'ldCodeNm': '법정동명',
+            'regstrSeCode': '대장구분코드',
+            'regstrSeCodeNm': '대장구분명',
+            'mnnmSlno': '지번',
+            'agbldgSn': '집합건물일련번호',
+            'buldDongNm': '건물동명',
+            'buldFloorNm': '건물층명',
+            'buldHoNm': '건물호명',
+            'buldRoomNm': '건물실명',
+            'cnrsPsnSn': '공유인일련번호',
+            'stdrYm': '기준연월',
+            'lndcgrCode': '지목코드',
+            'lndcgrCodeNm': '지목',
+            'ndpclAr': '토지면적(㎡)',
+            'pblntfPclnd': '공시지가(원/㎡)',
+            'posesnSeCode': '소유구분코드',
+            'posesnSeCodeNm': '소유구분',
+            'resdncSeCode': '거주지구분코드',
+            'resdncSeCodeNm': '거주지구분',
+            'nationInsttSeCode': '국가기관구분코드',
+            'nationInsttSeCodeNm': '국가기관구분',
+            'ownshipChgCauseCode': '소유권변동원인코드',
+            'ownshipChgCauseCodeNm': '소유권변동원인',
+            'ownshipChgDe': '소유권변동일자',
+            'cnrsPsnCo': '공유인수',
+            'lastUpdtDt': '데이터기준일자'
         }
         return df.rename(columns=rename_columns)
 

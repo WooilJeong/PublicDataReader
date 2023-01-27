@@ -46,6 +46,7 @@ pip install PublicDataReader --upgrade
 | [국토교통부 건축물대장정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/BuildingLedger.md)    | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [국토교통부 주택인허가정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/HousingLicense.md)    | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [국토교통부 토지임야정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/LandForestLedger.md)   | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [국토교통부 토지소유정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/LandOwnership.md)   | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [소상공인시장진흥공단 상가(상권)정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/SmallShop.md)   | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [한국자산관리공사 공매물건 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Kamco.md)             | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [국세청 사업자등록정보 진위확인 및 상태조회 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Nts.md)     | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
@@ -67,6 +68,7 @@ pip install PublicDataReader --upgrade
   - [건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
   - [주택인허가 데이터 조회하기](https://wooiljeong.github.io/python/pdr-housing-license/)
   - [토지대장 및 임야대장 조회하기](https://wooiljeong.github.io/python/pdr-land-forest-ledger/)
+  - [토지소유정보 조회하기](https://wooiljeong.github.io/python/pdr-land-ownership/)
   - [상가업소 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_02/)
   - [한국자산관리공사 캠코 공매물건 조회하기](https://wooiljeong.github.io/python/pdr-kamco/)
   - [사업자등록정보 진위확인 및 상태조회하기](https://wooiljeong.github.io/python/pdr-nts/)
