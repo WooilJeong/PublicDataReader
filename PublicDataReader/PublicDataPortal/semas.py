@@ -37,71 +37,71 @@ class SmallShop:
         self.service_key = service_key
         self.meta_dict = {
             "지정상권": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneOne",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeZoneOne",
                 "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
             },
             "반경상권": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneInRadius",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeZoneInRadius",
                 "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
             },
             "사각형상권": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneInRectangle",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeZoneInRectangle",
                 "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
             },
             "행정구역상권": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeZoneInAdmi",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeZoneInAdmi",
                 "columns": ['trarNo', 'mainTrarNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'trarArea', 'coordNum', 'coords', 'stdrDt'],
             },
             "단일상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeOne",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeOne",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "건물상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInBuilding",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInBuilding",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "지번상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInPnu",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInPnu",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "행정동상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInDong",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInDong",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "상권상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInArea",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInArea",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "반경상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInRadius",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInRadius",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "사각형상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInRectangle",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInRectangle",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "다각형상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInPolygon",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInPolygon",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "업종별상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListInUpjong",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListInUpjong",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "수정일자상가": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/storeListByDate",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/storeListByDate",
                 "columns": ['bizesId', 'bizesNm', 'brchNm', 'indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'ksicCd', 'ksicNm', 'ctprvnCd', 'ctprvnNm', 'signguCd', 'signguNm', 'adongCd', 'adongNm', 'ldongCd', 'ldongNm', 'lnoCd', 'plotSctCd', 'plotSctNm', 'lnoMnno', 'lnoSlno', 'lnoAdr', 'rdnmCd', 'rdnm', 'bldMnno', 'bldSlno', 'bldMngNo', 'bldNm', 'rdnmAdr', 'oldZipcd', 'newZipcd', 'dongNo', 'flrNo', 'hoNo', 'lon', 'lat'],
             },
             "업종대분류": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/largeUpjongList",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/largeUpjongList",
                 "columns": ["indsLclsCd", "indsLclsNm", "stdrDt"],
             },
             "업종중분류": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/middleUpjongList",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/middleUpjongList",
                 "columns": ["indsLclsCd", "indsLclsNm", "indsMclsCd", "indsMclsNm", "stdrDt"],
             },
             "업종소분류": {
-                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc/smallUpjongList",
+                "url": f"http://apis.data.go.kr/B553077/api/open/sdsc2/smallUpjongList",
                 "columns": ['indsLclsCd', 'indsLclsNm', 'indsMclsCd', 'indsMclsNm', 'indsSclsCd', 'indsSclsNm', 'stdrDt'],
             },
         }
@@ -270,7 +270,7 @@ class StoreInfo:
         self.serviceKey = serviceKey
 
         # ServiceKey 등록
-        self.endpoint = f"http://apis.data.go.kr/B553077/api/open/sdsc/"
+        self.endpoint = f"http://apis.data.go.kr/B553077/api/open/sdsc2/"
 
         # 오퍼레이션별 URL 및 컬럼 매핑 딕셔너리
         self.metaDict = {
