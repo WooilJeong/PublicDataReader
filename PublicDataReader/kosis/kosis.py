@@ -440,7 +440,7 @@ class _Kosis:
             return None
 
         try:
-            res = requests.get(self.url, params=kwargs).json()
+            res = requests.get(self.url, params=kwargs, verify=False).json()
         except:
             print("Request Failed!")
             return None

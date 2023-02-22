@@ -92,7 +92,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -141,7 +141,7 @@ class Kbland:
         params = {}
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -190,7 +190,7 @@ class Kbland:
         params = {}
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -257,7 +257,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -319,7 +319,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -366,7 +366,7 @@ class Kbland:
         params = {}
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -430,7 +430,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -514,7 +514,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -585,7 +585,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -647,7 +647,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -709,7 +709,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -762,7 +762,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -832,7 +832,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -890,7 +890,7 @@ class Kbland:
         }
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -944,7 +944,7 @@ class Kbland:
         params = {}
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -990,7 +990,7 @@ class Kbland:
         params = {}
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -1018,7 +1018,7 @@ class Kbland:
         params = {}
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)
@@ -1057,7 +1057,7 @@ class Kbland:
         params = {}
         params.update(kwargs)
         try:
-            res = requests.get(url, params=params)
+            res = requests.get(url, params=params, verify=False)
             data = res.json()['dataBody']['data']
         except Exception as e:
             print(e)

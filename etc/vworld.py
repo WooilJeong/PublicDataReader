@@ -12,7 +12,7 @@ while True:
 
     url = f"https://www.vworld.kr/dev/v4dv_2ddataguide2_s001.do"
     data = {"pageIndex": i}
-    res = requests.post(url, data)
+    res = requests.post(url, data, verify=False)
     soup = bs(res.text, "html5lib")
     title_tags = soup.select(
         "#container > div.page.clearfix > div.content > div > table > thead > tr > th")
