@@ -20,20 +20,18 @@
 </div>
 
 ```python
-import PublicDataReader as pdr
-print(pdr.__version__)
+from PublicDataReader import Kamco
 
 # 공공 데이터 포털 OpenAPI 서비스 인증키 입력하기
-serviceKey = "공공 데이터 포털에서 발급받은 서비스 키"
+service_key = "공공 데이터 포털에서 발급받은 서비스 키"
 
 # OpenAPI 인스턴스 생성
-API = pdr.Kamco(serviceKey)
+api = Kamco(service_key)
 
 # 사용가능한 서비스의 파라미터 값 확인
-print(API.meta_dict.keys())
-
+print(api.meta_dict.keys())
 # 서비스 별 사용가능한 기능의 파라미터 값 확인
-print(API.meta_dict['이용기관공매물건']['기능'].keys())
+print(api.meta_dict['이용기관공매물건']['기능'].keys())
 
 # 파라미터 정의
 service = "캠코공매물건"
@@ -45,6 +43,7 @@ params = {
     "SIDO": "서울특별시",
 }
 
-df = API.get_data(service, function, **params)
+# 데이터 조회
+df = api.get_data(service, function, **params)
 df.head()
 ```
