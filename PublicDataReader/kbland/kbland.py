@@ -4,6 +4,8 @@ KB부동산 데이터 API
 import requests
 import pandas as pd
 
+requests.packages.urllib3.disable_warnings()
+
 
 class Kbland:
 
