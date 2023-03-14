@@ -116,7 +116,7 @@ import PublicDataReader as pdr
 code_bdong = pdr.code_bdong()
 code_bdong.loc[
     (code_bdong['시도명']=='서울특별시') &
-    (code_bdong['말소일자'].isna()) &
+    (code_bdong['말소일자']=='') &
     (code_bdong['시군구명']=='서초구')
 ]
 ```
