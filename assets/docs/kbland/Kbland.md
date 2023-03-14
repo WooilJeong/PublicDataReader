@@ -151,12 +151,12 @@ code.head()
       <td>11</td>
       <td>서울특별시</td>
       <td>11000</td>
-      <td>NaN</td>
+      <td></td>
       <td>1100000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td></td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>1</th>
@@ -165,10 +165,10 @@ code.head()
       <td>11110</td>
       <td>종로구</td>
       <td>1111000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td></td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>2</th>
@@ -178,9 +178,9 @@ code.head()
       <td>종로구</td>
       <td>1111010100</td>
       <td>청운동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>3</th>
@@ -190,9 +190,9 @@ code.head()
       <td>종로구</td>
       <td>1111010200</td>
       <td>신교동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>4</th>
@@ -202,9 +202,9 @@ code.head()
       <td>종로구</td>
       <td>1111010300</td>
       <td>궁정동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

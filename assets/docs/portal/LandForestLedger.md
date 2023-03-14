@@ -147,10 +147,10 @@ code_bdong.loc[
       <td>11650</td>
       <td>서초구</td>
       <td>1165000000</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td></td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>977</th>
@@ -160,9 +160,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165010100</td>
       <td>방배동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19890427</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>978</th>
@@ -172,9 +172,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165010200</td>
       <td>양재동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19920701</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>979</th>
@@ -184,9 +184,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165010300</td>
       <td>우면동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19920701</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>980</th>
@@ -196,9 +196,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165010400</td>
       <td>원지동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19920701</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>982</th>
@@ -208,9 +208,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165010600</td>
       <td>잠원동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>983</th>
@@ -220,9 +220,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165010700</td>
       <td>반포동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>984</th>
@@ -232,9 +232,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165010800</td>
       <td>서초동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>985</th>
@@ -244,9 +244,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165010900</td>
       <td>내곡동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>986</th>
@@ -256,9 +256,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165011000</td>
       <td>염곡동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
     <tr>
       <th>987</th>
@@ -268,9 +268,9 @@ code_bdong.loc[
       <td>서초구</td>
       <td>1165011100</td>
       <td>신원동</td>
-      <td>NaN</td>
+      <td></td>
       <td>19880423</td>
-      <td>NaN</td>
+      <td></td>
     </tr>
   </tbody>
 </table>
