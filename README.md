@@ -45,6 +45,7 @@ pip install PublicDataReader --upgrade
 | :------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------: | :---------: |
 | [국토교통부 부동산 실거래가 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/TransactionPrice.md) | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [국토교통부 건축물대장정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/BuildingLedger.md)    | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
+| [국토교통부 건축인허가정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/BuildingLicense.md)    | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [국토교통부 주택인허가정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/HousingLicense.md)    | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [국토교통부 토지임야정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/LandForestLedger.md)   | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [국토교통부 토지소유정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/LandOwnership.md)   | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |

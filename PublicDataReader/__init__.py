@@ -9,6 +9,7 @@ __all__ = [
     "TransactionPrice",
     "Transaction",
     "BuildingLedger",
+    "BuildingLicense",
     "HousingLicense",
     "LandForestLedger",
     "LandOwnership",
