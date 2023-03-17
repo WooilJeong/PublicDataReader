@@ -11,6 +11,9 @@ from PublicDataReader.PublicDataPortal.semas import StoreInfo
 # 한국부동산원(REB) Open API 통합
 from PublicDataReader.PublicDataPortal.reb import Reb
 
+# 한국은행 경제통계 Open API
+from PublicDataReader.ecos.ecos import Ecos
+
 # 서울시 지하철호선별 역별 승하차 인원 정보 Open API
 from PublicDataReader.Seoul.transportation import Transportation
 

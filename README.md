@@ -54,6 +54,7 @@ pip install PublicDataReader --upgrade
 | [국세청 사업자등록정보 진위확인 및 상태조회 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Nts.md)     | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [한국부동산원 부동산 종합 정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Reb.md)            | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [KOSIS 통계정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis/Kosis.md)                 | [국가통계포털(KOSIS)](https://kosis.kr/openapi/index/index.jsp) | ✔️         |
+| [ECOS 한국은행 경제통계 서비스 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/ecos/ecos.md)                 | [한국은행 경제통계시스템(ECOS)](https://ecos.bok.or.kr/api/) | ✔️         |
 | [서울시 교통 관련 데이터 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul/Transportation.md)     | [서울 열린데이터 광장](https://data.seoul.go.kr/)                  | ✔️         |
 | [국가공간정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld/VworldData.md)               | [공간정보 오픈플랫폼(V-Word)](https://www.vworld.kr/v4po_main.do)  | ✔️         |
 | [KB통계 주택가격동향조사 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland/Kbland.md)            | [KB부동산](https://data.kbland.kr/)                          | ➖         |
