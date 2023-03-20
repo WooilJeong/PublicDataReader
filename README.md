@@ -82,6 +82,9 @@ pip install PublicDataReader --upgrade
   - [주민등록인구 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex1/)
   - [미분양주택현황 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex2/)
 
+- 한국은행(ECOS)
+  - [ECOS 한국은행 경제통계 조회하기](https://wooiljeong.github.io/python/pdr-ecos/)
+
 - KB부동산
   - [KB부동산 주택가격동향조사 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kbland/)
 
