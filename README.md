@@ -54,6 +54,7 @@ pip install PublicDataReader --upgrade
 | [국세청 사업자등록정보 진위확인 및 상태조회 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Nts.md)     | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [한국부동산원 부동산 종합 정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/Reb.md)            | [공공데이터포털](https://www.data.go.kr/)                        | ✔️         |
 | [KOSIS 통계정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kosis/Kosis.md)                 | [국가통계포털(KOSIS)](https://kosis.kr/openapi/index/index.jsp) | ✔️         |
+| [ECOS 한국은행 경제통계 서비스 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/ecos/ecos.md)                 | [한국은행 경제통계시스템(ECOS)](https://ecos.bok.or.kr/api/) | ✔️         |
 | [서울시 교통 관련 데이터 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/seoul/Transportation.md)     | [서울 열린데이터 광장](https://data.seoul.go.kr/)                  | ✔️         |
 | [국가공간정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/vworld/VworldData.md)               | [공간정보 오픈플랫폼(V-Word)](https://www.vworld.kr/v4po_main.do)  | ✔️         |
 | [KB통계 주택가격동향조사 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/kbland/Kbland.md)            | [KB부동산](https://data.kbland.kr/)                          | ➖         |
@@ -68,6 +69,7 @@ pip install PublicDataReader --upgrade
 - 공공데이터포털
   - [부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
+  - [건축인허가 데이터 조회하기](https://wooiljeong.github.io/python/pdr-building-license/)
   - [주택인허가 데이터 조회하기](https://wooiljeong.github.io/python/pdr-housing-license/)
   - [토지대장 및 임야대장 조회하기](https://wooiljeong.github.io/python/pdr-land-forest-ledger/)
   - [토지소유정보 조회하기](https://wooiljeong.github.io/python/pdr-land-ownership/)
@@ -79,6 +81,9 @@ pip install PublicDataReader --upgrade
   - [Python으로 KOSIS 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis/)
   - [주민등록인구 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex1/)
   - [미분양주택현황 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis-ex2/)
+
+- 한국은행(ECOS)
+  - [ECOS 한국은행 경제통계 조회하기](https://wooiljeong.github.io/python/pdr-ecos/)
 
 - KB부동산
   - [KB부동산 주택가격동향조사 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kbland/)
