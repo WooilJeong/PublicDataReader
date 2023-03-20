@@ -69,6 +69,7 @@ pip install PublicDataReader --upgrade
 - 공공데이터포털
   - [부동산 실거래가 조회하기](https://wooiljeong.github.io/python/public_data_reader_01/)
   - [건축물대장 데이터 조회하기](https://wooiljeong.github.io/python/public_data_reader_03/)
+  - [건축인허가 데이터 조회하기](https://wooiljeong.github.io/python/pdr-building-license/)
   - [주택인허가 데이터 조회하기](https://wooiljeong.github.io/python/pdr-housing-license/)
   - [토지대장 및 임야대장 조회하기](https://wooiljeong.github.io/python/pdr-land-forest-ledger/)
   - [토지소유정보 조회하기](https://wooiljeong.github.io/python/pdr-land-ownership/)
