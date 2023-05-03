@@ -1,12 +1,8 @@
 # 국토교통부(molit) Open API 통합
 from PublicDataReader.PublicDataPortal.molit import TransactionPrice, BuildingLedger, BuildingLicense, HousingLicense, LandForestLedger, LandOwnership
-# (Deprecated)
-from PublicDataReader.PublicDataPortal.molit import Transaction, Building
 
 # 소상공인 진흥공단(semas) Open API 통합
 from PublicDataReader.PublicDataPortal.semas import SmallShop
-# (Deprecated)
-from PublicDataReader.PublicDataPortal.semas import StoreInfo
 
 # 한국부동산원(REB) Open API 통합
 from PublicDataReader.PublicDataPortal.reb import Reb

@@ -1,21 +1,25 @@
-import pandas as pd
 import requests
 import xmltodict
+import pandas as pd
 
 requests.packages.urllib3.disable_warnings()
 
 
 class Kamco:
     """
-    KAMCO Open API 클래스
+    한국자산관리공사 오픈 API 클래스
+
+    parameters
+    ----------
+    service_key: str
+        한국자산관리공사 오픈 API 인증키
     """
 
     def __init__(self, service_key=None):
 
         # 전역 변수
         self.service_key = service_key
-        self.numOfRows = 99999
-        self.page = 1
+        self.numOfRows = 10000
         self.endpoint = "http://openapi.onbid.co.kr/openapi/services"
 
         # 서비스, 기능 딕셔너리
@@ -93,118 +97,1038 @@ class Kamco:
 
         }
 
-    def get_data(self, service, function, **kwargs):
+    def get_data(self, service, function, translate=True, **kwargs):
+        """
+        데이터 조회
 
-        try:
-            service = service.replace(" ", "")
-            function = function.replace(" ", "")
-            _service = self.meta_dict[service]['서비스']
-            _function = self.meta_dict[service]['기능'][function]
-            url = f"{self.endpoint}/{_service}/{_function}"
-        except:
-            print("서비스 및 기능 설정 오류")
-            return None
+        parameters
+        ----------
+        service: str
+            서비스 - 온비드코드, 캠코공매물건, 이용기관공매물건, 정부재산정보공개, 물건정보
+        function: str
+            기능 - 서비스별 기능
+        translate: bool
+            컬럼명 번역 여부 - True: 번역, False: 번역 안함
+        **kwargs: dict
+            입력 파라미터
+        """
+        page = 1
+        dataframes = []
+        # 페이지 순회
+        while True:
 
-        # 기본 파라미터
-        params = {
-            "serviceKey": requests.utils.unquote(self.service_key),
-            "numOfRows": self.numOfRows,
-            "page": self.page,
-        }
-        params.update(kwargs)
+            # 메타 정보 파싱
+            try:
+                service = service.replace(" ", "")
+                function = function.replace(" ", "")
+                _service = self.meta_dict[service]['서비스']
+                _function = self.meta_dict[service]['기능'][function]
+                url = f"{self.endpoint}/{_service}/{_function}"
+            except Exception as e:
+                print(f"서비스 및 기능 설정 오류\n{e}")
+                return None
 
-        # 요청
-        try:
-            response = requests.get(url, params=params, verify=False)
-        except:
-            print("API 요청 오류")
-            return None
+            # 입력 파라미터 업데이트
+            params = {
+                "serviceKey": requests.utils.unquote(self.service_key),
+                "numOfRows": self.numOfRows,
+                "pageNo": page,
+            }
+            params.update(kwargs)
 
-        try:
-            data = xmltodict.parse(response.text)
-        except:
-            print("XML-Dictionary 변환 오류")
-            return None
+            # API 요청
+            try:
+                response = requests.get(url, params=params, verify=False)
+                data = xmltodict.parse(response.text)
+                body = data['response']['body']
+            except Exception as e:
+                print(f"API 요청 오류\n{e}")
+                return None
 
-        try:
-            body = data['response']['body']
-        except:
-            print(data.get("response").get("header").get("resultMsg"))
-            return None
+            # 응답 바디에 items 존재 시 - 데이터 프레임 행 추가
+            if 'items' in body:
+                items = body['items']
 
-        # 데이터프레임으로 변환
-        try:
+                # items의 값 부재 시 반복문 Break
+                if items is None:
+                    break
 
-            # 바디에 items 키 값이 존재하는 경우
-            if body.get("items") is not None:
-
-                if body['items'].get("bidDateInfoItem"):
-                    if type(body['items'].get("bidDateInfoItem")) == dict:
-                        df = pd.DataFrame([body['items']['bidDateInfoItem']])
-                    else:
-                        df = pd.DataFrame(body['items']['bidDateInfoItem'])
-
-                elif body['items'].get("estimationInfo"):
-                    if type(body['items'].get("estimationInfo")) == dict:
-                        df = pd.DataFrame([body['items']['estimationInfo']])
-                    else:
-                        df = pd.DataFrame(body['items']['estimationInfo'])
-
-                elif body['items'].get("registered"):
-                    if type(body['items'].get("registered")) == dict:
-                        df = pd.DataFrame([body['items']['registered']])
-                    else:
-                        df = pd.DataFrame(body['items']['registered'])
-
-                elif body['items'].get("bidInfo"):
-                    if type(body['items'].get("bidInfo")) == dict:
-                        df = pd.DataFrame([body['items']['bidInfo']])
-                    else:
-                        df = pd.DataFrame(body['items']['bidInfo'])
-
-                elif body['items'].get("bidHistoryInfo"):
-                    if type(body['items'].get("bidHistoryInfo")) == dict:
-                        df = pd.DataFrame([body['items']['bidHistoryInfo']])
-                    else:
-                        df = pd.DataFrame(body['items']['bidHistoryInfo'])
-
-                elif body['items'].get("stockholderInfo"):
-                    if type(body['items'].get("stockholderInfo")) == dict:
-                        df = pd.DataFrame([body['items']['stockholderInfo']])
-                    else:
-                        df = pd.DataFrame(body['items']['stockholderInfo'])
-
-                elif body['items'].get("corporatebodyInfo"):
-                    if type(body['items'].get("corporatebodyInfo")) == dict:
-                        df = pd.DataFrame([body['items']['corporatebodyInfo']])
-                    else:
-                        df = pd.DataFrame(body['items']['corporatebodyInfo'])
-
-                elif body['items'].get("rentalInfo"):
-                    if type(body['items'].get("rentalInfo")) == dict:
-                        df = pd.DataFrame([body['items']['rentalInfo']])
-                    else:
-                        df = pd.DataFrame(body['items']['rentalInfo'])
-
+                # items의 값 존재 시
                 else:
-                    if type(body['items']['item']) == dict:
-                        df = pd.DataFrame([body['items']['item']])
-                    else:
-                        df = pd.DataFrame(body['items']['item'])
+                    item_keys = [
+                        "bidDateInfoItem", "estimationInfo", "registered", "bidInfo",
+                        "bidHistoryInfo", "stockholderInfo", "corporatebodyInfo", "rentalInfo"
+                    ]
+                    for key in item_keys:
+                        if key in items:
+                            dataframes.append(self._to_dataframe(items[key]))
 
-            # 바디에 items 키 값이 존재하지 않는 경우
+                    if 'item' in items:
+                        dataframes.append(self._to_dataframe(items['item']))
+
+            # 응답 바디에 item 존재 시 - 데이터 프레임 행 추가, 반복문 Break (pageNo 이슈)
+            elif 'item' in body:
+                dataframes.append(self._to_dataframe(body['item']))
+                break
+
+            # 응답 바디에 items, item 부재 시 - 반복문 Break
             else:
+                break
 
-                # items 대신 item 키 값이 존재하는 경우
-                if body.get("item"):
-                    df = pd.DataFrame([body['item']])
+            # 예외 - (pageNo 이슈)
+            if function in ['공고공매일정', '정부재산정보공개정보상세', '캠코관리재산정보공개정보상세']:
+                break
 
-                # items와 item 모두 키 값이 존재하지 않는 경우
-                else:
-                    print("데이터가 없습니다.")
-                    return None
-        except:
-            print("데이터 프레임 생성 오류")
-            return body
+            # 페이지 번호 추가
+            page += 1
 
+        # 데이터 프레임 병합
+        if dataframes:
+            df = pd.concat(dataframes, ignore_index=True)
+        else:
+            df = pd.DataFrame()
+
+        # 컬럼명 한글화
+        if translate:
+            df = self._translate(df, service, function)
         return df
+
+    @staticmethod
+    def _to_dataframe(item):
+        if isinstance(item, dict):
+            return pd.DataFrame([item])
+        return pd.DataFrame(item)
+
+    @staticmethod
+    def _translate(df, service, function):
+        data = {'온비드코드_용도상위코드': {'resultCode': '결과코드',
+                                 'resultMsg': '결과메시지',
+                                 'numOfRows': '한 페이지 결과 수',
+                                 'pageNo': '페이지 번호',
+                                 'TotalCount': '총건수',
+                                 'CTGR_ID': '코드 ID',
+                                 'CTGR_NM': '코드명',
+                                 'CTGR_HIRK_ID': '상위 코드 ID',
+                                 'CTGR_HIRK_NM': '상위 코드 명'},
+                '온비드코드_용도중간코드': {'resultCode': '결과코드',
+                                 'resultMsg': '결과메시지',
+                                 'numOfRows': '한 페이지 결과 수',
+                                 'pageNo': '페이지 번호',
+                                 'TotalCount': '총건수',
+                                 'CTGR_ID': '코드 ID',
+                                 'CTGR_NM': '코드명',
+                                 'CTGR_HIRK_ID': '상위 코드 ID',
+                                 'CTGR_HIRK_NM': '상위 코드 명'},
+                '온비드코드_용도하위코드': {'resultCode': '결과코드',
+                                 'resultMsg': '결과메시지',
+                                 'numOfRows': '한 페이지 결과 수',
+                                 'pageNo': '페이지 번호',
+                                 'TotalCount': '총건수',
+                                 'CTGR_ID': '코드 ID',
+                                 'CTGR_NM': '코드명',
+                                 'CTGR_HIRK_ID': '상위 코드 ID',
+                                 'CTGR_HIRK_NM': '상위 코드 명'},
+                '온비드코드_시도': {'resultCode': '결과코드',
+                             'resultMsg': '결과메시지',
+                             'numOfRows': '한 페이지 결과 수',
+                             'pageNo': '페이지 번호',
+                             'TotalCount': '총건수',
+                             'ADDR1': '1뎁스 주소'},
+                '온비드코드_시군구': {'resultCode': '결과코드',
+                              'resultMsg': '결과메시지',
+                              'numOfRows': '한 페이지 결과 수',
+                              'pageNo': '페이지 번호',
+                              'TotalCount': '총건수',
+                              'ADDR2': '2뎁스 주소'},
+                '온비드코드_읍면동': {'resultCode': '결과코드',
+                              'resultMsg': '결과메시지',
+                              'numOfRows': '한 페이지 결과 수',
+                              'pageNo': '페이지 번호',
+                              'TotalCount': '총건수',
+                              'ADDR3': '3뎁스 주소'},
+                '온비드코드_상세주소': {'resultCode': '결과코드',
+                               'resultMsg': '결과메시지',
+                               'numOfRows': '한 페이지 결과 수',
+                               'pageNo': '페이지 번호',
+                               'TotalCount': '총건수',
+                               'DTL_ADDR': '상세 주소'},
+                '캠코공매물건_물건목록': {'resultCode': '결과코드',
+                                'resultMsg': '결과메시지',
+                                'numOfRows': '한 페이지 결과 수',
+                                'pageNo': '페이지 번호',
+                                'TotalCount': '총 건수',
+                                'PLNM_NO': '공고번호',
+                                'PBCT_NO': '공매번호',
+                                'PBCT_CDTN_NO': '공매조건번호',
+                                'CLTR_NO': '물건번호',
+                                'CLTR_HSTR_NO': '물건이력번호',
+                                'SCRN_GRP_CD': '화면그룹코드',
+                                'CTGR_FULL_NM': '용도명',
+                                'BID_MNMT_NO': '입찰번호',
+                                'CLTR_NM': '물건명',
+                                'CLTR_MNMT_NO': '물건관리번호',
+                                'LDNM_ADRS': '물건소재지(지번)',
+                                'NMRD_ADRS': '물건소재지(도로명)',
+                                'DPSL_MTD_CD': '처분방식코드',
+                                'DPSL_MTD_NM': '처분방식코드명',
+                                'BID_MTD_NM': '입찰방식명',
+                                'MIN_BID_PRC': '최저입찰가',
+                                'APSL_ASES_AVG_AMT': '감정가',
+                                'FEE_RATE': '최저입찰가율',
+                                'PBCT_BEGN_DTM': '입찰시작일시',
+                                'PBCT_CLS_DTM': '입찰마감일시',
+                                'PBCT_CLTR_STAT_NM': '물건상태',
+                                'USCBD_CNT': '유찰횟수',
+                                'IQRY_CNT': '조회수',
+                                'GOODS_NM': '물건상세정보',
+                                'MANF': '제조사',
+                                'MDL': '모델',
+                                'NRGT': '연월식',
+                                'GRBX': '변속기',
+                                'ENDPC': '배기량',
+                                'VHCL_MLGE': '주행거리',
+                                'FUEL': '연료',
+                                'SCRT_NM': '법인명',
+                                'TPBZ': '업종',
+                                'ITM_NM': '종목명',
+                                'MMB_RGT_NM': '회원권명',
+                                'CLTR_IMG_FILES': '물건이미지'},
+                '캠코공매물건_공고목록': {'resultCode': '결과코드',
+                                'resultMsg': '결과메시지',
+                                'numOfRows': '한 페이지 결과 수',
+                                'pageNo': '페이지 번호',
+                                'TotalCount': '총 건수',
+                                'PLNM_NO': '공고번호',
+                                'PBCT_NO': '공매번호',
+                                'PRPT_DVSN_NM': '재산구분',
+                                'AST_DVSN_NM': '자산구분',
+                                'PLNM_NM': '공고명',
+                                'RSBY_DEPT': '담당부점',
+                                'PLNM_MNMT_NO': '공고관리번호',
+                                'PLNM_DT': '공고일',
+                                'PBCT_EXCT_DTM': '개찰일시'},
+                '캠코공매물건_일정': {'resultCode': '결과코드',
+                              'resultMsg': '결과메시지',
+                              'numOfRows': '한 페이지 결과 수',
+                              'pageNo': '페이지 번호',
+                              'TotalCount': '총건수',
+                              'PLNM_NO': '공고번호',
+                              'PBCT_NO': '공매번호',
+                              'PRPT_DVSN_CD': '재산구분코드',
+                              'PRPT_DVSN_NM': '재산구분',
+                              'AST_DVSN_CD': '자산구분코드',
+                              'AST_DVSN_NM': '자산구분',
+                              'RSBY_DEPT': '담당부점',
+                              'PBCT_SEQ': '회차',
+                              'PBCT_DGR': '차수',
+                              'PBCT_BEGN_DTM': '입찰시작일시',
+                              'PBCT_CLS_DTM': '입찰마감일시',
+                              'PBCT_EXCT_DTM': '개찰일시'},
+                '캠코공매물건_공고기본정보': {'resultCode': '결과코드',
+                                  'resultMsg': '결과메시지',
+                                  'PLNM_NM': '공고명',
+                                  'ORG_NM': '공고기관',
+                                  'RSBY_DEPT': '담당부점',
+                                  'PSCG_NM': '담당자명',
+                                  'PSCG_TPNO': '담당자전화번호',
+                                  'PSCG_EMAL_ADRS': '담당자이메일주소',
+                                  'PLNM_KIND_NM': '공고종류',
+                                  'PLNM_DT': '공고일자',
+                                  'PLNM_YR': '공고년도',
+                                  'PLNM_SEQ': '공고회차',
+                                  'PRPT_DVSN_NM': '재산종류',
+                                  'AST_DVSN_CD': '공고대상자산',
+                                  'PLNM_MNMT_NO': '공고관리번호',
+                                  'ORG_PLNM_NO': '기관공고번호',
+                                  'RLTN_PLNM_NO': '관련공고번호',
+                                  'RLTN_PLNM_TITL': '관련공고명',
+                                  'BID_MTD_NM': '입찰방식',
+                                  'DPSL_MTD_NM': '처분방식',
+                                  'CPTN_MTD_NM': '경쟁방식',
+                                  'TOT_AMT_UNPC_DVSN_NM': '총액단가구분',
+                                  'PTCT_QLFC': '참가자격',
+                                  'RBD_YN': '재입찰여부',
+                                  'COMN_BID_PMSN_YN': '공동입찰허용여부',
+                                  'SUBT_BID_PMSN_YN': '대리입찰허용여부',
+                                  'PLNM_DOC': '공고문',
+                                  'bidDateInfosTotalCount': '공매일정 총 건수',
+                                  'filesTotalCount': '첨부파일 총 건수'},
+                '캠코공매물건_공고공매일정': {'resultCode': '결과코드',
+                                  'resultMsg': '결과메시지',
+                                  'numOfRows': '한 페이지 결과 수',
+                                  'pageNo': '페이지 번호',
+                                  'TotalCount': '총 건수',
+                                  'PBCT_NO': '공매번호',
+                                  'PBCT_SEQ': '공매회차',
+                                  'PBCT_DGR': '공매차수',
+                                  'BID_DVSN_NM': '입찰구분',
+                                  'TWPS_LSTH_USBD_YN': '2인미만유찰여부',
+                                  'TWTM_GTHR_BID_PSBL_YN': '2회이상입찰가능여부',
+                                  'ELTR_GRT_DOC_USE_YN': '전자보증서',
+                                  'PTCT_CMSN': '참가수수료',
+                                  'PBCT_BEGN_DTM': '입찰시작일시',
+                                  'PBCT_CLS_DTM': '입찰마감일시',
+                                  'PBCT_EXCT_DTM': '개찰일시',
+                                  'OPBD_PLC_CNTN': '개찰장소내용'},
+                '캠코공매물건_공고첨부파일': {'resultCode': '결과코드',
+                                  'resultMsg': '결과메시지',
+                                  'numOfRows': '한 페이지 결과 수',
+                                  'pageNo': '페이지 번호',
+                                  'TotalCount': '총건수',
+                                  'ATCH_FILE_PTCS_NO': '첨부파일내역번호',
+                                  'ATCH_FILE_NM': '첨부파일명',
+                                  'FILE_PTH_CNTN': '파일경로내용'},
+                '이용기관공매물건_공고목록': {'resultCode': '결과코드',
+                                  'resultMsg': '결과메시지',
+                                  'numOfRows': '한 페이지 결과 수',
+                                  'pageNo': '페이지 번호',
+                                  'TotalCount': '총건수',
+                                  'RNUM': '순번',
+                                  'PLNM_NO': '공고번호',
+                                  'PBCT_NO': '공매번호',
+                                  'PLNM_KIND_CD': '공고종류코드',
+                                  'PLNM_KIND_NM': '공고종류',
+                                  'BID_DVSN_CD': '입찰형태코드',
+                                  'BID_DVSN_NM': '입찰형태',
+                                  'PLNM_NM': '공고명',
+                                  'ORG_NM': '공고기관명',
+                                  'PLNM_DT': '공고일자',
+                                  'ORG_PLNM_NO': '기관공고번호',
+                                  'PLNM_MNMT_NO': '공고관리번호',
+                                  'BID_MTD_CD': '입찰방식코드',
+                                  'BID_MTD_NM': '입찰방식',
+                                  'TOT_AMT_UNPC_DVSN_CD': '총액단가구분코드',
+                                  'TOT_AMT_UNPC_DVSN_NM': '총액단가구분',
+                                  'DPSL_MTD_CD': '처분방식코드',
+                                  'DPSL_MTD_NM': '처분방식',
+                                  'PRPT_DVSN_CD': '재산구분코드',
+                                  'PRPT_DVSN_NM': '재산구분',
+                                  'PBCT_BEGN_DTM': '입찰시작일시',
+                                  'PBCT_CLS_DTM': '입찰마감일시',
+                                  'PBCT_EXCT_DTM': '개찰일시',
+                                  'CTGR_ID': '용도코드',
+                                  'CTGR_FULL_NM': '용도'},
+                '이용기관공매물건_물건목록': {'resultCode': '결과코드',
+                                  'resultMsg': '결과메시지',
+                                  'numOfRows': '한 페이지 결과 수',
+                                  'pageNo': '페이지 번호',
+                                  'TotalCount': '총건수',
+                                  'PLNM_NO': '공고번호',
+                                  'PBCT_NO': '공매번호',
+                                  'CLTR_HSTR_NO': '물건이력번호',
+                                  'PBCT_CDTN_NO': '공매조건번호',
+                                  'SCRN_GRP_CD': '화면그룹코드',
+                                  'CTGR_ID': '용도코드',
+                                  'CTGR_FULL_NM': '용도',
+                                  'BID_MNMT_NO': '입찰번호',
+                                  'CLTR_NM': '물건명',
+                                  'CLTR_MNMT_NO': '물건관리번호',
+                                  'LDNM_ADRS': '물건소재지(지번)',
+                                  'NMRD_ADRS': '물건소재지(도로명)',
+                                  'DPSL_MTD_CD': '처분방식코드',
+                                  'DPSL_MTD_NM': '처분방식',
+                                  'BID_MTD_NM': '입찰방식',
+                                  'MIN_BID_PRC': '최저입찰가',
+                                  'APSL_ASES_AVG_AMT': '감정가',
+                                  'FEE_RATE': '최저입찰가율',
+                                  'PBCT_BEGN_DTM': '입찰시작일시',
+                                  'PBCT_CLS_DTM': '입찰마감일시',
+                                  'PBCT_CLTR_STAT_NM': '물건상태',
+                                  'USCBD_CNT': '유찰횟수',
+                                  'IQRY_CNT': '조회수',
+                                  'GOODS_NM': '물건상세정보',
+                                  'MANF': '제조사',
+                                  'MDL': '모델',
+                                  'NRGT': '연월식',
+                                  'GRBX': '변속기',
+                                  'ENDPC': '배기량',
+                                  'VHCL_MLGE': '주행거리',
+                                  'FUEL': '연료',
+                                  'SCRT_NM': '증권명',
+                                  'TPBZ': '업종',
+                                  'ITM_NM': '종목명',
+                                  'MMB_RGT_NM': '회원권명',
+                                  'CLTR_IMG_FILES': '물건이미지'},
+                '이용기관공매물건_통합공고목록': {'resultCode': '결과코드',
+                                    'resultMsg': '결과메시지',
+                                    'numOfRows': '한 페이지 결과 수',
+                                    'pageNo': '페이지 번호',
+                                    'totalCount': '총건수',
+                                    'RNUM': '순번',
+                                    'PLNM_KIND_CD': '공고종류코드',
+                                    'PLNM_KIND_NM': '공고종류',
+                                    'BID_DVSN_CD': '입찰형태코드',
+                                    'BID_DVSN_NM': '입찰형태',
+                                    'PLNM_NM': '공고명',
+                                    'ORG_NM': '공고기관명',
+                                    'PLNM_DT': '공고일자',
+                                    'PLNM_NO': '공고번호',
+                                    'PBCT_NO': '공매번호',
+                                    'ORG_PLNM_NO': '기관공고번호',
+                                    'PLNM_MNMT_NO': '공고관리번호',
+                                    'BID_MTD_CD': '입찰방식코드',
+                                    'BID_MTD_NM': '입찰방식',
+                                    'TOT_AMT_UNPC_DVSN_CD': '총액단가구분코드',
+                                    'TOT_AMT_UNPC_DVSN_NM': '총액단가구분',
+                                    'DPSL_MTD_CD': '처분방식코드',
+                                    'DPSL_MTD_NM': '처분방식',
+                                    'PRPT_DVSN_CD': '재산구분코드',
+                                    'PRPT_DVSN_NM': '재산구분',
+                                    'PBCT_BEGN_DTM': '입찰시작일시',
+                                    'PBCT_CLS_DTM': '입찰마감일시',
+                                    'PBCT_EXCT_DTM': '개찰일시',
+                                    'CTGR_ID': '용도코드',
+                                    'CTGR_FULL_NM': '용도'},
+                '이용기관공매물건_매각공고목록': {'resultCode': '결과코드',
+                                    'resultMsg': '결과메시지',
+                                    'numOfRows': '한 페이지 결과 수',
+                                    'pageNo': '페이지 번호',
+                                    'totalCount': '총건수',
+                                    'PLNM_KIND_CD': '공고종류코드',
+                                    'PLNM_KIND_NM': '공고종류',
+                                    'BID_DVSN_CD': '입찰형태코드',
+                                    'BID_DVSN_NM': '입찰형태',
+                                    'PLNM_NM': '공고명',
+                                    'ORG_NM': '공고기관명',
+                                    'PLNM_DT': '공고일자',
+                                    'PLNM_NO': '공고번호',
+                                    'PBCT_NO': '공매번호',
+                                    'ORG_PLNM_NO': '기관공고번호',
+                                    'PLNM_MNMT_NO': '공고관리번호',
+                                    'BID_MTD_CD': '입찰방식코드',
+                                    'BID_MTD_NM': '입찰방식',
+                                    'TOT_AMT_UNPC_DVSN_CD': '총액단가구분코드',
+                                    'TOT_AMT_UNPC_DVSN_NM': '총액단가구분',
+                                    'DPSL_MTD_CD': '처분방식코드',
+                                    'DPSL_MTD_NM': '처분방식',
+                                    'PRPT_DVSN_CD': '재산구분',
+                                    'PRPT_DVSN_NM': '재산구분',
+                                    'PBCT_BEGN_DTM': '입찰시작일시',
+                                    'PBCT_CLS_DTM': '입찰마감일시',
+                                    'PBCT_EXCT_DTM': '개찰일시',
+                                    'CTGR_ID': '용도코드',
+                                    'CTGR_FULL_NM': '용도'},
+                '이용기관공매물건_임대공고목록': {'resultCode': '결과코드',
+                                    'resultMsg': '결과메시지',
+                                    'numOfRows': '한 페이지 결과 수',
+                                    'pageNo': '페이지 번호',
+                                    'TotalCount': '총건수',
+                                    'PLNM_KIND_CD': '공고종류코드',
+                                    'PLNM_KIND_NM': '공고종류',
+                                    'BID_DVSN_CD': '입찰형태코드',
+                                    'BID_DVSN_NM': '입찰형태',
+                                    'PLNM_NM': '공고명',
+                                    'ORG_NM': '공고기관명',
+                                    'PLNM_DT': '공고일자',
+                                    'PLNM_NO': '공고번호',
+                                    'PBCT_NO': '공매번호',
+                                    'ORG_PLNM_NO': '기관공고번호',
+                                    'PLNM_MNMT_NO': '공고관리번호',
+                                    'BID_MTD_CD': '입찰방식코드',
+                                    'BID_MTD_NM': '입찰방식',
+                                    'TOT_AMT_UNPC_DVSN_CD': '총액단가구분코드',
+                                    'TOT_AMT_UNPC_DVSN_NM': '총액단가구분',
+                                    'DPSL_MTD_CD': '처분방식코드',
+                                    'DPSL_MTD_NM': '처분방식',
+                                    'PRPT_DVSN_CD': '재산구분',
+                                    'PRPT_DVSN_NM': '재산구분',
+                                    'PBCT_BEGN_DTM': '입찰시작일시',
+                                    'PBCT_CLS_DTM': '입찰마감일시',
+                                    'PBCT_EXCT_DTM': '개찰일시',
+                                    'CTGR_ID': '용도코드',
+                                    'CTGR_FULL_NM': '용도'},
+                '이용기관공매물건_마감임박공고목록': {'resultCode': '결과코드',
+                                      'resultMsg': '결과메시지',
+                                      'numOfRows': '한 페이지 결과 수',
+                                      'pageNo': '페이지 번호',
+                                      'TotalCount': '총건수',
+                                      'PLNM_KIND_CD': '공고종류코드',
+                                      'PLNM_KIND_NM': '공고종류',
+                                      'BID_DVSN_CD': '입찰형태코드',
+                                      'BID_DVSN_NM': '입찰형태',
+                                      'PLNM_NM': '공고명',
+                                      'ORG_NM': '공고기관명',
+                                      'PLNM_DT': '공고일자',
+                                      'PLNM_NO': '공고번호',
+                                      'PBCT_NO': '공매번호',
+                                      'ORG_PLNM_NO': '기관공고번호',
+                                      'PLNM_MNMT_NO': '공고관리번호',
+                                      'BID_MTD_CD': '입찰방식코드',
+                                      'BID_MTD_NM': '입찰방식',
+                                      'TOT_AMT_UNPC_DVSN_CD': '총액단가구분코드',
+                                      'TOT_AMT_UNPC_DVSN_NM': '총액단가구분',
+                                      'DPSL_MTD_CD': '처분방식코드',
+                                      'DPSL_MTD_NM': '처분방식',
+                                      'PRPT_DVSN_CD': '재산구분',
+                                      'PRPT_DVSN_NM': '재산구분',
+                                      'PBCT_BEGN_DTM': '입찰시작일시',
+                                      'PBCT_CLS_DTM': '입찰마감일시',
+                                      'PBCT_EXCT_DTM': '개찰일시',
+                                      'CTGR_ID': '용도코드',
+                                      'CTGR_FULL_NM': '용도'},
+                '정부재산정보공개_정부재산정보공개정보목록': {'resultCode': '결과코드',
+                                          'resultMsg': '결과메시지',
+                                          'numOfRows': '한 페이지 결과 수',
+                                          'pageNo': '페이지 번호',
+                                          'TotalCount': '총건수',
+                                          'RNUM': '순번',
+                                          'CLTR_NO': '물건번호',
+                                          'DLGT_ORG_NM': '물건관리기관명',
+                                          'CTGR_ID': '용도코드',
+                                          'CTGR_FULL_NM': '용도명',
+                                          'CLTR_NM': '물건명',
+                                          'LAND_SQMS': '토지면적',
+                                          'BLD_SQMS': '건물면적',
+                                          'CLTR_MNMT_STAT_CD': '관리상태코드',
+                                          'CLTR_MNMT_STAT_NM': '관리상태',
+                                          'IQRY_CNT': '조회수'},
+                '정부재산정보공개_정부재산정보공개정보상세': {'resultCode': '결과코드',
+                                          'resultMsg': '결과메시지',
+                                          'numOfRows': '한 페이지 결과 수',
+                                          'pageNo': '페이지 번호',
+                                          'TotalCount': '총건수',
+                                          'CLTR_NM': '물건명',
+                                          'CTGR_TYPE_NM': '물건종류',
+                                          'DLGT_ORG_NM': '물건관리기관명',
+                                          'CTNO': '연락처',
+                                          'CLTR_MNMT_STAT_NM': '관리상태',
+                                          'LDNM_ADRS': '물건소재지(지번)',
+                                          'NMRD_ADRS': '물건소재지(도로명)',
+                                          'CATEG_NM': '용도',
+                                          'USAGE_DETAIL_NAME': '세부용도',
+                                          'LAND_SQMS': '토지면적',
+                                          'BLD_SQMS': '건물면적',
+                                          'POSI_ENV_PSCD': '위치부근현황',
+                                          'UTLZ_PSCD': '이용현황',
+                                          'ETC_DTL_CNTN': '기타상세내용',
+                                          'ICDL_CDTN': '부대조건',
+                                          'BLD_NM': '건물명',
+                                          'DONG': '동',
+                                          'FLR': '층',
+                                          'HOUS': '호'},
+                '정부재산정보공개_캠코관리재산정보공개목록정보': {'resultCode': '결과코드',
+                                            'resultMsg': '결과메시지',
+                                            'numOfRows': '한 페이지 결과 수',
+                                            'pageNo': '페이지 번호',
+                                            'TotalCount': '총건수',
+                                            'CLTR_NO': '물건번호',
+                                            'DLGT_ORG_NM': '물건관리기관명',
+                                            'CTGR_ID': '용도코드',
+                                            'CTGR_FULL_NM': '용도명',
+                                            'CLTR_NM': '물건명',
+                                            'LAND_SQMS': '토지면적',
+                                            'BLD_SQMS': '건물면적',
+                                            'CLTR_MNMT_STAT_CD': '관리상태코드',
+                                            'CLTR_MNMT_STAT_NM': '관리상태',
+                                            'IQRY_CNT': '조회수'},
+                '정부재산정보공개_캠코관리재산정보공개정보상세': {'resultCode': '결과코드',
+                                            'resultMsg': '결과메시지',
+                                            'numOfRows': '한 페이지 결과 수',
+                                            'pageNo': '페이지 번호',
+                                            'TotalCount': '총건수',
+                                            'CLTR_NM': '물건명',
+                                            'CTGR_TYPE_NM': '물건종류',
+                                            'DLGT_ORG_NM': '물건관리기관명',
+                                            'CTNO': '연락처',
+                                            'CLTR_MNMT_STAT_NM': '관리상태',
+                                            'LDNM_ADRS': '물건소재지(지번)',
+                                            'NMRD_ADRS': '물건소재지(도로명)',
+                                            'CATEG_NM': '용도',
+                                            'USAGE_DETAIL_NAME': '세부용도',
+                                            'LAND_SQMS': '토지면적',
+                                            'BLD_SQMS': '건물면적',
+                                            'POSI_ENV_PSCD': '위치부근현황',
+                                            'UTLZ_PSCD': '이용현황',
+                                            'ETC_DTL_CNTN': '기타상세내용',
+                                            'ICDL_CDTN': '부대조건',
+                                            'BLD_NM': '건물명',
+                                            'DONG': '동',
+                                            'FLR': '층',
+                                            'HOUS': '호'},
+                '물건정보_통합용도별물건목록': {'resultCode': '결과코드',
+                                   'resultMsg': '결과메시지',
+                                   'numOfRows': '한 페이지 결과 수',
+                                   'pageNo': '페이지 번호',
+                                   'TotalCount': '총건수',
+                                   'PLNM_NO': '공고번호',
+                                   'PBCT_NO': '공매번호',
+                                   'ORG_BASE_NO': '기관번호',
+                                   'ORG_NM': '기관명',
+                                   'CLTR_NO': '물건번호',
+                                   'PBCT_CDTN_NO': '공매조건번호',
+                                   'CLTR_HSTR_NO': '물건이력번호',
+                                   'SCRN_GRP_CD': '화면그룹코드',
+                                   'CTGR_FULL_NM': '용도',
+                                   'BID_MNMT_NO': '입찰번호',
+                                   'CLTR_NM': '물건명',
+                                   'CLTR_MNMT_NO': '물건관리번호',
+                                   'LDNM_ADRS': '물건소재지(지번)',
+                                   'NMRD_ADRS': '물건소재지(도로명)',
+                                   'ROD_NM': '도로명',
+                                   'BLD_NO': '건물번호',
+                                   'DPSL_MTD_CD': '처분방식코드',
+                                   'DPSL_MTD_NM': '처분방식',
+                                   'BID_MTD_NM': '입찰방식',
+                                   'MIN_BID_PRC': '최저입찰가',
+                                   'APSL_ASES_AVG_AMT': '평균감정가',
+                                   'FEE_RATE': '최저입찰가율',
+                                   'PBCT_BEGN_DTM': '입찰시작일시',
+                                   'PBCT_CLS_DTM': '입찰마감일시',
+                                   'PBCT_CLTR_STAT_NM': '물건상태',
+                                   'USCBD_CNT': '유찰횟수',
+                                   'IQRY_CNT': '조회수',
+                                   'GOODS_NM': '물건상세정보',
+                                   'MANF': '제조사',
+                                   'MDL': '모델',
+                                   'NRGT': '연월식',
+                                   'GRBX': '변속기',
+                                   'ENDPC': '배기량',
+                                   'VHCL_MLGE': '주행거리',
+                                   'FUEL': '연료',
+                                   'SCRT_NM': '증권명',
+                                   'TPBZ': '업종',
+                                   'ITM_NM': '종목명',
+                                   'MMB_RGT_NM': '회원권명',
+                                   'RNUM': '순번'},
+                '물건정보_통합새로운물건목록': {'resultCode': '결과코드',
+                                   'resultMsg': '결과메시지',
+                                   'numOfRows': '한 페이지 결과 수',
+                                   'pageNo': '페이지 번호',
+                                   'TotalCount': '총건수',
+                                   'PLNM_NO': '공고번호',
+                                   'PBCT_NO': '공매번호',
+                                   'CLTR_NO': '물건번호',
+                                   'PBCT_CDTN_NO': '공매조건번호',
+                                   'CLTR_HSTR_NO': '물건이력번호',
+                                   'SCRN_GRP_CD': '화면그룹코드',
+                                   'CTGR_ID': '용도코드',
+                                   'CTGR_FULL_NM': '용도',
+                                   'BID_MNMT_NO': '입찰번호',
+                                   'CLTR_NM': '물건명',
+                                   'CLTR_MNMT_NO': '물건관리번호',
+                                   'LDNM_ADRS': '물건소재지(지번)',
+                                   'NMRD_ADRS': '물건소재지(도로명)',
+                                   'DPSL_MTD_CD': '처분방식코드',
+                                   'DPSL_MTD_NM': '처분방식',
+                                   'BID_MTD_NM': '입찰방식',
+                                   'MIN_BID_PRC': '최저입찰가',
+                                   'APSL_ASES_AVG_AMT': '감정가',
+                                   'FEE_RATE': '최저입찰가율',
+                                   'PBCT_BEGN_DTM': '입찰시작일시',
+                                   'PBCT_CLS_DTM': '입찰마감일시',
+                                   'PBCT_CLTR_STAT_NM': '물건상태',
+                                   'USCBD_CNT': '유찰횟수',
+                                   'IQRY_CNT': '조회수',
+                                   'GOODS_NM': '물건상세정보',
+                                   'MANF': '제조사',
+                                   'MDL': '모델',
+                                   'NRGT': '연식',
+                                   'GRBX': '변속기',
+                                   'ENDPC': '배기량',
+                                   'VHCL_MLGE': '주행거리',
+                                   'FUEL': '연료',
+                                   'SCRT_NM': '증권명',
+                                   'TPBZ': '업종',
+                                   'ITM_NM': '종목명',
+                                   'MMB_RGT_NM': '회원권명'},
+                '물건정보_통합마감임박물건목록': {'resultCode': '결과코드',
+                                    'resultMsg': '결과메시지',
+                                    'numOfRows': '한 페이지 결과 수',
+                                    'pageNo': '페이지 번호',
+                                    'TotalCount': '총건수',
+                                    'PLNM_NO': '공고번호',
+                                    'PBCT_NO': '공매번호',
+                                    'CLTR_NO': '물건번호',
+                                    'PBCT_CDTN_NO': '공매조건번호',
+                                    'CLTR_HSTR_NO': '물건이력번호',
+                                    'SCRN_GRP_CD': '화면그룹코드',
+                                    'CTGR_ID': '용도코드',
+                                    'CTGR_FULL_NM': '용도',
+                                    'BID_MNMT_NO': '입찰번호',
+                                    'CLTR_NM': '물건명',
+                                    'CLTR_MNMT_NO': '물건관리번호',
+                                    'LDNM_ADRS': '물건소재지(지번)',
+                                    'NMRD_ADRS': '물건소재지(도로명)',
+                                    'DPSL_MTD_CD': '처분방식코드',
+                                    'DPSL_MTD_NM': '처분방식',
+                                    'BID_MTD_NM': '입찰방식',
+                                    'MIN_BID_PRC': '최저입찰가',
+                                    'APSL_ASES_AVG_AMT': '감정가',
+                                    'FEE_RATE': '최저입찰가율',
+                                    'PBCT_BEGN_DTM': '입찰시작일시',
+                                    'PBCT_CLS_DTM': '입찰마감일시',
+                                    'PBCT_CLTR_STAT_NM': '물건상태',
+                                    'USCBD_CNT': '유찰횟수',
+                                    'IQRY_CNT': '조회수',
+                                    'GOODS_NM': '물건상세정보',
+                                    'MANF': '제조사',
+                                    'MDL': '모델',
+                                    'NRGT': '연식',
+                                    'GRBX': '변속기',
+                                    'ENDPC': '배기량',
+                                    'VHCL_MLGE': '주행거리',
+                                    'FUEL': '연료',
+                                    'SCRT_NM': '증권명',
+                                    'TPBZ': '업종',
+                                    'ITM_NM': '종목명',
+                                    'MMB_RGT_NM': '회원권명'},
+                '물건정보_통합수의계약가능물건목록': {'resultCode': '결과코드',
+                                      'resultMsg': '결과메시지',
+                                      'numOfRows': '한 페이지 결과 수',
+                                      'pageNo': '페이지 번호',
+                                      'TotalCount': '총건수',
+                                      'PLNM_NO': '공고번호',
+                                      'PBCT_NO': '공매번호',
+                                      'CLTR_NO': '물건번호',
+                                      'PBCT_CDTN_NO': '공매조건번호',
+                                      'CLTR_HSTR_NO': '물건이력번호',
+                                      'SCRN_GRP_CD': '화면그룹코드',
+                                      'CTGR_ID': '용도코드',
+                                      'CTGR_FULL_NM': '용도',
+                                      'BID_MNMT_NO': '입찰번호',
+                                      'CLTR_NM': '물건명',
+                                      'CLTR_MNMT_NO': '물건관리번호',
+                                      'LDNM_ADRS': '물건소재지(지번)',
+                                      'NMRD_ADRS': '물건소재지(도로명)',
+                                      'DPSL_MTD_CD': '처분방식코드',
+                                      'DPSL_MTD_NM': '처분방식',
+                                      'BID_MTD_NM': '입찰방식',
+                                      'MIN_BID_PRC': '최저입찰가',
+                                      'APSL_ASES_AVG_AMT': '감정가',
+                                      'FEE_RATE': '최저입찰가율',
+                                      'PBCT_BEGN_DTM': '입찰시작일시',
+                                      'PBCT_CLS_DTM': '입찰마감일시',
+                                      'PBCT_CLTR_STAT_NM': '물건상태',
+                                      'USCBD_CNT': '유찰횟수',
+                                      'IQRY_CNT': '조회수',
+                                      'GOODS_NM': '물건상세정보',
+                                      'MANF': '제조사',
+                                      'MDL': '모델',
+                                      'NRGT': '연식',
+                                      'GRBX': '변속기',
+                                      'ENDPC': '배기량',
+                                      'VHCL_MLGE': '주행거리',
+                                      'FUEL': '연료',
+                                      'SCRT_NM': '증권명',
+                                      'TPBZ': '업종',
+                                      'ITM_NM': '종목명',
+                                      'MMB_RGT_NM': '회원권명'},
+                '물건정보_통합50%체감물건목록': {'resultCode': '결과코드',
+                                     'resultMsg': '결과메시지',
+                                     'numOfRows': '한 페이지 결과 수',
+                                     'pageNo': '페이지 번호',
+                                     'TotalCount': '총건수',
+                                     'PLNM_NO': '공고번호',
+                                     'PBCT_NO': '공매번호',
+                                     'CLTR_NO': '물건번호',
+                                     'PBCT_CDTN_NO': '공매조건번호',
+                                     'CLTR_HSTR_NO': '물건이력번호',
+                                     'SCRN_GRP_CD': '화면그룹코드',
+                                     'CTGR_ID': '용도코드',
+                                     'CTGR_FULL_NM': '용도',
+                                     'BID_MNMT_NO': '입찰번호',
+                                     'CLTR_NM': '물건명',
+                                     'CLTR_MNMT_NO': '물건관리번호',
+                                     'LDNM_ADRS': '물건소재지(지번)',
+                                     'NMRD_ADRS': '물건소재지(도로명)',
+                                     'DPSL_MTD_CD': '처분방식코드',
+                                     'DPSL_MTD_NM': '처분방식',
+                                     'BID_MTD_NM': '입찰방식',
+                                     'MIN_BID_PRC': '최저입찰가',
+                                     'APSL_ASES_AVG_AMT': '감정가',
+                                     'FEE_RATE': '최저입찰가율',
+                                     'PBCT_BEGN_DTM': '입찰시작일시',
+                                     'PBCT_CLS_DTM': '입찰마감일시',
+                                     'PBCT_CLTR_STAT_NM': '물건상태',
+                                     'USCBD_CNT': '유찰횟수',
+                                     'IQRY_CNT': '조회수',
+                                     'GOODS_NM': '물건상세정보',
+                                     'MANF': '제조사',
+                                     'MDL': '모델',
+                                     'NRGT': '연식',
+                                     'GRBX': '변속기',
+                                     'ENDPC': '배기량',
+                                     'VHCL_MLGE': '주행거리',
+                                     'FUEL': '연료',
+                                     'SCRT_NM': '증권명',
+                                     'TPBZ': '업종',
+                                     'ITM_NM': '종목명',
+                                     'MMB_RGT_NM': '회원권명'},
+                '물건정보_통합클릭탑20물건목록': {'resultCode': '결과코드',
+                                     'resultMsg': '결과메시지',
+                                     'numOfRows': '한 페이지 결과 수',
+                                     'pageNo': '페이지 번호',
+                                     'TotalCount': '총건수',
+                                     'PLNM_NO': '공고번호',
+                                     'PBCT_NO': '공매번호',
+                                     'CLTR_NO': '물건번호',
+                                     'PBCT_CDTN_NO': '공매조건번호',
+                                     'CLTR_HSTR_NO': '물건이력번호',
+                                     'SCRN_GRP_CD': '화면그룹코드',
+                                     'CTGR_ID': '용도코드',
+                                     'CTGR_FULL_NM': '용도',
+                                     'BID_MNMT_NO': '입찰번호',
+                                     'CLTR_NM': '물건명',
+                                     'CLTR_MNMT_NO': '물건관리번호',
+                                     'LDNM_ADRS': '물건소재지(지번)',
+                                     'NMRD_ADRS': '물건소재지(도로명)',
+                                     'DPSL_MTD_CD': '처분방식코드',
+                                     'DPSL_MTD_NM': '처분방식',
+                                     'BID_MTD_NM': '입찰방식',
+                                     'MIN_BID_PRC': '최저입찰가',
+                                     'APSL_ASES_AVG_AMT': '감정가',
+                                     'FEE_RATE': '최저입찰가율',
+                                     'PBCT_BEGN_DTM': '입찰시작일시',
+                                     'PBCT_CLS_DTM': '입찰마감일시',
+                                     'PBCT_CLTR_STAT_NM': '물건상태',
+                                     'USCBD_CNT': '유찰횟수',
+                                     'IQRY_CNT': '조회수',
+                                     'GOODS_NM': '물건상세정보',
+                                     'MANF': '제조사',
+                                     'MDL': '모델',
+                                     'NRGT': '연식',
+                                     'GRBX': '변속기',
+                                     'ENDPC': '배기량',
+                                     'VHCL_MLGE': '주행거리',
+                                     'FUEL': '연료',
+                                     'SCRT_NM': '증권명',
+                                     'TPBZ': '업종',
+                                     'ITM_NM': '종목명',
+                                     'MMB_RGT_NM': '회원권명'},
+                '물건정보_통합관심탑20물건목록': {'resultCode': '결과코드',
+                                     'resultMsg': '결과메시지',
+                                     'numOfRows': '한 페이지 결과 수',
+                                     'pageNo': '페이지 번호',
+                                     'TotalCount': '총건수',
+                                     'PLNM_NO': '공고번호',
+                                     'PBCT_NO': '공매번호',
+                                     'CLTR_NO': '물건번호',
+                                     'PBCT_CDTN_NO': '공매조건번호',
+                                     'CLTR_HSTR_NO': '물건이력번호',
+                                     'SCRN_GRP_CD': '화면그룹코드',
+                                     'CTGR_ID': '용도코드',
+                                     'CTGR_FULL_NM': '용도',
+                                     'BID_MNMT_NO': '입찰번호',
+                                     'CLTR_NM': '물건명',
+                                     'CLTR_MNMT_NO': '물건관리번호',
+                                     'LDNM_ADRS': '물건소재지(지번)',
+                                     'NMRD_ADRS': '물건소재지(도로명)',
+                                     'DPSL_MTD_CD': '처분방식코드',
+                                     'DPSL_MTD_NM': '처분방식',
+                                     'BID_MTD_NM': '입찰방식',
+                                     'MIN_BID_PRC': '최저입찰가',
+                                     'APSL_ASES_AVG_AMT': '감정가',
+                                     'FEE_RATE': '최저입찰가율',
+                                     'PBCT_BEGN_DTM': '입찰시작일시',
+                                     'PBCT_CLS_DTM': '입찰마감일시',
+                                     'PBCT_CLTR_STAT_NM': '물건상태',
+                                     'USCBD_CNT': '유찰횟수',
+                                     'IQRY_CNT': '조회수',
+                                     'GOODS_NM': '물건상세정보',
+                                     'MANF': '제조사',
+                                     'MDL': '모델',
+                                     'NRGT': '연식',
+                                     'GRBX': '변속기',
+                                     'ENDPC': '배기량',
+                                     'VHCL_MLGE': '주행거리',
+                                     'FUEL': '연료',
+                                     'SCRT_NM': '증권명',
+                                     'TPBZ': '업종',
+                                     'ITM_NM': '종목명',
+                                     'MMB_RGT_NM': '회원권명'},
+                '물건정보_통합용도별물건기본정보상세': {'resultCode': '결과코드',
+                                       'resultMsg': '결과메시지',
+                                       'CLTR_NM': '물건명',
+                                       'CTGR_TYPE_NM': '물건종류',
+                                       'DPSL_MTD_NM': '처분방식',
+                                       'PBCT_CLTR_STAT_NM': '물건상태',
+                                       'ORG_NM': '입찰집행기관',
+                                       'RGST_DEPT_NM': '부서',
+                                       'PSCG_NM': '담당자',
+                                       'PSCG_TPNO': '연락처',
+                                       'LDNM_ADRS': '물건소재지(지번)',
+                                       'NMRD_ADRS': '물건소재지(도로명)',
+                                       'CLTR_MNMT_NO': '물건관리번호',
+                                       'PRPT_DVSN_NM': '재산종류',
+                                       'DLGT_ORG_NM': '위임기관',
+                                       'CTGR_FULL_NM': '용도',
+                                       'BID_MTD_NM': '입찰방식',
+                                       'LAND_SQMS': '토지면적',
+                                       'BLD_SQMS': '건물면적',
+                                       'POSI_ENV_PSCD': '위치및부근현황',
+                                       'UTLZ_PSCD': '이용현황',
+                                       'ETC_DTL_CNTN': '기타상세내용',
+                                       'ATCT_IVST_DT': '조사일자',
+                                       'ESCT_YN': '에스컬레이터여부',
+                                       'ELVT_YN': '승강기여부',
+                                       'SHR_YN': '지분여부',
+                                       'PKLT_YN': '주차장여부',
+                                       'BLD_NM': '건물명',
+                                       'DONG': '동',
+                                       'FLR': '층',
+                                       'HOUS': '호',
+                                       'QNTY': '수량',
+                                       'MIN_BID_PRC': '입찰시작가',
+                                       'PCMT_PYMT_EPDT_CNTN': '만기일',
+                                       'BID_PRGN_NFT': '입찰 회수',
+                                       'DLVR_RSBY': '명도책임',
+                                       'ICDL_CDTN': '부대조건',
+                                       'SHR_RQR_EPRT_DT': '배분요구종기',
+                                       'totalCountEst': '감정평가서 총 건수',
+                                       'totalCountRental': '임대차정보 총 건수',
+                                       'totalCountRegi': '권리종류정보 총 건수',
+                                       'totalCountBid': '공매일정 총 건수',
+                                       'totalCountBidHis': '입찰이력 총 건수',
+                                       'TFRT_PLNM_DT': '최초공고일자',
+                                       'GOODS_NM': '물건상세정보',
+                                       'MANF': '제조사',
+                                       'VHKN': '차종',
+                                       'MDL': '모델',
+                                       'NRGT': '연식',
+                                       'VHC_NO': '차량번호',
+                                       'CSTD_PLC': '보관장소',
+                                       'VHCL_MLGE': '주행거리',
+                                       'GRBX': '변속기',
+                                       'ENDPC': '배기량',
+                                       'FUEL': '연료',
+                                       'DLVR_PLC': '인도장소',
+                                       'SCRT_KIND': '주식종류',
+                                       'SCRT_NM': '증권명',
+                                       'PCOS': '지분율',
+                                       'STK_PER_DNMT_PRC': '주당액면가',
+                                       'DNMT_TOT_AMT': '액면총액',
+                                       'ISU_STK_TOT_CNT': '발행주식총수',
+                                       'ITM_NM': '종목명',
+                                       'RPSV_NM': '대표자명',
+                                       'CTNO': '연락처',
+                                       'ETLS_DT': '설립일자',
+                                       'CSCT_MON': '결산월',
+                                       'TPBZ': '업종',
+                                       'PRMR_MNFTR_GDS': '주요제품',
+                                       'MBS_SCRT_NO': '회원권번호',
+                                       'MMB_RGT_NM': '회원권명',
+                                       'DPSL_FINC_COMP': '매각금융회사',
+                                       'POOR_BOND_KIND': '부실채권종류',
+                                       'BOND_AMT': '채권금액',
+                                       'HDOR_AST_FIX_DY': '양도자산확정일시',
+                                       'totalCountStock': '주주정보 총 건수',
+                                       'totalCountCorpor': '법인현황정보 총 건수',
+                                       'STND': '규격',
+                                       'PSNS_SIZE': '크기',
+                                       'PRDN_PLC_CTFR': '생산원산지',
+                                       'USE_TERM': '사용기간',
+                                       'WGHT_QNTY': '가중량'},
+                '물건정보_통합용도별물건감정평가서정보상세': {'resultCode': '결과코드',
+                                          'resultMsg': '결과메시지',
+                                          'numOfRows': '한 페이지 결과 수',
+                                          'pageNo': '페이지 번호',
+                                          'totalCount': '전체 결과 수',
+                                          'APSL_ASES_AMT': '감정가',
+                                          'APSL_ASES_DT': '감정평가일자',
+                                          'APSL_ASES_ORG_NM': '감정평가업체'},
+                '물건정보_통합용도별물건임대차정보상세': {'resultCode': '결과코드',
+                                        'resultMsg': '결과메시지',
+                                        'numOfRows': '한 페이지 결과 수',
+                                        'pageNo': '페이지 번호',
+                                        'totalCount': '전체 결과 수',
+                                        'IRST_DVSN_NM': '임대차내용',
+                                        'IRST_IRPS_NM': '이름',
+                                        'TDPS_AMT': '보증금',
+                                        'MTHR_AMT': '차임(월세)',
+                                        'CONV_GRT_MONY': '환산보증금',
+                                        'FIX_DT': '확정(설정)일',
+                                        'MVN_DT': '전입일'},
+                '물건정보_통합용도별물건권리종류정보상세': {'IRST_DVSN_NM': '권리종류',
+                                         'IRST_IRPS_NM': '권리자명',
+                                         'RGST_DT': '등기일',
+                                         'STUP_AMT': '설정액(원)',
+                                         'resultCode': '결과코드',
+                                         'resultMsg': '결과메시지',
+                                         'numOfRows': '한 페이지 결과 수',
+                                         'pageNo': '페이지 번호',
+                                         'totalCount': '전체 결과 수'},
+                '물건정보_통합용도별물건공매일정상세': {'resultCode': '결과코드',
+                                       'resultMsg': '결과메시지',
+                                       'numOfRows': '한 페이지 결과 수',
+                                       'pageNo': '페이지 번호',
+                                       'totalCount': '전체 결과 수',
+                                       'BID_MNMT_NO': '입찰번호',
+                                       'PBCT_SEQ': '회차',
+                                       'PBCT_DGR': '차수',
+                                       'BID_DVSN_NM': '입찰구분명',
+                                       'PCMT_PYMT_MTD_CNTN': '대금납부',
+                                       'PCMT_PYMT_EPDT_CNTN': '납부기한',
+                                       'PBCT_BEGN_DTM': '입찰시작일시',
+                                       'PBCT_CLS_DTM': '입찰마감일시',
+                                       'PBCT_EXCT_DTM': '개찰일시',
+                                       'OPBD_PLC_CNTN': '개찰장소',
+                                       'DPSL_DCSN_DTM': '매각결정일시',
+                                       'MIN_BID_PRC': '최저입찰가'},
+                '물건정보_통합용도별물건입찰이력상세': {'resultCode': '결과코드',
+                                       'resultMsg': '결과메시지',
+                                       'numOfRows': '한 페이지 결과 수',
+                                       'pageNo': '페이지 번호',
+                                       'totalCount': '전체 결과 수',
+                                       'PBCT_SEQ': '회차',
+                                       'PBCT_DGR': '차수',
+                                       'BID_MNMT_NO': '입찰번호',
+                                       'DPSL_MTD_NM': '처분방식',
+                                       'PBCT_EXCT_DTM': '개찰일시',
+                                       'MIN_BID_PRC': '최저입찰가',
+                                       'PBCT_STAT_NM': '입찰결과'},
+                '물건정보_통합용도별물건주주정보상세': {'resultCode': '결과코드',
+                                       'resultMsg': '결과메시지',
+                                       'numOfRows': '한 페이지 결과 수',
+                                       'pageNo': '페이지 번호',
+                                       'totalCount': '전체 결과 수',
+                                       'SCRT_STHL_NO': '시퀀스번호',
+                                       'STHL_NM': '주주명',
+                                       'POSN_STK_CNT': '보유주식수',
+                                       'PCOS': '지분율'},
+                '물건정보_통합용도별물건법인현황정보상세': {'resultCode': '결과코드',
+                                         'resultMsg': '결과메시지',
+                                         'numOfRows': '한 페이지 결과 수',
+                                         'pageNo': '페이지 번호',
+                                         'totalCount': '전체 결과 수',
+                                         'FNCL_YR': '재무년도',
+                                         'CRCT_AST_AMT': '당좌자산',
+                                         'IVTR_AST_AMT': '재고자산',
+                                         'IVSM_AST_AMT': '투자자산',
+                                         'TYPE_AST_AMT': '유형자산',
+                                         'ITGB_AST_AMT': '무형자산',
+                                         'DFD_AST_AMT': '이연자산',
+                                         'LQDY_LBT_AMT': '유동부채',
+                                         'FIXD_LBT_AMT': '고정부채',
+                                         'CPTL_AMT': '자본금',
+                                         'CPTL_SPLS_AMT': '자본잉여금',
+                                         'GAIN_SPLS_AMT': '이익잉여금',
+                                         'CPTL_AJST_AMT': '자본조정',
+                                         'SALS_AMT': '매출액',
+                                         'SALS_COST_AMT': '매출원가',
+                                         'TOT_SALS_AMT': '총매출액',
+                                         'SALE_AMT_MNMT_AMT': '판매비와관리비',
+                                         'BIZ_GAIN_AMT': '영업이익',
+                                         'NOPT_GAIN_AMT': '영업외이익',
+                                         'NOPT_EPNS_AMT': '영업외비용',
+                                         'RGLR_GAIN_AMT': '경상이익',
+                                         'SPCL_GAIN_AMT': '특별이익',
+                                         'SPCL_LOS_AMT': '특별손실',
+                                         'CPRX_DCTN_BEF_NET_LSNG_AMT': '법인세차감전순손익',
+                                         'CPRX_AMT': '법인세',
+                                         'TSTR_NPRF_AMT': '당기순이익',
+                                         'PRSH_NPRF_AMT': '주당순이익',
+                                         'DVRT': '배당률',
+                                         'DVNS': '배당금',
+                                         'SALS_AMT_NPRF_RT': '매출액순이익율',
+                                         'TOT_CPTL_BIZ_GAIN_RT': '총자본영업이익율',
+                                         'SELF_CPTL_NPRF_RT': '자기자본순이익율',
+                                         'TOT_CPTL_NPRF_RT': '총자본순이익율',
+                                         'SALS_AMT_INCRT': '매출액증가율',
+                                         'NPRF_INCRT': '순이익증가율',
+                                         'LQDY_RT': '유동비율',
+                                         'LBT_RT': '부채비율',
+                                         'TOT_AST_ROTN_RT': '총자산회전율',
+                                         'ETC_ICLS_LSNG_CMLT_AMT': '기타포괄손익누계액'}
+                }
+
+        return df.rename(columns=data[f"{service}_{function}"])
