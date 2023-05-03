@@ -11,8 +11,8 @@ _code_vworld_json_path = f"""{_project_root_path}/raw/code_vworld.json"""
 
 
 CODE_INFORMATION = F"""\
-출처: 행정기관(행정동) 및 관할구역(법정동) 변경내역(2023. 2. 24. 시행)
-URL: https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000052&nttId=98870
+출처: 행정기관(행정동) 및 관할구역(법정동) 변경내역(2023. 5. 1. 시행)
+URL: https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000052&nttId=100215
 """
 
 
