@@ -7,6 +7,7 @@ _path = os.path.dirname(__file__)
 _project_root_path = os.path.dirname(_path)
 _code_vworld_json_path = f"""{_project_root_path}/raw/code_vworld.json"""
 
+_code_bdong_json_url = "https://raw.githubusercontent.com/WooilJeong/code/main/code/code_dong/code_bdong.json"
 _code_hdong_json_url = "https://raw.githubusercontent.com/WooilJeong/code/main/code/code_dong/code_hdong.json"
 _code_hdong_bdong_json_url = "https://raw.githubusercontent.com/WooilJeong/code/main/code/code_dong/code_hdong_bdong.json"
 
