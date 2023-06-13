@@ -1,19 +1,21 @@
 import os
 import json
+import requests
 import pandas as pd
 
 _path = os.path.dirname(__file__)
 _project_root_path = os.path.dirname(_path)
-_code_bdong_json_path = f"""{_project_root_path}/raw/code_bdong.json"""
-_code_hdong_json_path = f"""{_project_root_path}/raw/code_hdong.json"""
-_code_hdong_bdong_json_path = f"""{_project_root_path}/raw/code_hdong_bdong.json"""
 _code_vworld_json_path = f"""{_project_root_path}/raw/code_vworld.json"""
 
+_code_hdong_json_url = "https://raw.githubusercontent.com/WooilJeong/code/main/code/code_dong/code_hdong.json"
+_code_hdong_bdong_json_url = "https://raw.githubusercontent.com/WooilJeong/code/main/code/code_dong/code_hdong_bdong.json"
 
-CODE_INFORMATION = F"""\
-출처: 행정기관(행정동) 및 관할구역(법정동) 변경내역(2023. 5. 1. 시행)
-URL: https://www.mois.go.kr/frt/bbs/type001/commonSelectBoardArticle.do?bbsId=BBSMSTR_000000000052&nttId=100215
-"""
+def get_code_dong_by_url(url):
+    """
+    URL로 동 코드 JSON 읽기
+    """
+    res = requests.get(url)
+    return res.json()
 
 
 def read_json_file(file_path):
@@ -29,25 +31,31 @@ def code_bdong():
     """
     법정동코드(실제주소) 데이터 반환
     """
-    print(CODE_INFORMATION)
-    return pd.DataFrame(read_json_file(_code_bdong_json_path)).fillna("")
-
+    res = get_code_dong_by_url(_code_bdong_json_url)
+    name = res['name']
+    data = res['data']
+    print(f"출처: {name}")
+    return pd.DataFrame(data).fillna("")
 
 def code_hdong():
     """
     행정기관코드(행정동) 데이터 반환
     """
-    print(CODE_INFORMATION)
-    return pd.DataFrame(read_json_file(_code_hdong_json_path)).fillna("")
-
+    res = get_code_dong_by_url(_code_hdong_json_url)
+    name = res['name']
+    data = res['data']
+    print(f"출처: {name}")
+    return pd.DataFrame(data).fillna("")
 
 def code_hdong_bdong():
     """
     행정기관코드 + 관할 법정동코드 데이터 반환
     """
-    print(CODE_INFORMATION)
-    return pd.DataFrame(read_json_file(_code_hdong_bdong_json_path)).fillna("")
-
+    res = get_code_dong_by_url(_code_hdong_bdong_json_url)
+    name = res['name']
+    data = res['data']
+    print(f"출처: {name}")
+    return pd.DataFrame(data).fillna("")
 
 def get_vworld_data_api_info_by_dataframe():
     """
