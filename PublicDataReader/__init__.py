@@ -20,6 +20,8 @@ __all__ = [
     "Kamco",
     "Nts",
     "Kbland",
+    "Ecos",
+    "Fred",
     "code_bdong",
     "code_hdong",
     "code_hdong_bdong",
