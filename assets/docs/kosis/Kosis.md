@@ -1,6 +1,6 @@
 # KOSIS 통계정보 사용 가이드
 
-[KOSIS 공유서비스](https://kosis.kr/openapi/index/index.jsp)에서 제공하는 오픈 API 서비스를 이용하려면 인증키가 필요합니다. 인증키를 얻기 위해서는 [KOSIS 공유서비스](https://kosis.kr/openapi/index/index.jsp)에 회원가입을 하고 오픈 API 서비스를 신청해야 합니다. KOSIS 공유서비스 오픈 API 신청 방법과 PublicDataReader에서 제공하는 KOSIS 공유서비스 오픈 API의 모든 기능을 살펴보려면 [PublicDataReader - 주요 경제 지표 조회하기(feat.FRED)](https://wooiljeong.github.io/python/pdr-kosis/)블로그 글을 참고하세요.
+[KOSIS 공유서비스](https://kosis.kr/openapi/index/index.jsp)에서 제공하는 오픈 API 서비스를 이용하려면 인증키가 필요합니다. 인증키를 얻기 위해서는 [KOSIS 공유서비스](https://kosis.kr/openapi/index/index.jsp)에 회원가입을 하고 오픈 API 서비스를 신청해야 합니다. KOSIS 공유서비스 오픈 API 신청 방법과 PublicDataReader에서 제공하는 KOSIS 공유서비스 오픈 API의 모든 기능을 살펴보려면 [Python으로 KOSIS 데이터 조회하기](https://wooiljeong.github.io/python/pdr-kosis/) 블로그 글을 참고하세요.
 
 ## 라이브러리 임포트하기
 
