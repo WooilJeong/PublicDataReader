@@ -3,7 +3,7 @@
 [FRED(Federal Reserve Economic Data)](https://fred.stlouisfed.org/)는 세인트루이스 연방준비은행(Federal Reserve Bank of St. Louis)에서 제공하는 경제 데이터입니다. FRED API를 사용하려면 인증키가 필요합니다. 인증키를 얻기 위해서는 [FRED API Key](https://fredaccount.stlouisfed.org/apikey)에서 간단한 신청서를 작성하면 됩니다. 구체적인 FRED API 신청 방법과 실제 주요 경제 지표를 조회 사례를 확인하려면 [PublicDataReader - 주요 경제 지표 조회하기(feat.FRED)](https://wooiljeong.github.io/python/pdr-fred/) 블로그 글을 참고하세요.
 
 
-## 라이브러리 인포트하기
+## 라이브러리 임포트하기
 
 ```python
 from PublicDataReader import Fred
