@@ -1,6 +1,6 @@
 # FRED (Federal Reserve Economic Data) Usage Guide
 
-[FRED (Federal Reserve Economic Data)](https://fred.stlouisfed.org/) is an economic dataset provided by the Federal Reserve Bank of St. Louis. To use the FRED API, you will need an authentication key. You can obtain the authentication key by completing a simple form at [FRED API Key](https://fredaccount.stlouisfed.org/apikey). For a detailed guide on how to apply for the FRED API and to see real-life examples of key economic indicator inquiries, please refer to the blog post [Python for FRED: Exploring Economic Data](https://wooiljeong.github.io/python/pdr-fred/).
+[FRED (Federal Reserve Economic Data)](https://fred.stlouisfed.org/) is an economic dataset provided by the Federal Reserve Bank of St. Louis. To use the FRED API, you will need an authentication key. You can obtain the authentication key by completing a simple form at [FRED API Key](https://fredaccount.stlouisfed.org/apikey). For a detailed guide on how to apply for the FRED API and to see real-life examples of key economic indicator inquiries, please refer to the blog post [Python for FRED: Exploring Economic Data](https://wooiljeong.github.io/python/pdr-fred-en/).
 
 ## How to Install PublicDataReader
 
