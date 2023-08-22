@@ -11,7 +11,7 @@ class Ecos:
 
     def __init__(self, service_key=None):
         self.service_key = service_key
-        self.base_url = "https://ecos.bok.or.kr/api"
+        self.base_url = "http://ecos.bok.or.kr/api"
 
     def get_statistic_table_list(self, 통계표코드=None, translate=True):
         """
