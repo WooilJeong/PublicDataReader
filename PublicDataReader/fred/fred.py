@@ -69,7 +69,7 @@ class Fred:
             "file_type": "json",
         }
         params.update(kwargs)
-        res = requests.get(url, params=params)
+        res = requests.get(url, params=params, verify=False)
         data = res.json()
 
         key_list = [
