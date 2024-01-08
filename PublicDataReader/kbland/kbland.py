@@ -10,6 +10,11 @@ requests.packages.urllib3.disable_warnings()
 class Kbland:
 
     def __init__(self):
+
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
+        }
+
         self.월간주간구분코드 = {
             "01": "월간",
             "02": "주간",
@@ -1083,3 +1088,434 @@ class Kbland:
         elif n_date_str == 8:
             df4['날짜'] = pd.to_datetime(df4['날짜'], format='%Y%m%d')
         return df4
+
+    # ==============================================================================
+    # 공공통계 - 주택공급
+    # ==============================================================================
+
+    def 아파트_분양물량(self, 상세비중구분, 기간구분, 법정동코드, verbose=True, **kwargs):
+        """아파트 분양물량 API
+        
+        params
+        ------
+        상세비중구분: 0: 총세대수, 1: 유형별 세대수
+        기간구분: 0: 월별, 1: 년별, 2: 반기별
+        법정동코드: 법정동코드 10자리
+        """
+        상세비중구분 = str(상세비중구분)
+        기간구분 = str(기간구분)
+        법정동코드 = str(법정동코드).ljust(10, "0")
+
+        url = "https://api.kbland.kr/land-extra/lots/v1/api/aptSelotCnt"
+
+        params = {
+            "기간구분": 기간구분,
+            "상세비중구분": 상세비중구분,
+            "법정동코드": 법정동코드,
+        }
+        params.update(kwargs)
+        
+        try:
+            res = requests.get(url, headers=self.headers, params=params, verify=False)
+            data = res.json()['dataBody']['data']
+            지역명 = data['지역명']
+            df = pd.json_normalize(data['차트데이터'])
+        except Exception as e:
+            print(e)
+            return
+
+        try:
+            if verbose is True:
+                _API = "아파트 분양물량"
+                _상세비중구분 = {"0": "총세대수", "1": "유형별 세대수"}
+                _기간구분 = {"0": "월별", "1": "년별", "2": "반기별"}
+                msg = f"""{_API}({지역명})-{_상세비중구분.get(상세비중구분, "null")}-{_기간구분.get(기간구분, "null")}"""
+                print(msg)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            if 상세비중구분 == "1":
+                new_column_order = [
+                    '일정', '상하반기구분', 
+                    '일반.세대수', '일반.비율',
+                    '조합.세대수', '조합.비율', 
+                    '임대.세대수', '임대.비율', 
+                    '기타.세대수', '기타.비율', 
+                    '합계.단지개수', '합계.세대수', 
+                ]
+                df = df.reindex(columns=new_column_order)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            if 상세비중구분 == "0" and 법정동코드 == "0000000000":
+                new_column_order = [
+                    '일정', '상하반기구분', 
+                    '수도권.단지개수',
+                    '수도권.세대수',
+                    '비수도권.단지개수',
+                    '비수도권.세대수',
+                    '합계.단지개수',
+                    '합계.세대수',
+                ]
+                df = df.reindex(columns=new_column_order)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            df.insert(0, '지역코드', 법정동코드)
+            df.insert(0, '지역명', 지역명)
+        except Exception as e:
+            print(e)
+            return
+        
+        return df
+    
+    def 아파트_입주물량(self, 기간구분, 법정동코드, verbose=True, **kwargs):
+        """아파트 입주물량 API
+        
+        params
+        ------
+        기간구분: 0: 월별, 1: 년별, 2: 반기별
+        법정동코드: 법정동코드 10자리
+        """
+        기간구분 = str(기간구분)
+        법정동코드 = str(법정동코드).ljust(10, "0")
+
+        url = "https://api.kbland.kr/land-extra/lots/v1/api/aptMovinCnt"
+
+        params = {
+            "기간구분": 기간구분,
+            "법정동코드": 법정동코드,
+        }
+        params.update(kwargs)
+        
+        try:
+            res = requests.get(url, headers=self.headers, params=params, verify=False)
+            data = res.json()['dataBody']['data']
+            지역명 = data['지역명']
+            df = pd.json_normalize(data['차트데이터'])
+        except Exception as e:
+            print(e)
+            return
+
+        try:
+            if verbose is True:
+                _API = "아파트 입주물량"
+                _기간구분 = {"0": "월별", "1": "년별", "2": "반기별"}
+                msg = f"""{_API}({지역명})-{_기간구분.get(기간구분, "null")}"""
+                print(msg)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            if 법정동코드 == "0000000000":
+                new_column_order = [
+                    '일정', '상하반기구분', 
+                    '수도권.단지개수',
+                    '수도권.세대수',
+                    '비수도권.단지개수', 
+                    '비수도권.세대수', 
+                    '합계.단지개수', 
+                    '합계.세대수', 
+                ]
+                df = df.reindex(columns=new_column_order)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            df.insert(0, '지역코드', 법정동코드)
+            df.insert(0, '지역명', 지역명)
+        except Exception as e:
+            print(e)
+            return
+        
+        return df
+    
+    def 아파트_단지_분양(self, 법정동코드, 임대포함여부, 정렬구분, 정렬순서, 조회시작년월, 조회종료년월, 페이지번호=1, 페이지목록수=100000, verbose=True, **kwargs):
+        """아파트 단지 분양 API
+        
+        params
+        ------
+        법정동코드: 법정동코드 10자리
+        임대포함여부: 0: 제외, 1: 포함
+        정렬구분: 1: 청약임박순, 2: 분양일정순, 3: 분양가순, 4: 세대수순
+        정렬순서: 0: 오름차순, 1: 내림차순
+        조회시작년월: e.g. 202401
+        조회종료년월: e.g. 202407
+        페이지번호: default: 1
+        페이지목록수: default: 100000
+        """
+        임대포함여부 = str(임대포함여부)
+        정렬구분 = str(정렬구분)
+        정렬순서 = str(정렬순서)
+        조회시작년월 = str(조회시작년월)
+        조회종료년월 = str(조회종료년월)
+        페이지번호 = str(페이지번호)
+        페이지목록수 = str(페이지목록수)
+        법정동코드 = str(법정동코드).ljust(10, "0")
+
+        url = "https://api.kbland.kr/land-extra/lots/v1/api/aptSelotInfoList"
+
+        params = {
+            "법정동코드": 법정동코드,
+            "임대포함여부": 임대포함여부,
+            "정렬구분": 정렬구분,
+            "정렬순서": 정렬순서,
+            "조회시작년월": 조회시작년월,
+            "조회종료년월": 조회종료년월,
+            "페이지번호": 페이지번호,
+            "페이지목록수": 페이지목록수,    
+        }
+        params.update(kwargs)
+
+        try:
+            res = requests.get(url, headers=self.headers, params=params, verify=False)
+            data = res.json()['dataBody']['data']
+            지역명 = data['지역명']
+            건수 = data['total_count']
+            df = pd.json_normalize(data['데이터'])
+        except Exception as e:
+            print(e)
+            return
+
+        try:
+            if verbose is True:
+                _API = "아파트 단지 분양"
+                _임대포함여부 = {"0": "임대제외", "1": "임대포함",}
+                _정렬구분 = {"1": "청약임박순", "2": "분양일정순", "3": "분양가순", "4": "세대수순"}
+                _정렬순서 = {"0": "오름차순", "1": "내림차순",}
+                
+                msg = f"""{_API}({지역명}:{건수:,}건 중 {len(df):,}건 조회 완료)\n{조회시작년월} ~ {조회종료년월}\n- {_임대포함여부.get(임대포함여부, "null")}\n- {_정렬구분.get(정렬구분, "null")}({_정렬순서.get(정렬순서, "null")})"""
+                print(msg)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            new_column_order = [
+                '단지명', '주소', '법정동코드', '공급방식', '총세대수', '일반세대수', 
+                '최저분양가', '최대분양가', '분양일정시작', '분양일정종료', '입주일정', 
+                '분양일정구분명', '분양중', '다음분양일정일자', '분양최근일자', 
+                'wgs84중심위도', 'wgs84중심경도', '일련번호', '분양일정정렬순서',
+            ]
+            df = df.reindex(columns=new_column_order)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            df.insert(0, '지역코드', 법정동코드)
+            df.insert(0, '지역명', 지역명)
+        except Exception as e:
+            print(e)
+            return
+        
+        return df
+        
+    def 아파트_단지_입주(self, 법정동코드, 임대포함여부, 정렬구분, 정렬순서, 조회시작년월, 조회종료년월, 페이지번호=1, 페이지목록수=100000, verbose=True, **kwargs):
+        """아파트 단지 입주 API
+        
+        params
+        ------
+        법정동코드: 법정동코드 10자리
+        임대포함여부: 0: 제외, 1: 포함
+        정렬구분: 1: 입주일순, 2: 세대수순
+        정렬순서: 0: 오름차순, 1: 내림차순
+        조회시작년월: 202401
+        조회종료년월: 202407
+        페이지번호: default: 1
+        페이지목록수: default: 100000
+        """
+        임대포함여부 = str(임대포함여부)
+        정렬구분 = str(정렬구분)
+        정렬순서 = str(정렬순서)
+        조회시작년월 = str(조회시작년월)
+        조회종료년월 = str(조회종료년월)
+        페이지번호 = str(페이지번호)
+        페이지목록수 = str(페이지목록수)
+        법정동코드 = str(법정동코드).ljust(10, "0")
+
+        url = "https://api.kbland.kr/land-extra/lots/v1/api/aptMovinPlanHscmList"
+
+        params = {
+            "법정동코드": 법정동코드,
+            "임대포함여부": 임대포함여부,
+            "정렬구분": 정렬구분,
+            "정렬순서": 정렬순서,
+            "조회시작년월": 조회시작년월,
+            "조회종료년월": 조회종료년월,
+            "페이지번호": 페이지번호,
+            "페이지목록수": 페이지목록수,    
+        }
+        params.update(kwargs)
+
+        try:
+            res = requests.get(url, headers=self.headers, params=params, verify=False)
+            data = res.json()['dataBody']['data']
+            지역명 = data['지역명']
+            건수 = data['total_count']
+            df = pd.json_normalize(data['데이터'])
+        except Exception as e:
+            print(e)
+            return
+
+        try:
+            if verbose is True:
+                _API = "아파트 단지 분양"
+                _임대포함여부 = {"0": "임대제외", "1": "임대포함",}
+                _정렬구분 = {"1": "입주일순", "2": "세대수순",}
+                _정렬순서 = {"0": "오름차순", "1": "내림차순",}
+                
+                msg = f"""{_API}({지역명}:{건수:,}건 중 {len(df):,}건 조회 완료)\n{조회시작년월} ~ {조회종료년월}\n- {_임대포함여부.get(임대포함여부, "null")}\n- {_정렬구분.get(정렬구분, "null")}({_정렬순서.get(정렬순서, "null")})"""
+                print(msg)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            new_column_order = [
+                '단지명', '주소', '법정동코드', '총세대수', '임대분양여부', '분양단지여부', 
+                '입주일정', '전매제한년월일', 'wgs84중심위도', 'wgs84중심경도', '일련번호',
+            ]
+            df = df.reindex(columns=new_column_order)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            df.insert(0, '지역코드', 법정동코드)
+            df.insert(0, '지역명', 지역명)
+        except Exception as e:
+            print(e)
+            return
+        
+        return df
+    
+    def 주택공급실적(self, dtailDataSelct, 법정동코드, verbose=True, **kwargs):
+        """주택공급실적 API
+        
+        params
+        ------
+        dtailDataSelct: 1: 전체, 2: 공급단계별, 3: 주택유형별
+        법정동코드: 법정동코드 10자리
+        
+        optional
+        --------
+        splyStge: (dtailDataSelct이 2인 경우) 01: 인허가, 02: 착공, 03: 분양, 04: 준공
+        husePtm: (dtailDataSelect이 3인 경우) 1: 아파트, 2: 비아파트
+        """
+        dtailDataSelct = str(dtailDataSelct)
+        법정동코드 = str(법정동코드).ljust(10, "0")
+        
+        url = "https://data-api.kbland.kr/bfmpub/huse/huseSplyArsltInqury"
+
+        params = {
+            "dtailDataSelct": dtailDataSelct,
+            "법정동코드": 법정동코드,
+        }
+        params.update(kwargs)
+
+        try:
+            res = requests.get(url, headers=self.headers, params=params, verify=False)
+            data = res.json()['dataBody']['data']
+            df = pd.json_normalize(data)
+        except Exception as e:
+            print(e)
+            return
+
+        try:
+            if verbose is True:
+                _API = "주택공급실적"
+                _dtailDataSelct = {"1": "전체", "2": "공급단계별", "3": "주택유형별",}
+                _splyStge = {"01": "인허가", "02": "착공", "03": "분양", "04": "준공",}
+                _husePtrn = {"1": "아파트", "2": "비아파트",}
+                
+                msg = f"""{_API}(지역코드: {법정동코드} 조회 완료)\n- 데이터: {_dtailDataSelct.get(dtailDataSelct)}\n"""
+                
+                if dtailDataSelct == "2":
+                    msg += f"""- 공급단계: {_splyStge.get(kwargs.get("splyStge"))}"""
+                elif dtailDataSelct == "3":
+                    msg += f"""- 주택유형: {_husePtrn.get(kwargs.get("husePtrn"))}"""
+                print(msg)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            new_column_order = [
+                "기준년도",
+                "공통코드명",
+                "공급단계코드",
+                "실적",
+            ]
+            df = df.reindex(columns=new_column_order)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            df.insert(0, '지역코드', 법정동코드)
+        except Exception as e:
+            print(e)
+            return
+        
+        return df
+    
+    def 청약통장가입현황(self, scipClsfiDstic, 법정동코드, verbose=True, **kwargs):
+        """청약통장가입현황 API
+        
+        params
+        ------
+        scipClsfiDstic: 00: 전체, 01: 주택청약종합저축, 03: 청약부금, 04: 청약예금
+        법정동코드: 법정동코드 10자리
+        """
+        scipClsfiDstic = str(scipClsfiDstic)
+        법정동코드 = str(법정동코드).ljust(10, "0")
+        
+        url = "https://data-api.kbland.kr/bfmpub/huse/scipJoinPrstusInqury"
+
+        params = {
+            "scipClsfiDstic": scipClsfiDstic,
+            "법정동코드": 법정동코드,
+        }
+        params.update(kwargs)
+
+        try:
+            res = requests.get(url, headers=self.headers, params=params, verify=False)
+            data = res.json()['dataBody']['data']
+            df = pd.json_normalize(data)
+        except Exception as e:
+            print(e)
+            return
+
+        try:
+            if verbose is True:
+                _API = "청약통장가입현황"
+                _scipClsfiDstic = {"00": "전체", "01": "주택청약종합저축", "03": "청약부금", "04": "청약예금",}
+                msg = f"""{_API}(지역코드: {법정동코드} 조회 완료)\n- 데이터: {_scipClsfiDstic.get(scipClsfiDstic)}"""
+                print(msg)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            new_column_order = ['기준일자', '업무공통코드', '공통코드명', '청약가입건수',]
+            df = df.reindex(columns=new_column_order)
+        except Exception as e:
+            print(e)
+            return
+        
+        try:
+            df.insert(0, '지역코드', 법정동코드)
+        except Exception as e:
+            print(e)
+            return
+        
+        return df
