@@ -301,7 +301,7 @@ class BuildingLedger:
         sigungu_code : str
             시군구 코드 (ex. 11110)
         bdong_code : str
-            법정동 코드 (ex. 1111051500)
+            읍면동 코드 (ex. 51500) cf. 법정동코드 10자리 중 뒤 5자리
         plat_code : str
             대지구분 코드 (대지: 0, 산: 1, 블록: 2)
         bun : str
