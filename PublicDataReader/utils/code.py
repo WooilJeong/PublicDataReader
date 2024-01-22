@@ -16,7 +16,7 @@ def get_code_dong_by_url(url):
     URL로 동 코드 JSON 읽기
     """
     res = requests.get(url)
-    return res.json()
+    return json.loads(res.content)
 
 
 def read_json_file(file_path):
