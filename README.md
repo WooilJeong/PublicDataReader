@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://img.shields.io/pypi/l/ansicolortags.svg)
 [![Python](https://img.shields.io/badge/Official-Docs-tomato)](https://wooiljeong.github.io/PublicDataReader/)
 [![Downloads](https://static.pepy.tech/badge/publicdatareader)](https://pepy.tech/project/publicdatareader)  
-[![오픈채팅](https://img.shields.io/badge/오픈채팅-PublicDataReader_사용자모임사용자모임-yellow?logo=KakaoTalk)](https://open.kakao.com/o/gbt2Pl2d)
+[![오픈채팅](https://img.shields.io/badge/오픈채팅-PublicDataReader_사용자모임-yellow?logo=KakaoTalk)](https://open.kakao.com/o/gbt2Pl2d)
 
 <br>
 
