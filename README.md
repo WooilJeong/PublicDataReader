@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://img.shields.io/pypi/l/ansicolortags.svg)
 [![Python](https://img.shields.io/badge/Official-Docs-tomato)](https://wooiljeong.github.io/PublicDataReader/)
 [![Downloads](https://static.pepy.tech/badge/publicdatareader)](https://pepy.tech/project/publicdatareader)  
-[![오픈채팅](https://img.shields.io/badge/오픈채팅-사용자모임-yellow?logo=KakaoTalk)](https://open.kakao.com/o/gbt2Pl2d)
+[![오픈채팅](https://img.shields.io/badge/오픈채팅-PublicDataReader_사용자모임사용자모임-yellow?logo=KakaoTalk)](https://open.kakao.com/o/gbt2Pl2d)
 
 <br>
 
@@ -43,8 +43,8 @@ pip install PublicDataReader --upgrade
 
 <div align="center">
 
-| 사용 가이드 목록                                                                                                                | 플랫폼명                                                      | 인증키 필요 |
-| :------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------: | :---------: |
+| 사용 가이드 목록                                                                                                                | 플랫폼명                                                      | 인증키 |
+| :------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------- | :--------- |
 | [FRED(Federal Reserve Economic Data) 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/fred/fred.md)            | [FRED(Federal Reserve Economic Data)](https://fred.stlouisfed.org/docs/api/fred/)                          | 필요         |
 | [국토교통부 부동산 실거래가 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/TransactionPrice.md) | [공공데이터포털](https://www.data.go.kr/)                        | 필요         |
 | [국토교통부 건축물대장정보 사용 가이드](https://github.com/WooilJeong/PublicDataReader/blob/main/assets/docs/portal/BuildingLedger.md)    | [공공데이터포털](https://www.data.go.kr/)                        | 필요         |
@@ -75,7 +75,7 @@ pip install PublicDataReader --upgrade
 
 
 | 제목                                              | 출처       |
-|:-------------------------------------------------|:----------:|
+|:-------------------------------------------------|:----------|
 | [공공데이터를 활용한 우리 동네 아파트 실거래가 분석](https://www.youtube.com/watch?v=31EX6TLao5g&t=852s) | [나도코딩 유튜브 채널](https://www.youtube.com/@nadocoding) |
 | [[부동산 데이터 수집] KOSIS 시군구별 미분양 현황 및 준공후 미분양 데이터 조회(파이썬)](https://growing-datascientist.tistory.com/136) | [레디코의 인사이트창고](https://growing-datascientist.tistory.com/) |
 | [[부동산 데이터 수집] KOSIS 시군구별 주택 건설 착공 실적(파이썬)](https://growing-datascientist.tistory.com/137) | [레디코의 인사이트창고](https://growing-datascientist.tistory.com/) |
@@ -129,7 +129,7 @@ pip install PublicDataReader --upgrade
 
 ## 사용 관련 문의
 
-- **카카오톡 오픈채팅방**: [PublicDataReader 사용자 모임](https://open.kakao.com/o/gbt2Pl2d)  
+- **카카오톡 오픈채팅방**: [![오픈채팅](https://img.shields.io/badge/오픈채팅-PublicDataReader_사용자모임-yellow?logo=KakaoTalk)](https://open.kakao.com/o/gbt2Pl2d)
 - **이메일**: wooil@kakao.com
 
 <br>
