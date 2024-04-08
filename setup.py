@@ -2,8 +2,7 @@ import setuptools
 from PublicDataReader.config.info import __version__, __author__, __contact__, __github__
 
 with open("requirements.txt") as f:
-    tests_require = f.readlines()
-install_requires = [t.strip() for t in tests_require]
+    requirements = [line.strip() for line in f if line.strip() and not line.startswith('#')]
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -26,5 +25,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=install_requires,
+    install_requires=requirements,
 )

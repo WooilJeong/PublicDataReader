@@ -1,7 +1,7 @@
 """
 KOSIS Open API Python Module
 """
-
+import json
 import requests
 import pandas as pd
 
@@ -123,7 +123,10 @@ class Kosis:
             # API 요청
             res = requests.get(url, params=params, verify=False)
             # API 응답 결과를 JSON 형태로 변환
-            res_json = res.json()
+            try:
+                res_json = res.json()
+            except Exception as e:
+                res_json = json.loads(res.text.replace("\t", ""))
         except Exception as e:
             print("API 요청이 실패했습니다.")
             print(e)
