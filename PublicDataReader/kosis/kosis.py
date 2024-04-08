@@ -126,7 +126,7 @@ class Kosis:
             try:
                 res_json = res.json()
             except Exception as e:
-                res_json = json.loads(res.text.replace("\t", ""))
+                res_json = json.loads(res.text.replace("\t", "SEND_DE"))
         except Exception as e:
             print("API 요청이 실패했습니다.")
             print(e)
