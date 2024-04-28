@@ -78,6 +78,7 @@ pip install PublicDataReader --upgrade
 | 제목                                              | 출처       |
 |:-------------------------------------------------|:----------|
 | [공공데이터를 활용한 우리 동네 아파트 실거래가 분석](https://www.youtube.com/watch?v=31EX6TLao5g&t=852s) | [나도코딩 유튜브 채널](https://www.youtube.com/@nadocoding) |
+| [Python 국세청홈택스 사업자등록상태 조회 방법](https://blog.naver.com/devradio/223419187567) | [심심한세상](https://blog.naver.com/devradio) |
 | [[부동산 데이터 수집] KOSIS 시군구별 미분양 현황 및 준공후 미분양 데이터 조회(파이썬)](https://growing-datascientist.tistory.com/136) | [레디코의 인사이트창고](https://growing-datascientist.tistory.com/) |
 | [[부동산 데이터 수집] KOSIS 시군구별 주택 건설 착공 실적(파이썬)](https://growing-datascientist.tistory.com/137) | [레디코의 인사이트창고](https://growing-datascientist.tistory.com/) |
 | [[부동산 데이터 수집] 국가통계포털/부동산원 아파트 전세가율 상하락요인 확인(파이썬)](https://growing-datascientist.tistory.com/138) | [레디코의 인사이트창고](https://growing-datascientist.tistory.com/) |
