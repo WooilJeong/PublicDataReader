@@ -21,6 +21,9 @@ class Kamco:
         self.service_key = service_key
         self.numOfRows = 10000
         self.endpoint = "http://openapi.onbid.co.kr/openapi/services"
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        }
 
         # 서비스, 기능 딕셔너리
         self.meta_dict = {
@@ -138,7 +141,7 @@ class Kamco:
 
             # API 요청
             try:
-                response = requests.get(url, params=params, verify=False)
+                response = requests.get(url, headers=self.headers, params=params, verify=False)
                 data = xmltodict.parse(response.text)
                 body = data['response']['body']
             except Exception as e:
