@@ -162,7 +162,7 @@ class TransactionPrice:
             end_date = datetime.datetime.strptime(str(end_year_month), "%Y%m")
             end_date += datetime.timedelta(days=31)
             end_date = datetime.datetime.strftime(end_date, "%Y-%m")
-            ts = pd.date_range(start=start_date, end=end_date, freq="m")
+            ts = pd.date_range(start=start_date, end=end_date, freq="ME")
             date_list = list(ts.strftime("%Y%m"))
 
             df = pd.DataFrame(columns=columns)
