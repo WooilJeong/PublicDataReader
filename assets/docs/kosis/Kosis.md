@@ -952,7 +952,7 @@ df5 = api.get_data(
     objL1 = "ALL",
     objL2 = "ALL",
     prdSe = "Y",
-    startPrdeDe = "2021",
+    startPrdDe = "2021",
     endPrdDe = "2021",
     )
 df5.head(1)
