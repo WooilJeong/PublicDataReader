@@ -35,73 +35,95 @@ class TransactionPrice:
         self.meta_dict = {
             "아파트": {
                 "매매": {
-                    "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev",
-                    "columns": ['지역코드', '도로명', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '거래금액', '도로명건물본번호코드', '도로명건물부번호코드', '도로명시군구코드', '도로명일련번호코드', '도로명지상지하코드', '도로명코드', '법정동본번코드', '법정동부번코드', '법정동시군구코드', '법정동읍면동코드', '법정동지번코드', '일련번호', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev",
+                    # "columns": ['지역코드', '도로명', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '거래금액', '도로명건물본번호코드', '도로명건물부번호코드', '도로명시군구코드', '도로명일련번호코드', '도로명지상지하코드', '도로명코드', '법정동본번코드', '법정동부번코드', '법정동시군구코드', '법정동읍면동코드', '법정동지번코드', '일련번호', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
+                    "columns": ['sggCd', 'umdCd', 'landCd', 'bonbun', 'bubun', 'roadNm', 'roadNmSggCd', 'roadNmCd', 'roadNmSeq', 'roadNmbCd', 'roadNmBonbun', 'roadNmBubun', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'buildYear', 'aptSeq', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'rgstDate', 'aptDong', 'slerGbn', 'buerGbn', 'landLeaseholdGbn',]
                 },
                 "전월세": {
-                    "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent",
-                    "columns": ['지역코드', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '보증금액', '월세금액', '계약구분', '계약기간', '갱신요구권사용', '종전계약보증금', '종전계약월세']
+                    # "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptRent/getRTMSDataSvcAptRent",
+                    # "columns": ['지역코드', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '보증금액', '월세금액', '계약구분', '계약기간', '갱신요구권사용', '종전계약보증금', '종전계약월세'],
+                    "columns": ['sggCd', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'floor', 'buildYear', 'contractTerm', 'contractType', 'useRRRight', 'preDeposit', 'preMonthlyRent'],
                 },
             },
             "오피스텔": {
                 "매매": {
-                    "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiTrade",
-                    "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '건축년도', '층', '전용면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcOffiTrade/getRTMSDataSvcOffiTrade",
+                    # "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '건축년도', '층', '전용면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
+                    "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'offiNm', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'buildYear', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'slerGbn', 'buyerGbn',],
                 },
                 "전월세": {
-                    "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiRent",
-                    "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '건축년도', '층', '전용면적', '년', '월', '일', '보증금', '월세', '계약구분', '계약기간', '갱신요구권사용', '종전계약보증금', '종전계약월세']
+                    # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcOffiRent",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcOffiRent/getRTMSDataSvcOffiRent",
+                    # "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '건축년도', '층', '전용면적', '년', '월', '일', '보증금', '월세', '계약구분', '계약기간', '갱신요구권사용', '종전계약보증금', '종전계약월세'],
+                    "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'offiNm', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'floor', 'buildYear', 'contractType', 'contractTerm', 'useRRRight', 'preDeposit', 'preMonthlyRent',],
                 },
             },
             "단독다가구": {
                 "매매": {
-                    "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHTrade",
-                    "columns": ['지역코드', '법정동', '지번', '주택유형', '건축년도', '대지면적', '연면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    # "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcSHTrade/getRTMSDataSvcSHTrade",
+                    # "columns": ['지역코드', '법정동', '지번', '주택유형', '건축년도', '대지면적', '연면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
+                    "columns": ['sggCd', 'umdNm', 'houseType', 'jibun', 'totalFloorAr', 'plottageAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'buildYear', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'slerGbn', 'buyerGbn',],
                 },
                 "전월세": {
-                    "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHRent",
-                    "columns": ['지역코드', '법정동', '건축년도', '계약면적', '년', '월', '일', '보증금액', '월세금액', '계약구분', '계약기간', '갱신요구권사용', '종전계약보증금', '종전계약월세']
+                    # "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHRent",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcSHRent/getRTMSDataSvcSHRent",
+                    # "columns": ['지역코드', '법정동', '건축년도', '계약면적', '년', '월', '일', '보증금액', '월세금액', '계약구분', '계약기간', '갱신요구권사용', '종전계약보증금', '종전계약월세'],
+                    "columns": ['sggCd', 'umdNm', 'houseType', 'totalFloorAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'buildYear', 'contractTerm', 'contractType', 'useRRRight', 'preDeposit', 'preMonthlyRent', ],
                 },
             },
             "연립다세대": {
                 "매매": {
-                    "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHTrade",
-                    "columns": ['지역코드', '법정동', '지번', '연립다세대', '건축년도', '층', '대지권면적', '전용면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    # "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcRHTrade/getRTMSDataSvcRHTrade",
+                    # "columns": ['지역코드', '법정동', '지번', '연립다세대', '건축년도', '층', '대지권면적', '전용면적', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
+                    "columns": ['sggCd', 'umdNm', 'mhouseNm', 'jibun', 'buildYear', 'excluUseAr', 'landAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'rgstDate', 'slerGbn', 'buyerGbn', 'houseType', ],
                 },
                 "전월세": {
-                    "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHRent",
-                    "columns": ['지역코드', '법정동', '지번', '연립다세대', '건축년도', '층', '전용면적', '년', '월', '일', '보증금액', '월세금액', '계약구분', '계약기간', '갱신요구권사용', '종전계약보증금', '종전계약월세']
+                    # "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHRent",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcRHRent/getRTMSDataSvcRHRent",
+                    # "columns": ['지역코드', '법정동', '지번', '연립다세대', '건축년도', '층', '전용면적', '년', '월', '일', '보증금액', '월세금액', '계약구분', '계약기간', '갱신요구권사용', '종전계약보증금', '종전계약월세'],
+                    "columns": ['sggCd', 'umdNm', 'mhouseNm', 'jibun', 'buildYear', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'floor', 'contractTerm', 'contractType', 'useRRRight', 'preDeposit', 'preMonthlyRent', 'houseType',],
                 },
             },
             "상업업무용": {
                 "매매": {
-                    "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade",
-                    "columns": ['지역코드', '시군구', '법정동', '지번', '유형', '용도지역', '건물주용도', '건축년도', '층', '대지면적', '건물면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcNrgTrade/getRTMSDataSvcNrgTrade",
+                    # "columns": ['지역코드', '시군구', '법정동', '지번', '유형', '용도지역', '건물주용도', '건축년도', '층', '대지면적', '건물면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
+                    "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'buildingType', 'buildingUse', 'landUse', 'floor', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'buildYear', 'buildingAr', 'plottageAr', 'cdealType', 'cdealDay', 'dealingGbn', 'shareDealingType', 'estateAgentSggNm', 'slerGbn', 'buyerGbn',],
                 },
             },
             "토지": {
                 "매매": {
-                    "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade",
-                    "columns": ['지역코드', '시군구', '법정동', '지번', '용도지역', '지목', '거래면적', '거래금액', '구분', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcLandTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcLandTrade/getRTMSDataSvcLandTrade",
+                    # "columns": ['지역코드', '시군구', '법정동', '지번', '용도지역', '지목', '거래면적', '거래금액', '구분', '년', '월', '일', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
+                    "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'jimok', 'landUse', 'dealArea', 'dealingGbn', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'cdealType', 'cdealDay', 'estateAgentSggNm', 'shareDealingType', ],
                 },
             },
             "분양입주권": {
                 "매매": {
-                    "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSilvTrade",
-                    "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '층', '전용면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSilvTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcSilvTrade/getRTMSDataSvcSilvTrade",
+                    # "columns": ['지역코드', '시군구', '법정동', '지번', '단지', '층', '전용면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
+                    "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'aptNm', 'floor', 'excluUseAr', 'ownershipGbn', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'slerGbn', 'buyerGbn', ],
                 },
             },
             "공장창고등": {
                 "매매": {
-                    "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcInduTrade",
-                    "columns": ['지역코드', '시군구', '법정동', '지번', '유형', '용도지역', '건물주용도', '건축년도', '층', '대지면적', '건물면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부']
+                    # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcInduTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcInduTrade/getRTMSDataSvcInduTrade",
+                    # "columns": ['지역코드', '시군구', '법정동', '지번', '유형', '용도지역', '건물주용도', '건축년도', '층', '대지면적', '건물면적', '구분', '년', '월', '일', '거래금액', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
+                    "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'floor', 'landUse', 'plottageAr', 'buildingType', 'buildingAr', 'buildingUse', 'buildYear', 'dealingGbn', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'cdealType', 'cdealDay', 'estateAgentSggNm', 'shareDealingType', 'slerGbn', 'buyerGbn',],
                 },
             },
         }
-        self.integer_columns = ['년', '월', '일', '층', '건축년도',
-                                '거래금액', '보증금액', '보증금', '월세금액', '월세', '종전계약보증금', '종전계약월세']
-        self.float_columns = ['전용면적', '대지권면적',
-                              '대지면적', '연면적', '계약면적', '건물면적', '거래면적']
+        self.integer_columns = ['년', '월', '일', '층', '건축년도', '거래금액', '보증금액', '보증금', '월세금액', '월세', '종전계약보증금', '종전계약월세']
+        self.float_columns = ['전용면적', '대지권면적', '대지면적', '연면적', '계약면적', '건물면적', '거래면적']
 
     def get_data(self,
                  property_type,
@@ -172,7 +194,7 @@ class TransactionPrice:
                 params['DEAL_YMD'] = year_month
                 res = requests.get(url, params=params, verify=False)
                 res_json = xmltodict.parse(res.text)
-                if res_json['response']['header']['resultCode'] != '00':
+                if res_json['response']['header']['resultCode'] != '000':
                     error_message = res_json['response']['header']['resultMsg']
                     raise Exception(error_message)
                 items = res_json['response']['body']['items']
@@ -193,7 +215,7 @@ class TransactionPrice:
             params['DEAL_YMD'] = year_month
             res = requests.get(url, params=params, verify=False)
             res_json = xmltodict.parse(res.text)
-            if res_json['response']['header']['resultCode'] != '00':
+            if res_json['response']['header']['resultCode'] != '000':
                 error_message = res_json['response']['header']['resultMsg']
                 raise Exception(error_message)
             items = res_json['response']['body']['items']
@@ -207,16 +229,16 @@ class TransactionPrice:
             df = pd.concat([df, sub], axis=0, ignore_index=True)
 
         # 컬럼 타입 변환
-        try:
-            for col in self.integer_columns:
-                if col in df.columns:
-                    df[col] = pd.to_numeric(df[col].apply(
-                        lambda x: x.strip().replace(",", "") if x is not None and not pd.isnull(x) else x)).astype("Int64")
-            for col in self.float_columns:
-                if col in df.columns:
-                    df[col] = pd.to_numeric(df[col])
-        except Exception as e:
-            raise Exception(e)
+        # try:
+        #     for col in self.integer_columns:
+        #         if col in df.columns:
+        #             df[col] = pd.to_numeric(df[col].apply(
+        #                 lambda x: x.strip().replace(",", "") if x is not None and not pd.isnull(x) else x)).astype("Int64")
+        #     for col in self.float_columns:
+        #         if col in df.columns:
+        #             df[col] = pd.to_numeric(df[col])
+        # except Exception as e:
+        #     raise Exception(e)
 
         return df
 
