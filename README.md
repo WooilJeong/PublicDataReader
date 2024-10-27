@@ -138,10 +138,7 @@ pip install PublicDataReader --upgrade
 
 ## 기여자
 
-
-<a href="https://github.com/wooiljeong/PublicDataReader/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=wooiljeong/PublicDataReader" />
-</a>
+[![PublicDataReader contributors](https://contrib.rocks/image?repo=wooiljeong/PublicDataReader)](https://github.com/wooiljeong/PublicDataReader/graphs/contributors)
 
 <br>
 
