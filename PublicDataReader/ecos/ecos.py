@@ -21,6 +21,15 @@ class Ecos:
         ----------
         통계표코드 : str, optional
             통계표코드, by default None
+
+        Output
+        ----------
+        상위통계표코드(P_STAT_CODE) : str(8)
+        통계표코드(STAT_CODE) : str(8)
+        통계명(STAT_NAME) : str(200)
+        주기(CYCLE) : str(2)
+        검색가능여부(SRCH_YN) : str(1)
+        출처(ORG_NAME) : str(50)
         """
         if 통계표코드 is None:
             통계표코드 = ""
@@ -54,6 +63,11 @@ class Ecos:
         ----------
         용어 : str
             통계용어 (예시 : 소비자동향지수)
+
+        Output
+        ----------
+        용어(WORD) : str(100)
+        용어설명(CONTENT) : str(4000)
         """
         params = {
             "서비스명": "StatisticWord",
@@ -85,6 +99,23 @@ class Ecos:
         ----------
         통계표코드 : str
             통계표코드
+
+        Output
+        ----------
+        통계표코드(STAT_CODE) : str(8)
+        통계명(STAT_NAME) : str(200)
+        항목그룹코드(GRP_CODE) : str(20)
+        항목그룹명(GRP_NAME) : str(60)
+        통계항목코드(ITEM_CODE) : str(20)
+        통계항목명(ITEM_NAME) : str(200)
+        상위통계항목코드(P_ITEM_CODE) : str(8)
+        상위통계항목명(P_ITEM_NAME) : str(200)
+        주기(CYCLE) : str(2)
+        수록시작일자(START_TIME) : str(8)
+        수록종료일자(END_TIME) : str(8)
+        자료수(DATA_CNT) : str(22)
+        단위(UNIT_NAME) : str(200)
+        가중치(WEIGHT) : str(22)
         """
         params = {
             "서비스명": "StatisticItemList",
@@ -130,6 +161,23 @@ class Ecos:
             통계항목코드3, by default None
         통계항목코드4 : str, optional
             통계항목코드4, by default None
+
+        Output
+        ----------
+        통계표코드(STAT_CODE) : str(8)
+        통계명(STAT_NAME) : str(200)
+        통계항목코드1(ITEM_CODE1) : str(20)
+        통계항목명1(ITEM_NAME1) : str(200)
+        통계항목코드2(ITEM_CODE2) : str(20)
+        통계항목명2(ITEM_NAME2) : str(200)
+        통계항목코드3(ITEM_CODE3) : str(20)
+        통계항목명3(ITEM_NAME3) : str(200)
+        통계항목코드4(ITEM_CODE4) : str(20)
+        통계항목명4(ITEM_NAME4) : str(200)
+        단위(UNIT_NAME) : str(200)
+        가중치(WGT) : str(22)
+        시점(TIME) : str(8)
+        값(DATA_VALUE) : str(23)
         """
         if 통계항목코드1 is None:
             통계항목코드1 = ""
@@ -172,6 +220,14 @@ class Ecos:
     def get_key_statistic_list(self, translate=True):
         """
         100대 통계지표
+
+        Output
+        ----------
+        통계그룹명(CLASS_NAME) : str(400)
+        통계명(KEYSTAT_NAME) : str(200)
+        값(DATA_VALUE) : str(23)
+        시점(CYCLE) : str(13)
+        단위(UNIT_NAME) : str(200)
         """
         params = {
             "서비스명": "KeyStatisticList",
@@ -202,6 +258,14 @@ class Ecos:
         ----------
         데이터명 : str
             데이터명 (예시 : 경제심리지수)
+
+        Output
+        ----------
+        레벨(LVL) : str(2)
+        상위통계항목코드(P_CONT_CODE) : str(8)
+        통계항목코드(CONT_CODE) : str(8)
+        통계항목명(CONT_NAME) : str(200)
+        메타데이터(META_DATA) : str(200)
         """
         params = {
             "서비스명": "StatisticMeta",
