@@ -38,7 +38,7 @@ class TransactionPrice:
                     # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev",
                     "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev",
                     # "columns": ['지역코드', '도로명', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '거래금액', '도로명건물본번호코드', '도로명건물부번호코드', '도로명시군구코드', '도로명일련번호코드', '도로명지상지하코드', '도로명코드', '법정동본번코드', '법정동부번코드', '법정동시군구코드', '법정동읍면동코드', '법정동지번코드', '일련번호', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
-                    "columns": ['sggCd', 'umdCd', 'landCd', 'bonbun', 'bubun', 'roadNm', 'roadNmSggCd', 'roadNmCd', 'roadNmSeq', 'roadNmbCd', 'roadNmBonbun', 'roadNmBubun', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'buildYear', 'aptSeq', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'rgstDate', 'aptDong', 'slerGbn', 'buerGbn', 'landLeaseholdGbn',]
+                    "columns": ['sggCd', 'umdCd', 'landCd', 'bonbun', 'bubun', 'roadNm', 'roadNmSggCd', 'roadNmCd', 'roadNmSeq', 'roadNmbCd', 'roadNmBonbun', 'roadNmBubun', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'buildYear', 'aptSeq', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'rgstDate', 'aptDong', 'slerGbn', 'buyerGbn', 'landLeaseholdGbn',]
                 },
                 "전월세": {
                     # "url": "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent",
@@ -122,8 +122,10 @@ class TransactionPrice:
                 },
             },
         }
-        self.integer_columns = ['년', '월', '일', '층', '건축년도', '거래금액', '보증금액', '보증금', '월세금액', '월세', '종전계약보증금', '종전계약월세']
-        self.float_columns = ['전용면적', '대지권면적', '대지면적', '연면적', '계약면적', '건물면적', '거래면적']
+        # self.integer_columns = ['년', '월', '일', '층', '건축년도', '거래금액', '보증금액', '보증금', '월세금액', '월세', '종전계약보증금', '종전계약월세']
+        self.integer_columns = ['dealYear', 'dealMonth', 'dealDay', 'floor', 'buildYear', 'dealAmount', 'deposit', 'monthlyRent', 'monthlyRent', 'preDeposit', 'preMonthlyRent']
+        # self.float_columns = ['전용면적', '대지권면적', '대지면적', '연면적', '계약면적', '건물면적', '거래면적']
+        self.float_columns = ['excluUseAr', 'landAr', 'totalFloorAr', 'plottageAr', 'buildingAr', 'dealArea']
 
     def get_data(self,
                  property_type,
@@ -132,6 +134,7 @@ class TransactionPrice:
                  year_month=None,
                  start_year_month=None,
                  end_year_month=None,
+                 translate=True,
                  verbose=False,
                  **kwargs):
         """
@@ -151,6 +154,8 @@ class TransactionPrice:
             조회할 시작 연월 (ex. 201901), by default None
         end_year_month : str, optional
             조회할 종료 연월 (ex. 201901), by default None
+        translate : bool, optional
+            한글 컬럼명으로 변환 여부, by default None
         verbose : bool, optional
             진행 상황 출력 여부, by default False
         **kwargs : dict
@@ -229,18 +234,60 @@ class TransactionPrice:
             df = pd.concat([df, sub], axis=0, ignore_index=True)
 
         # 컬럼 타입 변환
-        # try:
-        #     for col in self.integer_columns:
-        #         if col in df.columns:
-        #             df[col] = pd.to_numeric(df[col].apply(
-        #                 lambda x: x.strip().replace(",", "") if x is not None and not pd.isnull(x) else x)).astype("Int64")
-        #     for col in self.float_columns:
-        #         if col in df.columns:
-        #             df[col] = pd.to_numeric(df[col])
-        # except Exception as e:
-        #     raise Exception(e)
+        try:
+            for col in self.integer_columns:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col].apply(
+                        lambda x: x.strip().replace(",", "") if x is not None and not pd.isnull(x) else x)).astype("Int64")
+            for col in self.float_columns:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col])
+        except Exception as e:
+            raise Exception(e)
 
+        if translate:
+            df = self.translate_columns(df)
         return df
+
+    def translate_columns(self, df):
+        """
+        영문 컬럼명을 한글로 변경
+        """
+        rename_columns = {
+            'sggCd': '법정동시군구코드',
+            'umdCd': '법정동읍면동코드',
+            'landCd': '법정동지번코드',
+            'bonbun': '법정동본번코드',
+            'bubun': '법정동부번코드',
+            'roadNm': '도로명',
+            'roadNmSggCd': '도로명시군구코드',
+            'roadNmCd': '도로명코드',
+            'roadNmSeq': '도로명일련번호코드',
+            'roadNmbCd': '도로명지상지하코드',
+            'roadNmBonbun': '도로명건물본번호코드',
+            'roadNmBubun': '도로명건물부번호코드',
+            'umdNm': '법정동',
+            'aptNm': '단지명',
+            'jibun': '지번',
+            'excluUseAr': '전용면적',
+            'dealYear': '계약년도',
+            'dealMonth': '계약월',
+            'dealDay': '계약일',
+            'dealAmount': '거래금액',
+            'floor': '층',
+            'buildYear': '건축년도',
+            'aptSeq': '단지일련번호',
+            'cdealType': '해제여부',
+            'cdealDay': '해제사유발생일',
+            'dealingGbn': '거래유형',
+            'estateAgentSggNm': '중개사소재지',
+            'rgstDate': '등기일자',
+            'aptDong': '아파트동명',
+            'slerGbn': '매도자',
+            'buyerGbn': '매수자',
+            'landLeaseholdGbn': '토지임대부아파트여부'
+        }
+        return df.rename(columns=rename_columns)
 
 
 class BuildingLedger:
