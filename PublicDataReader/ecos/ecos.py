@@ -49,7 +49,7 @@ class Ecos:
         if res_json.get("RESULT"):
             if res_json.get("RESULT").get("MESSAGE"):
                 print(res_json.get("RESULT").get("MESSAGE"))
-                return
+                return None
         df = pd.DataFrame(res_json['StatisticTableList']['row'])
         if translate:
             df = self.translate(df)
@@ -85,7 +85,7 @@ class Ecos:
         if res_json.get("RESULT"):
             if res_json.get("RESULT").get("MESSAGE"):
                 print(res_json.get("RESULT").get("MESSAGE"))
-                return
+                return None
         df = pd.DataFrame(res_json['StatisticWord']['row'])
         if translate:
             df = self.translate(df)
@@ -133,7 +133,7 @@ class Ecos:
         if res_json.get("RESULT"):
             if res_json.get("RESULT").get("MESSAGE"):
                 print(res_json.get("RESULT").get("MESSAGE"))
-                return
+                return None
         df = pd.DataFrame(res_json['StatisticItemList']['row'])
         if translate:
             df = self.translate(df)
@@ -211,7 +211,7 @@ class Ecos:
         if res_json.get("RESULT"):
             if res_json.get("RESULT").get("MESSAGE"):
                 print(res_json.get("RESULT").get("MESSAGE"))
-                return
+                return None
         df = pd.DataFrame(res_json['StatisticSearch']['row'])
         if translate:
             df = self.translate(df)
@@ -244,7 +244,7 @@ class Ecos:
         if res_json.get("RESULT"):
             if res_json.get("RESULT").get("MESSAGE"):
                 print(res_json.get("RESULT").get("MESSAGE"))
-                return
+                return None
         df = pd.DataFrame(res_json['KeyStatisticList']['row'])
         if translate:
             df = self.translate(df)
@@ -283,7 +283,7 @@ class Ecos:
         if res_json.get("RESULT"):
             if res_json.get("RESULT").get("MESSAGE"):
                 print(res_json.get("RESULT").get("MESSAGE"))
-                return
+                return None
         df = pd.DataFrame(res_json['StatisticMeta']['row'])
         if translate:
             df = self.translate(df)
