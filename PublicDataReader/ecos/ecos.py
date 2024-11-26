@@ -42,7 +42,7 @@ class Ecos:
             "요청종료건수": "99999",
             "통계표코드": 통계표코드,
         }
-        query_params = '/'.join(list(params.values()))
+        query_params = '/'.join(params.values())
         url = f"{self.base_url}/{query_params}"
         res = requests.get(url, params=params, verify=False)
         res_json = res.json()
@@ -78,7 +78,7 @@ class Ecos:
             "요청종료건수": "99999",
             "용어": 용어,
         }
-        query_params = '/'.join(list(params.values()))
+        query_params = '/'.join(params.values())
         url = f"{self.base_url}/{query_params}"
         res = requests.get(url, params=params, verify=False)
         res_json = res.json()
@@ -126,7 +126,7 @@ class Ecos:
             "요청종료건수": "99999",
             "통계표코드": 통계표코드,
         }
-        query_params = '/'.join(list(params.values()))
+        query_params = '/'.join(params.values())
         url = f"{self.base_url}/{query_params}"
         res = requests.get(url, params=params, verify=False)
         res_json = res.json()
@@ -204,7 +204,7 @@ class Ecos:
             "통계항목코드3": 통계항목코드3,
             "통계항목코드4": 통계항목코드4,
         }
-        query_params = '/'.join(list(params.values()))
+        query_params = '/'.join(params.values())
         url = f"{self.base_url}/{query_params}"
         res = requests.get(url, params=params, verify=False)
         res_json = res.json()
@@ -237,7 +237,7 @@ class Ecos:
             "요청시작건수": "1",
             "요청종료건수": "100",
         }
-        query_params = '/'.join(list(params.values()))
+        query_params = '/'.join(params.values())
         url = f"{self.base_url}/{query_params}"
         res = requests.get(url, params=params, verify=False)
         res_json = res.json()
@@ -276,7 +276,7 @@ class Ecos:
             "요청종료건수": "99999",
             "데이터명": 데이터명,
         }
-        query_params = '/'.join(list(params.values()))
+        query_params = '/'.join(params.values())
         url = f"{self.base_url}/{query_params}"
         res = requests.get(url, params=params, verify=False)
         res_json = res.json()
