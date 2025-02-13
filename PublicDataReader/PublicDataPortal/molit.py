@@ -37,7 +37,7 @@ class TransactionPrice:
                 "매매": {
                     # "url": "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev",
                     # "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev",
-                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade"
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade",
                     # "columns": ['지역코드', '도로명', '법정동', '지번', '아파트', '건축년도', '층', '전용면적', '년', '월', '일', '거래금액', '도로명건물본번호코드', '도로명건물부번호코드', '도로명시군구코드', '도로명일련번호코드', '도로명지상지하코드', '도로명코드', '법정동본번코드', '법정동부번코드', '법정동시군구코드', '법정동읍면동코드', '법정동지번코드', '일련번호', '거래유형', '중개사소재지', '해제사유발생일', '해제여부'],
                     "columns": ['sggCd', 'umdCd', 'landCd', 'bonbun', 'bubun', 'roadNm', 'roadNmSggCd', 'roadNmCd', 'roadNmSeq', 'roadNmbCd', 'roadNmBonbun', 'roadNmBubun', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'buildYear', 'aptSeq', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'rgstDate', 'aptDong', 'slerGbn', 'buyerGbn', 'landLeaseholdGbn',]
                 },
