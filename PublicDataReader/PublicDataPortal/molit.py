@@ -35,65 +35,65 @@ class TransactionPrice:
         self.meta_dict = {
             "아파트": {
                 "매매": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev",
                     "columns": ['sggCd', 'umdCd', 'landCd', 'bonbun', 'bubun', 'roadNm', 'roadNmSggCd', 'roadNmCd', 'roadNmSeq', 'roadNmbCd', 'roadNmBonbun', 'roadNmBubun', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'buildYear', 'aptSeq', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'rgstDate', 'aptDong', 'slerGbn', 'buyerGbn', 'landLeaseholdGbn',]
                 },
                 "전월세": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcAptRent/getRTMSDataSvcAptRent",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptRent/getRTMSDataSvcAptRent",
                     "columns": ['sggCd', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'floor', 'buildYear', 'contractTerm', 'contractType', 'useRRRight', 'preDeposit', 'preMonthlyRent'],
                 },
             },
             "오피스텔": {
                 "매매": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcOffiTrade/getRTMSDataSvcOffiTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcOffiTrade/getRTMSDataSvcOffiTrade",
                     "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'offiNm', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'buildYear', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'slerGbn', 'buyerGbn',],
                 },
                 "전월세": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcOffiRent/getRTMSDataSvcOffiRent",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcOffiRent/getRTMSDataSvcOffiRent",
                     "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'offiNm', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'floor', 'buildYear', 'contractType', 'contractTerm', 'useRRRight', 'preDeposit', 'preMonthlyRent',],
                 },
             },
             "단독다가구": {
                 "매매": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcSHTrade/getRTMSDataSvcSHTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcSHTrade/getRTMSDataSvcSHTrade",
                     "columns": ['sggCd', 'umdNm', 'houseType', 'jibun', 'totalFloorAr', 'plottageAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'buildYear', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'slerGbn', 'buyerGbn',],
                 },
                 "전월세": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcSHRent/getRTMSDataSvcSHRent",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcSHRent/getRTMSDataSvcSHRent",
                     "columns": ['sggCd', 'umdNm', 'houseType', 'totalFloorAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'buildYear', 'contractTerm', 'contractType', 'useRRRight', 'preDeposit', 'preMonthlyRent', ],
                 },
             },
             "연립다세대": {
                 "매매": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcRHTrade/getRTMSDataSvcRHTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcRHTrade/getRTMSDataSvcRHTrade",
                     "columns": ['sggCd', 'umdNm', 'mhouseNm', 'jibun', 'buildYear', 'excluUseAr', 'landAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'rgstDate', 'slerGbn', 'buyerGbn', 'houseType', ],
                 },
                 "전월세": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcRHRent/getRTMSDataSvcRHRent",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcRHRent/getRTMSDataSvcRHRent",
                     "columns": ['sggCd', 'umdNm', 'mhouseNm', 'jibun', 'buildYear', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'floor', 'contractTerm', 'contractType', 'useRRRight', 'preDeposit', 'preMonthlyRent', 'houseType',],
                 },
             },
             "상업업무용": {
                 "매매": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcNrgTrade/getRTMSDataSvcNrgTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcNrgTrade/getRTMSDataSvcNrgTrade",
                     "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'buildingType', 'buildingUse', 'landUse', 'floor', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'buildYear', 'buildingAr', 'plottageAr', 'cdealType', 'cdealDay', 'dealingGbn', 'shareDealingType', 'estateAgentSggNm', 'slerGbn', 'buyerGbn',],
                 },
             },
             "토지": {
                 "매매": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcLandTrade/getRTMSDataSvcLandTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcLandTrade/getRTMSDataSvcLandTrade",
                     "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'jimok', 'landUse', 'dealArea', 'dealingGbn', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'cdealType', 'cdealDay', 'estateAgentSggNm', 'shareDealingType', ],
                 },
             },
             "분양입주권": {
                 "매매": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcSilvTrade/getRTMSDataSvcSilvTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcSilvTrade/getRTMSDataSvcSilvTrade",
                     "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'aptNm', 'floor', 'excluUseAr', 'ownershipGbn', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'slerGbn', 'buyerGbn', ],
                 },
             },
             "공장창고등": {
                 "매매": {
-                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcInduTrade/getRTMSDataSvcInduTrade",
+                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcInduTrade/getRTMSDataSvcInduTrade",
                     "columns": ['sggCd', 'sggNm', 'umdNm', 'jibun', 'floor', 'landUse', 'plottageAr', 'buildingType', 'buildingAr', 'buildingUse', 'buildYear', 'dealingGbn', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'cdealType', 'cdealDay', 'estateAgentSggNm', 'shareDealingType', 'slerGbn', 'buyerGbn',],
                 },
             },
