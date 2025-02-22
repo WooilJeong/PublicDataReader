@@ -7,7 +7,10 @@
 
 [![Pypi 패키지 버전](https://img.shields.io/pypi/v/publicdatareader.svg)](https://pypi.org/project/publicdatareader/)
 [![License](https://img.shields.io/pypi/l/ansicolortags.svg)](https://img.shields.io/pypi/l/ansicolortags.svg)
-[![Python](https://img.shields.io/badge/Official-Docs-tomato)](https://wooiljeong.github.io/PublicDataReader/)
+[![pandas](https://img.shields.io/badge/pandas-2.2.3-blue)](https://pypi.org/project/pandas/)
+[![requests](https://img.shields.io/badge/requests-2.32.3-green)](https://pypi.org/project/requests/)
+[![xmltodict](https://img.shields.io/badge/xmltodict-0.14.2-orange)](https://pypi.org/project/xmltodict/)
+[![beautifulsoup4](https://img.shields.io/badge/beautifulsoup4-4.13.3-purple)](https://pypi.org/project/beautifulsoup4/)
 [![Downloads](https://static.pepy.tech/badge/publicdatareader)](https://pepy.tech/project/publicdatareader)  
 [![오픈채팅](https://img.shields.io/badge/오픈채팅-PublicDataReader_사용자모임-yellow?logo=KakaoTalk)](https://open.kakao.com/o/gbt2Pl2d)
 

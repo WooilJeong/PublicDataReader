@@ -1,6 +1,4 @@
-beautifulsoup4
-lxml
-numpy
-pandas
-requests
-xmltodict
+pandas==2.2.3
+requests==2.32.3
+xmltodict==0.14.2
+beautifulsoup4==4.13.3

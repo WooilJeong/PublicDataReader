@@ -8,18 +8,18 @@
 
 | **서비스명**                          | **부동산 유형** | **거래 유형** |
 | ------------------------------------- | ------------ | ------------ |
-| [아파트매매 실거래 상세 자료 조회](https://www.data.go.kr/data/15126468/openapi.do)      | 아파트       | 매매         |
-| [아파트 전월세 자료 조회](https://www.data.go.kr/data/15058017/openapi.do)               | 아파트       | 전월세       |
-| [아파트 분양권전매 신고 자료 조회](https://www.data.go.kr/data/15056782/openapi.do)      | 분양입주권   | 매매         |
-| [오피스텔 매매 신고 조회](https://www.data.go.kr/data/15058452/openapi.do)               | 오피스텔     | 매매         |
-| [오피스텔 전월세 신고 조회](https://www.data.go.kr/data/15059249/openapi.do)             | 오피스텔     | 전월세       |
-| [연립다세대 매매 실거래자료 조회](https://www.data.go.kr/data/15058038/openapi.do)       | 연립다세대   | 매매         |
-| [연립다세대 전월세 실거래자료 조회](https://www.data.go.kr/data/15058016/openapi.do)     | 연립다세대   | 전월세       |
-| [단독/다가구 매매 실거래 조회](https://www.data.go.kr/data/15058022/openapi.do)          | 단독다가구   | 매매         |
-| [단독/다가구 전월세 자료 조회](https://www.data.go.kr/data/15058352/openapi.do)          | 단독다가구   | 전월세       |
-| [토지 매매 신고 조회](https://www.data.go.kr/data/15056649/openapi.do)                   | 토지         | 매매         |
-| [상업업무용 부동산 매매 신고 자료 조회](https://www.data.go.kr/data/15057267/openapi.do) | 상업업무용   | 매매         |
-| [공장 및 창고 등 부동산 매매 신고 자료 조회](https://www.data.go.kr/data/15100574/openapi.do) | 공장창고등   | 매매         |
+| [국토교통부_아파트 매매 실거래가 상세 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126468) | 아파트       | 매매         |
+| [국토교통부_아파트 전월세 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126474) | 아파트       | 전월세       |
+| [국토교통부_아파트 분양권전매 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126471) | 분양입주권   | 매매         |
+| [국토교통부_오피스텔 매매 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126464)  | 오피스텔     | 매매         |
+| [국토교통부_오피스텔 전월세 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126475) | 오피스텔     | 전월세       |
+| [국토교통부_연립다세대 매매 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126467) | 연립다세대   | 매매         |
+| [국토교통부_연립다세대 전월세 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126473) | 연립다세대   | 전월세       |
+| [국토교통부_단독/다가구 매매 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126465) | 단독다가구   | 매매         |
+| [국토교통부_단독/다가구 전월세 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126472) | 단독다가구   | 전월세       |
+| [국토교통부_토지 매매 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126466) | 토지         | 매매         |
+| [국토교통부_상업업무용 부동산 매매 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126463) | 상업업무용   | 매매         |
+| [국토교통부_공장 및 창고 등 부동산 매매 실거래가 자료](https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15126470) | 공장창고등   | 매매         |
 
 </div>
 
