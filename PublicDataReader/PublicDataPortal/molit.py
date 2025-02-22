@@ -126,6 +126,66 @@ class TransactionPrice:
         self.integer_columns = ['dealYear', 'dealMonth', 'dealDay', 'floor', 'buildYear', 'dealAmount', 'deposit', 'monthlyRent', 'monthlyRent', 'preDeposit', 'preMonthlyRent']
         # self.float_columns = ['전용면적', '대지권면적', '대지면적', '연면적', '계약면적', '건물면적', '거래면적']
         self.float_columns = ['excluUseAr', 'landAr', 'totalFloorAr', 'plottageAr', 'buildingAr', 'dealArea']
+    
+    def _response_to_item_data(
+                 self,
+                 res: requests.Response,
+                 property_type: str,
+                 trade_type: str,
+                 sigungu_code: str,
+                 year_month: str) -> dict:
+        """
+        부동산 실거래가 조회결과에서 에러를 검출하고 필요한 items 를 반환한다.
+
+        Parameters
+        ----------
+        res : requests.Response
+            실거래가 조회 API 요청 결과
+        property_type : str
+            부동산 이름 (ex. 아파트, 오피스텔, 단독다가구, 연립다세대, 토지, 분양입주권, 공장창고등)
+        trade_type : str
+            거래 유형 (ex. 매매, 전월세)
+        sigungu_code : str
+            시군구코드 (ex. 11110)
+        year_month : str
+            조회할 연월 (ex. 201901)
+        
+        Returns
+        -------
+        dict
+            응답 결과에서 items 딕셔너리, request 자체가 실패한경우 None
+
+        Raises
+        ------
+        Exception
+            API 요청 결과에 문제가 있을 경우 예외 발생
+        """
+        if res.status_code != 200:
+            error_message = (
+                f"Request of {property_type}, {trade_type}, {sigungu_code} for {year_month} "
+                f"failed with status code: {res.status_code}"
+            )
+            print(error_message)
+            return None
+
+        res_json = xmltodict.parse(res.text)
+        try:
+            resultCode = res_json['response']['header']['resultCode']
+        except KeyError as e:
+            err_msg = res_json['OpenAPI_ServiceResponse']['cmmMsgHeader']['errMsg']
+            error_code = res_json['OpenAPI_ServiceResponse']['cmmMsgHeader']['returnReasonCode']
+            error_message = (
+                f"Request of {property_type}, {trade_type}, {sigungu_code} for {year_month} "
+                f"failed with error: {err_msg}, error code: '{error_code}'"
+            )
+            raise Exception(error_message)
+
+        if resultCode != '000':
+            error_message = res_json['response']['header']['resultMsg']
+            raise Exception(error_message)
+
+        items = res_json['response']['body']['items']
+        return items
 
     def get_data(self,
                  property_type,
@@ -198,11 +258,7 @@ class TransactionPrice:
                     print(year_month)
                 params['DEAL_YMD'] = year_month
                 res = requests.get(url, params=params, verify=False)
-                res_json = xmltodict.parse(res.text)
-                if res_json['response']['header']['resultCode'] != '000':
-                    error_message = res_json['response']['header']['resultMsg']
-                    raise Exception(error_message)
-                items = res_json['response']['body']['items']
+                items = self._response_to_item_data(res, property_type, trade_type, sigungu_code, year_month)
                 if not items:
                     continue
                 data = items['item']
@@ -219,11 +275,7 @@ class TransactionPrice:
             df = pd.DataFrame(columns=columns)
             params['DEAL_YMD'] = year_month
             res = requests.get(url, params=params, verify=False)
-            res_json = xmltodict.parse(res.text)
-            if res_json['response']['header']['resultCode'] != '000':
-                error_message = res_json['response']['header']['resultMsg']
-                raise Exception(error_message)
-            items = res_json['response']['body']['items']
+            items = self._response_to_item_data(res, property_type, trade_type, sigungu_code, year_month)
             if not items:
                 return pd.DataFrame(columns=columns)
             data = items['item']
