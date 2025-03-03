@@ -375,43 +375,43 @@ class BuildingLedger:
         self.service_key = service_key
         self.meta_dict = {
             "기본개요": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrBasisOulnInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrBasisOulnInfo",
                 "columns": ['bjdongCd', 'bldNm', 'block', 'bun', 'bylotCnt', 'crtnDay', 'guyukCd', 'guyukCdNm', 'ji', 'jiguCd', 'jiguCdNm', 'jiyukCd', 'jiyukCdNm', 'lot', 'mgmBldrgstPk', 'mgmUpBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'platGbCd', 'platPlc', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rnum', 'sigunguCd', 'splotNm']
             },
             "총괄표제부": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrRecapTitleInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrRecapTitleInfo",
                 "columns": ['archArea', 'atchBldArea', 'atchBldCnt', 'bcRat', 'bjdongCd', 'bldNm', 'block', 'bun', 'bylotCnt', 'crtnDay', 'engrEpi', 'engrGrade', 'engrRat', 'etcPurps', 'fmlyCnt', 'gnBldCert', 'gnBldGrade', 'hhldCnt', 'hoCnt', 'indrAutoArea', 'indrAutoUtcnt', 'indrMechArea', 'indrMechUtcnt', 'itgBldCert', 'itgBldGrade', 'ji', 'lot', 'mainBldCnt', 'mainPurpsCd', 'mainPurpsCdNm', 'mgmBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newOldRegstrGbCd', 'newOldRegstrGbCdNm', 'newPlatPlc', 'oudrAutoArea', 'oudrAutoUtcnt', 'oudrMechArea', 'oudrMechUtcnt', 'platArea', 'platGbCd', 'platPlc', 'pmsDay', 'pmsnoGbCd', 'pmsnoGbCdNm', 'pmsnoKikCd', 'pmsnoKikCdNm', 'pmsnoYear', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rnum', 'sigunguCd', 'splotNm', 'stcnsDay', 'totArea', 'totPkngCnt', 'useAprDay', 'vlRat', 'vlRatEstmTotArea']
             },
             "표제부": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrTitleInfo",
                 "columns": ['archArea', 'atchBldArea', 'atchBldCnt', 'bcRat', 'bjdongCd', 'bldNm', 'block', 'bun', 'bylotCnt', 'crtnDay', 'dongNm', 'emgenUseElvtCnt', 'engrEpi', 'engrGrade', 'engrRat', 'etcPurps', 'etcRoof', 'etcStrct', 'fmlyCnt', 'gnBldCert', 'gnBldGrade', 'grndFlrCnt', 'heit', 'hhldCnt', 'hoCnt', 'indrAutoArea', 'indrAutoUtcnt', 'indrMechArea', 'indrMechUtcnt', 'itgBldCert', 'itgBldGrade', 'ji', 'lot', 'mainAtchGbCd', 'mainAtchGbCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'mgmBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'oudrAutoArea', 'oudrAutoUtcnt', 'oudrMechArea', 'oudrMechUtcnt', 'platArea', 'platGbCd', 'platPlc', 'pmsDay', 'pmsnoGbCd', 'pmsnoGbCdNm', 'pmsnoKikCd', 'pmsnoKikCdNm', 'pmsnoYear', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rideUseElvtCnt', 'rnum', 'roofCd', 'roofCdNm', 'rserthqkAblty', 'rserthqkDsgnApplyYn', 'sigunguCd', 'splotNm', 'stcnsDay', 'strctCd', 'strctCdNm', 'totArea', 'totDongTotArea', 'ugrndFlrCnt', 'useAprDay', 'vlRat', 'vlRatEstmTotArea']
             },
             "층별개요": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrFlrOulnInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrFlrOulnInfo",
                 "columns": ['area', 'areaExctYn', 'bjdongCd', 'bldNm', 'block', 'bun', 'crtnDay', 'dongNm', 'etcPurps', 'etcStrct', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'flrNoNm', 'ji', 'lot', 'mainAtchGbCd', 'mainAtchGbCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'mgmBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'platGbCd', 'platPlc', 'rnum', 'sigunguCd', 'splotNm', 'strctCd', 'strctCdNm']
             },
             "부속지번": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrAtchJibunInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrAtchJibunInfo",
                 "columns": ['atchBjdongCd', 'atchBlock', 'atchBun', 'atchEtcJibunNm', 'atchJi', 'atchLot', 'atchPlatGbCd', 'atchRegstrGbCd', 'atchRegstrGbCdNm', 'atchSigunguCd', 'atchSplotNm', 'bjdongCd', 'bldNm', 'block', 'bun', 'crtnDay', 'ji', 'lot', 'mgmBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'platGbCd', 'platPlc', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rnum', 'sigunguCd', 'splotNm']
             },
             "전유공용면적": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrExposPubuseAreaInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrExposPubuseAreaInfo",
                 "columns": ['area', 'bjdongCd', 'bldNm', 'block', 'bun', 'crtnDay', 'dongNm', 'etcPurps', 'etcStrct', 'exposPubuseGbCd', 'exposPubuseGbCdNm', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'flrNoNm', 'hoNm', 'ji', 'lot', 'mainAtchGbCd', 'mainAtchGbCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'mgmBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'platGbCd', 'platPlc', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rnum', 'sigunguCd', 'splotNm', 'strctCd', 'strctCdNm']
             },
             "오수정화시설": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrWclfInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrWclfInfo",
                 "columns": ['bjdongCd', 'bldNm', 'block', 'bun', 'capaLube', 'capaPsper', 'crtnDay', 'etcMode', 'ji', 'lot', 'mgmBldrgstPk', 'modeCd', 'modeCdNm', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'platGbCd', 'platPlc', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rnum', 'sigunguCd', 'splotNm', 'unitGbCd', 'unitGbCdNm']
             },
             "주택가격": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrHsprcInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrHsprcInfo",
                 "columns": ['bjdongCd', 'bldNm', 'block', 'bun', 'bylotCnt', 'crtnDay', 'hsprc', 'ji', 'lot', 'mgmBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'platGbCd', 'platPlc', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rnum', 'sigunguCd', 'splotNm']
             },
             "전유부": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrExposInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrExposInfo",
                 "columns": ['bjdongCd', 'bldNm', 'block', 'bun', 'crtnDay', 'dongNm', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'hoNm', 'ji', 'lot', 'mgmBldrgstPk', 'naBjdongCd', 'naMainBun', 'naRoadCd', 'naSubBun', 'naUgrndCd', 'newPlatPlc', 'platGbCd', 'platPlc', 'regstrGbCd', 'regstrGbCdNm', 'regstrKindCd', 'regstrKindCdNm', 'rnum', 'sigunguCd', 'splotNm']
             },
             "지역지구구역": {
-                "url": f"http://apis.data.go.kr/1613000/BldRgstService_v2/getBrJijiguInfo",
+                "url": f"http://apis.data.go.kr/1613000/BldRgstHubService/getBrJijiguInfo",
                 "columns": ['bjdongCd', 'block', 'bun', 'crtnDay', 'etcJijigu', 'ji', 'jijiguCd', 'jijiguCdNm', 'jijiguGbCd', 'jijiguGbCdNm', 'lot', 'mgmBldrgstPk', 'newPlatPlc', 'platGbCd', 'platPlc', 'reprYn', 'rnum', 'sigunguCd', 'splotNm']
             },
             "소유자": {
@@ -774,71 +774,71 @@ class BuildingLicense:
         self.service_key = service_key
         self.meta_dict = {
             "기본개요": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApBasisOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApBasisOulnInfo",
                 "columns": ['guyukCdNm', 'jimokCd', 'jiyukCd', 'jiguCd', 'guyukCd', 'archGbCdNm', 'archGbCd', 'platArea', 'archArea', 'bcRat', 'totArea', 'vlRatEstmTotArea', 'vlRat', 'mainBldCnt', 'atchBldDongCnt', 'mainPurpsCd', 'mainPurpsCdNm', 'hhldCnt', 'hoCnt', 'fmlyCnt', 'totPkngCnt', 'stcnsSchedDay', 'stcnsDelayDay', 'realStcnsDay', 'archPmsDay', 'useAprDay', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'jimokCdNm', 'jiyukCdNm', 'jiguCdNm'],
             },
             "동별개요": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApDongOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApDongOulnInfo",
                 "columns": ['lot', 'mainAtchGbCd', 'mainAtchGbCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'hoCnt', 'fmlyCnt', 'hhldCnt', 'strctCd', 'strctCdNm', 'roofCd', 'roofCdNm', 'archArea', 'totArea', 'vlRatEstmTotArea', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmDongOulnPk', 'mgmPmsrgstPk', 'bldNm', 'splotNm', 'block', 'rideUseElvtCnt', 'emgenUseElvtCnt'],
             },
             "층별개요": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApFlrOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApFlrOulnInfo",
                 "columns": ['archGbCd', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmFlrOulnPk', 'mgmDongOulnPk', 'mgmPmsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'strctCd', 'strctCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'flrNo', 'flrArea', 'flrGbCd', 'flrGbCdNm', 'archGbCdNm'],
             },
             "호별개요": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApHoOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApHoOulnInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHoDetlPk', 'mgmDongOulnPk', 'mgmPmsrgstPk', 'splotNm', 'block', 'lot', 'hoNo', 'hoNm', 'pngtypGbNm', 'flrNo', 'flrGbCd', 'flrGbCdNm', 'changGbCd', 'changGbCdNm', 'crtnDay'],
             },
             "대수선": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApImprprInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApImprprInfo",
                 "columns": ['imprprGbCdNm', 'imprprChangGbCd', 'imprprChangGbCdNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'imprprGbCd'],
             },
             "공작물관리대장": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApHdcrMgmRgstInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApHdcrMgmRgstInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'jimokCd', 'jimokCdNm', 'jiyukCd', 'jiyukCdNm', 'jiguCd', 'jiguCdNm', 'guyukCd', 'guyukCdNm', 'hdcrKindCd', 'hdcrKindCdNm', 'strctCd', 'strctCdNm', 'len', 'heit', 'area', 'bcRat', 'crtnDay'],
             },
             "철거멸실관리대장": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApDemolExtngMgmRgstInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApDemolExtngMgmRgstInfo",
                 "columns": ['platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'demolExtngGbCd', 'demolExtngGbCdNm', 'demolStrtDay', 'demolEndDay', 'demolExtngDay', 'totArea', 'bldCnt', 'mainPurpsCd', 'mainPurpsCdNm', 'strctCd', 'strctCdNm', 'hhldCnt', 'hoCnt', 'fmlyCnt', 'cemaIncYn', 'himaIncYn', 'rfmaIncYn', 'lgmaIncYn', 'etcIncYn', 'nabYn', 'etcYn', 'btmaIncYn', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd'],
             },
             "가설건축물": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApTmpBldInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApTmpBldInfo",
                 "columns": ['mgmPmsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'sumArchArea', 'sumTotArea', 'platArea', 'tmpbldPrsvExpDay', 'strctCd', 'strctCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'archArea', 'totArea', 'grndFlrCnt', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji'],
             },
             "오수정화시설": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApWclfInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApWclfInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'newPlatPlc', 'splotNm', 'block', 'lot', 'reprYn', 'wclfModeCd', 'wclfModeCdNm', 'mainDongGbCd', 'mainDongGbCdNm', 'capaPsper', 'capaLube', 'crtnDay'],
             },
             "주차장": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApPklotInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApPklotInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'splotNm', 'block', 'lot', 'indrAutoUtcnt', 'indrAutoArea', 'oudrAutoUtcnt', 'oudrAutoArea', 'indrMechUtcnt', 'indrMechArea', 'oudrMechUtcnt', 'oudrMechArea', 'neigAutoUtcnt', 'neigAutoArea', 'neigMechUtcnt', 'neigMechArea', 'exmptUtcnt', 'crtnDay'],
             },
             "부설주차장": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApAtchPklotInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApAtchPklotInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'hjdongCd', 'jimokCd', 'jimokCdNm', 'relJibunNm', 'crtnDay'],
             },
             "전유공용면적": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApExposPubuseAreaInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApExposPubuseAreaInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmExposPubuseAreaPk', 'mgmPmsrgstPk', 'splotNm', 'block', 'lot', 'pngtypGbNm', 'exposPubuseGbCd', 'exposPubuseGbCdNm', 'mainAtchGbCd', 'mainAtchGbCdNm', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'strctCd', 'strctCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'etcPurps', 'area', 'crtnDay'],
             },
             "호별전유공용면적": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApHoExposPubuseAreaInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApHoExposPubuseAreaInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmExposPubuseAreaPk', 'mgmPmsrgstPk', 'splotNm', 'block', 'lot', 'pngtypGbNm', 'exposPubuseGbCd', 'exposPubuseGbCdNm', 'mainAtchGbCd', 'mainAtchGbCdNm', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'strctCd', 'strctCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'etcPurps', 'area', 'crtnDay'],
             },
             "지역지구구역": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApJijiguInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApJijiguInfo",
                 "columns": ['jijiguNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'splotNm', 'block', 'lot', 'jijiguGbCd', 'jijiguGbCdNm', 'jijiguCd', 'jijiguCdNm', 'reprYn', 'mainDongGbCd', 'mainDongGbCdNm'],
             },
             "도로명대장": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApRoadRgstInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApRoadRgstInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'splotNm', 'block', 'lot', 'ranoYear', 'ranoSeqno', 'rdasnGbCd', 'rdasnGbCdNm', 'rdasnDay', 'roadChangDay', 'roadChangOdr', 'roadCloseDay', 'mgmSigunguCd', 'rdasnChangDay', 'roadLenTotal', 'roadWidthTotal', 'roadAreaTotal', 'crtnDay'],
             },
             "대지위치": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApPlatPlcInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApPlatPlcInfo",
                 "columns": ['mgmDongOulnPk', 'reprYn', 'mainDongGbCd', 'mainDongGbCdNm', 'hjdongCd', 'splotNm', 'block', 'lot', 'jimokCd', 'jimokCdNm', 'relJibunNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPlatPlcPk', 'mgmPmsrgstPk'],
             },
             "주택유형": {
-                "url": "http://apis.data.go.kr/1613000/ArchPmsService_v2/getApHsTpInfo",
+                "url": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApHsTpInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmPmsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'hstpGbCd', 'hstpGbCdNm', 'silHoHhldCnt', 'silHoHhldArea', 'crtnDay'],
             },
         }
@@ -1144,67 +1144,67 @@ class HousingLicense:
         self.service_key = service_key
         self.meta_dict = {
             "기본개요": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpBasisOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpBasisOulnInfo",
                 "columns": ['bldNm', 'splotNm', 'block', 'lot', 'purpsCd', 'purpsCdNm', 'strctCd', 'strctCdNm', 'mainBldCnt', 'totArea', 'totHhldCnt', 'demolExtngGbCd', 'demolExtngGbCdNm', 'demolStrtDay', 'demolEndDay', 'demolExtngDay', 'apprvDay', 'stcnsSchedDay', 'stcnsDay', 'useInsptDay', 'useInsptSchedDay', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk'],
             },
             "동별개요": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpDongOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpDongOulnInfo",
                 "columns": ['mainPurpsCdNm', 'hhldCntPeplRent', 'hhldCntPubRent_5', 'hhldCntPubRent_10', 'hhldCntPubRentEtc', 'hhldCntPubRentTot', 'hhldCntPubLotou', 'hhldCntEmplRent', 'hhldCntLaborWlfar', 'hhldCntCvlRent', 'hhldCntCvlLotou', 'strctCd', 'strctCdNm', 'roofCd', 'roofCdNm', 'archArea', 'totArea', 'ugrndArea', 'vlRatEstmTotArea', 'ugrndFlrCnt', 'grndFlrCnt', 'heit', 'rideUseElvtCnt', 'emgenUseElvtCnt', 'flrhFrom', 'ceilHeit', 'stairValidWidth', 'hwayWidth', 'ouwlThick', 'adjHhldWallThick', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmDongOulnPk', 'mgmHsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'mainAtchGbCd', 'mainAtchGbCdNm', 'dongNm', 'mainPurpsCd'],
             },
             "층별개요": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpFlrOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpFlrOulnInfo",
                 "columns": ['mgmFlrOulnPk', 'mgmDongOulnPk', 'bldNm', 'splotNm', 'block', 'lot', 'dongNm', 'flrNo', 'flrGbCd', 'flrGbCdNm', 'flrArea', 'purpsCd', 'purpsCdNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji'],
             },
             "호별개요": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpHoOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpHoOulnInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHoDetlPk', 'mgmDongOulnPk', 'bldNm', 'splotNm', 'block', 'lot', 'dongNm', 'flrNo', 'flrGbCd', 'flrGbCdNm', 'hoNo', 'hoNm', 'pngtypGbNm', 'changGbCd', 'changGbCdNm', 'crtnDay'],
             },
             "부대시설": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpSbsdFcInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpSbsdFcInfo",
                 "columns": ['platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'sbsdfcKindCd', 'sbsdfcKindCdNm', 'etcFcKind', 'instalCurst', 'cmplxinCurst', 'cmplxbyndCurst', 'changbefInstalCurst', 'changbefCmplxinCurst', 'changbefCmplxbyndCurst', 'befSbsdKindCd', 'befSbsdKindCdNm', 'befEtcFcKind', 'crtnDay', 'rnum'],
             },
             "오수정화시설": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpWclfInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpWclfInfo",
                 "columns": ['wclfModeCd', 'wclfModeCdNm', 'etcWclf', 'capaPsper', 'capaLube', 'dongRelGb', 'dongRelGbNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'hjdongCd', 'splotNm', 'block', 'lot', 'reprYn'],
             },
             "주차장": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpPklotInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpPklotInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'splotNm', 'block', 'lot', 'indrAutoUtcnt', 'indrAutoArea', 'oudrAutoUtcnt', 'oudrAutoArea', 'indrMechUtcnt', 'indrMechArea', 'oudrMechUtcnt', 'oudrMechArea', 'neigAutoUtcnt', 'neigAutoArea', 'neigMechUtcnt', 'neigMechArea', 'exmptUtcnt', 'crtnDay'],
             },
             "부설주차장": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpAtchPklotInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpAtchPklotInfo",
                 "columns": ['platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'hjdongCd', 'splotNm', 'block', 'lot', 'jimokCd', 'jimokCdNm', 'relJibunNm', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd'],
             },
             "전유공용면적": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpExposPubuseAreaInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpExposPubuseAreaInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmExposPubusePk', 'mgmTypeOulnPk', 'exposPubuseGbCd', 'exposPubuseGbCdNm', 'mainAtchGbCd', 'mainAtchGbCdNm', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'flrNoNm', 'strctCd', 'strctCdNm', 'etcStrct', 'purpsCd', 'purpsCdNm', 'etcPurps', 'area', 'crtnDay'],
             },
             "행위호전유공용면적": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpHoExposPubuseAreaInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpHoExposPubuseAreaInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmActHoExposPubusePk', 'mgmHoDetlPk', 'splotNm', 'block', 'lot', 'pngtypGbNm', 'exposPubuseGbCd', 'exposPubuseGbCdNm', 'mainAtchGbCd', 'mainAtchGbCdNm', 'flrGbCd', 'flrGbCdNm', 'flrNo', 'strctCd', 'strctCdNm', 'mainPurpsCd', 'mainPurpsCdNm', 'etcPurps', 'area', 'crtnDay'],
             },
             "행위개요": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpActOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpActOulnInfo",
                 "columns": ['splotNm', 'block', 'lot', 'actGb', 'actGbCd', 'actGbCdNm', 'cmplxNm', 'bldYn', 'fcKind', 'archArea', 'totArea', 'btmArea', 'mainPurpsCd', 'mainPurpsCdNm', 'etcPurps', 'constArea', 'ugrndFlrCnt', 'grndFlrCnt', 'totWkp', 'stcnsSchedDay', 'useInsptSchedDay', 'hhldCnt', 'cmplxFlrCntDongCnt', 'regstrGbCd', 'regstrGbCdNm', 'actBefPurpsCd', 'actBefPurpsCdNm', 'actBefArea', 'actAftPurpsCd', 'actAftPurpsCdNm', 'actAftArea', 'fcNm', 'actBefEtcPurps', 'actAftEtcPurps', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk'],
             },
             "관리공동형별개요": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpMgmCoopTpOulnInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpMgmCoopTpOulnInfo",
                 "columns": ['mgmSigunguCd', 'crtnDay', 'platGbCd', 'bun', 'ji', 'mgmCoophsrgstPk', 'splotNm', 'block', 'lot', 'typeGb', 'etcType', 'exuseArea', 'cmplxNm', 'bizBodyNm', 'bizApprvDay', 'useInsptDay', 'mainBldCnt', 'maxFlrCnt', 'hhldCnt', 'strctCd', 'strctCdNm', 'elvtRideUse', 'elvtEmgen', 'platArea', 'totArea', 'archArea', 'hwayModeCd', 'hwayModeCdNm', 'wtspCd', 'wtspCdNm', 'mgmMthdCd', 'mgmMthdCdNm', 'sfgvMgmStrtDay', 'heatMthdCd', 'heatMthdCdNm', 'useFuel', 'hsStyleGbCd', 'hsStyleGbCdNm', 'hsTypeGbCd', 'hsTypeGbCdNm', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd'],
             },
             "관리공동부대복리시설": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpMgmCoopSbsdWlfarFcInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpMgmCoopSbsdWlfarFcInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmCoophsrgstPk', 'splotNm', 'block', 'lot', 'grndPklotUtcnt', 'ugrndPklotUtcnt', 'totPklotUtcnt', 'pkngCctvCnt', 'reprMtrmArea', 'mgmOffcArea', 'plgndCctvCnt', 'wttnkCapa', 'lndscArea', 'guardrmCnt', 'hsoldArea', 'lifeConvFcArea', 'nturFcArea', 'jmExcsFcCnt', 'kgtFlrCnt', 'kgtLotArea', 'kgtPurps', 'mediFcArea', 'plgndCnt', 'crtnDay'],
             },
             "지역지구구역": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpJijiguInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpJijiguInfo",
                 "columns": ['sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'splotNm', 'block', 'lot', 'jijiguGbCd', 'jijiguGbCdNm', 'jijiguCd', 'jijiguCdNm', 'reprYn', 'jijiguNm', 'dongRelGb', 'dongRelGbNm', 'crtnDay', 'rnum', 'platPlc'],
             },
             "복리분양시설": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpWlfarLotouFcInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpWlfarLotouFcInfo",
                 "columns": ['changbefPurpsCd', 'changbefPurpsCdNm', 'changbefEtcPurps', 'changbefArea', 'changbefCnt', 'changbefEtcCurst', 'befWlfarFcKindCd', 'befWlfarFcKindCdNm', 'befEtcFc', 'crtnDay', 'rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'bldNm', 'splotNm', 'block', 'lot', 'wlfarLotouFcKindCd', 'wlfarLotouFcKindCdNm', 'etcFc', 'purpsCd', 'purpsCdNm', 'etcPurps', 'area', 'openCnt'],
             },
             "대지위치": {
-                "url": "http://apis.data.go.kr/1611000/HsPmsService/getHpPlatPlcInfo",
+                "url": "http://apis.data.go.kr/1613000/HsPmsHubService/getHpPlatPlcInfo",
                 "columns": ['rnum', 'platPlc', 'sigunguCd', 'bjdongCd', 'platGbCd', 'bun', 'ji', 'mgmHsrgstPk', 'reprYn', 'hjdongCd', 'splotNm', 'block', 'lot', 'jimokCd', 'jimokCdNm', 'relJibunNm', 'platArea', 'minPlatWidth', 'maxPlatWidth', 'dongRelGb', 'dongRelGbNm', 'crtnDay'],
             },
         }
