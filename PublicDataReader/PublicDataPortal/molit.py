@@ -264,8 +264,12 @@ class TransactionPrice:
             df = df.astype(str)
             for col in self.integer_columns:
                 if col in df.columns:
-                    df[col] = pd.to_numeric(df[col].apply(
-                    lambda x: x.strip().replace(",", "") if isinstance(x, str) and x.isdigit() else x), errors='coerce').astype("Int64")
+                    df[col] = pd.to_numeric(
+                        df[col].apply(
+                            lambda x: x.strip().replace(",", "") if isinstance(x, str) else x
+                        ), 
+                        errors='coerce'
+                    ).astype("Int64")
             for col in self.float_columns:
                 if col in df.columns:
                     df[col] = pd.to_numeric(df[col], errors='coerce')
