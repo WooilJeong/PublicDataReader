@@ -1,4 +1,4 @@
 pandas==2.2.3
-requests==2.32.3
+requests==2.32.4
 xmltodict==0.14.2
 beautifulsoup4==4.13.3
