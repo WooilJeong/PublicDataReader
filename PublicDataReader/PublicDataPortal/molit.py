@@ -433,6 +433,7 @@ class BuildingLedger:
                  translate=True,
                  verbose=False,
                  wait_time=30,
+                 timeout=10,
                  **kwargs):
         """
         건축물대장 정보 조회
@@ -457,6 +458,8 @@ class BuildingLedger:
             진행 상황 출력 여부 (기본값: False)
         wait_time : int
             API 요청 간의 대기 시간 (초) (기본값: 30초)
+        timeout : int
+            API 요청 타임아웃(초) (기본값: 10초)
         **kwargs : dict
             API 요청에 필요한 추가 인자
         """
@@ -505,7 +508,7 @@ class BuildingLedger:
         # 빈 데이터 프레임 생성
         df = pd.DataFrame(columns=columns)
         # API 요청
-        res = requests.get(url, params=params, verify=False)
+        res = requests.get(url, params=params, verify=False, timeout=timeout)
         # 요청 결과 JSON 변환
         res_json = xmltodict.parse(res.text)
         # 응답 키 존재 확인
@@ -551,7 +554,7 @@ class BuildingLedger:
                     print(f"page {i} / {_pageNoCount} 요청")
                 params['pageNo'] = i
                 # API 요청
-                res = requests.get(url, params=params, verify=False)
+                res = requests.get(url, params=params, verify=False, timeout=timeout)
                 # 요청 결과 JSON 변환
                 res_json = xmltodict.parse(res.text)
                 # 응답 키 존재 확인
@@ -856,6 +859,7 @@ class BuildingLicense:
                  translate=True,
                  verbose=False,
                  wait_time=30,
+                 timeout=10,
                  **kwargs):
         """
         건축인허가 정보 조회
@@ -880,6 +884,8 @@ class BuildingLicense:
             진행 상황 출력 여부 (기본값: False)
         wait_time : int
             API 요청 간의 대기 시간 (초) (기본값: 30초)
+        timeout : int
+            API 요청 타임아웃(초) (기본값: 10초)
         **kwargs : dict
             API 요청에 필요한 추가 인자
         """
@@ -910,7 +916,7 @@ class BuildingLicense:
         # 빈 데이터 프레임 생성
         df = pd.DataFrame(columns=columns)
         # API 요청
-        res = requests.get(url, params=params, verify=False)
+        res = requests.get(url, params=params, verify=False, timeout=timeout)
         # 요청 결과 JSON 변환
         res_json = xmltodict.parse(res.text)
         # 응답 키 존재 확인
@@ -956,7 +962,7 @@ class BuildingLicense:
                     print(f"page {i} / {_pageNoCount} 요청")
                 params['pageNo'] = i
                 # API 요청
-                res = requests.get(url, params=params, verify=False)
+                res = requests.get(url, params=params, verify=False, timeout=timeout)
                 # 요청 결과 JSON 변환
                 res_json = xmltodict.parse(res.text)
                 # 응답 키 존재 확인
@@ -1222,6 +1228,7 @@ class HousingLicense:
                  translate=True,
                  verbose=False,
                  wait_time=30,
+                 timeout=10,
                  **kwargs):
         """
         주택인허가 정보 조회
@@ -1246,6 +1253,8 @@ class HousingLicense:
             진행 상황 출력 여부 (기본값: False)
         wait_time : int
             API 요청 간의 대기 시간 (초) (기본값: 30초)
+        timeout : int
+            API 요청 타임아웃(초) (기본값: 10초)
         **kwargs : dict
             API 요청에 필요한 추가 인자
         """
@@ -1276,7 +1285,7 @@ class HousingLicense:
         # 빈 데이터 프레임 생성
         df = pd.DataFrame(columns=columns)
         # API 요청
-        res = requests.get(url, params=params, verify=False)
+        res = requests.get(url, params=params, verify=False, timeout=timeout)
         # 요청 결과 JSON 변환
         res_json = xmltodict.parse(res.text)
         # 응답 키 존재 확인
@@ -1322,7 +1331,7 @@ class HousingLicense:
                     print(f"page {i} / {_pageNoCount} 요청")
                 params['pageNo'] = i
                 # API 요청
-                res = requests.get(url, params=params, verify=False)
+                res = requests.get(url, params=params, verify=False, timeout=timeout)
                 # 요청 결과 JSON 변환
                 res_json = xmltodict.parse(res.text)
                 # 응답 키 존재 확인
@@ -1587,6 +1596,7 @@ class LandForestLedger:
                  translate=True,
                  verbose=False,
                  wait_time=30,
+                 timeout=10,
                  **kwargs):
         """
         토지임야 정보 조회
@@ -1601,6 +1611,8 @@ class LandForestLedger:
             진행상황 출력 여부
         wait_time: int
             API 요청 간격
+        timeout: int
+            API 요청 타임아웃(초) (기본값: 10초)
         kwargs: dict
             API 요청에 필요한 추가 인자
         """
@@ -1615,7 +1627,7 @@ class LandForestLedger:
         # 빈 데이터 프레임 생성
         df = pd.DataFrame(columns=self.columns)
         # API 요청
-        res = requests.get(self.url, params=params, verify=False)
+        res = requests.get(self.url, params=params, verify=False, timeout=timeout)
         # 요청 결과 JSON 변환
         res_json = xmltodict.parse(res.text)
 
@@ -1652,7 +1664,7 @@ class LandForestLedger:
                     print(f"page {i} / {_pageNoCount} 요청")
                 params['pageNo'] = i
                 # API 요청
-                res = requests.get(self.url, params=params, verify=False)
+                res = requests.get(self.url, params=params, verify=False, timeout=timeout)
                 # 요청 결과 JSON 변환
                 res_json = xmltodict.parse(res.text)
                 data = res_json['fields']['ladfrlVOList']
@@ -1717,6 +1729,7 @@ class LandOwnership:
                  translate=True,
                  verbose=False,
                  wait_time=30,
+                 timeout=10,
                  **kwargs):
         """
         토지소유정보 조회
@@ -1731,6 +1744,8 @@ class LandOwnership:
             진행상황 출력 여부
         wait_time: int
             API 요청 간격
+        timeout: int
+            API 요청 타임아웃(초) (기본값: 10초)
         kwargs: dict
             API 요청에 필요한 추가 인자
         """
@@ -1746,7 +1761,7 @@ class LandOwnership:
         # 빈 데이터 프레임 생성
         df = pd.DataFrame(columns=self.columns)
         # API 요청
-        res = requests.get(self.url, params=params, verify=False)
+        res = requests.get(self.url, params=params, verify=False, timeout=timeout)
         # 요청 결과 JSON 변환
         res_json = res.json()
         # 요청 행 수
@@ -1782,7 +1797,7 @@ class LandOwnership:
                     print(f"page {i} / {_pageNoCount} 요청")
                 params['pageNo'] = i
                 # API 요청
-                res = requests.get(self.url, params=params, verify=False)
+                res = requests.get(self.url, params=params, verify=False, timeout=timeout)
                 # 요청 결과 JSON 변환
                 res_json = res.json()
                 data = res_json['possessions']['field']
