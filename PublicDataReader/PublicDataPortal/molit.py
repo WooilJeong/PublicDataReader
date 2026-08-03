@@ -35,11 +35,11 @@ class TransactionPrice:
         self.meta_dict = {
             "아파트": {
                 "매매": {
-                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev",
+                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev",
                     "columns": ['sggCd', 'umdCd', 'landCd', 'bonbun', 'bubun', 'roadNm', 'roadNmSggCd', 'roadNmCd', 'roadNmSeq', 'roadNmbCd', 'roadNmBonbun', 'roadNmBubun', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'dealAmount', 'floor', 'buildYear', 'aptSeq', 'cdealType', 'cdealDay', 'dealingGbn', 'estateAgentSggNm', 'rgstDate', 'aptDong', 'slerGbn', 'buyerGbn', 'landLeaseholdGbn',]
                 },
                 "전월세": {
-                    "url": "http://apis.data.go.kr/1613000/RTMSDataSvcAptRent/getRTMSDataSvcAptRent",
+                    "url": "https://apis.data.go.kr/1613000/RTMSDataSvcAptRent/getRTMSDataSvcAptRent",
                     "columns": ['sggCd', 'umdNm', 'aptNm', 'jibun', 'excluUseAr', 'dealYear', 'dealMonth', 'dealDay', 'deposit', 'monthlyRent', 'floor', 'buildYear', 'contractTerm', 'contractType', 'useRRRight', 'preDeposit', 'preMonthlyRent'],
                 },
             },
@@ -170,6 +170,7 @@ class TransactionPrice:
                  end_year_month=None,
                  translate=True,
                  verbose=False,
+                 timeout=10,
                  **kwargs):
         """
         부동산 실거래가 조회
@@ -192,6 +193,8 @@ class TransactionPrice:
             한글 컬럼명으로 변환 여부, by default None
         verbose : bool, optional
             진행 상황 출력 여부, by default False
+        timeout : int, optional
+            API 요청 타임아웃(초), by default 10
         **kwargs : dict
             API 요청에 필요한 추가 인자
         """
@@ -231,7 +234,7 @@ class TransactionPrice:
                 if verbose:
                     print(year_month)
                 params['DEAL_YMD'] = year_month
-                res = requests.get(url, params=params, verify=False)
+                res = requests.get(url, params=params, verify=False, timeout=timeout)
                 items = self._response_to_item_data(res, property_type, trade_type, sigungu_code, year_month)
                 if not items:
                     continue
@@ -248,7 +251,7 @@ class TransactionPrice:
                 print(year_month)
             df = pd.DataFrame(columns=columns)
             params['DEAL_YMD'] = year_month
-            res = requests.get(url, params=params, verify=False)
+            res = requests.get(url, params=params, verify=False, timeout=timeout)
             items = self._response_to_item_data(res, property_type, trade_type, sigungu_code, year_month)
             if not items:
                 return pd.DataFrame(columns=columns)
